@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 以下为 githubpage上不可修改的参数，见https://help.github.com/en/github/working-with-github-pages/about-github-pages-and-jekyll
 #lsi: false # 为相关文章生成索引
 #safe: true # 禁用自定义插件
@@ -758,3 +759,6 @@ page:
    #   src='http://push.zhanzhang.baidu.com/push.js'
    #   defer='defer'
    # ></script>
+=======
+theme: jekyll-theme-architect
+>>>>>>> dbc6da74f40c735a49e1d8643fa5ccbb6eb3489c
