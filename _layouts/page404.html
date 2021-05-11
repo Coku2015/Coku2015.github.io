@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<head>
+  <title>
+    {% if page.title %}{{ page.title }} &middot; {% endif %}{{ site.title }}
+  </title>
+  {{ site.page404.head }}
+</head>
+
+<body>
+  {{ content }}
+</body>
+
+</html>

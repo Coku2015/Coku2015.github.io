@@ -1,7 +1,12 @@
-# Coku2015.github.io
+---
+layout: page
+title: 关于
+permalink: /about/
+---
 
-# Lei Wei's Blog
+## 关于本站
 
-[![Build Status](https://github.com/Coku2015/Coku2015.github.io/workflows/Build%20&%20Deploy/badge.svg)](https://github.com/Coku2015/Coku2015.github.io/actions) 
+本站是微信公众号：虚化人生的博客网站版本。欢迎大家在浏览网站同时，关注我的个人公众号：
 
-2017年起，我陆续在微信公众号上开始发一些关于数据保护的话题，总感觉在公众号上的内容查询历史存档和内容并不是那么方便，于是决定将这些内容完整的整理一个博客网站，以后的内容我会在本站和微信公众号上同时发布。
+![Qrcode](/qrcode.jpg)
+

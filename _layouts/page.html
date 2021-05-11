@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<head>
+  <title>
+    {% if page.title %}{{ page.title }} &middot; {% endif %}{{ site.title }}
+  </title>
+  {{ site.page.head }}
+</head>
+
+<body
+  class="{{ site.page.body.theme-base }}{% if site.page.body.layout-reverse %} layout-reverse{% endif %}{% if site.page.body.sidebar-overlay %} sidebar-overlay{% endif %}">
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+  <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" {% if page.sidebar_open %}checked{% endif %} />
+  <!-- Toggleable sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-item">
+      {% if site.page.sidebar.avatar.enable %}
+      <div class="ih-item circle effect right_to_left">
+        <a class="blog-button" title="{{ site.author.name }}">
+          <img class="img" src="{{ site.page.sidebar.avatar.img }}" alt="img" />
+          <small class="info info-back">
+            {{ site.page.sidebar.avatar.info }}
+          </small>
+        </a>
+      </div>
+      {% endif %}
+      {{ site.description }}
+      <div class="sidebar-social">
+        {% for s in site.page.sidebar.social %}
+        <a href="{{ s.href }}" title="{{ s.title }}">
+          <i class="{{ s.class }}"></i>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      {% for node in site.page.sidebar.nav %}
+      <a class="sidebar-nav-item{% if page.url == node.href %} active{% endif %}" href="{{ node.href }}">
+        {{ node.title }}
+      </a>
+      {% endfor %}
+    </nav>
+    <div class="sidebar-item">
+      {% if site.page.sidebar.simple_jekyll_search.enable %}
+      <div>
+        {{ site.page.sidebar.simple_jekyll_search.alert }}
+      </div>
+      {% endif %}
+      {{ site.page.sidebar.alert }}
+      {% if site.page.sidebar.wordcount.enable %}
+      <div>
+        {{ site.page.sidebar.wordcount.alert }}
+        {% assign count = 0 %}
+        {% for post in site.posts %}
+        {% assign single_count = post.content | strip_html | strip_newlines | remove: " " | size %}
+        {% assign count = count | plus: single_count %}
+        {% endfor %}
+        {% if count > 1000 %}
+        {{ count | divided_by: 1000 }}{{ site.page.sidebar.wordcount.kilo }}
+        {{ count | modulo: 1000 }}{{ site.page.sidebar.wordcount.unit }}
+        {% else %}
+        {{ count }}{{ site.page.sidebar.wordcount.unit }}
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if site.page.sidebar.last_edit.enable %}
+      <div>
+        {{ site.page.sidebar.last_edit.alert }}
+        {{ site.time | date: '%F %T' }}
+      </div>
+      {% endif %}
+      {% if site.page.sidebar.copyright.enable %}
+      <div>
+        {{ site.page.sidebar.copyright.alert }}
+        {{ site.time | date: '%Y' }}
+        {{ site.author.name }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="container">
+      <h1 class="page-title">
+        {{ page.title }}
+        <small>
+          <i>
+            <a href="{{ site.baseurl }}/" title="{{ site.title }}">
+              {{ site.title }}
+            </a>
+          </i>
+        </small>
+      </h1>
+      <div id="content">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+  <label for="sidebar-checkbox" class="sidebar-toggle fas fa-bars"></label>
+</body>
+
+</html>
