@@ -1,0 +1,111 @@
+baseURL: "https://newblog.backupnext.cloud/"
+title: "Backup next cloud"
+paginate: 5
+theme: PaperMod
+copyright: "Copyright Lei Wei"
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: true
+buildExpired: true
+enableEmoji: true
+# googleAnalytics: UA-123-45
+
+minify:
+    disableXML: true
+    minifyOutput: true
+
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON  # is necessary
+
+params:
+    env: production # to enable google analytics, opengraph, twitter-cards and schema.
+    title: "Backup next Cloud"
+    description: "2017年起，我陆续在微信公众号上开始发一些关于数据保护的话题，总感觉在公众号上的内容查询历史存档和内容并不是那么方便，于是决定将这些内容完整的整理一个博客网站，以后的内容我会在本站和微信公众号上同时发布。"
+    keywords: [Blog, Research]
+    author: Lei Wei
+#    images: ["author.jpg"]
+    DateFormat: "2006, January 2"
+    defaultTheme: auto # dark, light
+    disableThemeToggle: false
+
+    ShowReadingTime: false
+    ShowShareButtons: false
+    ShowPostNavLinks: true
+    ShowBreadCrumbs: false
+    disableSpecial1stPost: false
+    disableScrollToTop: false
+    comments: false
+    hidemeta: false
+    hideSummary: false
+    showtoc: true
+    tocopen: false
+
+    assets:
+        # disableHLJS: true # to disable highlight.js
+        # disableFingerprinting: true
+        favicon: "favicon.ico"
+        favicon16x16: "favicon-16x16.png"
+        favicon32x32: "favicon-32x32.png"
+        apple_touch_icon: "apple-touch-icon.png"
+        safari_pinned_tab: "favicon.png"
+
+    label:
+        text: "Lei Wei's blog"
+        # icon: "https://github.com/Wsine/blog/raw/master/src/assets/images/author.jpg"
+        iconHeight: 35
+
+    # home-info mode
+    homeInfoParams:
+        Title: "Hi friend \U0001F44B"
+        Content: 2017年起，我陆续在微信公众号上开始发一些关于数据保护的话题，总感觉在公众号上的内容查询历史存档和内容并不是那么方便，于是决定将这些内容完整的整理一个博客网站，以后的内容我会在本站和微信公众号上同时发布。
+
+    socialIcons:
+        - name: email
+          url: "mailto:coku2015@gmail.com"
+        - name: github
+          url: "https://github.com/Coku2015"
+
+
+    # analytics:
+    #     google:
+    #         SiteVerificationTag: "XYZabc"
+
+    cover:
+        hidden: true # hide everywhere but not in structured data
+        hiddenInList: true # hide on list pages and home
+        hiddenInSingle: true # hide on single page
+
+    editPost:
+        URL: "https://github.com/Coku2015/Coku2015.github.io/blob/master/content"
+        Text: "Suggest Changes" # edit text
+        appendFilePath: true # to append file path to Edit link
+
+    # for search
+    # https://fusejs.io/api/options.html
+    fuseOpts:
+        isCaseSensitive: false
+        shouldSort: true
+        location: 0
+        distance: 1000
+        threshold: 0.4
+        minMatchCharLength: 0
+        keys: ["title", "permalink", "summary", "content"]
+menu:
+    main:
+        - identifier: Archive
+          name: Archive
+          url: /archives/
+          weight: 10
+        - identifier: Tags
+          name: Tags
+          url: /tags/
+          weight: 20
+        - identifier: Search
+          name: Search
+          url: /search/
+          weight: 30
