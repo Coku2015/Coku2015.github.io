@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 黑科技 | 激活隐藏在VBR中的快照猎手
-tags: VMware
+tags: ['VMware']
 categories: 黑科技
 ---
 
@@ -30,7 +30,6 @@ Veeam产品中大量使用VMware快照技术，在任务发起时，会通过API
 > https://kb.vmware.com/s/article/1038963
 >
 > https://kb.vmware.com/s/article/2003638
->
 
 ### 快照猎手    
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Veeam黑科技之Quick Migration
-tags: 迁移
+tags: ['迁移']
 categories: Veeam小工具
 ---
 

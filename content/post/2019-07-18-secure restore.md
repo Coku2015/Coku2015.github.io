@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 恢复 | 让那些病毒木马无所遁形
-tags: VMware
+tags: ['VMware']
 categories: 数据恢复
 ---
 

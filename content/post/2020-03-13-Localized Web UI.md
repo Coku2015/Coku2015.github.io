@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 自制Chrome浏览器插件 - 中文版Enterprise Manager Beta发布
-tags: Enterprise Manager
+tags: ['Enterprise Manager']
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VBR中的那些隐藏键
-tags: VBR
+tags: ['VBR']
 ---
 
 

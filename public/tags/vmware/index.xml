@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>VMware on Backup next cloud</title>
+    <link>https://newblog.backupnext.cloud/tags/vmware/</link>
+    <description>Recent content in VMware on Backup next cloud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright Lei Wei</copyright><atom:link href="https://newblog.backupnext.cloud/tags/vmware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam FAQ系列转载</title>
+      <link>https://newblog.backupnext.cloud/post/2019-03-21-veeam-faq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2019-03-21-veeam-faq/</guid>
+      <description>最近有很多Veeam今年新版本特性的系列文章，包括很多云端数据管理的话题，有兴趣的朋友可以参考Veeam云架构师Mars Zhang的系列推文：
+Veeam 9.5 U4 新功能，利用 Cloud Mobility 实现迁移即服务
+Veeam 云端数据管理新功能，打造BaaS备份即服务 （一）
+回归到Veeam最原始的功能，最近开始回过来做做基础知识普及，本系列内容较长，因此分多期推送，这里内容来自于Veeam官方论坛置顶帖，如果有想看原版的，可以直接通过原文链接跳转。
+本文纯技术内容，纯纯的干货，就不开篇废话了，直接进入主题：
+Architecture
+问：请问Veeam备份数据流的流向顺序？
+答：磁盘&amp;gt; Backup proxy &amp;gt; 网络&amp;gt; Backup repository &amp;gt; 磁盘
+Backup Proxies
+问：什么是Backup Proxy Server？
+答：Backup Proxy从生产存储中提取虚拟机数据（配置文件和虚拟磁盘），通过应用重复数据删除和压缩来处理数据以减小虚拟机数据的大小，并将虚拟机数据发送到Backup Repository（在备份的情况下）或其他Backup Proxy （在复制的情况下）。 Backup Proxy还用于在还原虚拟机时将虚拟机数据（配置文件和虚拟磁盘）写回VMware的生产存储，以及用于虚拟机的复制。
+问：为什么最好在物理机上安装Backup Proxy？
+答：由于大量数据流（高达每秒几千兆字节）的即时处理（重复数据删除和压缩）需要大量的CPU，内存和I / O资源，物理Backup Proxy最适合24/7虚拟化环境，具有高整合率。否则，您可能会发现备份过程会影响生产。
+问：我可以在什么操作系统上安装Backup Proxy？
+答：Microsoft Windows 7 SP1 / Server 2008 SP2 64位操作系统或更新版本.
+问：我是否必须设置Backup Proxy才能开始使用产品？
+答：不，因为安装程序会自动部署默认Backup Proxy。 但是，我们建议您添加额外的Backup Proxy以实现冗余和负载平衡。 有关最佳部署额外Backup Proxy的建议，将会在后续章节中详细说明。
+问：Backup Proxy可以备份自己吗？
+答：是的，Backup Proxy可以备份自己和任何其他Veeam Backup &amp;amp; Replication组件。
+Synthetic Backup</description>
+    </item>
+    
+    <item>
+      <title>Veeam黑科技之Direct NFS Access</title>
+      <link>https://newblog.backupnext.cloud/post/2017-07-04-direct-nfs-access/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-07-04-direct-nfs-access/</guid>
+      <description>最近这些天，碰到不少在VMware环境中使用NFS作为datastore的用户，发现NFS的场景是越来越多了。在以前，可能仅仅会是部分NetApp的用户去使用NFS作为VMware的datastore，而现在，随着各种超融合技术的兴起，市场上几个主流的超融合平台，比如Nutanix和Cisco HyperFlex在为VMware提供存储服务的时候都采用了NFS的方式去提供datastore。
+这在以往来说，并不是一个好消息，当datastore是NFS协议的时候，虚拟机的备份可用的数据传输方式只能通过效率最差的Network方式，受限于备份仅仅能使用VMKernel的40%最大网络吞吐量，即使是有足够的带宽，实际传输时，吞吐量依然低下。
+在Veeam Backup &amp;amp; Replication v9.0之后，使用Veeam去备份存放在NFS数据存储上的虚拟机的时候，有了一种全新的数据传输方式，Veeam把它称之为Direct NFS Access。很容易联想到VMware备份中的另外一种数据传输方式Direct SAN Access，在SAN备份中遵循VMware的数据提取方式，能不经过前端ESXi主机而是直接访问SAN存储读写数据。同样在NFS数据存储上，Veeam也能够提供类似的直接存储访问，而不经过前端ESXi主机。
+这么强大的功能，如何使用？
+Veeam的功能向来是强大却又极其简单。。这个Direct NFS Access的功能也是如此，以下我们来看看如何去进行这个功能的配置。
+首先在VMware上面，我们有一台虚拟机存放在NFS的datastore中，如图：
+在NFS服务器端，设置除了ESXi能访问这个卷之外，Veeam的Proxy也有读写的权限，本例中我在我的FreeNAS上做了一个访问设定，其中10.10.1.130是ESXi，而10.10.1.171则是Veeam Backup Proxy：
+然后，在Veeam的控制台，我们指定一下使用备份首选的备份网络，为NFS的存储访问网络：
+接下来，如果NFS数据存储是新添加的，在添加之后还未进行存储扫描，则可以做一个VMware基础架构的Rescan动作，确保识别到NFS数据存储。
+好了，所有设定完成，直接去执行备份任务即可，在备份任务执行过程中，Veeam会自动感知到可以使用Direct NFS Access的方式进行数据读取，就会优先采用这种方式读取：
+上图中我们看到读取方式标注为[nfs]，而常规其他的几种分别是[san]、[hotadd]、[nbd]，这是最大的区别。
+而在备份日志文件中，同样能找到数据读取的相关记录：
+好了，这就是简单的Direct NFS Access的配置方法，具体更详细的说明，可以点击阅读原文，参考Veeam官方手册查看详细内容。</description>
+    </item>
+    
+    <item>
+      <title>Veeam黑科技之vPower NFS</title>
+      <link>https://newblog.backupnext.cloud/post/2018-03-05-vpower-nfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2018-03-05-vpower-nfs/</guid>
+      <description>什么是vPower？
+这是Veeam的突破性科技，可以说是创造了一个时代，引领了当今虚拟化数据保护新的技术潮流。这项科技彻底颠覆了原有传统IT环境数据保护过程中恢复数据的流程，将漫长的恢复数据过程提升至分钟级，让超大容量的数据恢复变得不再那么可怕。
+Veeam的vPower技术不仅仅支持VMware vSphere，同时能够支持Microsoft Hyper-V平台，并且两者实现的效果几乎完全一致。本文仅以VMware vSphere为例介绍vPower的原理。
+这项科技的核心内容其实非常非常的简单，我认为这也是Veeam的科学家太聪明了，简单但是及其巧妙的运用虚拟化的手段直接让常规磁盘存储设备中存放的被压缩和重删后的数据能够模拟成前端Hypervisor程序可以识别的文件格式，然后运行起来。从技术上说，这是一个非常简单的架构，ESXi 主机直接访问vPower NFS Server，实现虚拟机恢复运行。
+这里面有个非常核心的角色，那就是有一台Windows Server，上面启动vPower NFS服务，来充当一台NFS Server。那么相信熟悉VMware的各位一定能想到，VMware在使用Datastore时，除了常规的VMFS这样的Block Level的使用方式外，还可以使用NFS 作为Datastore。Veeam正是用这种方式让ESXi能够访问到备份文件并直接启动。ESXi在访问Veeam搭建的这台vPower NFS Server的时候，能够透过Veeam的专利技术协议vPower识别到在这个Datastore中模拟出来的VMDK，看上去这些VMDK和正常的VM所使用的完全一样，Veeam的这个模拟技术骗过了ESXi。而事实上，这个NFS Datastore上的VMDK却是Veeam通过数据块指向技术，将ESXi需要访问的数据块再次定向到压缩重删后的备份文件中。
+通常的这类访问，是一个单向重定向技术，也就是说在备份存档中的数据块只负责提供被读取的权限，而当有交互数据需要写入时，Veeam的vPower技术又能很好的屏蔽这些写请求，使之写入至其他位置，确保备份存档的完整性和有效性。
+哪里用的了vPower技术？
+Instant VM Recovery – 直接恢复备份存档时，使用了vPower。
+SureBackup – 《全自动验证备份存档》，此功能可以查看之前的推送了解详细原理。
+U-AIR – 恢复任意的应用程序的对象。
+On-demand Sandbox – 隔离的沙盒用于测试开发等等各种场景。
+Instant File level recovery – 任何操作系统的文件级别恢复。
+以上这5种Veeam技术中，都会使用到vPower NFS Service，也就是说，vPower NFS Service如果出现故障，那将直接影响以上这5个Veeam的重要功能，当然这个故障基本不可能发生。
+限制条件？
+目前只要是存放在磁盘上的VM存档都支持使用vPower NFS Service。而存放在磁带以及Cloud Repository中的VM存档因为离线和异地等性能问题，无法支持这个操作。
+vPower写请求位置
+对于不同的技术中使用vPower，其实这点上会有一些不一样。在Instant VM Recovery和SureBackup中，Veeam使用了两种不同的技术去处理虚拟机运行产生的变化数据块，以应对对于Instant VM Recovery和SureBackup的不同用途。
+SureBackup中，vPower处理临时产生的数据变化量会存放于Virtual Lab所指定的Datastore的VMDK redo log中，因此通常的虚拟机VMDK都会被修改为non-persistent磁盘。
+而对于Instant VM Recovery的特点是，虚拟机启动后，通常管理员会进行下一步的迁移回生产主机/存储的操作，因此无法使用SureBackup中这种non-persistent磁盘和redo log的存储机制，而是使用Veeam自己特有的vPower NFS缓存技术来存储新增的数据变化量，这个缓存技术的使用使得VMware层面上来看挂载起来的虚拟机时，是一个完整合规的可以使用vMotion技术的VM。
+vPower技术配置要点
+配置入口：在配置Repository的位置，每个Repository都会有它独立对应的vPower NFS Server。</description>
+    </item>
+    
+    <item>
+      <title>不知勒索病毒的攻击原理，怎知如何防御？</title>
+      <link>https://newblog.backupnext.cloud/post/2019-06-10-ransomeware-attack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2019-06-10-ransomeware-attack/</guid>
+      <description>勒索病毒个话题，貌似近一两年是一如既往的火热，还记得一年多前刚刚爆发的时候的那些停止服务的图片吧，相信绝大多数没中招的同学都是以一份看热闹的心态去看这些图片。我也不能免俗，借了一些来晒在当时的推送中。热点蹭一下，算是也涨了点粉丝量。
+原本以为，这一话题早应该结束了，随着安全补丁的修复和安全防护的加强，勒索病毒不会太长命。而事实上并非如此，勒索病毒也不断演进，看上去这一来一回的攻防战，打的越来越有意思。
+勒索病毒基础小课堂
+我相信，大家都已经非常清楚所谓的勒索病毒是一类什么样的病毒，它的攻击流程无非就是：
+ 加密一切被感染的文件； 通过各种方式联系文件的主人，要求支付赎金；  通常和碰到勒索病毒的同学的对话，就往往变成了如下：
+倒霉的管理员：我丢，中招了，我的所有的资料全部被锁了，它们要我付10个比特币，怎么办？
+石头哥：备份了没？
+倒霉的管理员：没！
+石头哥：嗯，去付钱吧，祝你好运！
+没有备份的情况下，在这之后，会发生什么事情，我觉得真不好说，这两年的各种调查报告也很多，事实上真正能付了钱拿回数据的人，占总人数的1/4不到。
+勒索病毒的进化
+最近，看到一些评论，都在讨论现在的勒索病毒是越来越智能，以至于它们能够深入到用户的环境中自我复制、自我传播，同时它们还会去禁用一些主流的杀毒软件、备份软件、防火墙以及数据库，来确保达成勒索的目的。其中有些凶残的病毒甚至还带破坏和删除功能，对于主流已知的备份软件Catalog库进行深度分析，破坏发起后，为了达到勒索的目的，除了破坏生产数据，还同时去破坏备份数据。
+这时候，碰到勒索病毒的同学的对话会这样：
+倒霉的管理员：我丢，中招了，我的所有的资料全部被锁了，它们要我付20个比特币，怎么办？
+石头哥：备份了没？
+倒霉的管理员：备了，但是它们太聪明了，把我的备份服务器感染了，禁止了我感染那天以后的所有备份作业，同时删除了我的备份catalog文件。
+石头哥：还有数据可以恢复吗？
+倒霉的管理员：数据放在EMC DataDomain中，通过最新的文件锁协议（File Locking protocols），倒是挺安全，但是catalog没了，再安全的备份存档数据块都无法恢复了。
+石头哥：好吧，去付钱解锁吧！
+虽然用备份软件做了备份，但是水平还是没高过勒索软件，没有充分考虑到备份软件也会被勒索软件破坏，备份形同虚设。
+下图是某勒索病毒的样本分析中找到的，它能禁用的一系列常见服务。它能做到破坏数据之前，先处理那些干扰他搞破坏的元素。可以看到市场上常见的杀毒软件和备份软件的服务都在这个清单上。
+备份/灾备的应对策略建议
+有了备份，也不安心，所以，在设计备份/灾备架构的时候，需要考虑很多因素：
+ 备份存档的独立性和可移动性。  越来越多的客户开始意识到这一点的重要性，如果现在的备份存档，还无法做到自我恢复，完全依赖于备份软件所建立的Catalog，那么破坏了Catalog就相当于破坏了一切。
+相反，对于一个没有Catalog的使用Veeam备份的环境，这事情就简单太多了，每份存档就相当于一个个体，勒索病毒需要个个击破才能达到它勒索的目的，我相信，聪明的你肯定能把你最重要的数据存放中最安全的地方，而避免受到勒索病毒的感染。
+那么这时候，假设很不幸，你的备份服务器被感染了，狠一点的勒索病毒直接破坏磁盘MBR记录，在启动的时候就拒绝你进入系统。这时候你需要做的事情很简单：
+ 清理恢复完你的环境，确保已经杀干净勒索病毒。 安装一套全新的VBR。 只需要从你最安全的磁带中，拿出之前备份下来的VBK文件。 导入到新的VBR中，veeam不需要任何集中管理的catalog数据库或者重删库，就能识别每个备份存档内容。 使用各种恢复方式，和正常的Veeam恢复方式完全一致，包括Instant VM Recovery和Instant File Recovery。  多份备份数据的安全隔离性。  存放数据的时候，千万记得别用同步功能，企业数据和个人数据一样。拿个人数据举例，如果你有个百度盘，或者Onedrive，这时候你要把你的数据备份到云上。偷懒的做法是后台开启自动同步，一旦数据写入你的磁盘，这些网盘工具会做一个自动同步，近乎实时的把数据同步到云端。而试想一下，这个数据写入磁盘的动作假如是由勒索病毒发起的，那么你的云端的所有数据也将会被你的这个自动同步操作的给感染。这样你设置的所有备份防御措施都将失效。
+同理，在企业数据中心，偷懒的存储级同步方法，甚至是某些厂商宣称的字节级同步方法，在勒索病毒看来，这是多好的手段，让攻击范围自动蔓延，自动传播啊。
+所以，我强烈建议，把自动挡改成半自动挡，拥有自动挡的技术没有问题，但是在必要的情况下，调整成定期数据的复制，会大大降低数据感染的风险。
+数据多存放几份，多存几种介质都是很好的方法，来避免被全方位攻陷。对于勒索病毒来说，本身它是一种自动执行的计算机软件，全自动化的进行攻击，很少会有人工手工干预的攻击，因此改变正常的数据存放规则和套路是一个好方法。当然这个前提是，备份软件足够灵活，能够支持各种各样的存储设备。
+备份存档的定期验证和自动化恢复演练。  这又是一个很有意思的话题，可恢复性验证，这备份和灾备环境中，要去做这个验证通常都只能手工去做，这会消耗大量时间和资源。在没有勒索病毒出现的时候，这个验证仅仅是为了对付下领导，对付下监管，这也许交一份书面报告也就过去了。然后勒索病毒横行的今天，我们真的得好好想一想，要是哪天勒索病毒把我的环境破坏了，那我的哪些备份存档是没有勒索病毒感染的，能够正常恢复的干净系统？
+全自动的备份存档验证在这样的场景下，能够帮助备份管理员省下不少时间和资源。而加入了更多自动化校验逻辑的Veeam Availability Orchestrator 2.0则是这方面的小能手。
+来吧，和勒索病毒斗智斗勇吧。
+没有任何一个软件可以做到没有漏洞，没有任何一个软件可以做到完全免疫任何攻击。我认为只有更好更合理的去存放数据，并且持续的去检查数据，才能够在这场勒索病毒持久战中坚持到最后。</description>
+    </item>
+    
+    <item>
+      <title>利用Veeam U-Air恢复MySQL数据库</title>
+      <link>https://newblog.backupnext.cloud/post/2018-04-10-uair/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2018-04-10-uair/</guid>
+      <description>常常被问及Veeam是否支持某某数据库/应用程序的对象恢复，其实这个问题的答案和问题中提到的 某某数据库/应用程序 完全没有关系，这类问题的答案永远是肯定的。因为Veeam有一个超强的恢复工具：U-AIR（Universal Application-Item Recovery）
+今天我就以MySQL为例，给大家详解一下这个恢复工具。
+先来看看今天的备份存档，这是一个安装在CentOS上的MySQL 5.1.7，我使用Veeam Backup &amp;amp; Replication对其进行备份，备份过程中执行了Pre-freezing和Post-freezing脚本确保其数据一致性，关于此脚本，大家可以参考Veeam官网的白皮书，因为Veeam白皮书实在太详尽，我就不在此处担当复读机啦。
+具体链接如下：
+https://www.veeam.com/wp-consistent-protection-mysql-mariadb.html
+对于源虚拟机上，我的MySQL中有以下这些测试数据：
+然后这个状态的这台MySQL虚拟机我做了一次备份，这时候因为一些意外原因，我的veeamlab这个database被破坏了，我需要通过备份，将这个veeamlab database还原出来。此时，坏了的veeamlab将会被我弃用，而我会新建一个空的veeamlab_recovered作为新的目标还原库，而这时MySQL则是一切正常状态。
+接下去，我的还原过程开始了，启动Universal Lab Request Wizard来申请一个之前的备份存档，用于还原，申请过程非常简单。
+给出需要申请的VM Name，这里完全支持模糊名称。
+还原点我选择最新一份。
+完成之后提交申请。
+至此，U-AIR恢复申请提交完成，须等待备份管理员审核还原申请。
+我接下去通过Veeam Enterprise Manager来到备份管理员视图，进行此次还原申请的审核。
+Approve过程也非常简单，在这里完全用到Veeam SureBackup/Virtual Lab的功能，具体SureBackup/Virtual Lab的配置可参考之前的推文 。《备份存档能不能被恢复，这件事情上只有真正做过才知道。》
+这个审批过程，Veeam会自动找到合适的虚拟机备份存档：
+会选择合适Virtual Lab和SureBackup Job作为还原的临时环境：
+如此，审批过程就结束了，接下去，在数据库管理员这端，等待一小段时间后，将会获得临时还原环境的访问信息。
+通过172.20.1.139，我ssh到这台还原环境中，而此时我原来的10.10.1.139还是处于正常运行状态。检查临时的还原环境中的数据库情况如下：
+数据一切正常，接下去，我需要做一件事情，就是将这里的数据提取出来，然后传输至原来的10.10.1.139中，进行还原。我使用mysqldump命令来提取数据。
+提取完后，数据存放至/tmp/mysql/veeamlab.sql文件中。
+然后我们回到原机器10.10.1.139中，使用Virtual Lab中Static IP Mapping技术，我设定了能够让所有机器通过10.10.1.138这个地址访问到虚拟实验室中的临时还原环境，这时候，我可以从10.10.1.138中抽取这个dump进行还原。
+还原命令依旧非常简单：
+至此，所有数据还原工作完成，我们看到我们希望还原的数据已经全部找回。数据库管理员可以提前终止UAIR环境，也可以让它在使用时间到期后自动回收。
+好了，今天恢复MySQL的样例就是这些，这个恢复没有太多前提条件，唯一的条件就是使用Veeam Backup &amp;amp; Replication，有了Veeam您就能和我一样进行如此轻松的进行任何数据库/应用程序对象的恢复了。</description>
+    </item>
+    
+    <item>
+      <title>加速！加速！加速！（一）</title>
+      <link>https://newblog.backupnext.cloud/post/2017-08-01-speed-up-01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-08-01-speed-up-01/</guid>
+      <description>一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论Veeam的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引擎在备份软件中不仅仅是帮助了实现备份功能，更是Veeam去帮助客户实现IT可用性的重要保障
+Veeam备份加速引擎
+和其他使用VMware vStorage API for Data Protection（VADP）的备份软件不一样，除了软件传输服务中集成了VMware Virtual Disk DevelopmentKit（VDDK）之外，Veeam额外加入了一套优化数据提取的组件：Veeam Advanced Data Fetcher（ADF）。这个ADF简单来说就是为企业级存储阵列额外增加了超过2倍读取性能的列队深度，这个带来的直接的效果就是极大地加快了从vSphere平台数据源读取数据的速度。相比同类的备份产品，在从源端读取时，效率上有成倍的提升，并且ADF还降低了读取数据需要的I/O操作数量，从而有效的降低了读取相同容量的数据时对于生产存储的I/O压力.
+当然，Veeam还为这个ADF配备了一个智能的调控开关Backup I/O Control。当从生产读取速度并不快时，其实备份软件完全不需要考虑会不会对生产造成影响，可以说是完全可以忽略生产环境。当我们的速度足够快时，必须考虑到生产存储的负载能力，在生产对外服务的同时还要同时高效的完成备份，这就不是拍脑袋想多少是多少了。
+Veeam ADF和Backup I/OControl的协作可以完全智能地去完成对生产存储的控制，通过自动感知生产存储Latency技术，动态控制ADF的吞吐量来实现在有效的Latency范围内进行备份。
+在以往，一个备份管理员，通常会设定每天执行一次备份的数据保护策略，并且将这个备份时间段设定在晚上业务相对不繁忙的时间。这样的设定RPO就是24小时，究其原因并不是说管理员保守，而是因为没有很好的智能控制手段，所以备份要为生产让路，保证可用性的前提下去进行备份。然而现在Veeam的引擎，Veeam ADF和BackupI/O Control的协作，可以让备份管理员在不影响生产的情况下，在任何时间段完成备份，从而有效的提升备份的RPO。
+所以，Veeam不仅仅是完成了备份这么一件大家能用各种方式实现的事情，可能殊途同归，但是Veeam的技术是让在完成备份的同时达成可用性目标，关键业务的备份可以在任何时间进行，而不是备份必须在维护停机窗口进行。24×7×365的可用性保证从做备份做起！
+下期预告：
+vSphere通讯加速技术 - 虚拟化备份前，备份软件需要花大量时间与虚拟化平台通讯，这是整个备份作业中第二大耗时作业，全新的Veeam Broker Service能够帮助极大提升这个速度，节省时间。</description>
+    </item>
+    
+    <item>
+      <title>加速！加速！加速！（二）</title>
+      <link>https://newblog.backupnext.cloud/post/2017-08-07-speed-up-02/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-08-07-speed-up-02/</guid>
+      <description>上一期，我们讨论了备份引擎的加速，这对尽可能快的完成备份提升RPO有着极其重要的意义。然而除了这个数据传输引擎之外，在备份时还有一个加速器，那就是vSphere通讯加速技术。
+Broker Service
+这是Veeam9.5中新增加的一个特性，简单来说这项科技给备份带来的帮助是在Veeam和VMware vCenter之间加入了一个过渡服务，当Veeam每次发起任务时，需要查询vSphere信息时，可以替代性的去查询BrokerService而不用直接去找vSphere。
+如下图，这是有无BrokerService的一个直观对比，没有Broker时，每次备份任务都会去直接和vCenter通讯，其获取返回结果的耗时完全取决于vCenter性能和网络状况。而在有了Broker之后，Veeam则会去查询Broker中缓存的信息，而由Broker保持和vCenter处于update状态。
+那么这个Broker事实上在Veeam软件中是以一个服务的形式存在，因此我们在Services.msc中可以查看到这个Service:
+这个Broker在工作的时候，VMwarevCenter中清单基础架构的任何变化都会实时的被推送至Broker的缓存中，而如果Veeam未收到任何推送变化的情况下，默认Veeam会每15分钟（900秒）进行一次强制更新缓存，确保缓存内容的准确性。
+所以，这带来的好处显而易见，以下是一组软件中截图的对比，在无Broker的情况下，Veeam备份任务通过查询vCenter来创建备份虚拟机列表，消耗了40秒时间：
+而在有了Broker之后，Veeam备份任务查询Broker来创建备份虚拟机列表，仅需要耗时1秒：
+这可以说效率提升了40倍以上！！
+好吧，为了让你的备份速度飞起来，升级到Veeam 9.5Update2吧。
+下期预告：
+备份速度快不算啥，这都不是啥大事，划重点的来了，真正要快的还原技术，而Veeam除了有Instant VM Recovery之外，其他的那些还原技术会不会也很快？下期为你揭晓答案。</description>
+    </item>
+    
+    <item>
+      <title>备份存档能不能被恢复，这件事情上只有真正做过才知道。</title>
+      <link>https://newblog.backupnext.cloud/post/2018-03-05-surebackup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2018-03-05-surebackup/</guid>
+      <description>Veeam有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。
+该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。
+Veeam SureBackup适用于VMware和Hyper-V的备份，本文仅以VMware环境为例说明SureBackup的技术原理以及使用方法。
+如何工作？ Veeam SureBackup在工作时，会依次执行以下步骤完成整个验证过程：
+  Veeam Backup &amp;amp; Replication会将Application Group和被验证的虚拟机发布到一个隔离的沙盒环境中，通常我们称作为“数据实验室（DataLab.）”。这些虚拟机是直接从备份存储库的被压缩重删后的备份文件中启动，而不需要被预先还原至VMware的Datastore中。实现这一功能需要依赖Veeam的Instant VM Recovery和vPower NFS Service。 Veeam Backup &amp;amp; Replication对Application Group和被验证的虚拟机执行一系列的自动化校验测试，通常包含虚拟机心跳、网络ping和应用程序脚本测试，其中应用程序脚本可以通过自定义的方式加入。 在基础验证完成后，还可以选择让Veeam SureBackup对备份存档从文件层面执行一次CRC校验，确保在执行任务的过程中未修改原始备份存档。 在SureBackup任务结束后，Veeam Backup &amp;amp; Replication对这些虚拟机执行“Unpublish“动作，并且生成一份测试报告，此报告会通过Email的方式发送给指定的管理员。   在整个验证过程中，Veeam会保证所有虚拟机的备份存档处于只读状态，所有因虚拟机运行产生的数据会存放在虚拟机Redo Log中，这些Redo Log通常会存放于VMware的生成存储上，而当验证过程结束时，Veeam会删除这些Redo Log，释放临时空间。
+验证过程中的组件 和通常备份的基础架构不一样的是，执行Veeam SureBackup时，会需要用到几个SureBackup专用的对象。
+ Application Group - 在验证某些虚拟机时，这些虚拟机需要依赖一些其他的虚拟机才能正常启动和工作，Application Group就是为这些虚拟机正常工作提供所需的其他依赖应用程序和服务。通常我们会将运行这些应用程序和服务的虚拟机放入应用组，为验证提供依赖条件。举例来说，当我们需要去验证一台Exchange服务器时，该Exchange服务的启动需要有AD和DNS服务，因此，我们可以在Application Group中加入提供AD和DNS服务的虚拟机，用来为Exchange提供启动依赖。 Virtual Lab - 这是一个隔离的虚拟化沙盒环境，Application Group中的虚拟机和被验证的虚拟机都会在这个沙盒中启动起来。 SureBackup Job - 这是来自动或者手动执行验证备份存档的任务。它能够定时定期执行，也能够手动执行。  SureBackup 实战 如上面提到的，SureBackup有3个专用对象，因此在使用和配置SureBackup过程中显然需要进行这3个对象的设置。
+Application Group 这也是整个生产环境基础架构中最最重要的服务之一，其他应用程序的启动和运行都依赖这些机器。简单来说，Application Group就是定义一组虚拟机，这组虚拟机非常重要，其他被验证的虚拟机没有这组虚拟机无法工作。也就是当我们的环境中存在这样的虚拟机，那我们就需要将他定义为Application Group，以便其他机器在被校验时能够访问到这些虚拟机和服务。
+当然，Application Group中的这些虚拟机也是从备份镜像中启动起来，需要预先被备份，而不是直接使用生产环境的虚拟机。SureBackup对于Application Group中的虚拟机，也会定义一系列的校验和检测，确保Application Group中的虚拟机首先正常工作，然后才开始后续的其他虚拟机验证。当Application Group中的虚拟机验证失败的情况下，SureBackup将会中止工作，不会继续后续的虚拟机验证，这是因为SureBackup默认Application Group无法正常工作的情况下其他被验证的虚拟机也无法正常启动。因此，请不要在Application Group中放置非必要的虚拟机；如果被验证的虚拟机无需其他应用程序和服务依赖，则请不要在Application Group中放置虚拟机。</description>
+    </item>
+    
+    <item>
+      <title>好消息好消息，Veeam又通过一项VMware Ready认证！</title>
+      <link>https://newblog.backupnext.cloud/post/2017-06-30-another-vmware-ready/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-06-30-another-vmware-ready/</guid>
+      <description>上周，前方又传来一个激动人心的消息，Veeam通过了vSphere 6.5刚刚开放的VMware Web Client Plug-in Ready认证。厉害了，这个太厉害了。具体VMware官网查询链接https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp
+什么？什么？你还不知道啥是VMware Ready？好吧，我先来普及下这个认证。简单来说使用通过认证的plug-in有这么几个好处：
+ 符合VMware Web Plug-in的最佳实践，会被收录至各种白皮书、教科书。 用户体验极佳，可以说是几乎和VMware原厂软件完全一致。 插件经过VMware原厂严格测试，使用该插件，完全不会影响vCenter的性能，不用担心非原厂插件破坏vCenter。 插件故障，VMware给保修，这个很重要。一站式解决问题。  那么，这么好的插件，它能做点啥呢，我们来看下这个功能强大的小插件。
+这个插件部署完成之后，会在vSphere Web Client 上出现一个新的图标，和其他的Web Client插件一样，点击即可进入。
+在这个插件中，我们能够查看到当前的备份基础架构情况：
+能够看到最近24小时、7天、14天的虚拟机备份情况：
+能够看到备份任务的执行和计划情况：
+还能够看到最近7天、14天、1个月处理的虚拟机数量：
+能够查看备份存储库的容量，再也不担心日常运维的时候忘记存储快满了：
+并且以上这些内容，如果有部署Veeam ONE，能够直接点击跳转查看完整的相关报告。如此这样，基础架构运维，是不是突然发现，简单了好多？
+除此之外，该插件还提供了快速备份的功能，在每个VM的右键菜单中，我们可以找到Backup选项：
+VeeamZIP，立即执行Active Full类型的全备份，是一种快速备份的简单方法。
+VeeamZIP to &amp;hellip;则会跳转至ZIP设置界面，该界面也集成在vSphere Web Client中，而不用进入Veeam Console。
+Quick Backup则是进行快速的增量或反向增量备份，用于单次的即时备份。
+最后来看下VeeamZIP设置界面，该界面位于每台VM的Manage选项卡下的最后一项VeeamZIP中，如图：
+这里可以简单设置备份服务器、备份存储库、Key、VeeamZIP删除时间、压缩级别、是否进行客户端静默等选项，几乎与Veeam Console中的VeeamZIP设置选项一致。同时这里也提供VeeamZIP任务触发按钮。当执行VeeamZIP任务或者Quick Backup任务时，vSphere Web Client的任务栏还会出现Veeam的任务进度：
+好了，以上就是全部Veeam vSphere Web Client Plugin的功能，简单小巧，又非常好用，还带保修。。</description>
+    </item>
+    
+    <item>
+      <title>恢复 | 让那些病毒木马无所遁形</title>
+      <link>https://newblog.backupnext.cloud/post/2019-07-18-secure-restore/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2019-07-18-secure-restore/</guid>
+      <description>安全和备份是IT架构中两大重要的基础组件，通常情况下无论是个人家用和企业商用，都是必不可少的。然而很尴尬的是，作为安全类的杀毒软件，需要面对各种病毒和木马以及他们的变种，甚至是不断出现的新型病毒。有些病毒软件还具备了反杀毒功能，可以反向击杀杀毒软件，令人防不胜防。
+传统IT中，为每一台操作系统安装杀毒软件的方法显然不足以做到全面的防护，甚至是很容易被病毒软件破坏。而结合虚拟化技术之后，杀毒引擎被整合入虚拟化层，利用虚拟化的技术可以避免很多传统杀毒软件植入式安装带来的问题。
+然而这依旧无法解决一个重要问题，就是每款杀毒软件都有自己的强项，再优秀的杀毒软件都有需要更新病毒库的时候，总有那么一些病毒，是无法被某个软件杀死的。根据AV-Test的报告，市面上的杀毒软件种类几十种，查杀能力在不同版本时各不相同。
+前些天，在设计一个分布式的备份架构设计时，突然想到Veeam的Mount Server的特殊作用：可以在不同的Mount Server上安装不同的杀毒软件，形成多套不同杀毒引擎。使用Secure Restore时，只需要合理选择Mount Server即可实现使用不同的引擎进行病毒查杀。
+操作方法 配置Mount Server 在VBR中，Mount Server是个很基本的组件，没有太多要求，只需要是一台Windows Server，并且是Veeam Managed Server，即可成为Mount Server。如果说一定得有个前提条件，我觉得应该是网络上，作为Mount Server，这个Windows就必须要能够和VBR通讯，也必须要和Repository通讯。具体通讯端口要求，可参看官网手册。
+https://helpcenter.veeam.com/docs/backup/vsphere/used_ports.html?ver=95u4#mount
+进入VBR console 后，只要找到Backup Infrastructure下面的Managed Servers节点，在其中将希望添加的Windows Server添加进去即可。
+添加方式是经典的Veeam向导模式：
+ 首先填入Mount Server的FQDN或者IP地址，描述中可以填入杀毒软件名称用以识别。  下一步后填入管理员用户名密码，用于推送安装Mount Server的组件。  预览需要安装的组件，并完成添加。  ​ 为Repository选择Mount Server 由于每个Repository都有其一一对应的Mount Server，因此当我们要用到某个特殊的杀毒软件时，我们只需要编辑Repository的设定，选择对应的Mount Server即可。
+剩下步骤，就是进入各种支持Secure Restore的恢复操作中，执行正常的恢复步骤。
+以上就是今天的内容，不是很复杂，但是很有意思，希望能帮助到被病毒困扰的管理员们。</description>
+    </item>
+    
+    <item>
+      <title>改造HOME LAB之把ESXi装进M6400</title>
+      <link>https://newblog.backupnext.cloud/post/2017-08-27-esxi-in-m6400/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-08-27-esxi-in-m6400/</guid>
+      <description>上周VeeamON上海站，我最大的收获可能就是看到同事的LAB环境了，很诧异的发现，他的笔记本竟然装上ESXi了，按照我以往的认知，笔记本上安装ESXi会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的Key Point是使用Dell定制的ESXi ISO来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。
+不过犹豫再三，觉得平时LAB里面还是需要保留一套Hyper-V，公司配备的Dell M4800工作站内置的硬盘做成VMFS有点可惜了，正巧手边有一块退休的USB3.0移动硬盘，萌生了1套LAB硬件同时做Hyper-V和VMware的念头。Google一小会儿，把自己的想法验证下，看看是否有一些素材能够支持这样的做法，一点不意外，完全可行。
+M6400配置：
+CPU：i7-4710MQ@ 2.5GHz
+MEM：32GB
+Disk（internal）：SAMSUNG SSD 500G
+​ Seagate SATA 500G
+Network：Intel i217-LM
+外置设备：
+USB Stick：U盘8GB，用于启动系统
+USB HDD：WD 2TB SATA，通过USB3.0接入至M6400，用于local datastore
+DELL customized ESXi：可以至Dell官网查找下载，阅读原文可以快速跳转
+动手开干！
+部署ESXi过程非常简单，顺利的引导，识别出8GB的U盘，5分钟后安装完成。进系统配IP、主机名等一系列初始化工作，完成之后加入到现有的VC中。
+接下去要解决重头戏，添加External USB HDD，事实上在VMware官方来说，是并不支持使用USB HDD作为datastore用于生产环境，但是作为Home LAB来说，这可是一个好功能啊~
+添加过程如下（注意以下过程仅适合ESXi 6.0）：
+  打开ESXi的SSH，并连接上。
+  [root@esxim4800:~] ls /dev/disks
+  ​ 找到输出中有相应的usb hdd信息：
+mpx.vmhba38:C0:T0:L0 mpx.vmhba38:C0:T0:L0:1 mpx.vmhba38:C0:T0:L0:2 [root@esxim4800:~] partedUtil mklabel/dev/disks/mpx.vmhba38\:C0\:T0\:L0 gpt 计算vmfs卷的end sector  [root@esxim4800:~] eval expr $(partedUtilgetptbl /dev/disks/mpx.vmhba38\:C0\:T0\:L0 | tail -1 | awk &#39;{print $1 &amp;quot;\\* &amp;quot; $2 &amp;quot; \\* &amp;quot; $3}&#39;) – 13907024064 [root@esxim4800:~] partedUtil setptbl/dev/disks/mpx.</description>
+    </item>
+    
+    <item>
+      <title>无代理备份和应用程序感知</title>
+      <link>https://newblog.backupnext.cloud/post/2017-07-23-agentless-backup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2017-07-23-agentless-backup/</guid>
+      <description>虚拟化技术是一个彻底改变IT世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而Veeam的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。
+什么是代理（Software Agent）？
+这个IT专业词汇其实在中文上来说，并没办法给出很好很明确的定义，以致我们日常在技术交流的时候会含糊其辞，有时候会谈广义的代理，有时候会谈狭义的代理。我试着去从百度百科找找代理的定义，结果还是无功而返。而在wikipedia上，倒是有Software Agent的定义，不过也只是通过大众的认知给了一些Software Agent的应具备的特性：
+ 持续运行 - 通常会保持运行状态，即使空闲时候也会处于等待状态。 自动自主运行 - 无需人工干预和交互就能保持运行状态。 应用程序交互功能 - 能够和其他程序发生交互，激活其他模块、互相通讯、协同工作。  仔细琢磨了下，确实传统领域的代理备份，那些代理软件倒是符合这些Agent应具备的特性。
+Veeam无代理备份和应用程序感知
+Veeam的虚拟化备份技术，是不需要在任何的操作系统内安装任何这类的程序，因此备份不需要系统的运行状态。
+而应用程序感知则是在备份过程中，Veeam全自动的到操作系统内运行一个进程，完成相应的应用程序感知、一致性保障和文件系统一致性处理，之后关闭应用程序，退出执行。这一过程只是在备份执行过程中的一个可选进程，因此是完全不同于上述的代理程序。
+所以，通常代理程序会面临的问题，对于备份代理一样会碰到：
+ 需要不停的为新部署的虚拟机，手工安装代理程序（我们认为推送虽然方便，但也是“手工”的一种，避免不了远程/本地的配置工作）； 软件更新的时候，需要为每一台机器升级代理； 在长期大规模环境的运行过程中，还需要考虑拿个什么软件去监控这些代理，我们所谓代理保姆，就是干这事的，防止哪天这些代理突然不工作了也没人知道； 以上这些都是长期消耗计算资源的，包括CPU、内存、网络、存储，并且很多时候是重复的消耗。  而Veeam的技术，在深入到应用程序层面的感知进程，仅仅是在备份启动那一刻运行几分钟后立刻被关闭退出，因此完全不存在以上提及的这些问题。无需每次部署/无需更新/不用长期运行监控。
+更有意思的是，现在的IT世界是一个运行越多风险越大的世界。我们没有任何应用程序的时候，就是一个最最安全的状态，而每增加一个应用程序，就多一份被黑客、病毒、勒索软件攻击的风险。为每一个系统减少一份持续运行应用程序，就是为我们的系统安全增加一份保障。
+另外，如果系统关机了，那么需要保持运行才能进行备份的代理程序就彻底歇菜了。备份目标Offline，这是传统备份软件界面中常常见到的事情，这时候备份管理员能做的唯一事情就是去找到应用或者基础架构的管理员去启动这个操作系统。而对于无代理的技术，即使是系统关机的情况下，备份依然不受影响。而还原过程中，Veeam的多样化的颗粒度恢复却依然可以手工执行，堪称是完美的备份和还原。
+传统代理的更多缺陷
+利用代理技术的数据备份，绝大多数依赖网络。当我们为了隔离安全，去架构DMZ区域，去进行严格的出入规则的时候，突然发现因为买备份这个保险，我们不得不需要有个数据流去DMZ区域完成数据的抽取，以致原先的完全隔离的架构被打破，苦心设计的完美架构失去了其原本的设计目标。
+Veeam的这种应用程序插入运行技术则完全不同于传统代理，在感知应用程序时，这个运行执行可以通过VIX在无网络连通的状态下进行Hypervisor层面的感知。因此，在Veeam的设计理念中，可以为那些DMZ区域的备份带来更多一份的安全。</description>
+    </item>
+    
+    <item>
+      <title>黑科技 | 激活隐藏在VBR中的快照猎手</title>
+      <link>https://newblog.backupnext.cloud/post/2019-07-24-snapshot-hunter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2019-07-24-snapshot-hunter/</guid>
+      <description>好久好久没更新这个黑科技系列了，今天带来一篇想写了很久的功能。
+这项创造性科技我认为是可以在Veeam功能实用性排行榜上排上前三的。而绝大多数Veeam使用者我相信也几乎不知道有这个科技的存在。它就像个默默无闻的老黄牛，出现在每一个Backup/Replication的作业中，为每一台VM保驾护航。
+Snapshot 基础知识 VMware的Snapshot，自从有了虚拟化技术之后，可以说是虚拟化领域最具争议的技术。很多人因为喜欢快照技术开始入门虚拟化，很多人因为痛恨快照技术弃用一些解决方案和功能。而对于备份软件来说，想做好虚拟化的备份，不得不面对快照技术，修炼快照基本功是一门必修课！
+Veeam产品中大量使用VMware快照技术，在任务发起时，会通过API接口发送快照指令给vSphere，这时候有个名叫***“VEEAM BACKUP TEMPORARY SNAPSHOT”***会出现在虚拟机的快照管理器中。而任务结束时，Veeam会再一次发送指令要求VMware删除该快照。
+这时候，因为涉及到基础架构中多个产品之间的互相通讯，往往会出现一个结果，就是这个临时快照并没有被删除，甚至是出现一些“假删除”的情况。也就是说，表面上从快照管理器中看到已经不存在快照了，而实际上在vSphere Datastore中，依旧存在00001.vmdk这样的快照差异磁盘文件。VMware中，这种快照文件一般被称为孤立的快照（Orphaned snapshot），通常这种快照如果存在，后续的正常的快照都会受影响，而VMware的快照管理器中也会提供相应的“整合快照选项”。
+然而情况往往并没有那么乐观，这个问题不那么容易被发现，而这个整合也不那么顺利能进行。在有些时候往往就会碰到报错而进行不下去的状况，这种情况我们统称为Snapshot issue。而出现这种情况多数是因为没有及时去处理这个潜在的Orphaned Snapshot。
+我这里提供几个VMware官网的KB，算是小福利哦，能够帮大家更快处理这类issue。
+ https://kb.vmware.com/s/article/1005049
+https://kb.vmware.com/s/article/1006847
+https://kb.vmware.com/s/article/1038963
+https://kb.vmware.com/s/article/2003638
+ 快照猎手 如果不想那么麻烦，手工去做这么复杂的快照整合操作，那么可以试试Veeam Backup &amp;amp; Replication。在VBR中，有个特殊功能，能够全自动处理这些Snapshot issue，我们称他为“快照猎手”。
+通常这个功能会在每个备份和复制的Job中自动执行，因此对于一般用户而言，这个功能在后台全自动的进行。Veeam会全自动处理可能碰到的一切快照Issue。它的处理过程分为两大类：
+ 检测是否有上次备份后残留的Veeam辅助快照“VEEAM BACKUP TEMPORARY SNAPSHOT”，如果有，将会在备份之前提前删除该快照。这个过程确保历史任务中遗留的Veeam快照会被处理干净。 检测是否存在孤立的快照，如果有，尝试将它整合。这个过程确保除了上一种情况之外的所有情况都会被政策修复。  而对于第二步过程，Veeam又会采用一组复杂的整合算法，这个算法是综合了上文提到的4个VMware官方KB的精华。
+ 普通的VMware快照整合方法 这个和VMware菜单上的Consolidation按钮功能完全相同，如果正常能用VMware菜单上Consolidation按钮整合完成的，那么事情非常简单，Veeam会用这个功能立刻完成整合。 强制整合，不带静默 如果上一种方式失败，Veeam就会执行第二种方法，这种方法Veeam会借助快照技术，创建一个新的快照，然后调用VMware的***Delete all snapshot***命令，通过这种方式一把移除所有孤立快照，恢复磁盘状态。 强制整合，带静默 如果上一种方式还是失败，Veeam会执行第三种方法，这种方法会创建VMware静默快照，然后再次使用Delete all snapshot命令。 如果以上3种方法都失败 Veeam会发失败警告给用户，建议手工处理孤立快照，避免生产存储被撑爆。  最后，我还会有个视频，来给大家Demo一下快照猎手，近距离感受下快照猎手的强大。
+好了，感谢收看今天的内容，下期再会！</description>
+    </item>
+    
+  </channel>
+</rss>

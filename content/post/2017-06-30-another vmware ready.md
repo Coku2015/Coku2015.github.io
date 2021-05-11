@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 好消息好消息，Veeam又通过一项VMware Ready认证！
-tags: VMware
+tags: ['VMware']
 categories: 数据备份
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Veeam黑科技之Direct NFS Access
-tags: VMware
+tags: ['VMware']
 categories: 黑科技
 ---
 

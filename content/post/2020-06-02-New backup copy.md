@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Backup Copy新模式，让3-2-1的黄金法则覆盖更广
-tags: VBR
+tags: ['VBR']
 
 ---
 

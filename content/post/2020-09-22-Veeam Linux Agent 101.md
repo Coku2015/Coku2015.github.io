@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Veeam Agent for Linux基础知识
-tags: VBR
+tags: ['VBR']
 categories: 数据保护
 
 ---

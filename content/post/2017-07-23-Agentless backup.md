@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 无代理备份和应用程序感知
-tags: VMware
+tags: ['VMware']
 categories: 数据保护
 ---
 

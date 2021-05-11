@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Kubernetes on Backup next cloud</title>
+    <link>https://newblog.backupnext.cloud/tags/kubernetes/</link>
+    <description>Recent content in Kubernetes on Backup next cloud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright Lei Wei</copyright><atom:link href="https://newblog.backupnext.cloud/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kasten K10入门系列 - 快速搭建K8S单节点测试环境（上篇）</title>
+      <link>https://newblog.backupnext.cloud/post/2020-12-07-setting-up-quick-demo-for-k10-01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-12-07-setting-up-quick-demo-for-k10-01/</guid>
+      <description>自从Veeam收购Kasten之后，最近玩K8S特别多，最大的体会是，茫茫多的各种命令和对互联网的强烈需求，假如连不了网，特别是连不了国外的容器镜像站点时，通常的情况就是抓瞎，啥都干不了。当然，这在各位K8S和容器大拿眼里，并不是什么问题，而对于广大非软件开发专业的系统管理员和系统工程师来说，挑战着实不小。
+要搭建一套Kasten K10的Lab环境，其基础条件是K8S群集，Kasten K10是原生的云应用，它赖以运行的环境和备份恢复的对象都是K8S。因此，摆在我们面前的难题变成了简单快速不费劲的搭建一套K8S环境并且部署一个简单的有状态应用。这在没有网络的情况下，实在是太为难了。不过，办法总比困难多，不是吗？这点小小的阻碍完全难不倒熟练使用虚拟化技术的虚拟化管理员，在做了一番功课之后，我借鉴了Veeam日本的同事分享的快速部署脚本，使用了虚拟化中独特的OVF（Open Virtualization Format）方式，将这个过程封装成了一个虚拟一体机（Virtual Appliance），让这个Demo Lab的搭建过程大大简化，实现了不需要任何网络下载，即可搭建出这样一套单节点群集，并且内置了包含MySQL数据库的WordPress应用。
+先放上这个虚拟一体机的下载链接：
+https://cloud.189.cn/t/mAnyMrA36vam（访问码：wd69）
+需要说明的一点是，这个虚拟一体机为个人测试研究所用，不得用于任何商业目的，本人不保证这个设备的安全性、可靠性和稳定性，请各位使用者自行判断。
+虚拟一体机使用说明： 
+在导入完成后，虚拟一体机的首次启动中，会自动配置设备的IP地址。等到配置完成后，可以使用ssh连接登入系统进行K8S环境的基础配置。访问的初始用户名密码为：
+username: k10 Password: P@ssw0rd 进入系统后，使用sudo -i命令进入root用户。
+K8S群集初始化需要按顺序执行/root/目录下的5个脚本文件，分别是：
+0-minio.sh 1-createk8s.sh 2-loadimage.sh 3-storage.sh 4-wordpress.sh 脚本执行过程中所涉及到的需要用到的相关文件，我已经全部放置在/root/目录下了，脚本会自动调用这些文件。
+这些脚本都用来干啥？ 0-minio.sh 这个脚本会使用开源对象存储领域第一块招牌minio(https://minio.io) ，创建出一套本地的对象存储，命令执行后，对象存储就运行起来了，可以通过https://&amp;lt;虚拟一体机IP&amp;gt;:9000 来访问对象存储的web界面，web界面的初始用户名密码：
+username: minioadmin Password: minioadmin 1-createk8s.sh 这个脚本是使用Kind技术（K8S in Docker），在容器中运行K8S的节点来快速部署K8S的群集，K8S所用到的容器镜像已经提前被内置在这个一体机中，因此不需要去网上下载1.3G左右的K8S docker镜像。可以在运行脚本之前通过以下命令来确认K8S docker image已经就位：
+$ docker images list | grep kind 在脚本运行完成后，就可以正常使用kubectl的命令来查看所有K8S的资源了，这时候kubectl的所有命令都能正常使用了。比如，你可以试试这个：
+$ kubectl get nodes 2-loadimage.sh 这个脚本其实没什么特别秘密，纯粹是为后面第四第五个脚本做准备，提前将内置在本地CentOS中的docker images加载到Kind中，供Kind使用。
+3-storage.sh 这个脚本为K8S群集创建本地的CSI Hostpath driver，其用到的脚本可以在（https://github.com/kubernetes-csi/csi-driver-host-path）中找到，我对这个脚本要用到的互联网下载链接做了修改，更改为所有yaml文件都用本地/root/文件夹中的文件，并且对于这个脚本中用到的所有docker image，也提前从互联网上pull下来并在上一步加载至Kind中。
+在运行脚本前，可以通过以下命令查询部署前的storage class：
+$ kubectl get sc 在脚本运行完成后，可以通过再次运行这个命令，查看到新配置好的storage class。</description>
+    </item>
+    
+    <item>
+      <title>Kasten K10入门系列 - 快速搭建K8S单节点测试环境（下篇）</title>
+      <link>https://newblog.backupnext.cloud/post/2021-04-28-setting-up-quick-demo-for-k10-02/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2021-04-28-setting-up-quick-demo-for-k10-02/</guid>
+      <description>在上一篇中，我为大家提供了一个简易的ova镜像，这个镜像用于在vSphere上快速搭建单节点K8S演示环境。也许有些朋友并不喜欢这种ova的方式，而更喜欢自己安装整个环境，那么我今天的这篇就来详细介绍下这个环境的安装方法。
+这个基础环境的安装说明以Ubuntu 20.04LTS为例，如果有需要其他版本的朋友，请自行根据这些命令修改，在开始之前，需要首先有一个能够正常访问互联网（部分国际网站需要特殊访问渠道）的Ubuntu 20.04服务器能够使用，并且使用了root用户登录到这台服务器。
+步骤一：安装并启用Docker服务 root@UK10:~# curl -fsSL https://get.docker.com -o get-docker.sh &amp;amp;&amp;amp; \ &amp;gt;	sh get-docker.sh 安装完毕后，可以查看下docker版本信息
+root@UK10:~# docker version 步骤二： 下载kind。 root@UK10:~# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.9.0/kind-linux-amd64 root@UK10:~# chmod +x ./kind &amp;amp;&amp;amp; mv ./kind /usr/local/bin/kind 步骤三：安装kubectl root@UK10:~# apt-get update &amp;amp;&amp;amp; apt-get install -y apt-transport-https gnupg2 root@UK10:~# curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - root@UK10:~# cat &amp;lt;&amp;lt;EOF &amp;gt;/etc/apt/sources.list.d/kubernetes.list &amp;gt;	deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main &amp;gt;	EOF root@UK10:~# apt-get update &amp;amp;&amp;amp; apt-get install -y kubectl root@UK10:~# kubectl completion bash &amp;gt;/etc/bash_completion.</description>
+    </item>
+    
+  </channel>
+</rss>

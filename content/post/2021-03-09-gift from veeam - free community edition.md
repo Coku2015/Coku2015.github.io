@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 免费好工具，绝不套路
-tags: VBR
+tags: ['VBR']
 ---
 
 IT管理员的绝佳搭档，完全免费！

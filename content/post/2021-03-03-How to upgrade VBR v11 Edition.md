@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Veeam备份服务器升级指南
-tags: VBR
+tags: ['VBR']
 ---
 
 ## 前言

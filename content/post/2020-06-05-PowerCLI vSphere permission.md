@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 使用vSphere PowerCLI快速完成Veeam备份管理员角色创建
-tags: Automation
+tags: ['Automation']
 
 ---
 

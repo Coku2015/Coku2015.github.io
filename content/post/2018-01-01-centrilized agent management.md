@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 新年第一篇 - Veeam 9.5U3集中管理Agent详解
-tags: Agent
+tags: ['Agent']
 categories: 数据保护
 ---
 

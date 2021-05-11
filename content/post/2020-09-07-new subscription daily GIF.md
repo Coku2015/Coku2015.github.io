@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 微信搜一搜，10秒学Veeam
-tags: GIF
+tags: ['GIF']
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 备份基础架构高清版GIF，同步公众号持续更新
-tags: GIF
+tags: ['GIF']
 
 ---
 Week 01

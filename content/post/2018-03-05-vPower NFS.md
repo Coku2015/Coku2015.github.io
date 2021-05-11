@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Veeam黑科技之vPower NFS
-tags: VMware 黑科技
+tags: ['VMware', '黑科技']
 categories: 黑科技
 ---
 

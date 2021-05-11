@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 不知勒索病毒的攻击原理，怎知如何防御？
-tags: VMware
+tags: ['VMware']
 categories: 数据保护
 ---
 

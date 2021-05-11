@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>VAO on Backup next cloud</title>
+    <link>https://newblog.backupnext.cloud/tags/vao/</link>
+    <description>Recent content in VAO on Backup next cloud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright Lei Wei</copyright><atom:link href="https://newblog.backupnext.cloud/tags/vao/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VAO基础入门（一） -  简介</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-17-vao-guide-01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-17-vao-guide-01/</guid>
+      <description>随着Veeam旗舰产品Veeam Availability Suite v10的发布，Veeam Availability Orchestrator(以下简称VAO)也会在不久更新为v3.0版本，目前来说VAO产品还是处于v2.0版本。对于绝大多数同学来说，可能这个产品非常神秘，看似功能非常高大上，但是也不知道如何使用，我的这个基础入门系列将会和大家分享一些本人对于VAO的一些研究。
+什么是VAO？ 简单来说，他是VAS加强版。它需要和VAS一起工作，离不开VAS；VAO还需要和VMware vSphere一起工作，它仅限于支持VMware的虚拟化环境。
+ 能够通过软件的设置，来保证企业实施的灾备基础架构的满足所要求的RPO和RTO； 能够尽可能自动化的完成灾备的切换过程，该操作同时支持备份存档和复制存档； 能够通过数据实验室，来确保灾备的精准可靠，所有灾备演练将在数据实验室中1:1的完整演练。  VAO替代了VBR中Recovery、Failover以及Surebackup的操作，可以说是对于这3个关键操作的进一步加强，在这些关键操作中，可以加入各种自定义的步骤和脚本，使之能够更加接近实际业务场景中的使用。对于管理员来说，合理的设计这3个操作中的额外步骤能极大程度的降低IT运维中灾备流程的复杂度。
+VAO支持哪些场景使用？ VAO支持的数据中心从简单到复杂，都可以使用，以下仅简单从最基本的架构举两个例子：
+单个数据中心 单个数据中心内，加入VAO的组件后，和原有VAS的架构几乎没有太大差别，所有VBR上的操作不会有任何改变，常规的所有备份恢复操作都在VBR上可以完成，而VAO则在这里开始担当关键业务的RPO和RTO的确保任务。通常来说关键业务出现宕机后，都会在原始位置实现恢复，因此也没有特别的专用资源用于恢复准备。
+因此，在这种场景下，唯一需要改变的是选择一些关键的VM，由VAO来接管这些VM的RPO和RTO。
+一主一备数据中心 稍微复杂点，也是很典型的场景，就是跨区域的主备数据中心，主中心承担生成业务，而备中心承担灾备业务。我们通常VAS的设计会将备份存档拷贝到灾备中心进行存放，也可能会将一些关键的VM直接1:1的复制到灾备中心。而这时候，在灾备中心的数据恢复流程都将可以被编制到VAO的Failover Plan或Recovery Plan中，同时这些Plan也将会被在相应的Datalabs中做完整的恢复演练。
+这种场景下，原先VAS的架构也没有太大变化，和单数据中心非常相似，只是我们可以规划一部分资源专用于灾备恢复。
+VAO支持的两种Plan VAO本身并不提供备份和复制功能，所有对于源数据的提取功能，都会在VAS/VBR中完成。VAO中提供了两种Plan：Restore Plan和Failover Plan。
+Restore Plan 这是对应VBR中的Backup &amp;amp; Restore功能，所有对备份存档（.vbk，.vib，.vrb等）的恢复，都归为这一类。
+Failover Plan 这是对应VBR中的Replication &amp;amp; Failover功能，所有对于Replicas的故障切换，都归为这一类。
+这两种Plan支持的操作：
+ - DataLabs 测试 - 资源可用性测试 - 完整报告自动生成 - 一键式全自动恢复、故障切换 VAO额外支持的DataLabs功能 作为Veeam产品看家本领，DataLabs功能在VAO中也是极大增强，在VAO中不仅能将DataLabs用于以上两种Plan的测试，还能利用VAO中强大的脚本和步骤添加功能，自动化的生成各种复杂的用于测试的环境。通过这种增强，复杂的测试用例，复杂的环境部署工作将会被简化成一键式的按钮，极大提升DataLabs的使用效率。
+以上就是VAO的简介，欢迎关注VAO基础入门系列，在最近一段时间我会陆续更新以下内容：
+ VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  </description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（七） -  Plan Step · 上篇</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-27-vao-guide-07/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-27-vao-guide-07/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  前一篇，我详细介绍了Orchestration Plan，在我们设计灾备计划时，可以从某个Application入手，从简到繁循序渐进的规划整个数据中心的灾备。
+创建Orchestration Plan时默认情况下，为每个灾备计划内置了最基础的Step，而VAO的强大之处在于它能够添加各种Step，系统内置了一些常用的Step，管理员只需要根据自己实际的需求选择相应的Step，然后配置相关参数即可使用。
+Out-of-the-box的Plan Steps 这些出厂自带的steps一共22个，大概可以分为这么几类：
+ 恢复操作 - 2个
+Datalab Lab验证操作：
+ - DataLab准备操作 - 1个 - 虚拟机基础验证 - 2个 - 应用验证 - 12个  通知操作 - 2个
+虚拟机电源操作 - 2个
+虚拟机服务启动操作 - 1个
+ 这些操作基本没什么特别需要注意的地方，所以的内容都已经固化内置在系统中了，根据系统的提示，填入相关的内容即可。本文不详细展开逐个讨论这里每一个Step的参数配置方法，具体大家可以根据实际情况选择逐个测试。
+Plan Step通用参数 在每个Plan Step中，都会包含一个最基础的Common Parameter，这是对于这个Plan Step执行的基本控制条件，包含以下内容：</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（三） -  基本组件 · 上篇</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-19-vao-guide-03/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-19-vao-guide-03/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  VAO引入了一套非常特殊的概念，它为该产品中使用的组件定义了一系列名称，随着版本的更新和迭代，这里的组件和名称可能会发生一些变化。目前VAO的版本是v2.0，因此本文所述内容仅适用于v2.0之后的版本，而后续版本中如果有新的变化，我会在后续的更新中说明。
+Scope 定义和用途 Scope是VAO的最核心的概念，在v2.0中首次引入了这个概念。每个Scope中包含了灾备中需要一系列元素，VAO把这些元素称为Plan Components：
+ - VM Groups - Recovery Locations - Plan Steps - Credentials - Template Jobs 打个比方，Scope是一间房间，那么在这个房间中所放置的各种家具就是以上这些Plan Components。对于灾备来说，以上这些Plan Components将会在Orchestration Plan中被具体使用到。可以说Orchestration Plan是将这些Plan Components有序的组合起来，最终可以让我们实现一键的灾备恢复。
+另外，Scope中还有个非常特殊的Component &amp;ndash; Datalab，每一个Datalab对应某个Scope中，也就是说，每个Scope都有一个或多个独立的属于自己的DataLab。
+关于Plan Components和DataLab，将在VAO基础入门（四）- 基本组件 · 下篇中详细介绍。
+分类和创建方式 VAO中的Scope可以大致分为两类，一类是系统内置的名称叫Default的Scope，这个Scope无法删除，无法修改名称，并且Administrator的Role会被包含在这个Scope中，在VAO的其他Scope中是无法选择添加Administrators Role。当您要授予任何用户执行Administration配置操作时，您就需要将该用户添加至Default Scope下的Administrators Role。还记不记得在前一篇推送中提到的初始化步骤，在初始化过程中所添加的用户，默认就会被添加到这个Administrators Role下面。当然我们可以来添加更多的用户到Administrator Role中。</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（九） -  文档模板解析</title>
+      <link>https://newblog.backupnext.cloud/post/2020-03-02-vao-guide-09/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-03-02-vao-guide-09/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  本系列的最后一篇，我来介绍一下VAO的文档系统。
+VAO能够全自动的为管理员生成灾备需要的系统文档，文档的内容为VAO系统自动根据Orchestration Plan的设置和执行自动生成。VAO文档系统的强大在于所有的内容系统根据配置和运行会全自动生成，因此管理员只需要专心关注自己的灾备即可，这些后续的基础保障，繁琐的文档制定，全部交给VAO来完成。
+VAO生成的每个文档会包含两部分，第一部分是灾备管理员定义的Report Template；第二部分是系统根据Report Type生成的动态内容。无论什么类型的文档，在文档的开头部分都会使用Report Template中所定义的内容，而第二部分则根据Report Type不同自动填充相关内容。
+我们先来看个实际的例子，了解一下什么是Report Template中的内容，什么是根据Report Type自动生成的，如下图：
+左边是一个VAO最终生成的Readiness Check的Report，右边是我们在编辑器中打开的Report Template。可以看到红色框所示的内容就是来自于Report Template的，而图中左边文档的后半部分内容则是根据这个Report Type，自动产生的内容。
+Report Type 先来说说这个Report Type，也许聪明的你，在前几篇介绍Orchestration Plan的时候已经有看到，在每个Plan的右键菜单或者工具栏上有一些Report可以生成，它们分别是：
+   Report类型 作用     Plan Definition Report 记录灾备计划设置详情   Readiness Check Report 灾备计划可用性检测报告，包含恢复目标位置和灾备中心的可用性检测   Datalab test Reort 数据实验室测试报告   Excution Report 灾备执行情况报告    这些Report就是VAO能够生成的所有Report文档，这些文档都会有一个VAO已经内置设计好的内容，能够和灾备管理员定义的Report Template组合起来，最终形成一份完整可以阅读的Report。</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（二） -  安装与部署</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-18-vao-guide-02/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-18-vao-guide-02/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  VAO 安装包获取 Veeam官网可以直接下载VAO，直达电梯
+这个安装包是一套完整的VAO套件，其中包括VAO主程序、内嵌的VBR以及内嵌的VeeamONE，需要注意的是，这个安装包虽然包含了内嵌的VBR和内嵌的VeeamONE但是这两个软件都无法被提取出来单独安装，这两个内嵌的软件都是VAO工作的必要组件，它们是跟着VAO一起工作的。
+这两个内嵌的VBR和VeeamONE和正常的软件没有任何区别，在安装完VAO后可以以常规的访问方式访问使用，目前在这个安装包中包含的VBR是9.5U4版本，VeeamONE是9.5U4版本；在VAO安装完成后，使用VBR和VeeamONE的正常升级方式将这两个组件升级至9.5U4a或者4b的版本。
+安装前提条件 非常重要的两点提示：
+  请不要在已经安装了VBR或者VeeamONE的服务器上安装VAO软件包。 请不要在域控制器上安装VAO软件包。   一般来说，我们建议不管您是否已经安装了VBR，如果是进行VAO的安装，都应该准备一台全新的Windows服务器来安装VAO的安装包。
+安装完成后，您可以将您原来的VBR加入到VAO环境中来由VAO纳管，也可以使用VAO内嵌的VBR来进行常规的备份和复制任务。
+其他更多的安装前提条件，请参考官网的前提条件说明。
+安装过程 安装包是个ISO文件，通过挂载ISO的方式打开这个镜像后自动运行，可以找到VAO的安装按钮：
+整个安装过程非常简单，和Veeam其他产品的安装一样，跟着向导无脑点完下一步就能做完最基础的安装，安装完成后，请务必将VBR 9.5U4a和VeeamONE 9.5U4a的补丁打上，这一步千万不要忘了，因为9.5U4a这个补丁修复了很多VAO碰到的问题。
+关于VBR 9.5U4a的升级，同样也可以参考我之前的博文。
+需要注意的是，在安装过程中会要求输入用户名密码，此处的用户名密码为VAO、VBR、VeeamONE的服务和它们的数据库需要使用的用户名密码，因此此密码要求的最小权限为这台VAO Server的Windows 本地管理员权限，隶属于本地Administrators组即可。
+这个账号虽然和后续灾备所使用的灾备管理员的账号没有任何关系，但是在后续的初始化配置的第一步需要输入此账号来登入VAO的UI界面。
+初始化配置   安装结束后，请不要去打开内置的VBR和VeeamONE的控制台，请立刻开始初始化配置，系统只有在初始化配置完成后才能够正常工作，进入初始化配置的界面请访问：https://VAOIP:9898/ 这时候浏览器会提示输入用户名密码，请使用上图安装时所用到的用户名密码作为初始化登入使用的用户名密码。特别注意，这个密码只在初始化配置时使用1次，在初始化配置完成后，将会使用初始化配置过程中设定的VAO灾备管理员的用户名密码。
+  登入账号后，系统进入初始化向导，Welcome页面中有些信息，有兴趣的话可以阅读一下，这页很简单，只需读完后点击Next。   输入一些VAO服务器的基础管理信息，这些信息在后续的文档模板中都会有用到。当然这些信息在配置完成后都能在Configuration中进行修改，不用担心填错。   此处需要填入VAO灾备管理员的账号，需要注意的是，此处的账号为初始化配置结束后登入VAO UI的灾备管理员的账号，此账号需要属于域账号，因此在整个VAO的部署中，Active Directory 是必要条件，如果环境中没有AD域，那就创建一个VAO专用的AD域吧。 请一定记住此处填入的灾备管理员的账号，在这个向导结束后，安装阶段使用的本地管理员账号将再也无法登入系统进行初始化配置，替代的是此处填入的账号。</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（五） -  基础配置要点</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-21-vao-guide-05/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-21-vao-guide-05/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  在前几篇中，我们把VAO的基本架构、基本组件都盘点了一遍，所涉及到的内容都是在Administration中的设置，也就是具有VAO管理员权限的账户所能进行的操作。VAO的管理员可以在这里为每组应用分别设定不同的Scope，同时将这些Scope分派给相关的人员进行使用，利用这一特性，可以有效的进行分组和隔离，是不是有点类似多租户或者多用户？但是又有很大差异。
+本篇内容针对之前所提到的这些配置，说明一些可能需要注意的地方。
+基础架构 vCenter添加
+在安装和初始化配置过程中，我们把vCenter添加入VAO了，这时候之前的帖子如果大家有印象，可能会留意到我都没有提到过内嵌的VBR和Veeam ONE的配置，实际上在初始化配置完成之后，VAO非常智能的将我们在初始化阶段填写的vCenter的信息写入到了VBR和Veeam ONE之中，因此我们不需要再次在VBR和Veeam ONE里面重新添加了。
+VBR添加
+在VAO中，可以管理多个VBR或Enterprise Manager副本，在管理非内嵌的VBR时，需要做的只是通过推送的方式在VAO的控制台上，将VAO Agent推送到VBR上即可接管该VBR。这个操作也相当简单，通过这样的方式，可以很方便的管理到一个大规模的备份/灾备环境。
+Active Directory
+在项目实施中，往往很多用户环境没有Active Directory，而VAO又必须要有AD才能工作，这时候特别头疼，但是回过来其实这事情却又很简单。大家可以想想VDI的项目，也都是必须AD才能工作的，那他们那些项目不都得急死了？那倒不会的，因为很简单，没有AD我们就造个AD嘛，为了项目成功，没有条件创造个条件呗，这事完全难不倒我们这些攻城狮。
+Scope Scope特别难理解，但是想通了又特别简单，因此这个配置要点说明，我强烈建议大家回过去到我的第三篇，加强理解下Scope的概念，并且通过实战，到VAO中设置一些复杂的场景来理解这个Scope。只有真枪实弹动过手，才能把这个Scope吃透，才能用好VAO，这是最最关键的一个组件。
+另外，对于Scope，不能仅仅从Users and Scopes中去看这个Scopes，需要从Scopes的2个维度结合起来看，这样这个概念才会生动的显现在我们面前：
+ 授权使用这个Scope的用户； Scope包含的5大Components和对应的DataLabs；  Datalabs 请先理解VBR中所有DataLab的配置，如果还不会配置VBR中的DataLab，那么将会玩不转VAO，因为这是VAO的必要组件和必要条件。
+DataLabs的配置在VAO中几乎没有任何操作，只是通过Assign的动作分配给对应的Scope，在VAO中想知道自己的DataLabs是如何配置是件非常困难的事情，假如我们需要用到大量的DataLabs，这时候可能只能回到VBR中逐个逐个点开配置去查看，这个非常不科学。那么我在这里有个很不错的小技巧可以提供给大家，在VAO的DataLabs信息中，会从VBR上取得这个DataLabs的Name、Description、Platform和VBR Server Name，这时候大家完全可以利用好这个Description，只需要在VBR中创建DataLabs时，将Virtual Lab Summary的内容Copy出来，贴到这个Virtual Lab的Description中，这样这段关于该DataLabs的详细配置情况就会被读取到VAO中，那么我们也就能够很清楚的知道这个DataLabs的具体配置了。如下图，最终我的效果。
+Recovery Locations 设置相对复杂，而且设置完成后就固化下来了，然而这个只是一个计算资源的逻辑组合，他实际上只存在于VAO之中，不管在vCenter、VBR还是VeeamONE之中都不会有这个Recovery Locations存在。因此这也是一个非常好的消息，这个Recovery Locations无论设置成什么样子，他都不会影响除了VAO之外的其他任何组件的正常运行。
+小小的Tips给到大家，那就是任性的去设置Recovery Locations吧，放肆的组合吧，就算不会被实际的Orchestration Plan使用到，放在那边又何妨？难说哪天有需要就用到了呢？</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（八） -  Plan Step · 下篇</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-28-vao-guide-08/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-28-vao-guide-08/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  上一篇，我介绍了Plan Step的基本概况，今天我来详细分解下在Plan Step中的自定义脚本，我会通过一个脚本使用例子，来带大家使用一下自定义脚本。
+创建和设置 配置自定义的脚本需要使用隶属于Administrators组的账户登入VAO平台。进入Administration控制台后，可以在Configuration下面找到Plan Steps，在这里可以管理所有的Plan Steps，当然除了创建自定义的Steps之外，也可以在这里对OOTB的那些Steps进行一些个性化的配置。
+点击Add按钮即可进入添加向导，过程也非常简单，为它起个响亮的名字，比如：远程的骚操作测试。在File栏，点击Browse从当前的客户端上去选择制作好的powershell脚本吧。
+点击Next进入Step Visibility步骤，如果不希望所有的灾备管理员都看到这个骚脚本的话，可以不勾上这个界面的复选框。
+最后还是老样子，Summary总结一下，点Finish就创建完成了。但是，这只是创建完成，别想着就马上拿去用，这里特别敲黑板强调一下：
+Custom Script可以有两种不同执行位置，一种是在灾备的机器上执行，另外一种是在VBR上执行。这个必须手工在创建完Plan Step之后点击这个Step名称，浏览到右边如图位置进行调整，默认值是在VBR上执行。比如我今天要做的这个测试就是需要调整一下，更改成In-Guest OS。
+需要注意的是，这个Step的设置是全局的，也就是说，如果将这个Step提供给所有的Scope使用，那么这项配置内容是所有的Scope共享的，不能做计划任务中做更改。因此管理员如果有必要，需要做这个Plan Steps的管理页面中根据实际需求逐个定义。
+Hello！My Script 那么接下来，让我们来配置一个Script跑一把吧。来个简单的，内容如下：
+########### #Lei Wei - 02/28/20 # # # 这个脚本是骚操作的代表，请仔细往后看 # # v1.0 $S = Get-Date; Add-Content c:\vao_log.txt &amp;#34;$S - Recording date &amp;#34; 如果一切正常，在VAO中将会看到如下信息：</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（六） -  成功灾备计划的第一步</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-25-vao-guide-06/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-25-vao-guide-06/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  通过之前的配置，我们的VAO就可以开始正常使用了，我们可以用Plan Authors角色的用户登入到VAO控制台上，在控制台中，将看到被授权允许能访问的Scopes，并且可以对这些Scopes中的对象进行操作，包括Orchestration Plan、DataLabs和Report。
+要成功实现企业的灾备计划，达成企业的RPO和RTO，除了需要超级强大的计算资源和工具软件之外，对于这个灾备工具的了解和熟悉程度也是非常重要的一部分。对于VAO来说，本身是一款非常强大的软件，但是需要灾备管理员非常清楚的了解灾备计划的每一部分以及它的操作的预期结果。所以成功的灾备计划第一步，我们先来看看VAO是如何工作的。
+在这里我先使用user1@sedemolab.local这个Plan Authors角色的账号登入VAO系统中。它将看到房间Scope A和房间Scope B
+Orchestration Plan VAO中可以设定两类Orchestration Plan，分别是恢复计划和故障切换计划，分别对应VBR中的Backup和Replication功能。这两个计划是整个灾备和恢复的基础，所有自动化的操作过程都将会通过这个Plan加入到灾备中去。在这里，我建议首先第一步，尽可能的不要加入太复杂的自动化脚本，而是用系统自带的Plan Steps，用最少的流程来测试两类Plan，等到熟悉了系统的工作机制后，再来逐步逐步添加适合的自定义脚本。
+ 创建Orchestration Plan，进入左边的Orchestration Plans，在右边内容显示区域，会看到顶部的一排4个按钮，其中在Manage按钮所在的下拉菜单中，可以找到New的按钮。通过这个按钮可以启动Orchestration Plan的创建向导。  2. 打开向导后，首先需要选取使用哪个Scope来创建这个Orchestration Plan，就像前几篇中提到，每个Scope中包含了灾备的一系列元素，而Orchestration Plan则是把这些元素组合起来，形成一个可执行的计划。所以每个Orchestration Plan是属于某个特定的Scope下的Plan。 选择房间（Scope A）后，点击下一步。
+设定Plan Info，此处的内容一般来说按照实际的情况填写，这些都会在Report中被使用到。  选择Plan Type，即决定这将是个Restore操作还是Failover操作，两者的唯一区别是，如果是Restore Plan那么将会增加一个Recovery Location的选项，选择我们这Plan Components之前设置好的Location即可。  选择VM Groups，在当前Scope下能看到的所有可用VM Groups都会列在Available Group中，通过Add按钮将需要的Group添加至右边的Plan Groups窗格中。也可以通过View VMs来详细查看当前选定的VM Groups中所包含的VM。  在VM Recovery Options中，需要设置3个内容： If any VM recovery fails then：如果Plan中有多台VM需要恢复，假如其中有一台VM恢复失败，此选项决定了后续的Plan如何操作，可以继续执行计划恢复其他VM或者是直接停止计划。 Recover the VMs in each Group: 按顺序恢复还是同时恢复。如果选择Simultaneously是同时进行，如果是选择In Sequence则是按顺序执行。 Recover simultaneously max of VMs：选择合适的数量，默认是10个，一般来说，管理员需要根据自己的计算资源情况，合理选择，最好执行一些测试后最后决定这里的数量。 Restore VM Tags：这个复选框下有个⚠️，一般来说恢复至新位置成为一个新VM则大多是不会选择这个恢复Tags，避免和生产的VM混起来。  在VM Steps中，可以选择很多恢复过程中的可以用到的Steps，默认情况下，系统自动会选上Restore VM和Check VM Heartbeat这两个Step。我建议刚开始熟悉VAO的管理员逐项逐项的添加各种Step，以测试每一种操作的功能，确定了某个需要的Step之后，再将其设计到自己的最终Plan之中。  在VM被恢复之后，为了确保系统的可靠性，VAO还提供了立刻继续将恢复出来的VM备份起来的功能，在Protect VM Groups中勾选Protect VM Groups after restore并且选择合适的Template Job就行了。这里面的Template Job都是在Plan Component中所选择的。  对于灾备来说，非常非常重要的一个指标就是RTO和RPO了，通常在备份或者容灾软件中很少有看到这两个数值的设定，而在VAO中，灾备管理员可以为每个Plan来制定相应的RTO和RPO目标，如果达成这个目标，系统会显示绿色的状态，而如果无法达成这个目标，则会发出相应警告⚠️。 此项的设置，具体数值可以精细到分钟级别。  管理员还能在VAO中定义Orchestration Plan的报表，在Plan中只需要选择相关的模版即可，可以选择pdf或者word格式的报表。关于报表模版的设计，我将会在本系列的最后一节详细介绍。  选择完报表模版后，可以设定报表计划任务，个人感觉都是报表的内容，实际上没必要分成2个页面来设置，但是不管怎么样，根据VAO产品的设计，我们可以在这里设置每天报表的计划任务，需要注意的是，报表更新的任务是每天为频率的，只能选择每天的时间，不能有其他更多选择。  又是一个复选框占用一个页面，勾选之后，VAO会在Plan创建完成后立刻进行灾备资源的可用性检查，根据实际情况选择即可。  以上就是所有设定步骤，在Summary中查看详细设置后点击Finish就能完成创建。创建完成后，这个Plan将会出现在Orchestration Plan的页面中。  对于创建好的Plan，管理员可以对它做以下操作：</description>
+    </item>
+    
+    <item>
+      <title>VAO基础入门（四） -  基本组件 · 下篇</title>
+      <link>https://newblog.backupnext.cloud/post/2020-02-20-vao-guide-04/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://newblog.backupnext.cloud/post/2020-02-20-vao-guide-04/</guid>
+      <description>系列目录：  VAO基础入门（一）- 简介 VAO基础入门（二）- 安装与部署 VAO基础入门（三）- 基本组件 · 上篇 VAO基础入门（四）- 基本组件 · 下篇 VAO基础入门（五）- 基础配置要点 VAO基础入门（六）- 成功灾备计划的第一步 VAO基础入门（七）- Plan Step · 上篇 VAO基础入门（八）- Plan Step · 下篇 VAO基础入门（九）- 文档模板解析  Plan Components 以下这些组件，需要针对每个Scope进行设置，上一篇中已经介绍了具体设置位置，接下来我们来看看这些Components都有些什么以及他们的设置方法。
+VM Groups VM Groups定义了在这个Scope下面，能管理哪些虚拟机，简单来说就是圈一个范围，哪些虚拟机是属于这个Scope可以操作的，我们的Orchestration Plan针对哪些生产的VM进行操作。
+和简单的VM勾选不一样的是，在VAO中，我们没办法很自由的去随意选择哪台VM属于哪个Scope，在VAO中我们只能选择所谓的VM Groups。
+然而很尴尬的是，VAO本身并不能创建任何的VM Groups，这些Groups是通过VAO内嵌的Veeam ONE中的Business View引擎来获取的。Business View的系统分组引擎是VAO中非常重要的一个组成部分，它的具体内容可以参考官网手册：
+https://helpcenter.veeam.com/docs/vao/categorization/about.html?ver=20
+https://helpcenter.veeam.com/docs/one/monitor/bv_categorization_model.html?ver=100
+在Business View的分组引擎中有3种使用方式：
+ 1. vSphere Tags 2. 通过.CSV文件导入 3. 通过VeeamONE的自定义分组策略 这3种方式并没有天然的特殊优劣，还是取决于IT管理员对哪种更熟悉，使用更便捷。
+vSphere Tags 这个分组方式需要在vSphere上面进行，通过为不同的VM打入不同的Tags来实现分组，相同Tags名称的虚拟机会被归入同一个VM Groups中，而这个VM Groups的名称就是在vSphere中的Tags的名称。
+这种分组方式无法在Veeam系统中做任何修改，只需要在vSphere上操作即可，操作完成后VAO中稍等一小段时间即可收到操作结果，这个操作是全自动的同步。
+通过.CSV文件导入 可以手工或者自动进行，这个操作需要在VAO内嵌的VeeamONE上进行，打开VeeamONE Monitor的控制台，在Server Setting中可以找到Business View的标签卡，在这里分别有自动从.CSV文件同步的选项和手工立刻从.CSV文件做单次导入的选项。</description>
+    </item>
+    
+  </channel>
+</rss>

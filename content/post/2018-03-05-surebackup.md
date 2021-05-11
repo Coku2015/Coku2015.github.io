@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 备份存档能不能被恢复，这件事情上只有真正做过才知道。
-tags: VMware
+tags: [' VMware']
 categories: 数据保护
 ---
 
@@ -25,7 +25,6 @@ Veeam SureBackup在工作时，会依次执行以下步骤完成整个验证过�
 > 2. Veeam Backup & Replication对Application Group和被验证的虚拟机执行一系列的自动化校验测试，通常包含虚拟机心跳、网络ping和应用程序脚本测试，其中应用程序脚本可以通过自定义的方式加入。
 > 3. 在基础验证完成后，还可以选择让Veeam SureBackup对备份存档从文件层面执行一次CRC校验，确保在执行任务的过程中未修改原始备份存档。
 > 4. 在SureBackup任务结束后，Veeam Backup & Replication对这些虚拟机执行“Unpublish“动作，并且生成一份测试报告，此报告会通过Email的方式发送给指定的管理员。 
->
 
 在整个验证过程中，Veeam会保证所有虚拟机的备份存档处于只读状态，所有因虚拟机运行产生的数据会存放在虚拟机Redo Log中，这些Redo Log通常会存放于VMware的生成存储上，而当验证过程结束时，Veeam会删除这些Redo Log，释放临时空间。
 
