@@ -1,12 +1,12 @@
 # Basic
-title: 潘柏信
-subtitle: 个人站
-description: 欢迎来到我的个人站~
+title: 虚化人生
+subtitle: Backup Next Cloud
+description: 欢迎访问虚化人生
 # 头像里面的标题
-avatarTitle: leopardpan
+avatarTitle: Backup Next Cloud
 # 头像里面的描述
-avatarDesc: iOS / 机器学习
-url: "https://leopardpan.cn"
+avatarDesc: 云计算 / 数据保护
+url: "https://newblog.backupnext.cloud"
 
 # 博客是否自动生成目录，false为不生成
 enableToc: true
@@ -14,30 +14,30 @@ enableToc: true
 # Comment
 comment:
     # livere: MTAyMC81MDk5NC8yNzQ3Ng  # https://www.livere.com
-    disqus: leopard
+    disqus: Lei Wei
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
-    # zhihu: panpanleopard
-    # juejin: xxx
-    jianshu: 2ada30d8d0f7
+    #weibo:  
+    github: Coku2015
+    # zhihu: 
+    # juejin: 
+    #jianshu: 
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: Coku2015@gmail.com
 
 
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
-baidu:
-    id: 8ba1c6be0953b6f9c2ba38e57f615421  
+#baidu:
+#    id: 8ba1c6be0953b6f9c2ba38e57f615421  
 
 # Google Analytics
 # 使用博客模板请去掉或者更换 id
-ga:
-    id: UA-84134159-3  
-    host: auto  
+#ga:
+#    id: UA-84134159-3  
+#    host: auto  
 
 
 # 《----------------- 上面的信息修改成你自己的 ---------------------------》
