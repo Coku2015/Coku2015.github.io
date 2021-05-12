@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 数据中心备份容量和带宽的计算方法
-tags: 数据备份
+tags: backup
 categories: Veeam小工具
 ---
 

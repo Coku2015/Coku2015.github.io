@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Kasten K10入门系列 - 快速搭建K8S单节点测试环境（上篇）
+title: Kasten K10入门系列01 - 快速搭建K8S单节点测试环境
 tags: Kubernetes
 categories: Kubernetes
 
