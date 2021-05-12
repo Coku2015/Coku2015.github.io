@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 数据集成API真的就只是API？
-tags: Automation, Powershell
+tags: Automation Powershell
 
 ---
 
