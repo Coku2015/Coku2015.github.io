@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VMware VAIO技术概览
-tags: Veeam CDP
+tags: ['Veeam CDP']
 categories: VMware
 
 ---
