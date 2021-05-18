@@ -28,9 +28,9 @@ categories: Kubernetes
 
 [![ghQAun.png](https://z3.ax1x.com/2021/05/18/ghQAun.png)](https://imgtu.com/i/ghQAun)
 
-配置K10 DR时，管理员需要将K10 DR启用后显示在屏幕上的Cluster ID记录下来，妥善保存好，用于后续的K10 catalog的恢复。
+配置K10 DR时，管理员需要将K10 DR启用后显示在屏幕上的Cluster ID记录下来，妥善保存好，用于后续的K10 catalog的恢复。另外，在启用K10 DR时，系统会提示输入一个“通行码（passphrase）”，用于在恢复时，创建dr-secret。因此这个通行码也需要和Cluster ID一样，被妥善保管。
 
-
+![dr_policy_form](https://docs.kasten.io/latest/_images/dr_policy_form1.png)
 
 ## 备份
 
