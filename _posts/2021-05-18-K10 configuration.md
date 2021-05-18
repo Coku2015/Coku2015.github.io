@@ -44,6 +44,8 @@ K10的备份都是通过Policy来发起。在仪表盘正中间位置就是Polic
 
 创建完成后，可以在Policies中查看到这个Policy，并且可以通过run once来做一个单次备份作业的发起和运行，而正常情况，Policy就会根据计划任务的设置，自动在设定的时间运行。
 
+[![ghQP3Q.png](https://z3.ax1x.com/2021/05/18/ghQP3Q.png)](https://imgtu.com/i/ghQP3Q)
+
 ## 恢复
 
 数据完成备份后，可以在Applications中看到应用的状态变成了Compliant
