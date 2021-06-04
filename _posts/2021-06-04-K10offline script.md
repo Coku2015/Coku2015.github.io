@@ -39,7 +39,7 @@ K10的下载很纠结，我相信习惯了Veeam软件的下载使用方式的朋
 脚本下载：
 
 ```bash
-$ curl -O https://raw.githubusercontent.com/Coku2015/Coku2015.github.io/main/k10offline.sh
+$ curl -O https://blog.backupnext.cloud/k10offline.sh
 ```
 
 需要提醒的是，脚本下载后，请务必查看内容，确保正确再使用。
