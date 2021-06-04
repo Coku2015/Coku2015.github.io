@@ -6,6 +6,20 @@ categories: Kubernetes
 
 ---
 
+#### Release Notes: v1.2
+
+*2021/06/04 - 加入本地Registry，内置K10 v4.0.3镜像，可以在安装k10时使用*`--set global.airgapped.repository=localhost:5000` *来直接调用本地的docker镜像库*
+
+*Virtual Appliance版本更新为v1.2，对应网盘中文件为：
+UbuntuK10-v1.2.ova*
+
+#### Release Notes: v1.2
+
+*2021/05/03日 - 尝试了Stateful MySQL的部署，将一体机中内置的Demo应用改成了Helm安装的MySQL，这样，可以通过这个vApp来快速Demo和测试有状态应用的备份和恢复。*
+
+*Virtual Appliance版本更新为v1.1，对应网盘中文件为：
+UbuntuK10-v1.1.ova*
+
 自从Veeam收购Kasten之后，最近玩K8S特别多，最大的体会是，茫茫多的各种命令和对互联网的强烈需求，假如连不了网，特别是连不了国外的容器镜像站点时，通常的情况就是抓瞎，啥都干不了。当然，这在各位K8S和容器大拿眼里，并不是什么问题，而对于广大非软件开发专业的系统管理员和系统工程师来说，挑战着实不小。
 
 要搭建一套Kasten K10的Lab环境，其基础条件是K8S群集，Kasten K10是原生的云应用，它赖以运行的环境和备份恢复的对象都是K8S。因此，摆在我们面前的难题变成了简单快速不费劲的搭建一套K8S环境并且部署一个简单的有状态应用。这在没有网络的情况下，实在是太为难了。不过，办法总比困难多，不是吗？这点小小的阻碍完全难不倒熟练使用虚拟化技术的虚拟化管理员，在做了一番功课之后，我借鉴了Veeam日本的同事分享的快速部署脚本，使用了虚拟化中独特的OVF（Open Virtualization Format）方式，将这个过程封装成了一个虚拟一体机（Virtual Appliance），让这个Demo Lab的搭建过程大大简化，实现了不需要任何网络下载，即可搭建出这样一套单节点群集，并且内置了包含MySQL数据库的WordPress应用。
@@ -18,7 +32,7 @@ https://cloud.189.cn/t/mAnyMrA36vam（访问码：wd69）
 
 ### 虚拟一体机使用说明：
 
-
+熟练使用VMware虚拟化的管理员，可以将该OVA文件导入到VMware vSphere或者VMware Workstation，导入过程中，导入向导会提示配置网络和IP地址信息如下图，特别注意其中Netmask需要用CIDR格式：
 
 [![DziVDU.png](https://s3.ax1x.com/2020/12/07/DziVDU.png)](https://imgchr.com/i/DziVDU)
 
@@ -70,7 +84,7 @@ $ kubectl get nodes
 
 #### 2-loadimage.sh
 
-这个脚本其实没什么特别秘密，纯粹是为后面第四第五个脚本做准备，提前将内置在本地CentOS中的docker images加载到Kind中，供Kind使用。
+这个脚本其实没什么特别秘密，纯粹是为后面第四第五个脚本做准备，它会将本地的docker 镜像push到`localhost:5000`这个本地镜像库中，同时将内置在本地Ubuntu中的部分docker images加载到Kind中，供Kind使用。
 
 #### 3-storage.sh
 
@@ -92,13 +106,11 @@ $ kubectl get pod
 
 #### 4-wordpress.sh
 
-该脚本作用也很简单，部署一个WordPress应用，内置MySQL数据库，部署完成后，需要运行以下命令进行端口转发后，使用浏览器访问以下地址进行后续配置http://<虚拟一体机IP>。
+该脚本作用也很简单，部署一个WordPress应用，内置Stateful的MySQL数据库，部署完成后，需要运行以下命令进行端口转发后，使用浏览器访问以下地址进行后续配置http://<虚拟一体机IP>。
 
 ```bash
 $ kubectl port-forward --address 0.0.0.0 svc/wordpress 80:80 -n wordpress
 ```
 
 以上就是这个虚拟k8s一体机的简要使用说明，在部署完这套环境后，即可使用（https://docs.kasten.io）上的文档进行Kasten的正常安装配置使用了。
-
-如果您对这套环境的部署原理感兴趣，欢迎关注下一期内容，我将在下篇中详解如何在标准的Linux系统中安装以上这套环境的离线版。
 
