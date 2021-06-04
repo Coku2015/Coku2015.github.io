@@ -13,7 +13,7 @@ categories: Kubernetes
 *Virtual Appliance版本更新为v1.2，对应网盘中文件为：
 UbuntuK10-v1.2.ova*
 
-#### Release Notes: v1.2
+#### Release Notes: v1.1
 
 *2021/05/03日 - 尝试了Stateful MySQL的部署，将一体机中内置的Demo应用改成了Helm安装的MySQL，这样，可以通过这个vApp来快速Demo和测试有状态应用的备份和恢复。*
 
