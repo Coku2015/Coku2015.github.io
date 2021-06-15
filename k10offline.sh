@@ -1,7 +1,7 @@
 #!/bin/bash
 k10version=$1
 newrepo=$2
-sourcerepo=kasten-k10.jfrog.io/kasten-images
+sourcerepo=ccr.ccs.tencentyun.com/kasten
 
 docker run --rm -it $sourcerepo/k10offline:$k10version list-images --json > k10.json
 n=`jq 'length' k10.json`
