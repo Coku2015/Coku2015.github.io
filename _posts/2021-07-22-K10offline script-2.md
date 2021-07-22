@@ -27,8 +27,8 @@ https://cloud.189.cn/web/share?code=zIVZ3uaIzUr2（访问码：8fbw）
 
 在这个下载链接中，K10安装包按版本都放置在每个版本号命名的文件夹中。在版本号文件夹里面，会包含两个文件：
 
-- kasten_k10_offline_images_<ver>.tar.gz : 镜像包
-- k10_<ver>.json : 推送至私有镜像库的配置文件
+- kasten_k10_offline_images_<版本号>.tar.gz : 镜像包
+- k10_<版本号>.json : 推送至私有镜像库的配置文件
 
 在这个镜像包中，包含了所有k10的安装镜像(4.0.8版本，其他版本可能会略有不同)：
 
