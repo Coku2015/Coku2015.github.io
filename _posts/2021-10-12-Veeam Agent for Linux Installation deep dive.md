@@ -64,11 +64,11 @@ http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.e
 
 这个程序无法支持快照备份，只能通过File level snapshot-less的方式进行文件备份，如下图：
 
-![](https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png)
+![](https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png)
 
 当然，在VBR中也有同样的选项：
 
-![](https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png)
+![](https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png)
 
 这个主程序可以直接单独安装，在安装的时候它不会再去要求veeamsnap的依赖，而其他的常规依赖包依然是通过Linux包管理器自动获取。
 
