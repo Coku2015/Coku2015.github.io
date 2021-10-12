@@ -43,7 +43,7 @@ veeamsnap-<xxxxxxxxxxx>.rpm
 
 ### 2.3. 启用安全引导（UEFI的Secure  Boot）
 对于启用了UEFI安全引导的Linux系统，要使用kmod-veeamsnap，需要将kmod-veeamsnap的证书导入到UEFI控制台中。这个证书可以先使用veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm这个包获取，具体步骤如下：
-1. 下载并安装veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm
+1. 下载并安装veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm，比如Redhat8：
 ```shell
 curl -O http://repository.veeam.com/.private/rpm/el/8/x86_64/veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm
 rpm -ivh veeamsnap-ueficert*
@@ -59,7 +59,7 @@ mokutil --import veeamsnap-ueficert.crt
 
 ### 2.4. 😂😂不使用Veeamsnap
 
-以上这些veeamsnap都没条件使用时，从VAL 5.0.1起，Veeam提供snapless的备份方式，提供了不依赖veeamsnap工作的VAL主程序：
+以上这些veeamsnap都没条件使用时，从VAL 5.0.1起，Veeam提供snapless的备份方式，提供了不依赖veeamsnap工作的VAL主程序，比如Redhat 8：
 http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.el8.x86_64.rpm
 
 这个程序无法支持快照备份，只能通过File level snapshot-less的方式进行文件备份，如下图：
