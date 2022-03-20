@@ -39,7 +39,7 @@ NUC11上安装ESXi最大的挑战来自于网卡驱动，这个网卡是2.5GbE�
 
 - 安装Docker，并配置non-root用户使用Docker。配置方法很简单，只需要使用non-root用户，在安装完docker之后，按顺序执行下列命令即可。
 
-  ```shell
+  ```
   ## 1. 先加docker组
   k10@tceconsole:~$ sudo groupadd docker
   ## 2. 把当前用户加到docker组里
@@ -64,7 +64,7 @@ NUC11上安装ESXi最大的挑战来自于网卡驱动，这个网卡是2.5GbE�
 
 最后，是用下面的命令准备图形化安装第一步要用的ssh public key
 
-```shell
+```
 ## 创建一个SSH 密钥对
 k10@tceconsole:~$ ssh-keygen -t rsa -b 4096 -C "administrator@backupnext.cloud"
 ## 获取下这个公钥备用
@@ -75,7 +75,7 @@ k10@tceconsole:~$ cat .ssh/id_rsa.pub
 
 TCE和其他Tanzu一样，都由管理集群（Management Cluster）和工作负载集群（Workload Cluster）组成，我在我的环境中首先需要配置一个管理集群，配置启动方法非常简单，只需要运行下面的命令即可：
 
-```shell
+```
 k10@tceconsole:~$ tanzu management-cluster create --ui --bind 0.0.0.0:8080 --browser none
 ```
 
@@ -100,7 +100,7 @@ k10@tceconsole:~$ tanzu management-cluster create --ui --bind 0.0.0.0:8080 --bro
 
 管理集群部署完成后，回到我的Ubuntu控制台上，执行命令:
 
-```shell
+```
 ## 查询下前面安装的管理集群
 k10@tceconsole:~$ tanzu management-cluster get
   NAME     NAMESPACE   STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES       
@@ -149,7 +149,7 @@ leihome-md-0-6f69758844-zpfsj   Ready    <none>                 8d    v1.21.5+vm
 
 通过以下命令，先创建一份并修改用于部署Workload集群的yaml文件：
 
-```shell
+```
 k10@tceconsole:~$ cp  ~/.config/tanzu/tkg/clusterconfigs/pkwmre6kuu.yaml ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 k10@tceconsole:~$ vi ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 ```
@@ -166,13 +166,13 @@ VSPHERE_WORKER_MEM_MIB: "8192"
 
 修改完成后，运行如下命令，就能自动部署Workload集群了。
 
-```shell
+```
 k10@tceconsole:~$ tanzu cluster create leihome-workload-01 --file ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 ```
 
 大约10来分钟，Workload集群就会部署完成，部署后和管理集群一样，默认配置为一个Control Plane和一个Worker。我计划多运行几个应用程序，因此我用下面这条命令来增加Worker Node：
 
-```shell
+```
 k10@tceconsole:~$ tanzu cluster scale leihome-workload-01 --worker-machine-count=2
 Successfully updated worker node machine deployment replica count for cluster leihome-workload-01
 Workload cluster 'leihome-workload-01' is being scaled
@@ -180,7 +180,7 @@ Workload cluster 'leihome-workload-01' is being scaled
 
 Workload集群部署完成后，和管理集群一样，需要获取下Workload集群的访问权限：
 
-```shell
+```
 ## 获取当前的Workload集群列表
 k10@tceconsole:~$ tanzu cluster list
   NAME                 NAMESPACE  STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES   PLAN  
@@ -233,7 +233,7 @@ parameters:
 
 配置这个新的StorageClass，并取消原来default的storage Class作为默认Storage Class：
 
-```shell
+```
 ## 添加新的Storage Class，连接vSphere上的Datastore
 k10@tceconsole:~$ kubectl apply -f ~/storage/localnvme.yaml
 ## 取消原来自动配上的Hostpath作为默认Storage Class，当然也可以直接删除掉default的storage class
@@ -302,7 +302,7 @@ spec:
 
 创建过程很简单，下面2条命令即可，创建完成后，拷贝个文件进持久数据卷试试：
 
-```shell
+```
 k10@tceconsole:~$ kubectl create ns leihomedemo
 k10@tceconsole:~$ kubectl apply -n leihomedemo -f ~/demo/demoapp.yaml
 k10@tceconsole:~$ kubectl cp mytest leihomedemo/demo-app-696f676d47-dsbcr:/data/
@@ -312,7 +312,23 @@ drwx------    2 root     root         16384 Mar 12 14:01 lost+found
 -rw-rw-r--    1 1000     117             13 Mar 12 14:33 mytest
 ```
 
-一切正常，环境完美运行。接下去我会安装Kasten K10，并配置K10和vbr来备份这个demo app。这部分内容我在下一期推送中分享。
+一切正常，环境完美运行。
+
+到目前为止，整个环境资源消耗：
+
+| 虚拟机   | 用途 | CPU   | 内存 |
+| ---------- |--| ----- | ---- |
+| vCenter   | vCenter | 2vCPU | 12GB |
+| TCEconsole | Tanzu控制台 | 2vCPU |8GB|
+| leihome-control-plane-2mz2v | TCE管理集群控制节点 | 2vCPU | 4GB |
+| leihome-md-0-6f69758844-zpfsj | TCE管理集群工作节点 | 2vCPU | 4GB |
+| leihome-workload-01-control-plane-c4k4q | TCE工作集群控制节点 | 2vCPU | 4GB |
+| leihome-workload-01-md-0-668d8747d6-4hd6z | TCE工作集群工作节点 | 2vCPU | 8GB |
+| leihome-workload-01-md-0-668d8747d6-hcs4k | TCE工作集群工作节点 | 2vCPU | 8GB |
+|          | 总计 | 14vCPU | 48GB |
+|          |  |       |      |
+
+接下去我会安装Kasten K10，并配置K10和vbr来备份这个demo app。这部分内容我在下一期推送中分享。
 
 
 
