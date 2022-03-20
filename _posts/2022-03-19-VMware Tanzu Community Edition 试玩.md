@@ -150,8 +150,7 @@ leihome-md-0-6f69758844-zpfsj   Ready    <none>                 8d    v1.21.5+vm
 通过以下命令，先创建一份并修改用于部署Workload集群的yaml文件：
 
 ```shell
-k10@tceconsole:~$ cp  ~/.config/tanzu/tkg/clusterconfigs/pkwmre6kuu.yaml \
-			~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
+k10@tceconsole:~$ cp  ~/.config/tanzu/tkg/clusterconfigs/pkwmre6kuu.yaml ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 k10@tceconsole:~$ vi ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 ```
 
@@ -168,8 +167,7 @@ VSPHERE_WORKER_MEM_MIB: "8192"
 修改完成后，运行如下命令，就能自动部署Workload集群了。
 
 ```shell
-k10@tceconsole:~$ tanzu cluster create leihome-workload-01 \
-		--file ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
+k10@tceconsole:~$ tanzu cluster create leihome-workload-01 --file ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
 ```
 
 大约10来分钟，Workload集群就会部署完成，部署后和管理集群一样，默认配置为一个Control Plane和一个Worker。我计划多运行几个应用程序，因此我用下面这条命令来增加Worker Node：
