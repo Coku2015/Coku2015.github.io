@@ -4,11 +4,11 @@ title: Tanzu Community Edition（TCE）试玩
 tags: VMware
 ---
 
-最近刷新了下Homelab，开始在Homelab中玩玩Tanzu。去年VMware开源了Tanzu Community Edition，正好利用这个机会装上配上k10玩一把。
+最近刷新了下Homelab，开始在Homelab中玩玩Tanzu。去年VMware开源了Tanzu Community Edition，正好利用这个机会装上配上k10和VBR玩一把。
 
 ## 硬件部分
 
-我的环境由2台机器组成，一台是服役了6年多的Dell Precision M4800，另外一台是新加入的NUC11 猎豹峡谷。其中猎豹峡谷的配置如下：
+我的环境由2台机器组成，一台是服役了6年多的Dell Precision M4800，另外一台是新加入的NUC11 猎豹峡谷。Dell笔记本纯粹是在这个环境中打酱油的，而猎豹峡谷的配置如下：
 
 - CPU：Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
 - 内存：ADATA 32GB×2 DDR4-3200
@@ -314,6 +314,136 @@ drwx------    2 root     root         16384 Mar 12 14:01 lost+found
 
 一切正常，环境完美运行。
 
+## 安装配置K10
+
+### 安装K10
+
+安装K10前，我准备了一台VBR v11a的Windows服务器和一台Minio S3的对象存储，用于存放K10的备份数据。
+
+K10的安装和常规部署没任何区别，在安装前还是惯例运行下Pre-flight脚本检查环境：
+
+```
+k10@tceconsole:~$ curl https://docs.kasten.io/tools/k10_primer.sh | bash
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7045  100  7045    0     0    918      0  0:00:07  0:00:07 --:--:--  1757
+Namespace option not provided, using default namespace
+Checking for tools
+ --> Found kubectl
+ --> Found helm
+Checking if the Kasten Helm repo is present
+ --> The Kasten Helm repo was found
+Checking for required Helm version (>= v3.0.0)
+ --> No Tiller needed with Helm v3.4.1
+K10Primer image
+ --> Using Image (gcr.io/kasten-images/k10tools:4.5.11) to run test
+Checking access to the Kubernetes context leihome-workload-01-admin@leihome-workload-01
+ --> Able to access the default Kubernetes namespace
+K10 Kanister tools image
+ --> Using Kanister tools image (ghcr.io/kanisterio/kanister-tools:0.74.0) to run test
+
+Running K10Primer Job in cluster with command- 
+     ./k10tools primer 
+serviceaccount/k10-primer created
+clusterrolebinding.rbac.authorization.k8s.io/k10-primer created
+job.batch/k10primer created
+Waiting for pod k10primer-b5nf9 to be ready - ContainerCreating
+Waiting for pod k10primer-b5nf9 to be ready - ContainerCreating
+
+Pod Ready!
+
+I0319 05:28:41.931353       8 request.go:665] Waited for 1.043641473s due to client-side throttling, not priority and fairness, request: GET:https://100.64.0.1:443/apis/scheduling.k8s.io/v1beta1
+Kubernetes Version Check:
+  Valid kubernetes version (v1.21.5+vmware.1)  -  OK
+
+RBAC Check:
+  Kubernetes RBAC is enabled  -  OK
+
+Aggregated Layer Check:
+  The Kubernetes Aggregated Layer is enabled  -  OK
+
+W0319 05:28:42.188135       8 warnings.go:70] storage.k8s.io/v1beta1 CSIDriver is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 CSIDriver
+CSI Capabilities Check:
+  VolumeSnapshot CRD-based APIs are not installed  -  Error
+
+Validating Provisioners: 
+csi.vsphere.vmware.com:
+  Storage Classes:
+    default
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+    isonfs
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+    standard
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+
+Validate Generic Volume Snapshot:
+  Pod Created successfully  -  OK
+  GVS Backup command executed successfully  -  OK
+  Pod deleted successfully  -  OK
+
+serviceaccount "k10-primer" deleted
+clusterrolebinding.rbac.authorization.k8s.io "k10-primer" deleted
+job.batch "k10primer" deleted
+```
+
+以上可以看到其中CSI Capabilities Check出现了个Error，这个没关系，因为是使用vSphere CSI，快照部分功能是利用vSphere源生的vmdk快照实现，因此在集群里我并没有安装VolumeSnapshotClass。
+
+安装K10还是老方法，官网手册中的可以直接使用，而我这边还是依旧使用ccr.ccs.tencentyun.com/kasten这个镜像库：
+
+```
+k10@tceconsole:~$ helm repo add kasten https://charts.kasten.io/
+k10@tceconsole:~$ helm repo update
+k10@tceconsole:~$ helm install k10 kasten/k10 \
+	--namespace=kasten-io \
+	--set global.persistence.storageClass=standard \
+	--set global.airgapped.repository=ccr.ccs.tencentyun.com/kasten \
+	--set metering.mode=airgap
+## 通过Nodeport暴露k10图形界面访问
+k10@tceconsole:~$ kubectl expose -n kasten-io deployment gateway --type=NodePort --name=gateway-nodeport-svc --port=8000
+```
+
+等待10来分钟之后，我的K10就能通过http://10.10.1.14:32080/k10/#/进行访问了。
+
+### k10配置vCenter和VBR
+
+进入K10主页后，在Settings中找到Location Profile，首先需要添加一个S3对象存储作为主备份存储，就算我有VBR的存储库，这个都不能少。如下图配置非常简单：
+
+[![qe4KG8.png](https://s1.ax1x.com/2022/03/20/qe4KG8.png)](https://imgtu.com/i/qe4KG8)
+
+再来添加一个VBR的Repository，用于vmdk数据备份存储，也就是pvc的备份。
+
+[![qe48qs.png](https://s1.ax1x.com/2022/03/20/qe48qs.png)](https://imgtu.com/i/qe48qs)
+
+在Location Profile下面，找到Infrastructure，使用New Profile按钮新增一个vCenter的连接，配置信息非常简单，和任何设备添加vCenter几乎没区别，IP地址、用户名、密码，3要素。
+
+[![qe4JZn.png](https://s1.ax1x.com/2022/03/20/qe4JZn.png)](https://imgtu.com/i/qe4JZn)
+
+接下来，就可以进行备份策略的配置了。备份策略和其他Kubernetes平台K10的备份策略稍有不同，在Snapshot Retention上，可以看到K10自动感知到这是VMware平台，给出了VMware平台中Snapshot保留的最佳实践，建议不能超过3个Snapshot。因此如下图，我将Snapshot设置为1。在Export Location Profile中，可以选择Minio S3对象存储作为第一级备份Export目标，此处VBR的Location Profile不可选。
+
+在这个`Enable Backups via Snapshot Exports`之后，会有个新增的选项`Export snapshot data to a Veeam Backup Server repository`，勾选这个选项后，可以选择Veeam Backup Location Profile。
+
+[![qefZyd.png](https://s1.ax1x.com/2022/03/20/qefZyd.png)](https://imgtu.com/i/qefZyd)
+
+其他配置没有什么特别，这样配置后的Policy如下：
+
+[![qehDEt.png](https://s1.ax1x.com/2022/03/20/qehDEt.png)](https://imgtu.com/i/qehDEt)
+
+备份自动运行后，可以从Dashboard进入查看到详细的备份Action详情，其中VBR的导出部分由Kanister完成：
+
+[![qe5kWT.png](https://s1.ax1x.com/2022/03/20/qe5kWT.png)](https://imgtu.com/i/qe5kWT)
+
+而在VBR中，可以看到K10的Policy和K10的备份存档也已经出现：
+
+[![qeIlHs.png](https://s1.ax1x.com/2022/03/20/qeIlHs.png)](https://imgtu.com/i/qeIlHs)
+[![qeIQBj.png](https://s1.ax1x.com/2022/03/20/qeIQBj.png)](https://imgtu.com/i/qeIQBj)
+
+关于VBR中K10的操作，可以参考[Veeam官方的手册](https://helpcenter.veeam.com/docs/backup/kasten_integration/overview.html?ver=110)，已经在官网上线。
+
+## 最后
+
 到目前为止，整个环境资源消耗：
 
 | 虚拟机   | 用途 | CPU   | 内存 |
@@ -325,10 +455,11 @@ drwx------    2 root     root         16384 Mar 12 14:01 lost+found
 | leihome-workload-01-control-plane-c4k4q | TCE工作集群控制节点 | 2vCPU | 4GB |
 | leihome-workload-01-md-0-668d8747d6-4hd6z | TCE工作集群工作节点 | 2vCPU | 8GB |
 | leihome-workload-01-md-0-668d8747d6-hcs4k | TCE工作集群工作节点 | 2vCPU | 8GB |
-|          | 总计 | 14vCPU | 48GB |
+| VBR | VBR | 4vCPU | 8GB |
+|          | 总计 | 18vCPU | 56GB |
 |          |  |       |      |
 
-接下去我会安装Kasten K10，并配置K10和vbr来备份这个demo app。这部分内容我在下一期推送中分享。
+还没超过我的NUC11总内存，一台NUC11跑这么个环境绰绰有余啦。
 
 
 
