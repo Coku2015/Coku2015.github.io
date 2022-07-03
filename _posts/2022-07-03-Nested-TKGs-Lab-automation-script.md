@@ -366,7 +366,7 @@ Supervisor Cluster的创建会进入一个8个步骤的向导。
 
     等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
 
-[![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
+    [![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
 
 10. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
 
