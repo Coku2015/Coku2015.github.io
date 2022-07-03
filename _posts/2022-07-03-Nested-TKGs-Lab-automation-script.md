@@ -288,11 +288,11 @@ Supervisor Cluster的创建会进入一个8个步骤的向导。
 9. 点击Finish后，Supervisor Cluster就开始进入自动部署过程，Workload Management界面切换成如下图：
     [![j8KIXj.png](https://s1.ax1x.com/2022/07/03/j8KIXj.png)](https://imgtu.com/i/j8KIXj)
     
-    ### 2.2 部署Tanzu Kubernetes Cluster
-    
-    等待大约30分钟后，就能看到Tanzu Supervisor Cluster进入Running状态，Control Plane Node获取到了正确的ip地址。
-    [![j8lO4P.png](https://s1.ax1x.com/2022/07/03/j8lO4P.png)](https://imgtu.com/i/j8lO4P)
-    
+### 2.2 部署Tanzu Kubernetes Cluster
+
+等待大约30分钟后，就能看到Tanzu Supervisor Cluster进入Running状态，Control Plane Node获取到了正确的ip地址。
+[![j8lO4P.png](https://s1.ax1x.com/2022/07/03/j8lO4P.png)](https://imgtu.com/i/j8lO4P)
+
 1. 这时候我们可以切换到Namespace标签卡下，创建Namespace了，需要注意的是，这个Namespace并非Kubernetes的Namespace，这是vSphere Tanzu的Namespace，我们的Tanzu Kubernetes Cluster将会创建在这个Namespace之下。
     [![j8114x.png](https://s1.ax1x.com/2022/07/03/j8114x.png)](https://imgtu.com/i/j8114x)
     
