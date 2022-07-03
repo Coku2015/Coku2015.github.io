@@ -251,6 +251,8 @@ done
 
 ## Part 2. 启用Tanzu Kubernetes Cluster
 
+### 2.1 启用Supervisor Cluster
+
 进入vCenter后，在主页面导航栏中找到Worload Management，从这里进去开始Tanzu Kubernetes的管理。点击右边的`Get Started`开始创建Supervisor Cluster。当然这个过程也完全可以通过Powershell脚本方式来完成，这个不在本文中展开讨论，本文通过GUI图形化界面来完成Supervisor Cluster的创建。
 
 [![j8V3yq.png](https://s1.ax1x.com/2022/07/03/j8V3yq.png)](https://imgtu.com/i/j8V3yq)
@@ -259,41 +261,60 @@ Supervisor Cluster的创建会进入一个8个步骤的向导。
 
 1. vCenter Server and Network步骤，这里我们的这个Lab没有NSX，只能选择VDS。点击Next进入下一步。
     [![j8VTnP.png](https://s1.ax1x.com/2022/07/03/j8VTnP.png)](https://imgtu.com/i/j8VTnP)
+    
 2. Cluster步骤，选择tkgs-Cluster，点击Next进入下一步。
     [![j8ZfET.png](https://s1.ax1x.com/2022/07/03/j8ZfET.png)](https://imgtu.com/i/j8ZfET)
+    
 3. Storage步骤，选择Control Plane Storage Policy为`tkgs-demo-storage-policy`。点击Next进入下一步。
     [![j8Zv5D.png](https://s1.ax1x.com/2022/07/03/j8Zv5D.png)](https://imgtu.com/i/j8Zv5D)
+    
 4. Load Balancer步骤，这里需要填入haproxy的相关信息，Name中填入tkghaproxy，Load Balancer Type修改为HAproxy，Management IP Address为Part 1中配置信息里`$HAProxyManagementIPAddress = "10.10.1.102/24"`的地址，同时需要补充默认的HAProxy的服务端口`5556`，Username为`wcp`，Password为`P@ssw0rd`，Virtual IP Ranges为`10.10.3.64-10.10.3.127`。
     HAProxy Management TLS Certificate的内容，需要ssh至HAProxy中找到/etc/haproxy/ca.crt文件获取。
     点击Next进入下一步。
     [![j8udMj.png](https://s1.ax1x.com/2022/07/03/j8udMj.png)](https://imgtu.com/i/j8udMj)
+    
 5. Management Network步骤，Network Mode选择Static，Network选择TKGs-MGMT，为Supervisor配置一个静态IP。点击Next进入下一步。
     [![j8u5e1.png](https://s1.ax1x.com/2022/07/03/j8u5e1.png)](https://imgtu.com/i/j8u5e1)
+    
 6. Workload Network步骤，选择Network Mode为DHCP，Portgroup为tkgs-workload。点击Next进入下一步。
     [![j8uLSe.png](https://s1.ax1x.com/2022/07/03/j8uLSe.png)](https://imgtu.com/i/j8uLSe)
+    
 7. Tanzu Kubernetes Grid Service步骤，选择Content Library为TKG-Content-Library。点击Next进入最后一步。
     [![j8uxeI.png](https://s1.ax1x.com/2022/07/03/j8uxeI.png)](https://imgtu.com/i/j8uxeI)
+    
 8. Review and Confirm步骤，将Control Plane Size从Small更改为Tiny，这时候需要注意的是，还需要回到步骤6中，重新点下Next按钮，使Internal Network for Kubernetes Services从10.96.0.0/23自动更新为10.96.0.0/24。
     [![j8KD6H.png](https://s1.ax1x.com/2022/07/03/j8KD6H.png)](https://imgtu.com/i/j8KD6H)
+    
 9. 点击Finish后，Supervisor Cluster就开始进入自动部署过程，Workload Management界面切换成如下图：
     [![j8KIXj.png](https://s1.ax1x.com/2022/07/03/j8KIXj.png)](https://imgtu.com/i/j8KIXj)
-10. 等待大约30分钟后，就能看到Tanzu Supervisor Cluster进入Running状态，Control Plane Node获取到了正确的ip地址。
+    
+    ### 2.2 部署Tanzu Kubernetes Cluster
+    
+    等待大约30分钟后，就能看到Tanzu Supervisor Cluster进入Running状态，Control Plane Node获取到了正确的ip地址。
     [![j8lO4P.png](https://s1.ax1x.com/2022/07/03/j8lO4P.png)](https://imgtu.com/i/j8lO4P)
-11. 这时候我们可以切换到Namespace标签卡下，创建Namespace了，需要注意的是，这个Namespace并非Kubernetes的Namespace，这是vSphere Tanzu的Namespace，我们的Tanzu Kubernetes Cluster将会创建在这个Namespace之下。
+    
+1. 这时候我们可以切换到Namespace标签卡下，创建Namespace了，需要注意的是，这个Namespace并非Kubernetes的Namespace，这是vSphere Tanzu的Namespace，我们的Tanzu Kubernetes Cluster将会创建在这个Namespace之下。
     [![j8114x.png](https://s1.ax1x.com/2022/07/03/j8114x.png)](https://imgtu.com/i/j8114x)
-12. 创建完Namespace，会看到当前这个Namespace的config Status，为了进行接下去的配置，我们需要在Namespace的管理中进行3项设置，分别是Permissions、Storage和VM Service设置。首先是Permissions，我们通过Add Permissions按钮添加一个管理员用户。
+    
+2. 创建完Namespace，会看到当前这个Namespace的config Status，为了进行接下去的配置，我们需要在Namespace的管理中进行3项设置，分别是Permissions、Storage和VM Service设置。首先是Permissions，我们通过Add Permissions按钮添加一个管理员用户。
     [![j81fVs.png](https://s1.ax1x.com/2022/07/03/j81fVs.png)](https://imgtu.com/i/j81fVs)
-13. 通过Add Storage按钮，为Namespace新增数据存储空间。
+    
+3. 通过Add Storage按钮，为Namespace新增数据存储空间。
     [![j81LqJ.png](https://s1.ax1x.com/2022/07/03/j81LqJ.png)](https://imgtu.com/i/j81LqJ)
-14. 通过Add VM Class按钮，为Namespace添加各种规格的VM，后续的Kubernetes的Node都会自动根据选择的规格来配置相应的CPU和内存。推荐可以将这里默认的16个规格都选择上。
+    
+4. 通过Add VM Class按钮，为Namespace添加各种规格的VM，后续的Kubernetes的Node都会自动根据选择的规格来配置相应的CPU和内存。推荐可以将这里默认的16个规格都选择上。
     [![j83ise.png](https://s1.ax1x.com/2022/07/03/j83ise.png)](https://imgtu.com/i/j83ise)
-15. 通过Add Content Library按钮，将Tanzu Content Library再次关联上。
+    
+5. 通过Add Content Library按钮，将Tanzu Content Library再次关联上。
     [![j83mJP.png](https://s1.ax1x.com/2022/07/03/j83mJP.png)](https://imgtu.com/i/j83mJP)
-16. Namespace全部配置完成后，如下图，这时候就完成了我们Tanzu Kubernetes Cluster创建的所有准备工作了。
+    
+6. Namespace全部配置完成后，如下图，这时候就完成了我们Tanzu Kubernetes Cluster创建的所有准备工作了。
     [![j83NWV.png](https://s1.ax1x.com/2022/07/03/j83NWV.png)](https://imgtu.com/i/j83NWV)
-17. 在上图的Status卡片中，最下面一行，有个Link to CLI Tools，我们需要点击Open，打开一个新网页，在这个网页上，我们能够下载到kubectl vsphere plugins，这个命令行plugins将帮助我们管理和使用Tanzu Kubernetes Cluster。
+    
+7. 在上图的Status卡片中，最下面一行，有个Link to CLI Tools，我们需要点击Open，打开一个新网页，在这个网页上，我们能够下载到kubectl vsphere plugins，这个命令行plugins将帮助我们管理和使用Tanzu Kubernetes Cluster。
     [![j83fyD.png](https://s1.ax1x.com/2022/07/03/j83fyD.png)](https://imgtu.com/i/j83fyD)
-18. 根据网页上的提示，下载安装完成后，我们来到CLI控制台上，使用CLI登入我们的Supervisor Cluster。server地址为步骤10中Control Plane Node中看到的IP地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤12中设置的管理员用户。登入后，会看到Logged in successfully的信息。
+    
+8. 根据网页上的提示，下载安装完成后，我们来到CLI控制台上，使用CLI登入我们的Supervisor Cluster。server地址为步骤10中Control Plane Node中看到的IP地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤12中设置的管理员用户。登入后，会看到Logged in successfully的信息。
 
 ```shell
 c:\bin>kubectl-vsphere.exe login --server=10.10.3.65 --insecure-skip-tls-verify
@@ -315,7 +336,7 @@ To change context, use `kubectl config use-context <workload name>`
 c:\bin>
 ```
 
-19. 这时，我们已经成功登入了Supervisor Cluster，接下去我们会使用以下的yaml配置文件来创建Tanzu Kubernetes Cluster。
+9. 这时，我们已经成功登入了Supervisor Cluster，接下去我们会使用以下的yaml配置文件来创建Tanzu Kubernetes Cluster。
 ```yaml
 apiVersion: run.tanzu.vmware.com/v1alpha1
 kind: TanzuKubernetesCluster
@@ -350,9 +371,10 @@ c:\bin>kubectl apply -f tkc.ymal
 tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created
 ```
 
-20. 等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
+10. 等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
     [![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
-21. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
+11. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
+
 ```shell
 c:\bin>kubectl vsphere login --server=10.10.3.65 --tanzu-kubernetes-cluster-name sedemo-tkc-01 --tanzu-kubernetes-cluster-namespace tkgs --vsphere-username administrator@tkg.local --insecure-skip-tls-verify
 
@@ -371,4 +393,4 @@ logging in again later, or contact your cluster administrator.
 To change context, use `kubectl config use-context <workload name>`
 ```
 
-22. 至此，我们已经能够正常访问我们的Kubernetes cluster 了，可以通过所有常规的kubectl命令执行所有的管理任务。
+至此，我们已经能够正常访问我们的Kubernetes cluster 了，可以通过所有常规的kubectl命令执行所有的管理任务。
