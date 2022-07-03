@@ -337,6 +337,7 @@ c:\bin>
 ```
 
 9. 这时，我们已经成功登入了Supervisor Cluster，接下去我们会使用以下的yaml配置文件来创建Tanzu Kubernetes Cluster。
+
 ```yaml
 apiVersion: run.tanzu.vmware.com/v1alpha1
 kind: TanzuKubernetesCluster
@@ -373,6 +374,7 @@ tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created
 
 10. 等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
     [![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
+
 11. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
 
 ```shell
