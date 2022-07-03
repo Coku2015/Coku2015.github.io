@@ -295,104 +295,97 @@ Supervisor Cluster的创建会进入一个8个步骤的向导。
 
 1. 这时候我们可以切换到Namespace标签卡下，创建Namespace了，需要注意的是，这个Namespace并非Kubernetes的Namespace，这是vSphere Tanzu的Namespace，我们的Tanzu Kubernetes Cluster将会创建在这个Namespace之下。
     [![j8114x.png](https://s1.ax1x.com/2022/07/03/j8114x.png)](https://imgtu.com/i/j8114x)
-    
 2. 创建完Namespace，会看到当前这个Namespace的config Status，为了进行接下去的配置，我们需要在Namespace的管理中进行3项设置，分别是Permissions、Storage和VM Service设置。首先是Permissions，我们通过Add Permissions按钮添加一个管理员用户。
     [![j81fVs.png](https://s1.ax1x.com/2022/07/03/j81fVs.png)](https://imgtu.com/i/j81fVs)
-    
 3. 通过Add Storage按钮，为Namespace新增数据存储空间。
     [![j81LqJ.png](https://s1.ax1x.com/2022/07/03/j81LqJ.png)](https://imgtu.com/i/j81LqJ)
-    
 4. 通过Add VM Class按钮，为Namespace添加各种规格的VM，后续的Kubernetes的Node都会自动根据选择的规格来配置相应的CPU和内存。推荐可以将这里默认的16个规格都选择上。
     [![j83ise.png](https://s1.ax1x.com/2022/07/03/j83ise.png)](https://imgtu.com/i/j83ise)
-    
 5. 通过Add Content Library按钮，将Tanzu Content Library再次关联上。
     [![j83mJP.png](https://s1.ax1x.com/2022/07/03/j83mJP.png)](https://imgtu.com/i/j83mJP)
-    
 6. Namespace全部配置完成后，如下图，这时候就完成了我们Tanzu Kubernetes Cluster创建的所有准备工作了。
     [![j83NWV.png](https://s1.ax1x.com/2022/07/03/j83NWV.png)](https://imgtu.com/i/j83NWV)
-    
 7. 在上图的Status卡片中，最下面一行，有个Link to CLI Tools，我们需要点击Open，打开一个新网页，在这个网页上，我们能够下载到kubectl vsphere plugins，这个命令行plugins将帮助我们管理和使用Tanzu Kubernetes Cluster。
     [![j83fyD.png](https://s1.ax1x.com/2022/07/03/j83fyD.png)](https://imgtu.com/i/j83fyD)
+8. 根据网页上的提示，下载安装完成后，我们来到CLI控制台上，使用CLI登入我们的Supervisor Cluster。server地址为中Control Plane Node中看到的IP地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤2中设置的管理员用户。登入后，会看到Logged in successfully的信息。
+
+    ```shell
+    c:\bin>kubectl-vsphere.exe login --server=10.10.3.65 --insecure-skip-tls-verify
     
-8. 根据网页上的提示，下载安装完成后，我们来到CLI控制台上，使用CLI登入我们的Supervisor Cluster。server地址为步骤10中Control Plane Node中看到的IP地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤12中设置的管理员用户。登入后，会看到Logged in successfully的信息。
-
-```shell
-c:\bin>kubectl-vsphere.exe login --server=10.10.3.65 --insecure-skip-tls-verify
-
-Username: administrator@tkg.local
-KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the         password below
-Password:
-Logged in successfully.
-
-You have access to the following contexts:
-   10.10.3.65
-   tkgs
-
-If the context you wish to use is not in this list, you may need to try
-logging in again later, or contact your cluster administrator.
-
-To change context, use `kubectl config use-context <workload name>`
-
-c:\bin>
-```
+    Username: administrator@tkg.local
+    KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the         password below
+    Password:
+    Logged in successfully.
+    
+    You have access to the following contexts:
+       10.10.3.65
+       tkgs
+    
+    If the context you wish to use is not in this list, you may need to try
+    logging in again later, or contact your cluster administrator.
+    
+    To change context, use `kubectl config use-context <workload name>`
+    
+    c:\bin>
+    ```
 
 9. 这时，我们已经成功登入了Supervisor Cluster，接下去我们会使用以下的yaml配置文件来创建Tanzu Kubernetes Cluster。
 
-```yaml
-apiVersion: run.tanzu.vmware.com/v1alpha1
-kind: TanzuKubernetesCluster
-metadata:
-  name: sedemo-tkc-01
-  namespace: tkgs
-spec:
-  distribution:
-    version: v1.21
-  topology:
-    controlPlane:
-      class: best-effort-xsmall
-      count: 1
-      storageClass: tkgs-demo-storage-policy
-    workers:
-      class: best-effort-small
-      count: 2
-      storageClass: tkgs-demo-storage-policy
-  settings:
-    storage:
-      classes: ["tkgs-demo-storage-policy"]              #Named PVC storage     classes
-      defaultClass: tkgs-demo-storage-policy
-```
+    ```yaml
+    apiVersion: run.tanzu.vmware.com/v1alpha1
+    kind: TanzuKubernetesCluster
+    metadata:
+      name: sedemo-tkc-01
+      namespace: tkgs
+    spec:
+      distribution:
+        version: v1.21
+      topology:
+        controlPlane:
+          class: best-effort-xsmall
+          count: 1
+          storageClass: tkgs-demo-storage-policy
+        workers:
+          class: best-effort-small
+          count: 2
+          storageClass: tkgs-demo-storage-policy
+      settings:
+        storage:
+          classes: ["tkgs-demo-storage-policy"]              #Named PVC storage     classes
+          defaultClass: tkgs-demo-storage-policy
+    ```
 
-    其中，metadata下的name为创建出来的cluster的名字，Namespace则是vSphere中我们刚刚创建的Namespace名称。
-    spec下的内容里，distribution为需要创建的Kubernetes的版本。topology-controlplane-class/topology-workers-class分别是对应步骤14中，我们所设定的VM class类型，此处分别选择为best-effort-xsmall和best-effort-small。数量分别是1和2。
+	其中，metadata下的name为创建出来的cluster的名字，Namespace则是vSphere中我们刚刚创建的Namespace名称。
+	spec下的内容里，distribution为需要创建的Kubernetes的版本。topology-controlplane-class/topology-workers-class分别是对应步骤14中，我们所设定的VM class类型，此处分别选择为best-effort-xsmall和best-effort-small。数量分别是1和2。
+	运行下面的命令，Tanzu Kubernetes Cluster会自动在vCenter中创建出来：
+
+    ```shell
+    c:\bin>kubectl apply -f tkc.ymal
+    tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created
+    ```
+
+    等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
+
+		[![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
+
+10. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
+
+    ```shell
+    c:\bin>kubectl vsphere login --server=10.10.3.65 --tanzu-kubernetes-cluster-name sedemo-tkc-01 --tanzu-kubernetes-cluster-namespace tkgs --vsphere-username administrator@tkg.local --insecure-skip-tls-verify
     
-    运行下面的命令，Tanzu Kubernetes Cluster会自动在vCenter中创建出来：
-
-```shell
-c:\bin>kubectl apply -f tkc.ymal
-tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created
-```
-
-10. 等待几分钟后，在vCenter中，能够看到被创建出来的3台VM，如图。
-    [![j8JgWq.png](https://s1.ax1x.com/2022/07/03/j8JgWq.png)](https://imgtu.com/i/j8JgWq)
-
-11. 再次回到CLI控制台，执行如下登录命令，我们可以登入到Tanzu Kubernetes Guest Cluster中。
-
-```shell
-c:\bin>kubectl vsphere login --server=10.10.3.65 --tanzu-kubernetes-cluster-name sedemo-tkc-01 --tanzu-kubernetes-cluster-namespace tkgs --vsphere-username administrator@tkg.local --insecure-skip-tls-verify
-
-KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the password below
-Password:
-Logged in successfully.
-
-You have access to the following contexts:
-   10.10.3.65
-   sedemo-tkc-01
-   tkgs
-
-If the context you wish to use is not in this list, you may need to try
-logging in again later, or contact your cluster administrator.
-
-To change context, use `kubectl config use-context <workload name>`
-```
+    KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the password below
+    Password:
+    Logged in successfully.
+    
+    You have access to the following contexts:
+       10.10.3.65
+       sedemo-tkc-01
+       tkgs
+    
+    If the context you wish to use is not in this list, you may need to try
+    logging in again later, or contact your cluster administrator.
+    
+    To change context, use `kubectl config use-context <workload name>`
+    ```
 
 至此，我们已经能够正常访问我们的Kubernetes cluster 了，可以通过所有常规的kubectl命令执行所有的管理任务。
