@@ -294,6 +294,7 @@ Supervisor Cluster的创建会进入一个8个步骤的向导。
 17. 在上图的Status卡片中，最下面一行，有个Link to CLI Tools，我们需要点击Open，打开一个新网页，在这个网页上，我们能够下载到kubectl vsphere plugins，这个命令行plugins将帮助我们管理和使用Tanzu Kubernetes Cluster。
     [![j83fyD.png](https://s1.ax1x.com/2022/07/03/j83fyD.png)](https://imgtu.com/i/j83fyD)
 18. 根据网页上的提示，下载安装完成后，我们来到CLI控制台上，使用CLI登入我们的Supervisor Cluster。server地址为步骤10中Control Plane Node中看到的IP地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤12中设置的管理员用户。登入后，会看到Logged in successfully的信息。
+
 ```shell
 c:\bin>kubectl-vsphere.exe login --server=10.10.3.65 --insecure-skip-tls-verify
 
@@ -313,6 +314,7 @@ To change context, use `kubectl config use-context <workload name>`
 
 c:\bin>
 ```
+
 19. 这时，我们已经成功登入了Supervisor Cluster，接下去我们会使用以下的yaml配置文件来创建Tanzu Kubernetes Cluster。
 ```yaml
 apiVersion: run.tanzu.vmware.com/v1alpha1
