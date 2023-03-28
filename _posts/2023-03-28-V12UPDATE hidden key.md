@@ -11,7 +11,7 @@ tags: VBR
 
 #### Repair 修复VACM文件
 
-我们知道，v12更新后几乎所有的数据都能够在Veeam Hardened Repository(VHR)中，但是对于Oracle RMAN、SAP Hana和新推出的SQL Plugins，他们的 Backup job metadata (VACM)是无法实现WORM功能的。这时候会出现一种情况就是黑客恶意删除了VACM文件，造成VACM文件丢失。
+我们知道，v12更新后几乎所有的数据都能够安全地储存在Veeam Hardened Repository(VHR)中，但是对于Oracle RMAN、SAP Hana和新推出的SQL Plugins，他们的 Backup job metadata (VACM)是无法实现WORM功能的。这时候会出现一种情况就是黑客恶意删除了VACM文件，造成VACM文件丢失。
 
 在Enterprise Plugin备份存档中，按住Ctrl后点击鼠标右键，可以调出两个新菜单，其中一个是Repair按钮，这个按钮可以用于修复备份作业的metadata文件。
 
@@ -35,7 +35,7 @@ SOBR使用时间久了，特别是不同容量混用存放大量虚拟机的时�
 
 ### 新增隐藏的鼠标右键
 
-由于全新的Per-vm backup chain的能力，在备份作业历史记录中，每一个机器都新增了全新的右键按钮。这个按钮包含两种功能，一个是Active full全备份，另外一个是Retry。在以前的版本中，这两个功能都仅针对整个备份作业有效，也就是说，当我有个作业中有4个虚拟机/物理机时，我如果需要进行一次全新的Active Full操作，那么这4个机器将会都被同时执行Active Full，无法为单台机器进行单独操作；而v12中，对于每一台机器新增的右键按钮，就可以帮助实现这一功能。
+由于全新的Per-vm backup chain的能力，在备份作业历史记录中，每一个机器都新增了全新的右键按钮。这个按钮包含两种功能，一个是Active full全备份，另外一个是Retry。在以前的版本中，这两个功能都仅针对整个备份作业有效，也就是说，当我有个作业中有4个虚拟机/物理机时，我如果需要进行一次全新的Active Full操作，那么这4个机器将会都被同时执行Active Full，无法为单台机器进行单独操作；而v12中，每一台机器都可以单独进行操作了。
 
 [![pp6C2HP.png](https://s1.ax1x.com/2023/03/28/pp6C2HP.png)](https://imgse.com/i/pp6C2HP)
 
