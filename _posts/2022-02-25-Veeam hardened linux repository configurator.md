@@ -32,7 +32,7 @@ https://github.com/Coku2015/Veeam_Repo_Configurator
 ## 脚本使用详解
 下载脚本：
 ```bash
-curl -O https://raw.githubusercontent.com/Coku2015/Veeam_Repo_Configurator/main/HLRepo_configurator.sh
+curl -O https://ghproxy/https://raw.githubusercontent.com/Coku2015/Veeam_Repo_Configurator/main/HLRepo_configurator.sh
 ```
 
 运行脚本
@@ -46,6 +46,6 @@ bash HLRepo_configurator.sh
 3. 为服务器上空闲的磁盘创建LVM卷，并格式化成xfs文件系统，启用reflink功能用于VBR的fast clone功能。
 4. 往/etc/fstab文件中添加记录并挂载格式化后的磁盘空间，分配用户权限。
 [![bkKzhd.png](https://s4.ax1x.com/2022/02/24/bkKzhd.png)](https://imgtu.com/i/bkKzhd)
-5. 回VBR控制台配置备份存储库，配置完成后，锁定Veeam存储管理用户，禁止登陆，同时提示用户禁用SSH访问，进一步加固系统。
+5. 回VBR控制台配置备份存储库，配置完成后，脚本会锁定Veeam存储管理用户，禁止登陆，同时提示用户禁用SSH访问，进一步加固系统。
 [![bkKxtH.png](https://s4.ax1x.com/2022/02/24/bkKxtH.png)](https://imgtu.com/i/bkKxtH)
 
