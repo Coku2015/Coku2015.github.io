@@ -14,7 +14,9 @@ tags: VMware, Kubernetes, Instant Recovery
 
 ### k3s 节点/集群安装配置
 
-今天的例子中，我的 Kubernetes 使用了轻量级的 K3S 1.25s1 版本，安装在一台 Ubuntu 20.04 上，配置成单节点启动实验环境。默认部署的 K3S 会禁用大多数 Cloud Provider，因此我需要调整一下 K3S 的安装参数，然后额外安装 VMware Cloud Manager。
+本次 Demo 实验环境是部署在我家 HomeLab 中一台 NUC11 猎豹峡谷上，这台 NUC 配置了 64G 内存和 1 块 NVME 的 SSD 硬盘，上面运行的是 vSphere 7u3。
+
+在这个环境中，我的 Kubernetes 使用了轻量级的 K3S 1.25s1 版本，安装在一台 Ubuntu 20.04 上，配置成单节点启动实验环境。默认部署的 K3S 会禁用大多数 Cloud Provider，因此我需要调整一下 K3S 的安装参数，然后额外安装 VMware Cloud Manager。
 
 ```bash
 # 安装命令
