@@ -229,7 +229,7 @@ kubectl apply -f demo.yaml
 
 ## 配置 Loadbalance
 
-在我的 Demo 中，我还多配置了一个本地的 Loadbalance，用来为我的应用分配 IP 地址，在这里我选用了 MetalLB(https://metallb.universe.tf/)。安装也非常简单，在我的环境中，我使用了 0.13.9 的版本，从官网下载 yaml 文件，然后修改下镜像库即可。
+在我的 Demo 中，我还多配置了一个本地的 Loadbalance，用来为我的应用分配 IP 地址，在这里我选用了 [MetalLB](https://metallb.universe.tf/)。安装也非常简单，在我的环境中，我使用了 0.13.9 的版本，从官网下载 yaml 文件，然后修改下镜像库即可。
 
 ```bash
 curl -O https://ghproxy/https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
