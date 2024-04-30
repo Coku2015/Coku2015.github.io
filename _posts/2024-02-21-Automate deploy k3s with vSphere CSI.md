@@ -40,15 +40,14 @@ $ sed -i 's/#\?PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/s
 # 重启ssh服务
 $ systemctl restart sshd
 # 加入sudo免密码(如果username不是ubuntu，请修改下面的命令)
-$ echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
-$ curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
+$ echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # 修复 VMware 自定义配置问题，详情可以参考VMware KB56409
 $ sed -i '/^\[Unit\]/a After=dbus.service' /lib/systemd/system/open-vm-tools.service
 $ awk 'NR==11 {$0="#D /tmp 1777 root root -"} 1' /usr/lib/tmpfiles.d/tmp.conf | tee /usr/lib/tmpfiles.d/tmp.conf
 # 禁用 Cloud Init
 $ touch /etc/cloud/cloud-init.disabled
 # 更新系统
-$ apt clean
+$ apt cleaan
 $ apt update -y
 $ apt upgrade -y
 # 删除machine-id，避免模版部署后同ID冲突

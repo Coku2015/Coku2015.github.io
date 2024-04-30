@@ -105,13 +105,13 @@ while True:
 
 VBR中的备份任务没什么特别的，一个普通的VMware虚拟机备份作业，不需要开启应用感知，直接进行备份。
 
-![Xnip2023-12-15_11-05-43](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_11-05-43.png)
+![Xnip2023-12-15_11-05-43](https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png)
 
 #### 数据恢复一 ：整机故障
 
 出现了系统级的故障后，通过VBR可以执行整机的即时恢复，不仅服务器能够恢复，数据库也能完美恢复。在VBR控制台中启动即时虚拟机恢复后，MySQL能在2分钟内恢复上线。
 
-![Xnip2023-12-15_11-27-59](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_11-27-59.png)
+![Xnip2023-12-15_11-27-59](https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png)
 
 我们来看看恢复后的数据库，数据库成功通过InnoDB的自我恢复模式使用crash recovery恢复。
 
@@ -158,11 +158,11 @@ mysql> select * from time order by id desc LIMIT 10;
 
 找到VBR控制台的MySQL存档，在右键菜单中，选择`Restore guest files-> Linux and other...`，就能打开MySQL的文件级还原向导。
 
-![Xnip2023-12-15_11-55-18](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_11-55-18.png)
+![Xnip2023-12-15_11-55-18](https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png)
 
 打开后，在图形化恢复界面中，可以快速找到/var/lib/mysql的数据目录，看到其中的详细每一个文件。
 
-![Xnip2023-12-15_12-46-34](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_12-46-34.png)
+![Xnip2023-12-15_12-46-34](https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png)
 
 选择文件或者目录后，把/var/lib/mysql整个目录还原回源机或者新服务器，即可完成数据还原。完成数据还原后，在MySQL服务器上，检查下目录的权限，如果owner和group不正确，就通过以下命令调整一下权限，然后启动mysql即可。
 
@@ -212,11 +212,11 @@ Query OK, 0 rows affected (0.00 sec)
 
 接着，我们找到备份数据中的time.idb文件，如图做一个单文件的文件级恢复：
 
-![Xnip2023-12-15_13-18-21](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_13-18-21.png)
+![Xnip2023-12-15_13-18-21](https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png)
 
 恢复至对应的数据库目录下以后，VBR中能够看到恢复成功信息如图：
 
-![Xnip2023-12-15_13-22-49](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_13-22-49.png)
+![Xnip2023-12-15_13-22-49](https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png)
 
 然后我们需要将刚刚从数据实验室中取出来的time.cfg文件一样还原至/var/lib/mysql/leitestdb/目录下，确保还原后该目录下内容如下：
 
@@ -264,11 +264,11 @@ mysql> SELECT * from time order by id desc LIMIT 5;
 
 在VBR控制台中找到MySQL的存档，右键恢复菜单中，能看到`Publish Disks`选项。
 
-![Xnip2023-12-15_14-23-16](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_14-23-16.png)
+![Xnip2023-12-15_14-23-16](https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png)
 
 简单跟着向导输入一些目标机器的信息，磁盘就能备发布挂载至对应的Linux服务器的/tmp目录下了。
 
-![Xnip2023-12-15_14-26-00](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_14-26-00.png)
+![Xnip2023-12-15_14-26-00](https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png)
 
 我们回到MySQL服务器上，进入这个目录看一看
 
@@ -331,7 +331,7 @@ lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-
 
 在恢复结束后，不要忘记在VBR中取消磁盘发布。
 
-![Xnip2023-12-15_14-31-01](/Users/lei/Library/CloudStorage/SynologyDrive-Lei/Lei-MacBook Pro Picture/Xnipshot/Xnip2023-12-15_14-31-01.png)
+![Xnip2023-12-15_14-31-01](https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png)
 
 ## 总结
 
