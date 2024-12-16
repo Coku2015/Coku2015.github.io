@@ -28,21 +28,21 @@ tags: Backup, Security
 
 在 Veeam B&R 中，以下关键操作需通过四眼认证：
 
-#### **1. 删除备份操作**
+**1. 删除备份操作**
 
 - 删除备份文件、快照或不可用备份记录。
 
-#### **2. 存储基础设施管理**
+**2. 存储基础设施管理**
 
 - 删除备份存储库或存储资源。
 
-#### **3. 用户管理与身份验证**
+**3. 用户管理与身份验证**
 
 - 添加、更新或删除用户及用户组。
 - 启用或修改多因素认证（MFA）。
 - 调整自动注销设置。
 
-#### **4. Veeam Cloud Connect 相关操作**
+**4. Veeam Cloud Connect 相关操作**
 
 - 服务提供商：删除云存储库，删除导入的租户备份文件。
 - 租户：删除服务提供商，删除备份文件。
@@ -57,16 +57,16 @@ tags: Backup, Security
 
 四眼认证在 VDP 中通过以下机制确保操作安全：
 
-#### **1. 操作请求的创建**
+**1. 操作请求的创建**
 
 备份管理员提交敏感操作时，系统会生成请求，需额外审批方可执行。
 
-#### **2. 请求审批的通知与展示**
+**2. 请求审批的通知与展示**
 
 - **Veeam 控制台**：请求显示在“Home”视图的“Pending Approvals”节点下。
 - **邮件通知**：已配置全局通知的管理员会收到审批提醒。
 
-#### **3. 审批与处理**
+**3. 审批与处理**
 如图，管理员或安全管理员审批界面：
 
 ![four_eyes.png](https://s2.loli.net/2024/12/15/qTQMO6jel8mUXZ3.png)
@@ -75,7 +75,7 @@ tags: Backup, Security
 - 备份管理员或安全管理员可批准或拒绝请求，支持批量处理。
 - 请求创建者仅能取消其提交的请求，无法自行批准。
 
-#### **4. 超时自动拒绝**
+**4. 超时自动拒绝**
 
 未在规定时间内处理的请求（默认 7 天）将自动被拒绝，避免悬而未决的风险。
 
@@ -83,12 +83,12 @@ tags: Backup, Security
 
 ### **前提条件与限制**
 
-#### **前提条件**
+**前提条件**
 
 - 功能仅适用于**Veeam Universal License**或**Enterprise Plus**版本。
 - 订阅许可证到期后，已创建请求仍可处理，但无法提交新请求。
 
-#### **限制条件**
+**限制条件**
 
 1. **不支持的操作：**
    - 通过 PowerShell、REST API 或 Veeam Backup Enterprise Manager 执行删除操作。
@@ -102,14 +102,14 @@ tags: Backup, Security
 
 ### **如何配置四眼认证模式**
 
-#### **1. 用户角色配置**
+**1. 用户角色配置**
 
 确保至少两名用户具备以下角色之一：
 
 - **Veeam Backup Administrator**
 - **Veeam Security Administrator**
 
-#### **2. 启用四眼认证**
+**2. 启用四眼认证**
 
 1. 打开**Users and Roles > Authorization**设置。
 2. 勾选**Require additional approval for sensitive operations**选项。
@@ -117,7 +117,7 @@ tags: Backup, Security
 
 ![four_eyes_enable](https://s2.loli.net/2024/12/15/EjRraw8kIC5Hcvf.png)
 
-#### **3. 关闭四眼认证**
+**3. 关闭四眼认证**
 
 关闭功能也需另一位管理员审批，确保设置变更的安全性。
 
