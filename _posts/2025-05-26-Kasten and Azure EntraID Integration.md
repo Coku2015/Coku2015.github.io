@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用 Azure EntraID 为 Kasten 控制台提供多因子验证
+title: 使用 Azure EntraID 为 Kasten 控制台提供多因子验证 
 tags: Kubernetes
 ---
 
