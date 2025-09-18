@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ：让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略
+title: 让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略
 tags: VBR
 ---
 
