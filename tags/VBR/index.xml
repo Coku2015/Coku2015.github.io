@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VBR on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/VBR/</link>
+    <link>https://blog.backupnext.cloud/tags/VBR/</link>
     <description>Recent content in VBR on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,110 +10,110 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Tue, 23 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/VBR/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/VBR/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>深度解读：Veeam V13 的发布策略与部署选择</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-06/</link>
       <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-06/</guid>
       <description>&lt;p&gt;最近，Veeam 在 &lt;a href=&#34;https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;R&amp;amp;D 论坛上&lt;/a&gt;由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。&lt;/p&gt;</description>
     </item>
     <item>
       <title>把复杂留给 Veeam：Infrastructure Appliance 上手指南</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-05/</link>
       <pubDate>Mon, 22 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-05/</guid>
       <description>&lt;p&gt;Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 &lt;strong&gt;Veeam Infrastructure Appliance&lt;/strong&gt;。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。&lt;/p&gt;</description>
     </item>
     <item>
       <title>让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-04/</link>
       <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-04/</guid>
       <description>&lt;p&gt;在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：&lt;strong&gt;在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新&lt;/strong&gt;。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。&lt;/p&gt;</description>
     </item>
     <item>
       <title>你必须知道的：Veeam Software Appliance 全新的管理使用方法</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/</link>
       <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/</guid>
       <description>&lt;p&gt;在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。&lt;/p&gt;</description>
     </item>
     <item>
       <title>有手就能装！Veeam Software Appliance 一步一步带你部署</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/</link>
       <pubDate>Fri, 05 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/</guid>
       <description>&lt;p&gt;在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 &lt;strong&gt;Veeam Software Appliance&lt;/strong&gt; 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 &lt;strong&gt;Veeam Software Appliance&lt;/strong&gt; 的部署和使用。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-01/</link>
       <pubDate>Thu, 04 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-01/</guid>
       <description>&lt;h2 id=&#34;前言veeam-software-appliance-发布背景&#34;&gt;前言：Veeam Software Appliance 发布背景&lt;/h2&gt;&#xA;&lt;p&gt;昨天 Veeam 官网悄悄上线了一个新产品：&lt;a href=&#34;https://www.veeam.com/blog/veeam-software-appliance.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Veeam Software Appliance&lt;/a&gt;。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 + 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VBR备份和恢复MySQL最佳实践</title>
-      <link>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</link>
+      <link>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</link>
       <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</guid>
+      <guid>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</guid>
       <description>&lt;p&gt;在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam全线产品2023年下半年度重磅更新</title>
-      <link>http://192.168.16.79:1313/2023/12/vdp23h2-update/</link>
+      <link>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</link>
       <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/12/vdp23h2-update/</guid>
+      <guid>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</guid>
       <description>&lt;p&gt;就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VBR v12 中的那些隐藏键</title>
-      <link>http://192.168.16.79:1313/2023/03/v12update-hidden-key/</link>
+      <link>https://blog.backupnext.cloud/2023/03/v12update-hidden-key/</link>
       <pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/03/v12update-hidden-key/</guid>
+      <guid>https://blog.backupnext.cloud/2023/03/v12update-hidden-key/</guid>
       <description>&lt;p&gt;在 VBR v10 的时候，产品中加入了一些隐藏功能，最近 v12 发布后，隐藏按键和功能又多了一些。&lt;/p&gt;&#xA;&lt;h3 id=&#34;ctrl鼠标右键&#34;&gt;[Ctrl]+鼠标右键&lt;/h3&gt;&#xA;&lt;h4 id=&#34;repair-修复-vacm-文件&#34;&gt;Repair 修复 VACM 文件&lt;/h4&gt;&#xA;&lt;p&gt;我们知道，v12 更新后几乎所有的数据都能够安全地储存在 Veeam Hardened Repository(VHR) 中，但是对于 Oracle RMAN、SAP Hana 和新推出的 SQL Plugins，他们的 Backup job metadata (VACM) 是无法实现 WORM 功能的。这时候会出现一种情况就是黑客恶意删除了 VACM 文件，造成 VACM 文件丢失。&lt;/p&gt;</description>
     </item>
     <item>
       <title>免费好工具，绝不套路</title>
-      <link>http://192.168.16.79:1313/2021/03/gift-from-veeam-free-community-edition/</link>
+      <link>https://blog.backupnext.cloud/2021/03/gift-from-veeam-free-community-edition/</link>
       <pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/03/gift-from-veeam-free-community-edition/</guid>
+      <guid>https://blog.backupnext.cloud/2021/03/gift-from-veeam-free-community-edition/</guid>
       <description>&lt;p&gt;IT 管理员的绝佳搭档，完全免费！&lt;/p&gt;&#xA;&lt;p&gt;今天来给大家介绍 Veeam Software 的免费好工具，推荐给每一位 IT 管理员，Veeam 作为备份解决方案领域的领军者，除了有强大的旗舰产品 Veeam Availability Suite 之外，还为每一位 IT 管理员配备了全套的免费工具。这些工具完全没有任何广告、没有任何限制、可以随意使用，但是这又和开源软件有所不同，Veeam 称它们为社区版软件。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam 备份服务器升级指南</title>
-      <link>http://192.168.16.79:1313/2021/03/how-to-upgrade-vbr-v11-edition/</link>
+      <link>https://blog.backupnext.cloud/2021/03/how-to-upgrade-vbr-v11-edition/</link>
       <pubDate>Wed, 03 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/03/how-to-upgrade-vbr-v11-edition/</guid>
+      <guid>https://blog.backupnext.cloud/2021/03/how-to-upgrade-vbr-v11-edition/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;2 月 25 日，Veeam 推出全新的 v11 版本，在去年，我曾经写过一篇升级到 v10 的帖子，其实本次 v11 的升级和之前的 v10 升级没有太多的差别，今天的内容，我将之前的这个帖子提到的做一些针对 v11 的调整，算是一些些小更新吧。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam Agent for Linux 基础知识</title>
-      <link>http://192.168.16.79:1313/2020/09/veeam-linux-agent-101/</link>
+      <link>https://blog.backupnext.cloud/2020/09/veeam-linux-agent-101/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/09/veeam-linux-agent-101/</guid>
+      <guid>https://blog.backupnext.cloud/2020/09/veeam-linux-agent-101/</guid>
       <description>&lt;p&gt;自从年初 Veeam Agent for Linux 4.0（简称 VAL）随着 VBR V10 推出以来，这个功能越来越强大的备份代理使用也越来越广，不管是云上还是云下、虚拟还是物理，总有场景会用到 VAL。然而我们发现对于刚刚接触 VAL 的朋友们其实还是会受到这个代理安装过程的困扰，就算是全自动的推送安装，依然会有朋友会碰到各种各样的安装问题。这让本来以使用体验极佳著称的 Veeam 备份软件变得很尴尬，“It just works!”的口号都不敢随便喊了。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广</title>
-      <link>http://192.168.16.79:1313/2020/06/new-backup-copy/</link>
+      <link>https://blog.backupnext.cloud/2020/06/new-backup-copy/</link>
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/06/new-backup-copy/</guid>
+      <guid>https://blog.backupnext.cloud/2020/06/new-backup-copy/</guid>
       <description>&lt;h2 id=&#34;backup-copy-理论基础&#34;&gt;Backup Copy 理论基础&lt;/h2&gt;&#xA;&lt;p&gt;Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VBR 中的那些隐藏键</title>
-      <link>http://192.168.16.79:1313/2020/05/hidden-key-in-vbr/</link>
+      <link>https://blog.backupnext.cloud/2020/05/hidden-key-in-vbr/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/05/hidden-key-in-vbr/</guid>
+      <guid>https://blog.backupnext.cloud/2020/05/hidden-key-in-vbr/</guid>
       <description>&lt;p&gt;VBR 升级到 v10 之后增加了很多全新的功能，也多了很多隐藏的快捷键，今天我就来说说这些隐藏的秘密。&lt;/p&gt;&#xA;&lt;h3 id=&#34;ctrl鼠标右键&#34;&gt;[Ctrl]+鼠标右键&lt;/h3&gt;&#xA;&lt;p&gt;在不少操作中，可以用到这个 Ctrl+鼠标右键调出特别的菜单，一般来说，如果不按住 Ctrl 键，那么直接鼠标右键是看不见这些隐藏的菜单的。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam 备份服务器升级指南</title>
-      <link>http://192.168.16.79:1313/2020/02/how-to-upgrade-vbr/</link>
+      <link>https://blog.backupnext.cloud/2020/02/how-to-upgrade-vbr/</link>
       <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/02/how-to-upgrade-vbr/</guid>
+      <guid>https://blog.backupnext.cloud/2020/02/how-to-upgrade-vbr/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;Veeam 即将推出全新的 v10 版本，在这个版本中，Veeam 支持从以前的 VBR 升级至 v10 版本，整个平滑升级过程不算复杂，和以往的 VBR 升级一样，当然也有一些细节需要注意。&lt;/p&gt;</description>
     </item>
   </channel>

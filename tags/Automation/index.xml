@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Automation on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/Automation/</link>
+    <link>https://blog.backupnext.cloud/tags/Automation/</link>
     <description>Recent content in Automation on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/Automation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/Automation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用 vSphere PowerCLI 快速完成 Veeam 备份管理员角色创建</title>
-      <link>http://192.168.16.79:1313/2020/06/powercli-vsphere-permission/</link>
+      <link>https://blog.backupnext.cloud/2020/06/powercli-vsphere-permission/</link>
       <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/06/powercli-vsphere-permission/</guid>
+      <guid>https://blog.backupnext.cloud/2020/06/powercli-vsphere-permission/</guid>
       <description>&lt;p&gt;为 Veeam 定制一个最小化的 vSphere 权限账号对于系统管理安全来说非常有必要，但是随着软件的升级功能的增强，对于 vSphere 上需要用到的权限也越来越多，Veeam 在官方的 UserGuide 中提到了详细的 &lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/permissions/cumulativepermissions.html?ver=100&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;细颗粒度权限要求&lt;/a&gt;，此时如果手工去逐个比对、选择，其实还是挺费时挺麻烦的一件事情。&lt;/p&gt;</description>
     </item>
   </channel>

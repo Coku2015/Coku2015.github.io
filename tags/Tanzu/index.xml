@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tanzu on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/Tanzu/</link>
+    <link>https://blog.backupnext.cloud/tags/Tanzu/</link>
     <description>Recent content in Tanzu on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Sun, 03 Jul 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/Tanzu/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/Tanzu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>虚拟化嵌套 TKGs 实验环境自动化脚本</title>
-      <link>http://192.168.16.79:1313/2022/07/nested-tkgs-lab-automation-script/</link>
+      <link>https://blog.backupnext.cloud/2022/07/nested-tkgs-lab-automation-script/</link>
       <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2022/07/nested-tkgs-lab-automation-script/</guid>
+      <guid>https://blog.backupnext.cloud/2022/07/nested-tkgs-lab-automation-script/</guid>
       <description>&lt;p&gt;学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。&lt;/p&gt;</description>
     </item>
   </channel>

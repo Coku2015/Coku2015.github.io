@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Veeam 小工具 on 虚化人生</title>
-    <link>http://192.168.16.79:1313/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
+    <link>https://blog.backupnext.cloud/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
     <description>Recent content in Veeam 小工具 on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,26 +10,26 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Fri, 16 Jun 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>VeeamON 2017 系列之另类 VPN -- Veeam PN</title>
-      <link>http://192.168.16.79:1313/2017/06/veeam-pn-intro/</link>
+      <link>https://blog.backupnext.cloud/2017/06/veeam-pn-intro/</link>
       <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2017/06/veeam-pn-intro/</guid>
+      <guid>https://blog.backupnext.cloud/2017/06/veeam-pn-intro/</guid>
       <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;&#xA;&lt;p&gt;在上个月的 VeeamON 大会上，Veeam 发布了一个全新的产品，这个产品其实和备份是完全没有关系，叫 Veeam PN，全称是 Veeam Powered Network。这是一款轻量级的 SDN 解决方案，能够迅速打通多个站点，实现站点-站点之间的通讯，也可以实现终端-站点的通讯。由于此解决方案功能过于强大，本文不想展开全面介绍，详细内容可以参考 Veeam KB2271 和 VeeamPN 帮助手册。&lt;/p&gt;</description>
     </item>
     <item>
       <title>数据中心备份容量和带宽的计算方法</title>
-      <link>http://192.168.16.79:1313/2017/05/how-to-calculate-backup-size/</link>
+      <link>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</link>
       <pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2017/05/how-to-calculate-backup-size/</guid>
+      <guid>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</guid>
       <description>&lt;p&gt;常常在工作中被问及，你们备份软件，重删效果如何？备份数据占多少空间？其实，就效果而言，这往往会和数据类型以及存放方式直接相关，不同的方式以及不同的设备类型，产生的实际效果差异非常大，因此这个问题说实话是非常难用一句话来回答。但是，无论如何，备份数据是需要磁盘空间进行存储的，在备份项目的设计过程中，必然会有备份存储库的容量设计。通常这个设计会直接关系到用户的存储成本、存储效率以及备份的可用性，因此这个设计在备份项目中非常关键，尽可能准确的设计存储容量和带宽，直接关系到项目的成败。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam 黑科技之 Quick Migration</title>
-      <link>http://192.168.16.79:1313/2017/04/veeam-quick-migration/</link>
+      <link>https://blog.backupnext.cloud/2017/04/veeam-quick-migration/</link>
       <pubDate>Fri, 21 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2017/04/veeam-quick-migration/</guid>
+      <guid>https://blog.backupnext.cloud/2017/04/veeam-quick-migration/</guid>
       <description>&lt;p&gt;vSphere 和 Hyper-V 都拥有自己的一些迁移技术，而 Veeam 作为一个数据保护软件，从数据保护的角度出发，为 IT 管理员提供了另外一种迁移技术。在 Veeam 软件中，该技术通常叫做 Quick Migration。&lt;/p&gt;</description>
     </item>
   </channel>

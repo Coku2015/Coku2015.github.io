@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GIF on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/GIF/</link>
+    <link>https://blog.backupnext.cloud/tags/GIF/</link>
     <description>Recent content in GIF on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,19 +10,19 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/GIF/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/GIF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>备份基础架构高清版 GIF，同步公众号持续更新</title>
-      <link>http://192.168.16.79:1313/2020/09/backup-infra-gifs/</link>
+      <link>https://blog.backupnext.cloud/2020/09/backup-infra-gifs/</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/09/backup-infra-gifs/</guid>
-      <description>&lt;p&gt;Week 01&lt;/p&gt;&#xA;&lt;p&gt;2020/09/07 - 添加 vCenter&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;http://192.168.16.79:1313/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 1.5x, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        title=&#34;wZ2oWR.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/08 - 添加 VMware Windows Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;http://192.168.16.79:1313/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif, https://s1.ax1x.com/2020/09/06/weSFTe.gif 1.5x, https://s1.ax1x.com/2020/09/06/weSFTe.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        title=&#34;weSFTe.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/09 - 添加 VMware Linux Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;http://192.168.16.79:1313/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 1.5x, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        title=&#34;wnrw4A.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/10 - 添加文件备份代理 File Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;http://192.168.16.79:1313/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 1.5x, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        title=&#34;w5OZe1.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/11 - 添加 Windows 服务器直连的磁盘为备份存储库&lt;/p&gt;</description>
+      <guid>https://blog.backupnext.cloud/2020/09/backup-infra-gifs/</guid>
+      <description>&lt;p&gt;Week 01&lt;/p&gt;&#xA;&lt;p&gt;2020/09/07 - 添加 vCenter&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 1.5x, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        title=&#34;wZ2oWR.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/08 - 添加 VMware Windows Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif, https://s1.ax1x.com/2020/09/06/weSFTe.gif 1.5x, https://s1.ax1x.com/2020/09/06/weSFTe.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        title=&#34;weSFTe.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/09 - 添加 VMware Linux Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 1.5x, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        title=&#34;wnrw4A.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/10 - 添加文件备份代理 File Proxy&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 1.5x, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        title=&#34;w5OZe1.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020/09/11 - 添加 Windows 服务器直连的磁盘为备份存储库&lt;/p&gt;</description>
     </item>
     <item>
       <title>微信搜一搜，10 秒学 Veeam</title>
-      <link>http://192.168.16.79:1313/2020/09/new-subscription-daily-gif/</link>
+      <link>https://blog.backupnext.cloud/2020/09/new-subscription-daily-gif/</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/09/new-subscription-daily-gif/</guid>
+      <guid>https://blog.backupnext.cloud/2020/09/new-subscription-daily-gif/</guid>
       <description>&lt;p&gt;Veeam 的软件是一个极致简单的产品，简单易用贯穿了整个产品的设计，但是随着功能越来越多，也许刚刚接触 Veeam 的朋友们会不知道从哪里入手。&lt;/p&gt;&#xA;&lt;p&gt;因此，我新开了一个每日一图的专用公众号，在这个公众号中，每个工作日都会推送一个简单的 GIF 动画，计划通过一个 10 多秒的动画来教您使用 Veeam 产品。&lt;/p&gt;</description>
     </item>
   </channel>

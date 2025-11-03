@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 虚化人生</title>
-    <link>http://192.168.16.79:1313/categories/</link>
+    <link>https://blog.backupnext.cloud/categories/</link>
     <description>Recent content in Categories on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,68 +10,68 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 25 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux Agent</title>
-      <link>http://192.168.16.79:1313/categories/Linux-Agent/</link>
+      <link>https://blog.backupnext.cloud/categories/Linux-Agent/</link>
       <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/Linux-Agent/</guid>
+      <guid>https://blog.backupnext.cloud/categories/Linux-Agent/</guid>
       <description></description>
     </item>
     <item>
       <title>Repository</title>
-      <link>http://192.168.16.79:1313/categories/Repository/</link>
+      <link>https://blog.backupnext.cloud/categories/Repository/</link>
       <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/Repository/</guid>
+      <guid>https://blog.backupnext.cloud/categories/Repository/</guid>
       <description></description>
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>http://192.168.16.79:1313/categories/Kubernetes/</link>
+      <link>https://blog.backupnext.cloud/categories/Kubernetes/</link>
       <pubDate>Thu, 22 Jul 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/Kubernetes/</guid>
+      <guid>https://blog.backupnext.cloud/categories/Kubernetes/</guid>
       <description></description>
     </item>
     <item>
       <title>VMware</title>
-      <link>http://192.168.16.79:1313/categories/VMware/</link>
+      <link>https://blog.backupnext.cloud/categories/VMware/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/VMware/</guid>
+      <guid>https://blog.backupnext.cloud/categories/VMware/</guid>
       <description></description>
     </item>
     <item>
       <title>数据保护</title>
-      <link>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
+      <link>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</guid>
+      <guid>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</guid>
       <description></description>
     </item>
     <item>
       <title>黑科技</title>
-      <link>http://192.168.16.79:1313/categories/%E9%BB%91%E7%A7%91%E6%8A%80/</link>
+      <link>https://blog.backupnext.cloud/categories/%E9%BB%91%E7%A7%91%E6%8A%80/</link>
       <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/%E9%BB%91%E7%A7%91%E6%8A%80/</guid>
+      <guid>https://blog.backupnext.cloud/categories/%E9%BB%91%E7%A7%91%E6%8A%80/</guid>
       <description></description>
     </item>
     <item>
       <title>数据恢复</title>
-      <link>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/</link>
+      <link>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Thu, 18 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/</guid>
+      <guid>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/</guid>
       <description></description>
     </item>
     <item>
       <title>数据备份</title>
-      <link>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/</link>
+      <link>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/</link>
       <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/</guid>
+      <guid>https://blog.backupnext.cloud/categories/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/</guid>
       <description></description>
     </item>
     <item>
       <title>Veeam 小工具</title>
-      <link>http://192.168.16.79:1313/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
+      <link>https://blog.backupnext.cloud/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</guid>
+      <guid>https://blog.backupnext.cloud/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/</guid>
       <description></description>
     </item>
   </channel>

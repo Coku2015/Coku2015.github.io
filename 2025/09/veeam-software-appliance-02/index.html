@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>有手就能装！Veeam Software Appliance 一步一步带你部署 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/">
+        <title>有手就能装！Veeam Software Appliance 一步一步带你部署 - 虚化人生</title><meta name="description" content="在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 Veeam Software Appliance 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 Veeam …"><meta property="og:url" content="https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/">
   <meta property="og:site_name" content="虚化人生">
   <meta property="og:title" content="有手就能装！Veeam Software Appliance 一步一步带你部署">
   <meta property="og:description" content="在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 Veeam Software Appliance 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 Veeam Software Appliance 的部署和使用。">
@@ -14,17 +14,17 @@
     <meta property="article:published_time" content="2025-09-05T00:00:00+00:00">
     <meta property="article:modified_time" content="2025-09-05T00:00:00+00:00">
     <meta property="article:tag" content="VBR">
-    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
   <meta name="twitter:title" content="有手就能装！Veeam Software Appliance 一步一步带你部署">
   <meta name="twitter:description" content="在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 Veeam Software Appliance 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 Veeam Software Appliance 的部署和使用。">
 <meta name="application-name" content="虚化人生">
 <meta name="apple-mobile-web-app-title" content="虚化人生">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/" /><link rel="prev" href="https://blog.backupnext.cloud/2025/09/veeam-software-appliance-01/" /><link rel="next" href="https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -34,11 +34,11 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-02\/"
-        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  3035 ,
-        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-02\/","datePublished": "2025-09-05T00:00:00+00:00","dateModified": "2025-09-05T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@id": "https:\/\/blog.backupnext.cloud\/2025\/09\/veeam-software-appliance-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  3035 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2025\/09\/veeam-software-appliance-02\/","datePublished": "2025-09-05T00:00:00+00:00","dateModified": "2025-09-05T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
             "@type": "Organization",
-            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Lei Wei"
             },"description": ""
@@ -65,18 +65,18 @@
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章" id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                        <button type="button" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                        </button>
+                        <button type="button" class="search-button search-clear" id="search-clear-desktop" title="清空">
                             <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
+                        </button>
                         <span class="search-button search-loading" id="search-loading-desktop">
                             <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
                         </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    </span><button type="button" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a></div>
+                </button></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
@@ -92,22 +92,22 @@
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章" id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                        <button type="button" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                        </button>
+                        <button type="button" class="search-button search-clear" id="search-clear-mobile" title="清空">
                             <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
+                        </button>
                         <span class="search-button search-loading" id="search-loading-mobile">
                             <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                    <button type="button" class="search-cancel" id="search-cancel-mobile">
                         取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
+                    </button>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><button type="button" class="menu-item theme-switch" title="切换主题">
+                        <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                    </button></div>
     </div>
 </header><div class="search-dropdown desktop">
         <div id="search-dropdown-desktop"></div>
@@ -423,7 +423,7 @@ Rufus 是一款非常轻量级、无需安装、功能强大的 U 盘启动盘�
                             <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-02/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-02%2F&amp;text=%E6%9C%89%E6%89%8B%E5%B0%B1%E8%83%BD%E8%A3%85%EF%BC%81Veeam&#43;Software&#43;Appliance&#43;%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E5%B8%A6%E4%BD%A0%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F09%2Fveeam-software-appliance-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F09%2Fveeam-software-appliance-02%2F&amp;text=%E6%9C%89%E6%89%8B%E5%B0%B1%E8%83%BD%E8%A3%85%EF%BC%81Veeam&#43;Software&#43;Appliance&#43;%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E5%B8%A6%E4%BD%A0%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -431,14 +431,16 @@ Rufus 是一款非常轻量级、无需安装、功能强大的 U 盘启动盘�
     <div class="post-info-more">
         <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
         <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
     <div class="post-nav"><a href="/2025/09/veeam-software-appliance-01/" class="prev" rel="prev" title="Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</a>
             <a href="/2025/09/veeam-software-appliance-03/" class="next" rel="next" title="你必须知道的：Veeam Software Appliance 全新的管理使用方法">你必须知道的：Veeam Software Appliance 全新的管理使用方法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-</article></div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
@@ -453,5 +455,5 @@ Rufus 是一款非常轻量级、无需安装、功能强大的 U 盘启动盘�
         <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
 </html>

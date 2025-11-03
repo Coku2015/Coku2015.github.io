@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Automation Powershell on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/Automation-Powershell/</link>
+    <link>https://blog.backupnext.cloud/tags/Automation-Powershell/</link>
     <description>Recent content in Automation Powershell on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 13 Jul 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/Automation-Powershell/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/Automation-Powershell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数据集成 API 真的就只是 API？</title>
-      <link>http://192.168.16.79:1313/2020/07/data-integration-api/</link>
+      <link>https://blog.backupnext.cloud/2020/07/data-integration-api/</link>
       <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2020/07/data-integration-api/</guid>
+      <guid>https://blog.backupnext.cloud/2020/07/data-integration-api/</guid>
       <description>&lt;p&gt;Veeam 发布 v10 之后，推出了一个全新的功能，但是这个功能深深的埋藏在了 Powershell API 之下，并且被冠了一个令人高不可攀的名称：数据集成 API。我相信很多朋友看完这个名字，就可能不太想了解这个功能。对于系统管理员来说，有点略复杂了，还要开发什么东西才能把这个用起来？算了还是不用了。&lt;/p&gt;</description>
     </item>
   </channel>

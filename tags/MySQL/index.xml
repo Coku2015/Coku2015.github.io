@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MySQL on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/MySQL/</link>
+    <link>https://blog.backupnext.cloud/tags/MySQL/</link>
     <description>Recent content in MySQL on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 11 Dec 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/MySQL/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/MySQL/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>VBR备份和恢复MySQL最佳实践</title>
-      <link>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</link>
+      <link>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</link>
       <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</guid>
+      <guid>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</guid>
       <description>&lt;p&gt;在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。&lt;/p&gt;</description>
     </item>
   </channel>

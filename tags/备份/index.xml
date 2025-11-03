@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>备份 on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/%E5%A4%87%E4%BB%BD/</link>
+    <link>https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/</link>
     <description>Recent content in 备份 on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,47 +10,47 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 25 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/%E5%A4%87%E4%BB%BD/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux</title>
-      <link>http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/</link>
+      <link>https://blog.backupnext.cloud/2024/11/veeam-agent-for-linux-nosnap/</link>
       <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/</guid>
+      <guid>https://blog.backupnext.cloud/2024/11/veeam-agent-for-linux-nosnap/</guid>
       <description>&lt;p&gt;Linux 高度自由的开源系统让每个人都有自己使用它自己的使用方式，这让对于操作系统深度依赖的备份软件变的各种不适。细微的一些变化就会引起备份失败，因此备份软件通常都会有一个兼容列表，不在列表中的系统通常无法工作。&lt;/p&gt;</description>
     </item>
     <item>
       <title>【社区预览版】Managed Hardened Repository ISO by Veeam（下）</title>
-      <link>http://192.168.16.79:1313/2024/10/veeam-hardened-repository-iso-2/</link>
+      <link>https://blog.backupnext.cloud/2024/10/veeam-hardened-repository-iso-2/</link>
       <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/10/veeam-hardened-repository-iso-2/</guid>
+      <guid>https://blog.backupnext.cloud/2024/10/veeam-hardened-repository-iso-2/</guid>
       <description>&lt;p&gt;上一期，我给大家介绍了国庆前 Veeam 发布的 Veeam Managed Hardened Repository 社区预览版，今天这一篇，我手把手带大家一步一步来安装和配置这个系统。&lt;/p&gt;&#xA;&lt;p&gt;本次帖子中的部署，为了方便我使用了 VMware 平台上的虚拟机进行部署，大家如果有条件完全可以在物理硬件上进行部署，部署过程中如果发现任何问题，可以随时联系我进行反馈。&lt;/p&gt;</description>
     </item>
     <item>
       <title>【社区预览版】Managed Hardened Repository ISO by Veeam（上）</title>
-      <link>http://192.168.16.79:1313/2024/10/veeam-hardened-repository-iso/</link>
+      <link>https://blog.backupnext.cloud/2024/10/veeam-hardened-repository-iso/</link>
       <pubDate>Thu, 03 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/10/veeam-hardened-repository-iso/</guid>
+      <guid>https://blog.backupnext.cloud/2024/10/veeam-hardened-repository-iso/</guid>
       <description>&lt;p&gt;自从 Veeam v11 起，Veeam 推出了加固的备份存储库，这个存储库已经在全球范围内被 Veeam 的客户广泛使用，很多客户使用自己的 Linux 系统构建了加固存储库，为 Veeam 提供安全可靠的数据存储，成功抵抗了各种勒索病毒的攻击。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Ubuntu系统用于Veeam加固存储库的进一步安全加固</title>
-      <link>http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/</link>
+      <link>https://blog.backupnext.cloud/2024/02/veeam-hardened-ubuntu/</link>
       <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/</guid>
+      <guid>https://blog.backupnext.cloud/2024/02/veeam-hardened-ubuntu/</guid>
       <description>&lt;p&gt;Veeam v12版本发布后，官方手册给出了基于Ubuntu20.04系统构建Veeam加固存储库后&lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;进一步系统安全加固的方法&lt;/a&gt;，并且提供了全自动配置的脚本，因此在使用我的&lt;a href=&#34;https://github.com/Coku2015/Veeam_Repo_Configurator&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Configurator&lt;/a&gt;构建完Ubuntu存储库后，可以用这个自动化配置脚本进行更安全的加固。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam Hardened Linux Repository Configurator</title>
-      <link>http://192.168.16.79:1313/2022/02/veeam-hardened-linux-repository-configurator/</link>
+      <link>https://blog.backupnext.cloud/2022/02/veeam-hardened-linux-repository-configurator/</link>
       <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2022/02/veeam-hardened-linux-repository-configurator/</guid>
+      <guid>https://blog.backupnext.cloud/2022/02/veeam-hardened-linux-repository-configurator/</guid>
       <description>&lt;h2 id=&#34;脚本用途&#34;&gt;脚本用途&lt;/h2&gt;&#xA;&lt;p&gt;根据Veeam最佳实践，一键脚本配置Linux系统，操作系统配置完成后，可以回到VBR控制台完成存储库的添加。&#xA;关于手工配置和原理介绍，请参考以下帖子：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam Agent for Linux 安装深度分析</title>
-      <link>http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/</link>
+      <link>https://blog.backupnext.cloud/2021/10/veeam-agent-for-linux-installation-deep-dive/</link>
       <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/</guid>
+      <guid>https://blog.backupnext.cloud/2021/10/veeam-agent-for-linux-installation-deep-dive/</guid>
       <description>&lt;h2 id=&#34;一组成和作用&#34;&gt;一。组成和作用&lt;/h2&gt;&#xA;&lt;p&gt;Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：&lt;/p&gt;</description>
     </item>
   </channel>

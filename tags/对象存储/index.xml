@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>对象存储 on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</link>
+    <link>https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</link>
     <description>Recent content in 对象存储 on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Veeam Cloud Tier – 云对象存储使用详解（一）</title>
-      <link>http://192.168.16.79:1313/2019/02/cloud-tier-01/</link>
+      <link>https://blog.backupnext.cloud/2019/02/cloud-tier-01/</link>
       <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2019/02/cloud-tier-01/</guid>
+      <guid>https://blog.backupnext.cloud/2019/02/cloud-tier-01/</guid>
       <description>&lt;p&gt;2019 年 1 月 23 日 Veeam 发布了其产品历史上功能最多的一次 Update 包 VBR 9.5U4，其中包含了一系列和云相关的功能模块，本文将会详细讨论其中最主要的一个特性：云对象存储。&lt;/p&gt;</description>
     </item>
   </channel>

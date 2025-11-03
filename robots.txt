@@ -1,8 +1,5 @@
 User-agent: *
-
-Disallow: /images/
-Disallow: /js/
-Disallow: /css/
+Disallow:
 
 User-agent: MJ12bot
 Disallow: /
@@ -61,4 +58,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: http://192.168.16.79:1313/sitemap.xml
+Sitemap: https://blog.backupnext.cloud/sitemap.xml

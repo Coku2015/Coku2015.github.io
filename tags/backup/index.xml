@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Backup on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/backup/</link>
+    <link>https://blog.backupnext.cloud/tags/backup/</link>
     <description>Recent content in Backup on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,96 +10,96 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
-      <link>http://192.168.16.79:1313/2025/09/veeam13-security-features-01/</link>
+      <link>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</link>
       <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2025/09/veeam13-security-features-01/</guid>
+      <guid>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</guid>
       <description>&lt;p&gt;v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。&lt;/p&gt;&#xA;&lt;p&gt;今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp;amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</title>
-      <link>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
+      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
       <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
+      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
       <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号</title>
-      <link>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
+      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
       <pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
+      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
       <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理</title>
-      <link>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
+      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
       <pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
+      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
       <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控</title>
-      <link>http://192.168.16.79:1313/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
+      <link>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
       <pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
+      <guid>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
       <description>&lt;p&gt;在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp;amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</title>
-      <link>http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
+      <link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
       <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
+      <guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
       <description>&lt;p&gt;接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。&lt;/p&gt;&#xA;&lt;p&gt;VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</title>
-      <link>http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
+      <link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
       <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
+      <guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
       <description>&lt;p&gt;去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。&lt;/p&gt;</description>
     </item>
     <item>
       <title>VBR备份和恢复MySQL最佳实践</title>
-      <link>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</link>
+      <link>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</link>
       <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/</guid>
+      <guid>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</guid>
       <description>&lt;p&gt;在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam全线产品2023年下半年度重磅更新</title>
-      <link>http://192.168.16.79:1313/2023/12/vdp23h2-update/</link>
+      <link>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</link>
       <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2023/12/vdp23h2-update/</guid>
+      <guid>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</guid>
       <description>&lt;p&gt;就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam Agent for MAC 单机版使用全攻略</title>
-      <link>http://192.168.16.79:1313/2021/04/mac-agent/</link>
+      <link>https://blog.backupnext.cloud/2021/04/mac-agent/</link>
       <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/04/mac-agent/</guid>
+      <guid>https://blog.backupnext.cloud/2021/04/mac-agent/</guid>
       <description>&lt;p&gt;Veeam Agent for MAC 随着 Veeam v11 版本推出，原本这个产品是集成在 VBR 之中，我也一直以为这个只能是被 VBR 统一管理才能使用，然而当我仔细阅读官网的 UserGuide 之后，发现在 Veeam Agent for MAC 竟然可以工作在 Standalone 模式下。惊喜之下，赶紧动手来玩了一把。&lt;/p&gt;</description>
     </item>
     <item>
       <title>野路子 - 用 Veeam 抵御勒索攻击的另类方法</title>
-      <link>http://192.168.16.79:1313/2021/04/rotated-driver/</link>
+      <link>https://blog.backupnext.cloud/2021/04/rotated-driver/</link>
       <pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/04/rotated-driver/</guid>
+      <guid>https://blog.backupnext.cloud/2021/04/rotated-driver/</guid>
       <description>&lt;p&gt;我觉得这几天朋友们看了不少关于 Veeam 在 v11 中如何抵御勒索软件的方法，但是应该还是没有看够。方法是不是有点太单一？黑客们都在不断研究，我们 IT 管理员们怎么可以停下来。&lt;/p&gt;</description>
     </item>
     <item>
       <title>保存美好回忆，就在此时此刻！</title>
-      <link>http://192.168.16.79:1313/2021/03/world-backup-day/</link>
+      <link>https://blog.backupnext.cloud/2021/03/world-backup-day/</link>
       <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/03/world-backup-day/</guid>
+      <guid>https://blog.backupnext.cloud/2021/03/world-backup-day/</guid>
       <description>&lt;p&gt;今天的内容非常简单，没太多技术含量，纯粹水一把。提醒大家做个备份，不管是个人的还是公司的，对于今天来说，一年一度的这个日子，做一个备份显得尤为重要。今天是世界备份日（World Backup Day）。&lt;/p&gt;</description>
     </item>
     <item>
       <title>数据中心备份容量和带宽的计算方法</title>
-      <link>http://192.168.16.79:1313/2017/05/how-to-calculate-backup-size/</link>
+      <link>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</link>
       <pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2017/05/how-to-calculate-backup-size/</guid>
+      <guid>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</guid>
       <description>&lt;p&gt;常常在工作中被问及，你们备份软件，重删效果如何？备份数据占多少空间？其实，就效果而言，这往往会和数据类型以及存放方式直接相关，不同的方式以及不同的设备类型，产生的实际效果差异非常大，因此这个问题说实话是非常难用一句话来回答。但是，无论如何，备份数据是需要磁盘空间进行存储的，在备份项目的设计过程中，必然会有备份存储库的容量设计。通常这个设计会直接关系到用户的存储成本、存储效率以及备份的可用性，因此这个设计在备份项目中非常关键，尽可能准确的设计存储容量和带宽，直接关系到项目的成败。&lt;/p&gt;</description>
     </item>
   </channel>

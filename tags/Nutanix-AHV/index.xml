@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nutanix AHV on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/Nutanix-AHV/</link>
+    <link>https://blog.backupnext.cloud/tags/Nutanix-AHV/</link>
     <description>Recent content in Nutanix AHV on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,19 +10,19 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 30 Jul 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/Nutanix-AHV/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/Nutanix-AHV/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Veeam Availability for Nutanix AHV 配置和使用系列（二）</title>
-      <link>http://192.168.16.79:1313/2018/07/van-02/</link>
+      <link>https://blog.backupnext.cloud/2018/07/van-02/</link>
       <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2018/07/van-02/</guid>
+      <guid>https://blog.backupnext.cloud/2018/07/van-02/</guid>
       <description>&lt;p&gt;上一期介绍了 &lt;a href=&#34;http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247483910&amp;amp;idx=1&amp;amp;sn=fc9effdd1355334ca52380e518a2ab73&amp;amp;chksm=fdf0a4d3ca872dc5d653cf1c7f78b8f7363a3df3c1f1409ce2f5a4c06eca4fac866eaff1b00c&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;《Veeam Availability for Nutanix AHV 的安装和配置》&lt;/a&gt;，本期来说说 VAN 的备份和恢复。&lt;/p&gt;&#xA;&lt;p&gt;备份 AHV 的虚拟机&lt;/p&gt;&#xA;&lt;p&gt;VAN 的所有备份操作依旧是以备份作业方式，但是和 VMware/Hyper-V 不同的是，Nutanix AHV 的 VM 备份作业都会在 VAN Console 中进行，而不是 VBR 上。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Veeam Availability for Nutanix AHV 配置和使用系列（一）</title>
-      <link>http://192.168.16.79:1313/2018/07/van-01/</link>
+      <link>https://blog.backupnext.cloud/2018/07/van-01/</link>
       <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2018/07/van-01/</guid>
+      <guid>https://blog.backupnext.cloud/2018/07/van-01/</guid>
       <description>&lt;p&gt;Veeam Availability for Nutanix AHV（下文简称 VAN）正式发布了，本文详细介绍下这一新工具的使用方法。&lt;/p&gt;&#xA;&lt;p&gt;此次的软件发布以 Proxy Appliance 形式，到 Veeam 官网直接下载 Zip 包解压即可得到一个 Disk Image，这是一个 vmdk 文件。和其他 Veeam 软件一样，这里官网依旧能够申请到一个 30 天的试用许可。&lt;/p&gt;</description>
     </item>
   </channel>

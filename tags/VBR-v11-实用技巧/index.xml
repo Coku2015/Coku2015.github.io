@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VBR V11 实用技巧 on 虚化人生</title>
-    <link>http://192.168.16.79:1313/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+    <link>https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
     <description>Recent content in VBR V11 实用技巧 on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Mon, 22 Mar 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用了这个方法，您的备份数据再也不怕被勒索了</title>
-      <link>http://192.168.16.79:1313/2021/03/hardened-linux-repository/</link>
+      <link>https://blog.backupnext.cloud/2021/03/hardened-linux-repository/</link>
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/03/hardened-linux-repository/</guid>
+      <guid>https://blog.backupnext.cloud/2021/03/hardened-linux-repository/</guid>
       <description>&lt;p&gt;勒索病毒自从 2017 年 5 月 12 日大规模爆发以来，在过去的 4 年里，也不断的自我进化，产生各种变种病毒，并且学会了各种弱点攻击，甚至是买通了门卫大叔。..&lt;/p&gt;</description>
     </item>
   </channel>

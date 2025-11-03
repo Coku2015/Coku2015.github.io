@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VMware on 虚化人生</title>
-    <link>http://192.168.16.79:1313/categories/VMware/</link>
+    <link>https://blog.backupnext.cloud/categories/VMware/</link>
     <description>Recent content in VMware on 虚化人生</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
@@ -10,12 +10,12 @@
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Fri, 19 Feb 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://192.168.16.79:1313/categories/VMware/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.backupnext.cloud/categories/VMware/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>VMware VAIO 技术概览</title>
-      <link>http://192.168.16.79:1313/2021/02/vmware-vaio-overview/</link>
+      <link>https://blog.backupnext.cloud/2021/02/vmware-vaio-overview/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>http://192.168.16.79:1313/2021/02/vmware-vaio-overview/</guid>
+      <guid>https://blog.backupnext.cloud/2021/02/vmware-vaio-overview/</guid>
       <description>&lt;p&gt;下周，Veeam 即将发布旗舰产品 VAS 套件全新的 v11 版本，在这个版本中最重要的一个功能就是 Veeam CDP。我相信不少朋友期待这个功能已经很久了，而事实上 Veeam 通过接近 5 年的精雕细琢，终于在 v11 中正式发布了这个功能。由于这个 CDP 功能在使用 VMware 相关技术时和以往的备份复制有很大的不同，今天我想带大家提前来做一些准备，介绍一些 CDP 背后使用的 VMware 相关技术和 API 接口，以帮助大家更好的理解这个 CDP 技术。&lt;/p&gt;</description>
     </item>
   </channel>
