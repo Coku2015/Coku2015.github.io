@@ -1,0 +1,88 @@
+# VRO 基础入门（一） -  简介
+
+
+Veeam Data Platform v12 发布后，产品版本做了重新的组合，其中在最高的白金版中包含了 Veeam Recovery Orchestrator （VRO）组件，这个组件是从以前的 Veeam Availability Orchestrator 升级而来，目前的版本是 v6 版本，配合 VBR v12 和 Veeam ONE v12 一起使用。v6 的版本相比之前 v2 的版本有了全面的更新，功能也更加强大，因此我对我的这个基础入门系列文章进行了一轮更新。
+
+## 什么是 VRO？
+
+作为 Veeam 数据管理平台的最高配组件，它全面加强了 Veeam Backup &Replication 在恢复时的能力。在 v6 中能够支持非常丰富的备份和灾备数据，主要包括：
+
+- VBR 备份的 vSphere 虚拟机
+- Veeam Agent 备份的各种 Windows 和 Linux 虚拟机
+- VBR 复制的 vSphere Replica 存档
+- Veeam CDP 复制的 vSphere VM 存档
+- 通过 NetApp 和 HPE 存储设备复制的存储卷（仅限存储用于 vSphere 环境）
+
+在 v6 中，这些数据支持非常丰富的恢复场景和功能，主要包括
+
+ - 能够通过软件的设置，来保证企业实施的灾备基础架构的满足所要求的 RPO 和 RTO；
+ - 能够尽可能自动化的完成灾备的切换过程，该操作同时支持备份存档、复制存档和 CDP 存档；
+ - 能够通过数据实验室，来确保灾备的精准可靠，所有灾备演练将在数据实验室中 1:1 的完整演练。
+
+而对于恢复目的地的选择，VRO 也将范围从单一的 vSphere 扩充到了 Azure 云，支持了 Direct to Azure 的恢复。
+
+VRO 替代了 VBR 中 Recovery、Failover 以及 Surebackup 的操作，可以说是对于这 3 个关键操作的进一步加强，在这些关键操作中，可以加入各种自定义的步骤和脚本，使之能够更加接近实际业务场景中的使用。对于管理员来说，合理的设计这 3 个操作中的额外步骤能极大程度的降低 IT 运维中灾备流程的复杂度。
+
+## VRO 支持哪些场景使用？
+
+VRO 支持的数据中心从简单到复杂，都可以使用，以下仅简单从最基本的架构举两个例子：
+
+### 单个数据中心
+
+![390jqx.png](https://s2.ax1x.com/2020/02/16/390jqx.png)
+
+单个数据中心内，加入 VRO 的组件后，和原有备份的架构几乎没有太大差别，所有 VBR 上的操作不会有任何改变，常规的所有备份恢复操作都在 VBR 上可以完成，而 VRO 则在这里开始担当关键业务的 RPO 和 RTO 的确保任务。通常来说关键业务出现宕机后，都会在原始位置实现恢复，因此也没有特别的专用资源用于恢复准备。
+
+因此，在这种场景下，唯一需要改变的是选择一些关键的 VM，由 VRO 来接管这些 VM 的 RPO 和 RTO。
+
+### 一主一备数据中心
+
+![390OMR.png](https://s2.ax1x.com/2020/02/16/390OMR.png)
+
+稍微复杂点，也是很典型的场景，就是跨区域的主备数据中心，主中心承担生成业务，而备中心承担灾备业务。我们通常备份的设计会将备份存档拷贝到灾备中心进行存放，也可能会将一些关键的 VM 直接 1:1 的复制到灾备中心。而这时候，在灾备中心的数据恢复流程都将可以被编制到 VRO 的 Replica Plan 或 Restore Plan 中，同时这些 Plan 也将会被在相应的 Datalabs 中做完整的恢复演练。
+
+这种场景下，原先备份的架构也没有太大变化，和单数据中心非常相似，只是我们可以规划一部分资源专用于灾备恢复。
+
+## VRO 支持的五种 Plan
+
+VRO 本身并不提供备份和复制功能，所有对于源数据的处理功能，都会在 VBR 中完成。VRO 中目前提供了五种 Plan：
+
+- Replica Plan - 通过 VBR 复制功能创建的的副本恢复计划
+- CDP Replica Plan - 通过 VBR CDP 复制功能创建的副本恢复计划
+- Restore Plan - 通过 VBR vSphere 备份和通过 Veeam Agent 备份创建的备份存档，恢复至 vSphere 恢复计划
+- Storage Plan - 通过 NetApp 和 HPE 存储卷复制创建的 VMware Datastore 恢复计划
+- Cloud Plan - 通过 VBR vSphere 备份和通过 Veeam Agent 备份创建的备份存档，恢复至 Azure 恢复计划
+
+这些 Plan 支持的操作：
+
+  - 资源可用性测试
+  - 完整报告自动生成
+  - 一键式全自动恢复、故障切换
+
+另外，作为 Veeam 产品看家本领，DataLabs 功能在 VRO 中也是极大增强，在 VRO 中不仅能将 DataLabs 用于 Replica Plan 和 Restore Plan 的测试，还能利用 VRO 中强大的脚本和步骤添加功能，自动化的生成各种复杂的用于测试的环境。通过这种增强，复杂的测试用例，复杂的环境部署工作将会被简化成一键式的按钮，极大提升 DataLabs 的使用效率。
+
+## VRO 可以用来做什么？
+
+简单来说，我总结了下，有以下主要能力：
+
+- 全自动恢复到 Azure 云和 VMware 虚拟化
+- “零污染”还原 - 通过智能检测引擎在还原前扫描病毒，确保还原的数据没有被污染
+- 全自动灾备和恢复测试
+- 即时可用的数据实验室创建
+- 全面的应用可用性验证
+- 一键式灾备恢复
+- 全自动动态灾备文档
+
+以上就是 VRO 的简单介绍，欢迎关注 VRO 基础入门系列，在最近一段时间我会陆续更新以下内容：
+
+- [VRO 基础入门（一）-  简介](https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/)
+- [VRO 基础入门（二）-  安装与部署](https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/)
+- [VRO 基础入门（三）-  基本组件 · 上篇](https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/)
+- [VRO 基础入门（四）-  基本组件 · 下篇](https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/)
+- [VRO 基础入门（五）-  成功灾备计划的第一步](https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/)
+- [VRO 基础入门（六）-  数据实验室](https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/)
+- [VRO 基础入门（七）-  Plan Step  · 上篇](https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/)
+- [VRO 基础入门（八）-  Plan Step  · 下篇](https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/)
+- [VRO 基础入门（九）-  文档模板解析](https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/)
+- [VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备](https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/)
+

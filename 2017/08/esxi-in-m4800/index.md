@@ -1,0 +1,73 @@
+# 改造 HOME LAB 之把 ESXi 装进 M6400
+
+
+上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。
+
+不过犹豫再三，觉得平时 LAB 里面还是需要保留一套 Hyper-V，公司配备的 Dell M4800 工作站内置的硬盘做成 VMFS 有点可惜了，正巧手边有一块退休的 USB3.0 移动硬盘，萌生了 1 套 LAB 硬件同时做 Hyper-V 和 VMware 的念头。Google 一小会儿，把自己的想法验证下，看看是否有一些素材能够支持这样的做法，一点不意外，完全可行。
+
+**M4800 配置：**
+
+CPU：i7-4710MQ@ 2.5GHz
+
+MEM：32GB
+
+Disk（internal）：SAMSUNG SSD 500G
+
+​                Seagate SATA 500G
+
+Network：Intel i217-LM
+
+**外置设备：**
+
+USB Stick：U 盘 8GB，用于启动系统
+
+USB HDD：WD 2TB SATA，通过 USB3.0 接入至 M4800，用于 local datastore
+
+DELL customized ESXi：可以至 Dell 官网查找下载，**阅读原文**可以快速跳转
+
+动手开干！
+
+部署 ESXi 过程非常简单，顺利的引导，识别出 8GB 的 U 盘，5 分钟后安装完成。进系统配 IP、主机名等一系列初始化工作，完成之后加入到现有的 VC 中。
+
+![17ITHO.png](https://s2.ax1x.com/2020/02/12/17ITHO.png)
+
+接下去要解决重头戏，添加 External USB HDD，事实上在 VMware 官方来说，是并不支持使用 USB HDD 作为 datastore 用于生产环境，但是作为 Home LAB 来说，这可是一个好功能啊~
+
+添加过程如下（注意以下过程仅适合 ESXi 6.0）：
+
+1. 打开 ESXi 的 SSH，并连接上。
+
+2. [root@esxim4800:~] ls /dev/disks
+
+​    找到输出中有相应的 usb hdd 信息：
+
+```
+mpx.vmhba38:C0:T0:L0
+mpx.vmhba38:C0:T0:L0:1
+mpx.vmhba38:C0:T0:L0:2
+```
+
+```
+[root@esxim4800:~] partedUtil mklabel/dev/disks/mpx.vmhba38\:C0\:T0\:L0 gpt
+```
+
+3. 计算 vmfs 卷的 end sector
+
+```
+[root@esxim4800:~] eval expr $(partedUtilgetptbl /dev/disks/mpx.vmhba38\:C0\:T0\:L0 | tail -1 | awk '{print $1 "\\* " $2 " \\* " $3}') – 13907024064
+```
+
+```
+[root@esxim4800:~] partedUtil setptbl/dev/disks/mpx.vmhba38\:C0\:T0\:L0 gpt "12048 3907024064 AA31E02A400F11DB9590000C2911D1B8 
+```
+
+```
+[root@esxim4800:~] vmkfstools -C vmfs5 -SUSB-LOCAL /dev/disks/mpx.vmhba38\:C0\:T0\:L0:1
+```
+
+至此，回到 vSphere Client 中就能看的已经添加的名字叫 USB-LOCAL 的 datastore 了。
+
+![17IbUe.png](https://s2.ax1x.com/2020/02/12/17IbUe.png)
+
+双系统改造完成，只要选择从本地硬盘启动即可回到 Windows2016 的 Hyper-V，而平时将会一直运行 ESXi。
+

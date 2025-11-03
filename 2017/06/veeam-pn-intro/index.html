@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VeeamON 2017 系列之另类 VPN -- Veeam PN - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/06/veeam-pn-intro/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VeeamON 2017 系列之另类 VPN -- Veeam PN">
+  <meta property="og:description" content="前言 在上个月的 VeeamON 大会上，Veeam 发布了一个全新的产品，这个产品其实和备份是完全没有关系，叫 Veeam PN，全称是 Veeam Powered Network。这是一款轻量级的 SDN 解决方案，能够迅速打通多个站点，实现站点-站点之间的通讯，也可以实现终端-站点的通讯。由于此解决方案功能过于强大，本文不想展开全面介绍，详细内容可以参考 Veeam KB2271 和 VeeamPN 帮助手册。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-06-16T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-06-16T00:00:00+00:00">
+    <meta property="article:tag" content="VeeamON">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VeeamON 2017 系列之另类 VPN -- Veeam PN">
+  <meta name="twitter:description" content="前言 在上个月的 VeeamON 大会上，Veeam 发布了一个全新的产品，这个产品其实和备份是完全没有关系，叫 Veeam PN，全称是 Veeam Powered Network。这是一款轻量级的 SDN 解决方案，能够迅速打通多个站点，实现站点-站点之间的通讯，也可以实现终端-站点的通讯。由于此解决方案功能过于强大，本文不想展开全面介绍，详细内容可以参考 Veeam KB2271 和 VeeamPN 帮助手册。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/06/veeam-pn-intro/" /><link rel="prev" href="http://192.168.16.79:1313/2017/05/wannacry/" /><link rel="next" href="http://192.168.16.79:1313/2017/06/another-vmware-ready/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VeeamON 2017 系列之另类 VPN -- Veeam PN",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/06\/veeam-pn-intro\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VeeamON","wordcount":  1596 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/06\/veeam-pn-intro\/","datePublished": "2017-06-16T00:00:00+00:00","dateModified": "2017-06-16T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VeeamON 2017 系列之另类 VPN -- Veeam PN</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Veeam-%E5%B0%8F%E5%B7%A5%E5%85%B7/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Veeam 小工具</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-06-16">2017-06-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1596 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><h1 id="前言">前言</h1>
+<p>在上个月的 VeeamON 大会上，Veeam 发布了一个全新的产品，这个产品其实和备份是完全没有关系，叫 Veeam PN，全称是 Veeam Powered Network。这是一款轻量级的 SDN 解决方案，能够迅速打通多个站点，实现站点-站点之间的通讯，也可以实现终端-站点的通讯。由于此解决方案功能过于强大，本文不想展开全面介绍，详细内容可以参考 Veeam KB2271 和 VeeamPN 帮助手册。</p>
+<p>今天的内容，我想来介绍下我的使用场景，在我的 Home Lab 中使用 Veeam PN。</p>
+<p>先来说说需求，其实这个需求并不复杂，我相信绝大多数的 VPN 解决方案都能够实现，也就是当我不在家的时候，任意一个地方，我都能连回家里的实验室，进行工作。</p>
+<p>实现这个功能，大多数方法可能是基于 VPN 的方式，也就是说得搭建 VPN 环境，那么各种环境中搭建方法可能各式各样，而 Veeam PN 为我这样的环境提供了一个非常简单的部署方法，只需几分钟，鼠标点击几下，就能完成这样的搭建。</p>
+<h1 id="架构组件">架构组件</h1>
+<p>这整个架构中里面一共有 3 个组件：</p>
+<ol>
+<li>Veeam Hub</li>
+</ol>
+<p>相当于接入点，充当了集中控制所有端点的一个唯一入口。Veeam Hub 可以部署在任意的位置，任意的一个有互联网接入的站点、云端都可以，唯一的要求就是能够和其他站点通过广域网互联互通，有公网地址。</p>
+<ol start="2">
+<li>Veeam Site Gateway</li>
+</ol>
+<p>每个站点的出口连接 Hub 的网关。这里的每个站点的概念为 1 个子网，也就是说每个子网都需要一个 site Gateway。对于 Site Gateway 的要求，是有 internet 接入而不必有公网地址。</p>
+<ol start="3">
+<li>VPN 客户端</li>
+</ol>
+<p>终端连接入私网的客户端，Veeam PN 可以使用任何支持 OpenVPN 的客户端，具体客户端下载可以自行百度查找。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TMJfS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TMJfS.png, https://s2.ax1x.com/2020/02/11/1TMJfS.png 1.5x, https://s2.ax1x.com/2020/02/11/1TMJfS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TMJfS.png"
+        title="1TMJfS.png" /></p>
+<p>如图，简单架构就是这样。对于我 Home Lab，目前仅有一个网段，是 10.100.1.0/24，所以在我的 Lab 中我需要的组件就是一个 Hub 和一个 Site Gateway。这两个组件的部署非常简单，其实是同一个 OVA 的不同工作模式，具体下载地址可以点击<strong>阅读原文</strong>查看。</p>
+<h1 id="安装配置">安装配置</h1>
+<p>在 vSphere Client 中，和常规部署 OVA 一样，导入这个虚拟设备进行部署，导入后，可以进入这个 Ubuntu 系统进行 IP 地址和主机名。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQsHI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQsHI.png, https://s2.ax1x.com/2020/02/11/1TQsHI.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQsHI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQsHI.png"
+        title="1TQsHI.png" /></p>
+<p>因为我的这个 Hub 和 Site Gateway 都部署在家中，所以我需要重复上面的步骤导入两次，生成 2 个虚拟机，分别配置为 Hub 和 Site Gateway：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQ6Et.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQ6Et.png, https://s2.ax1x.com/2020/02/11/1TQ6Et.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQ6Et.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQ6Et.png"
+        title="1TQ6Et.png" /></p>
+<p>接下去，可以通过网页分别访问 Hub 和 Site Gateway 进行详细配置，整个配置过程非常简单，首先来看下 Hub，我们进入 Hub 的网页：</p>
+<p>Https://10.100.1.40/</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQwge.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQwge.png, https://s2.ax1x.com/2020/02/11/1TQwge.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQwge.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQwge.png"
+        title="1TQwge.png" /></p>
+<p>Username：root</p>
+<p>Password:VeeamPN</p>
+<p>进去后会提示修改密码并选择角色：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQg4f.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQg4f.png, https://s2.ax1x.com/2020/02/11/1TQg4f.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQg4f.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQg4f.png"
+        title="1TQg4f.png" /></p>
+<p>先选择 Hub，进行下一步：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQrDA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQrDA.png, https://s2.ax1x.com/2020/02/11/1TQrDA.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQrDA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQrDA.png"
+        title="1TQrDA.png" /></p>
+<p>简单填入一些个性化信息后可以点击下一步，其中加密等级保持默认 2048 位就可以了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQRC8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQRC8.png, https://s2.ax1x.com/2020/02/11/1TQRC8.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQRC8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQRC8.png"
+        title="1TQRC8.png" /></p>
+<p>设置公网 IP 或者 DNS，我在这里输入了我自己的对外 internet DDNS 域名，端口保持默认。点击 Finish 就能完成 Hub 的基础设置。</p>
+<p>然后我们来添加一个 Site 和一个客户端接入点，点击 Clients，Add 按钮就能打开向导</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TMQeI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TMQeI.png, https://s2.ax1x.com/2020/02/11/1TMQeI.png 1.5x, https://s2.ax1x.com/2020/02/11/1TMQeI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TMQeI.png"
+        title="1TMQeI.png" /></p>
+<p>选择添加一个 Site 或者一个计算机，Entire Site 就是加一个 site Gateway，而 standalone computer 就是远程单独接入点：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TMuyd.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TMuyd.png, https://s2.ax1x.com/2020/02/11/1TMuyd.png 1.5x, https://s2.ax1x.com/2020/02/11/1TMuyd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TMuyd.png"
+        title="1TMuyd.png" /></p>
+<p>我们先加一个 Site，选择 Entire Site 后 next：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TM8Ff.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TM8Ff.png, https://s2.ax1x.com/2020/02/11/1TM8Ff.png 1.5x, https://s2.ax1x.com/2020/02/11/1TM8Ff.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TM8Ff.png"
+        title="1TM8Ff.png" /></p>
+<p>任意输入一个名字标识，然后添加子网段地址，比如我家 Lab 是 10.100.1.0/24</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TMnQH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TMnQH.png, https://s2.ax1x.com/2020/02/11/1TMnQH.png 1.5x, https://s2.ax1x.com/2020/02/11/1TMnQH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TMnQH.png"
+        title="1TMnQH.png" /></p>
+<p>点击 Finish 之后，就会自动下载一个。xml 文件，这个文件将会在 Site Gateway 配置过程中用到。</p>
+<p>然后我们来再重复前面 Add Client 步骤来添加一个接入点：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TMlwt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TMlwt.png, https://s2.ax1x.com/2020/02/11/1TMlwt.png 1.5x, https://s2.ax1x.com/2020/02/11/1TMlwt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TMlwt.png"
+        title="1TMlwt.png" /></p>
+<p>接入点只需要一个名称来标识，没有更多信息需要配置，点击下一步和 Finish 之后，浏览器会自动下载一个。ovpn 文件，这个文件可以在任何的 OpenVPN 客户端中载入并连接。</p>
+<p>接下去可以打开 Site Gateway 的页面进行 Site Gateway 的连接 Hub 配置。</p>
+<p>进入 site Gateway 页面之后依旧是修改密码和初始化向导，只是不同的是初始化向导中选择 Site Gateway，而不是 network Hub</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQg4f.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQg4f.png, https://s2.ax1x.com/2020/02/11/1TQg4f.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQg4f.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQg4f.png"
+        title="1TQg4f.png" /></p>
+<p>Next 之后，选择刚刚从 Hub 上下载到的。xml 文件导入点击 Finish 就完成了 Site Gateway 配置，这样这个 Site 就自动连接到 Hub 上了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TQcUP.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TQcUP.png, https://s2.ax1x.com/2020/02/11/1TQcUP.png 1.5x, https://s2.ax1x.com/2020/02/11/1TQcUP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TQcUP.png"
+        title="1TQcUP.png" /></p>
+<p>最后，我们来配置 OpenVPN Client。目前在所有操作系统平台上，包括手机上，都可以找到合适的 Client，本文就以最常见的 Windows 为例，可以安装** openvpn-install-2.4.2-I601.exe**</p>
+<p>过程也极其简单，一路 next 完了之后，双击快捷方式后 import 之前下载下来的。ovpn 文件即可进行连接，整个连接过程也不需要输入用户名密码之类的，就和通常 OpenVPN 的连接是完全一样的。</p>
+<p>至此，我就能在外面任何地方轻松的连上自己家里的实验室了。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-06-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/06/veeam-pn-intro/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F06%2Fveeam-pn-intro%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F06%2Fveeam-pn-intro%2F&amp;text=VeeamON&#43;2017&#43;%E7%B3%BB%E5%88%97%E4%B9%8B%E5%8F%A6%E7%B1%BB&#43;VPN&#43;--&#43;Veeam&#43;PN" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F06%252Fveeam-pn-intro%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F06%252Fveeam-pn-intro%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VeeamON/">VeeamON</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/05/wannacry/" class="prev" rel="prev" title="关于“想哭”病毒，我也来两句。"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>关于“想哭”病毒，我也来两句。</a>
+            <a href="/2017/06/another-vmware-ready/" class="next" rel="next" title="好消息好消息，Veeam 又通过一项 VMware Ready 认证！">好消息好消息，Veeam 又通过一项 VMware Ready 认证！<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

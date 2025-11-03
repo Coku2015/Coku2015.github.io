@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2018/01/centrilized-agent-management/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解">
+  <meta property="og:description" content="VBR 中的 Agent 集中管理 本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp; Cloud Infrastructure 下。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-01-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-01-01T00:00:00+00:00">
+    <meta property="article:tag" content="Agent">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解">
+  <meta name="twitter:description" content="VBR 中的 Agent 集中管理 本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp; Cloud Infrastructure 下。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2018/01/centrilized-agent-management/" /><link rel="prev" href="http://192.168.16.79:1313/2017/08/esxi-in-m4800/" /><link rel="next" href="http://192.168.16.79:1313/2018/03/surebackup/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2018\/01\/centrilized-agent-management\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Agent","wordcount":  1685 ,
+        "url": "http:\/\/192.168.16.79:1313\/2018\/01\/centrilized-agent-management\/","datePublished": "2018-01-01T00:00:00+00:00","dateModified": "2018-01-01T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-01-01">2018-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1685 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#veeam-agent-for-windows-的集中管理">Veeam Agent for Windows 的集中管理</a></li>
+    <li><a href="#veeam-agent-for-linux-的集中管理">Veeam Agent for Linux 的集中管理</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="vbr-中的-agent-集中管理">VBR 中的 Agent 集中管理</h1>
+<p>本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp; Cloud Infrastructure 下。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17owIe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17owIe.png, https://s2.ax1x.com/2020/02/12/17owIe.png 1.5x, https://s2.ax1x.com/2020/02/12/17owIe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17owIe.png"
+        title="17owIe.png" /></p>
+<p>Veeam 管理 Agent 的方式还是和其他 Veeam 的功能非常类似，非常简单的 3 部曲方式：</p>
+<ul>
+<li>创建 Protection Group – 定义并自动发现需要保护的对象。</li>
+<li>创建 Job 或者 Policy – 定义备份任务或者备份策略实现备份。</li>
+<li>执行 Restore – 通过多种还原手段实现数据还原。</li>
+</ul>
+<p>我们先来一起熟悉下 Physical &amp; Cloud Infrastructure 界面。</p>
+<p>在这个节点中会出现一些类似文件夹的图标，在软件升级完成后，会立刻出现 Manually Added、Unmanaged 这两个系统内置文件夹，而在我们开始创建新的 Protection Group 后，又会出现一些我们创建的文件夹，每一个文件夹就是一个 Protection Group，里面会包含一组需要保护的服务器或者工作站。</p>
+<p>创建 Protection Group</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oaVO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oaVO.png, https://s2.ax1x.com/2020/02/12/17oaVO.png 1.5x, https://s2.ax1x.com/2020/02/12/17oaVO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oaVO.png"
+        title="17oaVO.png" /></p>
+<p>又是老套路，Veeam 经典的向导式操作方式，创建 Protection Group</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17odaD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17odaD.png, https://s2.ax1x.com/2020/02/12/17odaD.png 1.5x, https://s2.ax1x.com/2020/02/12/17odaD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17odaD.png"
+        title="17odaD.png" /></p>
+<p>支持 3 种添加 Protection Group 的方式，其实也就是 3 种不同的服务器/工作站添加模式</p>
+<ul>
+<li>Individual computers</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oNqK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oNqK.png, https://s2.ax1x.com/2020/02/12/17oNqK.png 1.5x, https://s2.ax1x.com/2020/02/12/17oNqK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oNqK.png"
+        title="17oNqK.png" /></p>
+<p>这种方式可以手工逐台 Computers 添加，支持 Host Name 或者 IP address，然后 Credentials 中输入合适的账号密码即可。</p>
+<ul>
+<li>Microsoft Active Directory objects</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17otr6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17otr6.png, https://s2.ax1x.com/2020/02/12/17otr6.png 1.5x, https://s2.ax1x.com/2020/02/12/17otr6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17otr6.png"
+        title="17otr6.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oBPH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oBPH.png, https://s2.ax1x.com/2020/02/12/17oBPH.png 1.5x, https://s2.ax1x.com/2020/02/12/17oBPH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oBPH.png"
+        title="17oBPH.png" /></p>
+<p>这种方式需要先点击 Change 按钮设定 AD 相关信息，包括 AD 的域名和域管理员账号，然后就可以找到 AD 中的所有对象，按照对象的方式动态添加被保护的服务器/工作站。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oDGd.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oDGd.png, https://s2.ax1x.com/2020/02/12/17oDGd.png 1.5x, https://s2.ax1x.com/2020/02/12/17oDGd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oDGd.png"
+        title="17oDGd.png" /></p>
+<p>自动排除不需要使用 Agent 进行保护的对象，特别是虚拟机。</p>
+<ul>
+<li>Computers from CSV files</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17orRA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17orRA.png, https://s2.ax1x.com/2020/02/12/17orRA.png 1.5x, https://s2.ax1x.com/2020/02/12/17orRA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17orRA.png"
+        title="17orRA.png" /></p>
+<p>这种模式只需手工编辑 host name 或者 ip 地址到一个 CSV 文件，然后指定从这个文件读取 host 列表即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17osxI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17osxI.png, https://s2.ax1x.com/2020/02/12/17osxI.png 1.5x, https://s2.ax1x.com/2020/02/12/17osxI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17osxI.png"
+        title="17osxI.png" /></p>
+<p>为不同的 Host 分别指定合适的管理员账号。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17o6Mt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17o6Mt.png, https://s2.ax1x.com/2020/02/12/17o6Mt.png 1.5x, https://s2.ax1x.com/2020/02/12/17o6Mt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17o6Mt.png"
+        title="17o6Mt.png" /></p>
+<p>设定自动发现和扫描的间隔，在扫描完成后是否进行 Agent 和 Windows CBT 驱动的自动推送安装，安装完成后如果有需要重新启动，是否自动启动。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ogqf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ogqf.png, https://s2.ax1x.com/2020/02/12/17ogqf.png 1.5x, https://s2.ax1x.com/2020/02/12/17ogqf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ogqf.png"
+        title="17ogqf.png" /></p>
+<p>检测推送分发 Agent 的服务器的状态，检测完成后，Protection Group 就创建完成了。</p>
+<p>Veeam Agent for Windows 和 Veeam Agent for Linux 略有不同，我们先看看 Windows 的。</p>
+<h2 id="veeam-agent-for-windows-的集中管理">Veeam Agent for Windows 的集中管理</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oRZ8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oRZ8.png, https://s2.ax1x.com/2020/02/12/17oRZ8.png 1.5x, https://s2.ax1x.com/2020/02/12/17oRZ8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oRZ8.png"
+        title="17oRZ8.png" /></p>
+<p>在自动发现了一组机器后，Protection Group 中会罗列出所有自动扫描到的机器，在这个 Protection Group 中，我设定了不自动安装 Agent，这时候对于需要安装 Agent 的机器，我可以通过屏幕上方的工具栏进行 Agent 的安装和卸载工作，同时我还能完成该服务器/工作站的重启、恢复介质的创建工作，在原先，这些工作都能够在 Veeam Agent for Windows 的客户端上完成，现在已经全部集成到了 VBR 上。</p>
+<p>对于 Windows 服务器，创建备份任务也非常的简单，只要点击 Add to Backup 即可，还是经典的向导界面：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oWdS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oWdS.png, https://s2.ax1x.com/2020/02/12/17oWdS.png 1.5x, https://s2.ax1x.com/2020/02/12/17oWdS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oWdS.png"
+        title="17oWdS.png" /></p>
+<p>在这里我不详细展开介绍 Workstation 和 Managed by Agent 内容，这些选项能够为我们在远程站点备份数据的时候带来帮助，功能和之前的 2.0 版本中非常相似，我们重点来看看 Managed by backup server 这个选项的功能。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ofIg.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ofIg.png, https://s2.ax1x.com/2020/02/12/17ofIg.png 1.5x, https://s2.ax1x.com/2020/02/12/17ofIg.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ofIg.png"
+        title="17ofIg.png" /></p>
+<p>设定备份任务名字</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17o4iQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17o4iQ.png, https://s2.ax1x.com/2020/02/12/17o4iQ.png 1.5x, https://s2.ax1x.com/2020/02/12/17o4iQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17o4iQ.png"
+        title="17o4iQ.png" /></p>
+<p>选择被保护的服务器，在这里还能定义保护的服务器的顺序。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPNUH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPNUH.png, https://s2.ax1x.com/2020/02/12/1HPNUH.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPNUH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPNUH.png"
+        title="1HPNUH.png" /></p>
+<p>选择保护模式，还是和之前的完全一样。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPdPA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPdPA.png, https://s2.ax1x.com/2020/02/12/1HPdPA.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPdPA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPdPA.png"
+        title="1HPdPA.png" /></p>
+<p>选择备份至哪个存储库，一样可以在高级选项中设定 Synthetic full 和 Active full 的时间。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPw8I.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPw8I.png, https://s2.ax1x.com/2020/02/12/1HPw8I.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPw8I.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPw8I.png"
+        title="1HPw8I.png" /></p>
+<p>应用感知，也是 Veeam 经典模式。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPtVe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPtVe.png, https://s2.ax1x.com/2020/02/12/1HPtVe.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPtVe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPtVe.png"
+        title="1HPtVe.png" /></p>
+<p>依旧是经典的计划任务设定。这样就完成了一个 Windows Agent 的备份任务设置。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPU5d.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPU5d.png, https://s2.ax1x.com/2020/02/12/1HPU5d.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPU5d.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPU5d.png"
+        title="1HPU5d.png" /></p>
+<p>任务执行情况，在执行过程中会截断日志并且收集 Windows 的驱动程序，用于后续的恢复。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HP02t.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HP02t.png, https://s2.ax1x.com/2020/02/12/1HP02t.png 1.5x, https://s2.ax1x.com/2020/02/12/1HP02t.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HP02t.png"
+        title="1HP02t.png" /></p>
+<p>在 Home 界面中，能够找到备份下来的存档，选中备份存档，可以执行一系列 Veeam 支持的恢复操作，依旧还是 Veeam 经典的管理方式，和虚拟化的恢复完全一致。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPBxP.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPBxP.png, https://s2.ax1x.com/2020/02/12/1HPBxP.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPBxP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPBxP.png"
+        title="1HPBxP.png" /></p>
+<p>而物理机的裸机恢复则是由 Recovery Media 来完成，向导式的 Recovery Media 生成界面也从客户端搬迁至 VBR 中。</p>
+<h2 id="veeam-agent-for-linux-的集中管理">Veeam Agent for Linux 的集中管理</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPrKf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPrKf.png, https://s2.ax1x.com/2020/02/12/1HPrKf.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPrKf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPrKf.png"
+        title="1HPrKf.png" /></p>
+<p>和 Windows 不一样，Linux Agent 少了 Recovery Media 创建、CBT 驱动安装以及 Reboot 按钮。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPsr8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPsr8.png, https://s2.ax1x.com/2020/02/12/1HPsr8.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPsr8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPsr8.png"
+        title="1HPsr8.png" /></p>
+<p>创建备份任务，也是向导模式，只是没有了 Cluster 支持，暂时 Linux 平台无法支持 Cluster 模式。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPyqS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPyqS.png, https://s2.ax1x.com/2020/02/12/1HPyqS.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPyqS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPyqS.png"
+        title="1HPyqS.png" /></p>
+<p>备份任务名称和描述设定</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPcVg.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPcVg.png, https://s2.ax1x.com/2020/02/12/1HPcVg.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPcVg.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPcVg.png"
+        title="1HPcVg.png" /></p>
+<p>选择被保护的服务器/工作站。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPWPs.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPWPs.png, https://s2.ax1x.com/2020/02/12/1HPWPs.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPWPs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPWPs.png"
+        title="1HPWPs.png" /></p>
+<p>选择备份模式</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPfGn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPfGn.png, https://s2.ax1x.com/2020/02/12/1HPfGn.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPfGn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPfGn.png"
+        title="1HPfGn.png" /></p>
+<p>选择备份存储库和还原点数量。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPh2q.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPh2q.png, https://s2.ax1x.com/2020/02/12/1HPh2q.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPh2q.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPh2q.png"
+        title="1HPh2q.png" /></p>
+<p>设定 Linux 的应用感知，主要通过 Script 来实现，同样文件系统的索引也是在这一步来进行。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPIMV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPIMV.png, https://s2.ax1x.com/2020/02/12/1HPIMV.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPIMV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPIMV.png"
+        title="1HPIMV.png" /></p>
+<p>经典的计划任务界面，设定时间后，就创建好 Linux 备份任务了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPorT.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPorT.png, https://s2.ax1x.com/2020/02/12/1HPorT.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPorT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPorT.png"
+        title="1HPorT.png" /></p>
+<p>备份任务执行也是经典 Veeam 界面，相信大家都很熟悉了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPHZF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPHZF.png, https://s2.ax1x.com/2020/02/12/1HPHZF.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPHZF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPHZF.png"
+        title="1HPHZF.png" /></p>
+<p>对于 Linux 存档的恢复，在 VBR 中操作相对来说较少，仅支持文件级恢复、还原至 Azure 以及导出成虚拟磁盘这几项，而如果需要进行裸机还原，则需要在 Veeam 官网下载 Linux 专用的 Recovery Media。</p>
+<p>电梯直达链接：https://download2.veeam.com/veeam-recovery-media-2.0.0.400_x86_64.iso</p>
+<p>另外，如果需要查看更详细的 Release Notes 和下载更新包，可以点击阅读原文。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2018-01-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2018/01/centrilized-agent-management/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F01%2Fcentrilized-agent-management%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F01%2Fcentrilized-agent-management%2F&amp;text=%E6%96%B0%E5%B9%B4%E7%AC%AC%E4%B8%80%E7%AF%87&#43;-&#43;Veeam&#43;9.5U3&#43;%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86&#43;Agent&#43;%E8%AF%A6%E8%A7%A3" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F01%252Fcentrilized-agent-management%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F01%252Fcentrilized-agent-management%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Agent/">Agent</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/08/esxi-in-m4800/" class="prev" rel="prev" title="改造 HOME LAB 之把 ESXi 装进 M6400"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>改造 HOME LAB 之把 ESXi 装进 M6400</a>
+            <a href="/2018/03/surebackup/" class="next" rel="next" title="备份存档能不能被恢复，这件事情上只有真正做过才知道。">备份存档能不能被恢复，这件事情上只有真正做过才知道。<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

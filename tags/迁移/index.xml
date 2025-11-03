@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>迁移 on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/%E8%BF%81%E7%A7%BB/</link>
+    <description>Recent content in 迁移 on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Fri, 21 Apr 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/%E8%BF%81%E7%A7%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam 黑科技之 Quick Migration</title>
+      <link>http://192.168.16.79:1313/2017/04/veeam-quick-migration/</link>
+      <pubDate>Fri, 21 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2017/04/veeam-quick-migration/</guid>
+      <description>&lt;p&gt;vSphere 和 Hyper-V 都拥有自己的一些迁移技术，而 Veeam 作为一个数据保护软件，从数据保护的角度出发，为 IT 管理员提供了另外一种迁移技术。在 Veeam 软件中，该技术通常叫做 Quick Migration。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

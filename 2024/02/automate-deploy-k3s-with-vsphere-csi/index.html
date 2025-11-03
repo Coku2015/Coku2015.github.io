@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>一键部署脚本：K3S&#43;vSphere CSI - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="一键部署脚本：K3S&#43;vSphere CSI">
+  <meta property="og:description" content="之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-02-21T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Instant Recovery">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="一键部署脚本：K3S&#43;vSphere CSI">
+  <meta name="twitter:description" content="之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/" /><link rel="prev" href="http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/" /><link rel="next" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "一键部署脚本：K3S+vSphere CSI",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/02\/automate-deploy-k3s-with-vsphere-csi\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  1969 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/02\/automate-deploy-k3s-with-vsphere-csi\/","datePublished": "2024-02-21T00:00:00+00:00","dateModified": "2024-02-21T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">一键部署脚本：K3S+vSphere CSI</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-21">2024-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1969 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前提条件">前提条件</a>
+      <ul>
+        <li><a href="#虚拟机镜像">虚拟机镜像</a></li>
+        <li><a href="#虚拟机自定义规范">虚拟机自定义规范</a></li>
+      </ul>
+    </li>
+    <li><a href="#脚本使用说明">脚本使用说明</a>
+      <ul>
+        <li><a href="#脚本使用环境拓扑介绍">脚本使用环境拓扑介绍：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。</p>
+<p>脚本仓库地址：</p>
+<p><a href="https://github.com/Coku2015/k3s_vsphere" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/k3s_vsphere</a></p>
+<h2 id="前提条件">前提条件</h2>
+<p>在使用这个脚本之前，需要提前准备一下能够用于自动化部署的镜像和虚拟机自定义规范，脚本会自动调用这个镜像和规范来部署k3s环境。</p>
+<h3 id="虚拟机镜像">虚拟机镜像</h3>
+<p>我推荐使用Ubuntu 20.04LTS作为运行k3s的环境，虚拟机模版镜像的制作也推荐基于这个版本。</p>
+<p>模版虚拟机，我一般硬件配置比较低1vCPU，2GB内存和50GB硬盘就足够了。</p>
+<p>虚拟机模版的安装可以有多种方法，最简单直接的是用iso进行一个最小化的安装，在安装结束后，为了能够进行后续的全自动远程配置，需要在这个模版中做一些调整，首先是启用密钥对认证远程登录：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 在你的Linux机器上创建远程连接的密钥对</span>
+</span></span><span class="line"><span class="cl">$ ssh-keygen
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建完成后，你会得到id_rsa和id_rsa.pub两个文件，分别是私钥和公钥。</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 用下面这个命令远程复制到模版机器上，假设ubuntu的用户名为ubuntu</span>
+</span></span><span class="line"><span class="cl">$ ssh-copy-id ubuntu@ubuntu_template_vm
+</span></span><span class="line"><span class="cl"><span class="c1"># 试试拷贝完成后的效果, 正常还是会提示输入密码。</span>
+</span></span><span class="line"><span class="cl">$ ssh ubuntu@ubuntu_template_vm</span></span></code></pre></div></div>
+<p>接下去，ssh远程进入这台Ubuntu后<code>sudo -i</code>到root直接运行以下命令，进行进一步调整：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 修改ssh密钥对登录免密码</span>
+</span></span><span class="line"><span class="cl">$ sed -i <span class="s1">&#39;s/#\?PasswordAuthentication yes/PasswordAuthentication no/&#39;</span> /etc/ssh/sshd_config
+</span></span><span class="line"><span class="cl"><span class="c1"># 重启ssh服务</span>
+</span></span><span class="line"><span class="cl">$ systemctl restart sshd
+</span></span><span class="line"><span class="cl"><span class="c1"># 加入sudo免密码(如果username不是ubuntu，请修改下面的命令)</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s1">&#39;ubuntu ALL=(ALL) NOPASSWD:ALL&#39;</span> &gt;&gt; /etc/sudoers
+</span></span><span class="line"><span class="cl"><span class="c1"># 修复 VMware 自定义配置问题，详情可以参考VMware KB56409</span>
+</span></span><span class="line"><span class="cl">$ sed -i <span class="s1">&#39;/^\[Unit\]/a After=dbus.service&#39;</span> /lib/systemd/system/open-vm-tools.service
+</span></span><span class="line"><span class="cl">$ awk <span class="s1">&#39;NR==11 {$0=&#34;#D /tmp 1777 root root -&#34;} 1&#39;</span> /usr/lib/tmpfiles.d/tmp.conf <span class="p">|</span> tee /usr/lib/tmpfiles.d/tmp.conf
+</span></span><span class="line"><span class="cl"><span class="c1"># 禁用 Cloud Init</span>
+</span></span><span class="line"><span class="cl">$ touch /etc/cloud/cloud-init.disabled
+</span></span><span class="line"><span class="cl"><span class="c1"># 更新系统</span>
+</span></span><span class="line"><span class="cl">$ apt cleaan
+</span></span><span class="line"><span class="cl">$ apt update -y
+</span></span><span class="line"><span class="cl">$ apt upgrade -y
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除machine-id，避免模版部署后同ID冲突</span>
+</span></span><span class="line"><span class="cl">$ rm /etc/machine-id
+</span></span><span class="line"><span class="cl">$ touch /etc/machine-id</span></span></code></pre></div></div>
+<p>好了，这样配置完成后，退出ssh，然后再试下ssh至这台模版机器，看看是否还需要密码验证，并且<code>sudo -i</code>试试提权是否需要密码，如果都不要，那么恭喜你，模版制作完成了。接下去只需要将这台虚拟机关机，转换成模版即可。</p>
+<h3 id="虚拟机自定义规范">虚拟机自定义规范</h3>
+<p>除了制作模版之外，我们还需要配置一个虚拟机自定义规范。</p>
+<ol>
+<li>在vSphere Client的快捷方式中，找到虚拟机自定义规范按钮，点击进入。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttbcV" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttbcV.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttbcV.png, https://s11.ax1x.com/2024/02/21/pFttbcV.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttbcV.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttbcV.png"
+        title="pFttbcV.png" /></a></p>
+<ol start="2">
+<li>
+<p>点击新建按钮后，弹出一个新建向导。</p>
+</li>
+<li>
+<p>设置一个名称，选择Linux操作系统。这个名称会在后续的脚本中使用到</p>
+</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttXBF" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttXBF.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttXBF.png, https://s11.ax1x.com/2024/02/21/pFttXBF.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttXBF.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttXBF.png"
+        title="pFttXBF.png" /></a></p>
+<ol start="4">
+<li>设置计算机名称，我们选择使用虚拟机名称，表示和虚拟机同名，然后在下方域名中随便填入个合适的域名，这步不能省略，必须填上任意文字。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttOnU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttOnU.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttOnU.png, https://s11.ax1x.com/2024/02/21/pFttOnU.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttOnU.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttOnU.png"
+        title="pFttOnU.png" /></a></p>
+<ol start="5">
+<li>选择时区，我选择我所在的亚洲 - 上海。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttqXT" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttqXT.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttqXT.png, https://s11.ax1x.com/2024/02/21/pFttqXT.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttqXT.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttqXT.png"
+        title="pFttqXT.png" /></a></p>
+<ol start="6">
+<li>自定义脚本这里不用配置，直接点下一步。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttH10" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttH10.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttH10.png, https://s11.ax1x.com/2024/02/21/pFttH10.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttH10.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttH10.png"
+        title="pFttH10.png" /></a></p>
+<ol start="7">
+<li>设置网络，需要选择<code>手动选择自定义设置</code>，然后选择下方的网卡1，再点击编辑，进行下一步调整。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFtNShR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtNShR.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtNShR.png, https://s11.ax1x.com/2024/02/21/pFtNShR.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtNShR.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtNShR.png"
+        title="pFtNShR.png" /></a></p>
+<ol start="8">
+<li>打开网络设置界面，在IPV4里，左边选择<code>当使用规范时，提示用户输入IPv4地址</code>，右边填入你环境中的子网掩码和网关。IPv6默认不做配置，点击确定保存配置。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttxAJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttxAJ.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttxAJ.png, https://s11.ax1x.com/2024/02/21/pFttxAJ.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttxAJ.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttxAJ.png"
+        title="pFttxAJ.png" /></a></p>
+<ol start="9">
+<li>设置DNS，配上环境中的能上互联网的默认DNS服务器地址。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttj74" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttj74.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttj74.png, https://s11.ax1x.com/2024/02/21/pFttj74.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttj74.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttj74.png"
+        title="pFttj74.png" /></a></p>
+<ol start="10">
+<li>点击完成保存设置。</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttzN9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttzN9.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttzN9.png, https://s11.ax1x.com/2024/02/21/pFttzN9.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttzN9.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttzN9.png"
+        title="pFttzN9.png" /></a></p>
+<p>这样自定义规范机配置好了，可以在后续的脚本中直接调用第一步设置的名称使用了。</p>
+<h2 id="脚本使用说明">脚本使用说明</h2>
+<h3 id="脚本使用环境拓扑介绍">脚本使用环境拓扑介绍：</h3>
+<p><a href="https://imgse.com/i/pFtIS5d" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtIS5d.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtIS5d.png, https://s11.ax1x.com/2024/02/21/pFtIS5d.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtIS5d.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtIS5d.png"
+        title="pFtIS5d.png" /></a></p>
+<p>在Linux控制机上，使用git clone下载脚本仓库。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git clone https://github.com/Coku2015/k3s_vsphere.git</span></span></code></pre></div></div>
+<p>下载后进入脚本目录：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">cd</span> k3s_vsphere</span></span></code></pre></div></div>
+<p>用vi编辑器打开脚本，找到脚本开头部分，修改其中的环境变量参数。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#######################  Environment Variables Section  ######################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">###  Modify the following environment variables to match your environment  ###</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_SSH_USER</span><span class="o">=</span><span class="s2">&#34;ubuntu&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_SERVER</span><span class="o">=</span><span class="s2">&#34;172.16.0.100&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_USERNAME</span><span class="o">=</span><span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_PASSWORD</span><span class="o">=</span><span class="s2">&#34;VMware123!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_DATACENTER</span><span class="o">=</span><span class="s2">&#34;MyDatacenter&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VM_TEMPLATE</span><span class="o">=</span><span class="s2">&#34;Ubuntu20.04LTS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_DATASTORE</span><span class="o">=</span><span class="s2">&#34;localdatastore&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#######################  Environment Section End   ###########################</span></span></span></code></pre></div></div>
+<p>其中第一个MY_SSH_USER是Ubuntu模版的用户名，其他信息都是比较常规的vSphere访问信息，根据实际情况填写即可。</p>
+<p>填写完成后，保存退出，然后就能执行脚本啦，对了，还需要注意，脚本运行需要root权限安装相关软件。</p>
+<p>执行命令运行脚本：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ bash deploy_k3s_with_vspherecsi.sh</span></span></code></pre></div></div>
+<p>这时候会提示输入一些本次自动部署的配置，一共三个，第一个为部署的虚拟机名称，只需要输入一个前缀，脚本会自动为虚拟机名称加上4个随机数字作为唯一标识；第二个为虚拟机的IP地址，根据自己环境的空闲IP地址情况按实际情况输入即可；第三个为k3s的版本，可以到k3s官网查询相关需要的版本，理论上任何stable版本都能支持:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>              K3S with vSphere CSI automation script                  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  This script is used to create a single node k3s cluster on vSphere. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  Intro: https://blog.backupnext.cloud                                <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  Bug Report: Lei.wei@veeam.com                                       <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Please enter the VM name:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default VM name will be ‘k3s-cluster-&lt;<span class="m">4</span> random number&gt;’<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">Please enter the IP address <span class="k">for</span> the VM:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default IP address will be ‘192.168.1.&lt;random number&gt;’<span class="o">)</span>:10.10.1.103
+</span></span><span class="line"><span class="cl">Please enter the k3s version:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default version will be ‘v1.28.6+k3s2’<span class="o">)</span>:v1.27.10+k3s2</span></span></code></pre></div></div>
+<p>输入完成后，脚本就开始自动部署了，大约10分钟左右，你就能像我一样获得一个直接可以使用的k3s测试环境了。
+<a href="https://imgse.com/i/pFtI9PA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtI9PA.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtI9PA.png, https://s11.ax1x.com/2024/02/21/pFtI9PA.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtI9PA.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtI9PA.png"
+        title="pFtI9PA.png" /></a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-02-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/02/automate-deploy-k3s-with-vsphere-csi/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F02%2Fautomate-deploy-k3s-with-vsphere-csi%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F02%2Fautomate-deploy-k3s-with-vsphere-csi%2F&amp;text=%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC%EF%BC%9AK3S%2BvSphere&#43;CSI" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F02%252Fautomate-deploy-k3s-with-vsphere-csi%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F02%252Fautomate-deploy-k3s-with-vsphere-csi%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/02/veeam-hardened-ubuntu/" class="prev" rel="prev" title="Ubuntu系统用于Veeam加固存储库的进一步安全加固"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Ubuntu系统用于Veeam加固存储库的进一步安全加固</a>
+            <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/" class="next" rel="next" title="VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测">VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

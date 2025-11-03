@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描">
+  <meta property="og:description" content="接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。
+VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-29T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-04-29T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描">
+  <meta name="twitter:description" content="接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。
+VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/" /><link rel="prev" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/" /><link rel="next" href="http://192.168.16.79:1313/2024/05/vdp-v12-1-security-feature-deep-dive-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/04\/vdp-v12-1-security-feature-deep-dive-02\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1701 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/04\/vdp-v12-1-security-feature-deep-dive-02\/","datePublished": "2024-04-29T00:00:00+00:00","dateModified": "2024-04-29T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-29">2024-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1701 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#yara-工具">YARA 工具</a>
+          <ul>
+            <li><a href="#yara-规则">YARA 规则</a></li>
+            <li><a href="#yara-扫描工作原理">YARA 扫描工作原理</a></li>
+          </ul>
+        </li>
+        <li><a href="#杀毒软件扫描">杀毒软件扫描</a>
+          <ul>
+            <li><a href="#杀毒软件配置">杀毒软件配置</a></li>
+          </ul>
+        </li>
+        <li><a href="#配置方法">配置方法</a>
+          <ul>
+            <li><a href="#查看扫描结果">查看扫描结果</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。</p>
+<p>VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。</p>
+<h3 id="yara-工具">YARA 工具</h3>
+<p>YARA(全称：<em>Yet Another Recursive Acronym</em>)。官网链接：https://yara.readthedocs.io/en/latest/，Github 仓库链接：https://github.com/virustotal/yara。</p>
+<p>YARA 通常是用来帮助安全专家和研究人员识别和分类恶意软件，它主要用于恶意软件的研究和检测。它能够扫描文本或者二进制模式的代码。</p>
+<p>YARA 工具一般包含两部分，其中一部分是 YARA 扫描引擎本身，它可以安装在各种平台上。另外一部分是 YARA 规则，这个是使用者根据实际需求进行编写的匹配规则。在 YARA 使用时，简单逻辑是，YARA 引擎调用 YARA 规则扫描对应的需要扫描的内容，输出扫描结果。</p>
+<p>在 VDP v12.1 中，加入了 YARA 工具，备份和安全管理员，可以直接在 VBR 控制台调用编写好的 YARA 规则，对备份存档进行扫描。完全不需要自己去手工搭建 YARA 运行环境。</p>
+<h4 id="yara-规则">YARA 规则</h4>
+<p>关于 YARA 规则，其实语法非常简单，可以参考官网的说明 <a href="https://yara.readthedocs.io/en/stable/writingrules.html" target="_blank" rel="noopener noreffer ">https://yara.readthedocs.io/en/stable/writingrules.html</a>，在 Github 上能找到相关的规则模版 <a href="https://github.com/Yara-Rules/rules" target="_blank" rel="noopener noreffer ">https://github.com/Yara-Rules/rules</a>。</p>
+<p>在 VBR 上，内置了 3 段经典的 YARA 规则模版，可以作为编写的参考。</p>
+<p>当然现在也不用那么麻烦，各种 GPT 可以帮我们轻松写一段 YARA 规则，比如：
+<a href="https://imgse.com/i/pkiq6D1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiq6D1.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiq6D1.png, https://s21.ax1x.com/2024/04/28/pkiq6D1.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiq6D1.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiq6D1.png"
+        title="pkiq6D1.png" /></a></p>
+<h4 id="yara-扫描工作原理">YARA 扫描工作原理</h4>
+<p>将以上 Chat GPT 帮我生成的内容存入到一个.yar 或者.yara 结尾的文件中，然后放到<code>C:\Program Files\Veeam\Backup and Replication\Backup\YaraRules</code> 目录下，VBR 就能自动识别到这些规则。
+<a href="https://imgse.com/i/pkiqhCD" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiqhCD.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiqhCD.png, https://s21.ax1x.com/2024/04/28/pkiqhCD.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiqhCD.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiqhCD.png"
+        title="pkiqhCD.png" /></a></p>
+<p>启动扫描后，VBR 会将备份存档挂载到 Mount Server 上，然后利用 Mount Server 上的 YARA 引擎加载选择的 YARA 规则进行扫描。</p>
+<p>当然，这个扫描因为是文本和二进制扫描，它不仅局限于恶意代码的扫描，实际上它能够扫描任何我们想查找的关键信息。</p>
+<h3 id="杀毒软件扫描">杀毒软件扫描</h3>
+<p>在 VBR v10 开始就在 Secure Restore 功能中内置了杀毒软件的扫描，VBR 会调用在 Mount Server 上的杀毒软件对备份存档进行扫描。v12.1 中，这个功能被集成到了 Scan Backup 中，并且内置支持的杀毒软件也更加丰富了。</p>
+<h4 id="杀毒软件配置">杀毒软件配置</h4>
+<p>在 v12.1 中内置了 Symantec Protection Engine、ESET、Windows Defender、Kaspersky Security、Bitdefender Endpoint Security Tools、Trellix (以前鼎鼎大名的 McAfee) 这 6 款杀毒引擎。</p>
+<p>除了这 6 款软件之外，如果需要使用其他的杀毒软件，Veeam 也支持通过 AntivirusInfos.xml 配置其他的杀毒软件，只需要修改 Mount Server 上<code>%ProgramFiles%\Common Files\Veeam\Backup and Replication\Mount Service</code>这个目录下的 xml 文件，通过 CLI 命令行调用对应杀毒软件即可。更详细的 xml 配置方法，可以查看官网的详细 xml 语法属性说明 <a href="https://helpcenter.veeam.com/docs/backup/vsphere/av_scan_xml.html?ver=120" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/av_scan_xml.html?ver=120</a>。</p>
+<h3 id="配置方法">配置方法</h3>
+<p>在 VBR 上，有多种方式启动扫描。</p>
+<ol>
+<li>选中受支持的备份存档，右键点击或者选择工具栏上的<code>Scan Backup</code>按钮，激活杀毒引擎扫描或者 YARA 扫描对话框。</li>
+</ol>
+<p><a href="https://imgse.com/i/pkiqW4O" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiqW4O.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiqW4O.png, https://s21.ax1x.com/2024/04/28/pkiqW4O.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiqW4O.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiqW4O.png"
+        title="pkiqW4O.png" /></a>
+启动 Scan Backup 后，会打开扫描对话框，这时候，可以用这两个引擎按照 3 中不同的扫描方式对整条备份链进行安全扫描。</p>
+<p><a href="https://imgse.com/i/pkiqRUK" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiqRUK.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiqRUK.png, https://s21.ax1x.com/2024/04/28/pkiqRUK.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiqRUK.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiqRUK.png"
+        title="pkiqRUK.png" /></a></p>
+<ol start="2">
+<li>
+<p>在各种整机或者磁盘恢复的 Secure Restore 步骤中，勾选杀毒引擎扫描或者 YARA 扫描选项。
+<a href="https://imgse.com/i/pkiqcHx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiqcHx.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiqcHx.png, https://s21.ax1x.com/2024/04/28/pkiqcHx.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiqcHx.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiqcHx.png"
+        title="pkiqcHx.png" /></a></p>
+</li>
+<li>
+<p>在 Surebackup 作业中，勾选杀毒引擎扫描或者 YARA 扫描选项。
+<a href="https://imgse.com/i/pkiq2E6" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiq2E6.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiq2E6.png, https://s21.ax1x.com/2024/04/28/pkiq2E6.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiq2E6.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiq2E6.png"
+        title="pkiq2E6.png" /></a></p>
+</li>
+</ol>
+<h4 id="查看扫描结果">查看扫描结果</h4>
+<p>如果扫描结果匹配到了需要查找的内容，VBR 就会标记扫描到的备份存档为 Infected 状态，表示有恶意软件被发现。</p>
+<p>完整的扫描存档会记录在 VBR 的这个目录下：<code>C:\ProgramData\Veeam\Backup\FLRSessions\Windows\FLR__&lt;machinename&gt;_\Antivirus</code></p>
+<p>和前面介绍的在线恶意攻击分析一样，在 VBR 的 History 中也会记录到详细的扫描状态，可以在 History 中查找扫描的结果。</p>
+<p><a href="https://imgse.com/i/pkiqyuR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/28/pkiqyuR.png"
+        data-srcset="https://s21.ax1x.com/2024/04/28/pkiqyuR.png, https://s21.ax1x.com/2024/04/28/pkiqyuR.png 1.5x, https://s21.ax1x.com/2024/04/28/pkiqyuR.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/28/pkiqyuR.png"
+        title="pkiqyuR.png" /></a></p>
+<p>以上这些就是 VDP v12.1 中新增的一些备份存档扫描检查方法，能够帮助管理员在发生问题后避免二次感染，确保恢复出来的数据是干净的系统存档。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F04%2Fvdp-v12-1-security-feature-deep-dive-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F04%2Fvdp-v12-1-security-feature-deep-dive-02%2F&amp;text=VDP&#43;v12.1&#43;%E5%AE%89%E5%85%A8%E5%8A%9F%E8%83%BD%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89-&#43;%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6%E6%89%AB%E6%8F%8F" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F04%252Fvdp-v12-1-security-feature-deep-dive-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F04%252Fvdp-v12-1-security-feature-deep-dive-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/" class="prev" rel="prev" title="VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</a>
+            <a href="/2024/05/vdp-v12-1-security-feature-deep-dive-03/" class="next" rel="next" title="VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控">VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

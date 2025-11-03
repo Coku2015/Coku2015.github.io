@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Agent for Linux 安装深度分析 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam Agent for Linux 安装深度分析">
+  <meta property="og:description" content="一。组成和作用 Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-10-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-10-12T00:00:00+00:00">
+    <meta property="article:tag" content="备份">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam Agent for Linux 安装深度分析">
+  <meta name="twitter:description" content="一。组成和作用 Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/" /><link rel="prev" href="http://192.168.16.79:1313/2021/07/k10offline-script-2/" /><link rel="next" href="http://192.168.16.79:1313/2022/02/veeam-hardened-linux-repository-configurator/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Agent for Linux 安装深度分析",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2021\/10\/veeam-agent-for-linux-installation-deep-dive\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "备份","wordcount":  1373 ,
+        "url": "http:\/\/192.168.16.79:1313\/2021\/10\/veeam-agent-for-linux-installation-deep-dive\/","datePublished": "2021-10-12T00:00:00+00:00","dateModified": "2021-10-12T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Agent for Linux 安装深度分析</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-10-12">2021-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1373 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一组成和作用">一。组成和作用</a></li>
+    <li><a href="#二安装过程">二。安装过程</a>
+      <ul>
+        <li><a href="#21-dkms-编译安装">2.1. dkms 编译安装</a></li>
+        <li><a href="#22-预编译安装包">2.2. 预编译安装包</a></li>
+        <li><a href="#23-启用安全引导uefi-的-secure--boot">2.3. 启用安全引导（UEFI 的 Secure  Boot）</a></li>
+        <li><a href="#24-不使用-veeamsnap">2.4. 😂😂不使用 Veeamsnap</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="一组成和作用">一。组成和作用</h2>
+<p>Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>veeam-&lt;xxxxxxxxxxx&gt;.rpm
+veeamsnap-&lt;xxxxxxxxxxx&gt;.rpm</code></pre></div>
+<p>其中，Veeamsnap 驱动程序负责系统快照和变化数据块追踪工作，而 Veeam 主程序则负责其他所有相关的工作，当 Veeam 主程序被安装时，依赖包 Veeamsnap 会被自动安装。</p>
+<h2 id="二安装过程">二。安装过程</h2>
+<p>在安装时，VAL 需要安装一系列 Linux 依赖包，这些依赖包会自动通过 Linux 的包管理器去 Linux 相关的软件镜像源中搜索，关于这部分，可以参考 <a href="https://blog.backupnext.cloud/2020/09/Veeam-Linux-Agent-101/" target="_blank" rel="noopener noreffer ">《Veeam Agent for Linux 基础知识》</a>。
+大部分比较顺滑的情况，是通过 VBR 进行 VAL 的推送安装，VBR 会自动处理以下的所有安装逻辑，自动判断自动安装最合适的软件包，但是在这背后，有多种特殊情况存在。</p>
+<h3 id="21-dkms-编译安装">2.1. dkms 编译安装</h3>
+<p>对于 Veeamsnap 来说，它是一个 Linux 内核外的驱动程序，对于不同的 Linux 系统，绝大多数情况下无法通用。因此 Veeam 采用了 DKMS 来帮助维护这个驱动程序，安装<code>veeamsnap-&lt;xxxxxxxxxxx&gt;.rpm</code>时，会将 Veeamsnap 模块自动添加至 dkms 中并执行编译和安装模块的过程。</p>
+<p>关于 DKMS，它是 Dell 创建的开源项目，全称是 Dynamic Kernel Module Support，用于维护内核外的驱动程序，详细内容可以参考 <a href="https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html" target="_blank" rel="noopener noreffer ">https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html</a></p>
+<p>要正确安装并编译 Veeamsnap 快照驱动，就需要首先安装并配置 dkms 能正常工作，这部分在绝大多数 Linux 系统中并不算复杂，Veeamsnap 会去自动寻找 dkms 依赖包并把和 dkms 相关的 gcc、make、kernel-header 自动装上，然后使用它们进行安装和编译驱动过程。</p>
+<h3 id="22-预编译安装包">2.2. 预编译安装包</h3>
+<p>对于特定的 Linux 发行版，Veeam 还制作了无需编译安装的 Veeamsnap，这些 Veeamsnap 安装包我们称为 kmod-veeamsnap，这些安装包和上面提到的<code>veeamsnap-&lt;xxxxxxxxxxx&gt;.rpm</code>功能完全相同，只是在使用时，无需通过 dkms 编译，而是直接使用。这时候 dkms 编译的前提条件和依赖对于 kmod-veeamsnap 就完全不需要了。</p>
+<p>已经预编译的系统包括：</p>
+<ul>
+<li>内核版本 2.6.32-131.0.15 以上的 Radhat 6</li>
+<li>内核版本 3.10.0-123 以上的 CentOS/Radhat 7.0-7.9</li>
+<li>CentOS/Radhat 8</li>
+<li>SLES</li>
+<li>openSUSE</li>
+</ul>
+<p>这些系统的 kmod 安装包都可以在 <a href="http://repository.veeam.com/.private/rpm" target="_blank" rel="noopener noreffer ">http://repository.veeam.com/.private/rpm</a> 中找到。</p>
+<p>需要注意的是，因为是预编译的软件包，对于不同的系统需要选择不同的驱动，这时候这个选择 Veeam 需要借助 python3 脚本来完成，这时候 Linux 系统需要依赖 Python3。在安装<code>kmod-veeamsnap--&lt;xxxxxxxxxxx&gt;.rpm</code>时，VAL 会自动寻找 python3 依赖包，安装并使用，最终完成 kmod-veeamsnap 的安装。</p>
+<h3 id="23-启用安全引导uefi-的-secure--boot">2.3. 启用安全引导（UEFI 的 Secure  Boot）</h3>
+<p>对于启用了 UEFI 安全引导的 Linux 系统，要使用 kmod-veeamsnap，需要将 kmod-veeamsnap 的证书导入到 UEFI 控制台中。这个证书可以先使用 veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm 这个包获取，具体步骤如下：</p>
+<ol>
+<li>下载并安装 veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm，比如 Redhat8：</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -O http://repository.veeam.com/.private/rpm/el/8/x86_64/veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm
+</span></span><span class="line"><span class="cl">rpm -ivh veeamsnap-ueficert*</span></span></code></pre></div></div>
+<ol start="2">
+<li>执行导入命令</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mokutil --import veeamsnap-ueficert.crt</span></span></code></pre></div></div>
+<ol start="3">
+<li>重启 Linux 系统进入 UEFI Bios 控制台里，去分配下这个证书</li>
+</ol>
+<p>后续的 kmod-veeamsnap 安装过程和 2.2 中没任何区别。</p>
+<h3 id="24-不使用-veeamsnap">2.4. 😂😂不使用 Veeamsnap</h3>
+<p>以上这些 veeamsnap 都没条件使用时，从 VAL 5.0.1 起，Veeam 提供 snapless 的备份方式，提供了不依赖 veeamsnap 工作的 VAL 主程序，比如 Redhat 8：
+<a href="http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.el8.x86_64.rpm" target="_blank" rel="noopener noreffer ">http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.el8.x86_64.rpm</a></p>
+<p>这个程序无法支持快照备份，只能通过 File level snapshot-less 的方式进行文件备份，如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png"
+        data-srcset="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png, https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png 1.5x, https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png"
+        title="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png" /></p>
+<p>当然，在 VBR 中也有同样的选项：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png"
+        data-srcset="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png, https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png 1.5x, https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png"
+        title="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png" /></p>
+<p>这个主程序可以直接单独安装，在安装的时候它不会再去要求 veeamsnap 的依赖，而其他的常规依赖包依然是通过 Linux 包管理器自动获取。</p>
+<p>以上就是今天的内容，希望对大家安装 VAL 有帮助。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/10/veeam-agent-for-linux-installation-deep-dive/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F10%2Fveeam-agent-for-linux-installation-deep-dive%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F10%2Fveeam-agent-for-linux-installation-deep-dive%2F&amp;text=Veeam&#43;Agent&#43;for&#43;Linux&#43;%E5%AE%89%E8%A3%85%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F10%252Fveeam-agent-for-linux-installation-deep-dive%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F10%252Fveeam-agent-for-linux-installation-deep-dive%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2021/07/k10offline-script-2/" class="prev" rel="prev" title="Kasten K10 入门系列 05 - K10 安装包下载（2）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kasten K10 入门系列 05 - K10 安装包下载（2）</a>
+            <a href="/2022/02/veeam-hardened-linux-repository-configurator/" class="next" rel="next" title="Veeam Hardened Linux Repository Configurator">Veeam Hardened Linux Repository Configurator<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

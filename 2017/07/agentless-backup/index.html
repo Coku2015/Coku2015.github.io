@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>无代理备份和应用程序感知 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/07/agentless-backup/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="无代理备份和应用程序感知">
+  <meta property="og:description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-07-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-07-23T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="无代理备份和应用程序感知">
+  <meta name="twitter:description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/07/agentless-backup/" /><link rel="prev" href="http://192.168.16.79:1313/2017/07/direct-nfs-access/" /><link rel="next" href="http://192.168.16.79:1313/2017/08/speed-up-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "无代理备份和应用程序感知",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/07\/agentless-backup\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1463 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/07\/agentless-backup\/","datePublished": "2017-07-23T00:00:00+00:00","dateModified": "2017-07-23T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">无代理备份和应用程序感知</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-07-23">2017-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1463 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。</p>
+<p><strong>什么是代理（Software Agent）？</strong></p>
+<p>这个 IT 专业词汇其实在中文上来说，并没办法给出很好很明确的定义，以致我们日常在技术交流的时候会含糊其辞，有时候会谈广义的代理，有时候会谈狭义的代理。我试着去从百度百科找找代理的定义，结果还是无功而返。而在 wikipedia 上，倒是有 Software Agent 的定义，不过也只是通过大众的认知给了一些 Software Agent 的应具备的特性：</p>
+<ul>
+<li>持续运行 - 通常会保持运行状态，即使空闲时候也会处于等待状态。</li>
+<li>自动自主运行 - 无需人工干预和交互就能保持运行状态。</li>
+<li>应用程序交互功能 - 能够和其他程序发生交互，激活其他模块、互相通讯、协同工作。</li>
+</ul>
+<p>仔细琢磨了下，确实传统领域的代理备份，那些代理软件倒是符合这些 Agent 应具备的特性。</p>
+<p><strong>Veeam 无代理备份和应用程序感知</strong></p>
+<p>Veeam 的虚拟化备份技术，是不需要在任何的操作系统内安装任何这类的程序，因此备份不需要系统的运行状态。</p>
+<p>而应用程序感知则是在备份过程中，Veeam 全自动的到操作系统内运行一个进程，完成相应的应用程序感知、一致性保障和文件系统一致性处理，之后关闭应用程序，退出执行。这一过程只是在备份执行过程中的一个可选进程，因此是完全不同于上述的代理程序。</p>
+<p>所以，通常代理程序会面临的问题，对于备份代理一样会碰到：</p>
+<ul>
+<li>需要不停的为新部署的虚拟机，手工安装代理程序（我们认为推送虽然方便，但也是“手工”的一种，避免不了远程/本地的配置工作）；</li>
+<li>软件更新的时候，需要为每一台机器升级代理；</li>
+<li>在长期大规模环境的运行过程中，还需要考虑拿个什么软件去监控这些代理，我们所谓代理保姆，就是干这事的，防止哪天这些代理突然不工作了也没人知道；</li>
+<li>以上这些都是长期消耗计算资源的，包括 CPU、内存、网络、存储，并且很多时候是重复的消耗。</li>
+</ul>
+<p>而 Veeam 的技术，在深入到应用程序层面的感知进程，仅仅是在备份启动那一刻运行几分钟后立刻被关闭退出，因此完全不存在以上提及的这些问题。<strong>无需每次部署/无需更新/不用长期运行监控</strong>。</p>
+<p>更有意思的是，现在的 IT 世界是一个运行越多风险越大的世界。我们没有任何应用程序的时候，就是一个最最安全的状态，而每增加一个应用程序，就多一份被黑客、病毒、勒索软件攻击的风险。为每一个系统减少一份持续运行应用程序，就是为我们的系统安全增加一份保障。</p>
+<p>另外，如果系统关机了，那么需要保持运行才能进行备份的代理程序就彻底歇菜了。备份目标 Offline，这是传统备份软件界面中常常见到的事情，这时候备份管理员能做的唯一事情就是去找到应用或者基础架构的管理员去启动这个操作系统。而对于无代理的技术，即使是系统关机的情况下，备份依然不受影响。而还原过程中，Veeam 的多样化的颗粒度恢复却依然可以手工执行，堪称是完美的备份和还原。</p>
+<p><strong>传统代理的更多缺陷</strong></p>
+<p>利用代理技术的数据备份，绝大多数依赖网络。当我们为了隔离安全，去架构 DMZ 区域，去进行严格的出入规则的时候，突然发现因为买备份这个保险，我们不得不需要有个数据流去 DMZ 区域完成数据的抽取，以致原先的完全隔离的架构被打破，苦心设计的完美架构失去了其原本的设计目标。</p>
+<p>Veeam 的这种应用程序插入运行技术则完全不同于传统代理，在感知应用程序时，这个运行执行可以通过 VIX 在无网络连通的状态下进行 Hypervisor 层面的感知。因此，在 Veeam 的设计理念中，可以为那些 DMZ 区域的备份带来更多一份的安全。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-07-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/07/agentless-backup/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F07%2Fagentless-backup%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F07%2Fagentless-backup%2F&amp;text=%E6%97%A0%E4%BB%A3%E7%90%86%E5%A4%87%E4%BB%BD%E5%92%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%84%9F%E7%9F%A5" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F07%252Fagentless-backup%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F07%252Fagentless-backup%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/07/direct-nfs-access/" class="prev" rel="prev" title="Veeam 黑科技之 Direct NFS Access"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam 黑科技之 Direct NFS Access</a>
+            <a href="/2017/08/speed-up-01/" class="next" rel="next" title="加速！加速！加速！（一）">加速！加速！加速！（一）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

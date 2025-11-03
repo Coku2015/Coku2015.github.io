@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam FAQ 系列转载 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2019/03/veeam-faq/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam FAQ 系列转载">
+  <meta property="og:description" content="最近有很多 Veeam 今年新版本特性的系列文章，包括很多云端数据管理的话题，有兴趣的朋友可以参考 Veeam 云架构师 Mars Zhang 的系列推文：
+Veeam 9.5 U4 新功能，利用 Cloud Mobility 实现迁移即服务">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-03-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-03-21T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam FAQ 系列转载">
+  <meta name="twitter:description" content="最近有很多 Veeam 今年新版本特性的系列文章，包括很多云端数据管理的话题，有兴趣的朋友可以参考 Veeam 云架构师 Mars Zhang 的系列推文：
+Veeam 9.5 U4 新功能，利用 Cloud Mobility 实现迁移即服务">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2019/03/veeam-faq/" /><link rel="prev" href="http://192.168.16.79:1313/2019/03/cloud-tier-02/" /><link rel="next" href="http://192.168.16.79:1313/2019/06/ransomeware-attack/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam FAQ 系列转载",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2019\/03\/veeam-faq\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  18000 ,
+        "url": "http:\/\/192.168.16.79:1313\/2019\/03\/veeam-faq\/","datePublished": "2019-03-21T00:00:00+00:00","dateModified": "2019-03-21T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam FAQ 系列转载</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-03-21">2019-03-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 18000 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 36 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>最近有很多 Veeam 今年新版本特性的系列文章，包括很多云端数据管理的话题，有兴趣的朋友可以参考 Veeam 云架构师 Mars Zhang 的系列推文：</p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=Mzg5MTExNjA3Nw==&amp;mid=2247483682&amp;idx=1&amp;sn=6678a43c46309919e6b1eafe2280f302&amp;chksm=cfd30e60f8a48776d8562c189b472bd8510ac03143ca153991a2069c04309c5814899fb0a5f7&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">Veeam 9.5 U4 新功能，利用 Cloud Mobility 实现迁移即服务</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=Mzg5MTExNjA3Nw==&amp;mid=2247483715&amp;idx=1&amp;sn=9ef774512d7af578fcec35f63ae63e7e&amp;chksm=cfd30e01f8a4871779abed21c8698aaea6703d9a9be2358204b8624028db58b352b894a49041&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">Veeam 云端数据管理新功能，打造 BaaS 备份即服务 （一）</a></p>
+<p>回归到 Veeam 最原始的功能，最近开始回过来做做基础知识普及，本系列内容较长，因此分多期推送，这里内容来自于 Veeam 官方论坛置顶帖，如果有想看原版的，可以直接通过原文链接跳转。</p>
+<p>本文纯技术内容，纯纯的干货，就不开篇废话了，直接进入主题：</p>
+<p>Architecture</p>
+<p>问：请问 Veeam 备份数据流的流向顺序？</p>
+<p>答：磁盘&gt; Backup proxy &gt; 网络&gt; Backup repository &gt; 磁盘</p>
+<p>Backup Proxies</p>
+<p>问：什么是 Backup Proxy Server？</p>
+<p>答：Backup Proxy 从生产存储中提取虚拟机数据（配置文件和虚拟磁盘），通过应用重复数据删除和压缩来处理数据以减小虚拟机数据的大小，并将虚拟机数据发送到 Backup Repository（在备份的情况下）或其他 Backup Proxy （在复制的情况下）。 Backup Proxy 还用于在还原虚拟机时将虚拟机数据（配置文件和虚拟磁盘）写回 VMware 的生产存储，以及用于虚拟机的复制。</p>
+<p>问：为什么最好在物理机上安装 Backup Proxy？</p>
+<p>答：由于大量数据流（高达每秒几千兆字节）的即时处理（重复数据删除和压缩）需要大量的 CPU，内存和 I / O 资源，物理 Backup Proxy 最适合 24/7 虚拟化环境，具有高整合率。否则，您可能会发现备份过程会影响生产。</p>
+<p>问：我可以在什么操作系统上安装 Backup Proxy？</p>
+<p>答：Microsoft Windows 7 SP1 / Server 2008 SP2 64 位操作系统或更新版本。</p>
+<p>问：我是否必须设置 Backup Proxy 才能开始使用产品？</p>
+<p>答：不，因为安装程序会自动部署默认 Backup Proxy。 但是，我们建议您添加额外的 Backup Proxy 以实现冗余和负载平衡。 有关最佳部署额外 Backup Proxy 的建议，将会在后续章节中详细说明。</p>
+<p>问：Backup Proxy 可以备份自己吗？</p>
+<p>答：是的，Backup Proxy 可以备份自己和任何其他 Veeam Backup &amp; Replication 组件。</p>
+<p>Synthetic Backup</p>
+<p>问：增量永久备份方法有什么好处？</p>
+<p>答：因为无需保留多个完整备份（反向增量备份，永久正向增量备份和带转换的正向增量备份），所以可以减少对生产环境的压力，提高完整备份性能，减少备份存储空间，。</p>
+<p>问：我正在使用重复数据删除存储设备。合成完全备份对我有好处吗？</p>
+<p>答：根据存储实现重复数据删除的方式（Inline，后处理或与 DDboost 或 Catalyst 集成），您可以通过使用 Active Full Backup 而不是合成备份来获得更好的性能。</p>
+<p>问：我们企业有一项数据保护合规性要求，需要执行真正的完整备份。我是否被强制使用 Veeam 的合成全备份？</p>
+<p>答：不，您可以将作业配置为执行 Active Full Backup。 此外，您可以安排 Active Full Backup，例如，每月一次（或每季度一次），同时在其余时间进行合成完全备份。 Veeam 在安排 Active Full Backup 方面提供了极大的灵活性。</p>
+<p>问：反向增量备份模式究竟如何工作？</p>
+<p>答：Veeam 在备份作业进行中，从源端提取变化的数据量，然后将其注入到之前的一份全备份文件中（.VBK），同时将被注入过的数据块重新写入到一个新的文件（.VRB）中。这样 VBK 文件永远包含了一份最新的虚拟机备份存档。详细信息请参阅：</p>
+<p><a href="https://www.veeam.com/blog/veeam-synthetic-backup-explained.html" target="_blank" rel="noopener noreffer ">https://www.veeam.com/blog/veeam-synthetic-backup-explained.html</a></p>
+<p>问：增量备份的转换选项与反向增量备份模式有何不同？</p>
+<p>答：转换的最终结果是相同的 - 包含最新 VM 状态的单个完整备份，以及早期还原点（VRB 文件）。 不同之处在于，如果使用反向增量备份模式，每次运行备份时都会发生合成全备份数据注入；而使用带转换选项的增量备份时，仅在合成全备份当天发生数据注入。这可以加快每日增量的备份速度，但会在减慢合成全备份当天的备份速度。</p>
+<p>Backup Repositories</p>
+<p>问：什么是 Backup Repository？</p>
+<p>答：Backup Repository 是存储备份的位置。每个 Backup Repository 都具有本地代理，可在 Backup Proxy 和 Backup Repository 通过局域网或广域网进行通信时实现增量数据的高效本地处理。</p>
+<p>问：Veeam 支持什么样的设备作为 Backup Repository？</p>
+<p>答：以下几种设备是可以被支持的：</p>
+<ul>
+<li>任何直连至 Windows 服务器的磁盘。可以是本地磁盘、直连的任何磁盘存储（包括 U 盘）、iSCSI 或者 FC LUN。</li>
+<li>任何直连或者挂载到 Linux 服务器（需要安装 bash shell、SSH 和 Perl）的磁盘，可以是本地磁盘、直连的任何磁盘存储（包括 U 盘）、NFS 共享、iSCSI 或者 FC LUN。</li>
+<li>SMB （CIFS）共享，支持用户名密码验证。数据支持从 Proxy Server 直接写入到 SMB 共享文件夹，也可以通过 Gateway 写入（对于远程服务器非常有用）。</li>
+<li>基于磁盘的重复数据删除设备，包括 Dell/EMC 的 DataDomain、HPE StoreOnce、ExaGrid、QuantumDXI。</li>
+</ul>
+<p>问：我可以使用虚拟机作为 Backup Repository 吗？</p>
+<p>答：是的，但是请务必想清楚在发生灾难情况下的恢复计划。但请记住，如果将备份文件存储在虚拟机且位于生产存储中，发生灾难时可能会影响您检索备份文件的能力，虽然实际上该虚拟机不一定需要保持运行状态，因为您始终可以在 Veeam 中直接导入备份存档所在的磁盘文件。</p>
+<p>问：您推荐为备份存储选择什么 Raid 级别？</p>
+<p>答：我们建议使用 Raid 6（或者其他同类双奇偶校验技术）来最优化冗余级别。而 Raid 10 则能为合成全备份的提供更好的 I/O 性能。</p>
+<p>磁带和异地</p>
+<p>问：Veeam 支持将备份写入磁带吗？</p>
+<p>答：是的，Veeam 支持源生的 LTO-3 以上的磁带写入。详细内容将会在后续磁带 FAQ 中说明。</p>
+<p>问：如何才是最佳的异地备份存放方式？</p>
+<p>答：使用 Backup copy job 将备份存档复制到异地的 Backup Repository，如果链路带宽较小，可以考虑使用广域网加速器。</p>
+<p>Backup 模式</p>
+<p>问：我应该选用什么样的备份模式？</p>
+<p>答：请参考下图。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU1NnLg6wuibaVFt4o4uK6R8R6iaWVGtxUYWsIS8qoEjicd5JDgGNfm7fYlrRZwxicOoPichnoggXqMwkrw/640?wx_fmt=png"
+        data-srcset="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU1NnLg6wuibaVFt4o4uK6R8R6iaWVGtxUYWsIS8qoEjicd5JDgGNfm7fYlrRZwxicOoPichnoggXqMwkrw/640?wx_fmt=png, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU1NnLg6wuibaVFt4o4uK6R8R6iaWVGtxUYWsIS8qoEjicd5JDgGNfm7fYlrRZwxicOoPichnoggXqMwkrw/640?wx_fmt=png 1.5x, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU1NnLg6wuibaVFt4o4uK6R8R6iaWVGtxUYWsIS8qoEjicd5JDgGNfm7fYlrRZwxicOoPichnoggXqMwkrw/640?wx_fmt=png 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU1NnLg6wuibaVFt4o4uK6R8R6iaWVGtxUYWsIS8qoEjicd5JDgGNfm7fYlrRZwxicOoPichnoggXqMwkrw/640?wx_fmt=png"
+        title="img" /></p>
+<p>备份作业类型</p>
+<p>问：什么是 Backup Jobs?</p>
+<p>答：Backup Jobs 使用生产的虚拟机数据生成的高度压缩和重删的备份文件，从而可以节省大量托管备份所需的空间。但是由于需要从备份中提取并解压拷贝完整的虚拟机映像回生产存储，因此从备份存档还原完整的虚拟机通常需要很长时间。另外，Veeam 也提供立即恢复少量虚拟机的方式（请参阅即时虚拟机恢复相关内容）。</p>
+<p>问：什么是 Backup Copy Jobs？</p>
+<p>答：Backup Copy Job 可以有效的在本地（通常用于存档目的）和异地（以满足异地备份存储要求）创建备份存档的副本。 维护备份存档的多个副本是行业的最佳实践（称为 3-2-1 备份黄金法则）：至少 3 个数据副本（1 个生产和 2 个备份），备份存储在 2 种不同的介质中，其中 1 份存放在异地。</p>
+<p>问：什么是 SureBackup Jobs？</p>
+<p>答：SureBackup Jobs 通过在隔离环境中启动一个或多个虚拟机来执行全仿真的恢复验证，该验证通过检查虚拟机是否已启动，操作系统是否已启动，虚拟机的 ping 包响应以及虚拟机应用程序是否正常运行来验证恢复是否成功。 SureBackup Jobs 也是 U-AIR 和按需沙盒功能的关键组件。</p>
+<p>问：什么是 Replication Jobs？</p>
+<p>答：Replication Jobs 使用生产的虚拟机在备用主机上生成精准的虚拟机副本。当生产环境宕机后这些虚拟机副本能够立刻被启动起来并拥有完整的 I/O 性能，这不需要依赖 Veeam Backup &amp; Replication 服务器进行工作。然而，这样的虚拟机副本相比备份存档还会需要备用的主机、需要更多的磁盘容量，因为这个虚拟机副本是以未压缩重删的虚拟化平台的源生格式进行存放。所以，虚拟机副本通常是用于最关键的那些应用系统，对于恢复时间要求极高的系统。</p>
+<p>问：什么是 VM Copy Jobs？</p>
+<p>答：VM Copy Jobs 使用生产的虚拟机在指定的存储上生成精准的拷贝，比较适合用于数据中心迁移，创建测试实验室以及临时发起的数据备份。VM Copy Jobs 支持处理运行中的虚拟机。和 Backup Jobs 不同的是，VM Copy 不支持增量。 VM Copy Jobs 仅支持 VMware 虚拟机。</p>
+<p>问：什么是 File Copy Jobs？</p>
+<p>答：File Copy Jobs 可以在任何被 Veeam 管理的服务器（Windows、Linux 或者虚拟化平台）之间进行常规的文件拷贝，能够执行各种各样的管理类的操作。File Copy Jobs 并不支持那些属于开机运行中的虚拟机的虚拟磁盘文件。</p>
+<p>问：什么是 Backup to Tape Jobs？</p>
+<p>答：Backup to Tape Jobs 将 Veeam 备份文件复制到磁带，并完全追踪磁带目录中复制的备份文件的内容。这能够让恢复过程简化，能够自动选择所需的磁带。</p>
+<p>问：什么是 File to Tape Jobs？</p>
+<p>答：File to Tape Jobs 将任何文件从被 Veeam 管理的服务器（Windows、Linux 或者虚拟化平台）复制到磁带。被复制的文件可以在磁带目录中进行追踪，然而 Veeam 备份存档文件也会被认为是常规的文件。</p>
+<p>问：什么是 Quick Migration Jobs？</p>
+<p>答：Quick Migration Jobs 能够将运行中的虚拟机以最小的停机窗口在选定的主机和存储之间进行移动。根据您的迁移场景和 VMware 许可授权级别，这个迁移任务会自动利用以下方式：VMware vMotion、VMware Storage vMotion、Veeam Quick Migration with SmartSwitch 以及 Veeam Quick Migration with cold switch。这能够让您在不影响性能或者业务的情况下快速将虚拟机从需要紧急维护的主机中撤出，也可以让您执行数据中心内或者数据中心之间的虚拟机迁移。Quick Migration Jobs 仅支持 VMware 虚拟机。</p>
+<p>Backup Copy</p>
+<p>问：请问 Backup Copy Job 数据流的流向顺序？</p>
+<p>答：不同的传输模式选择都会不一样。</p>
+<ul>
+<li>直接传输模式：磁盘 &gt; 源端 backup repository &gt; 网络&gt; 目标端 backup repository &gt; 磁盘</li>
+<li>启用广域网加速器：磁盘 &gt; 源端 backup repository &gt; 源端 WAN accelerator &gt; 网络&gt; 目标端 WAN accelerator &gt; 目标端 backup repository &gt; 磁盘</li>
+</ul>
+<p>问：Backup Copy Job 是完全一模一样复制备份文件？</p>
+<p>答：不是。Backup Copy Job 是为选择的虚拟机创建一份新的备份文件。</p>
+<p>问：Backup Copy Job 中 2 种对象的选择方式（from Infrastructure/from backup）有什么区别？</p>
+<p>答：没有区别，只是为了更方便。无论哪种方式，Backup Copy Jobs 都会从备份文件中提取虚拟机数据创建新的备份文件。</p>
+<p>问：如何使用 Backup Copy Job 生成的存档创建新的 Backup Copy Job？（一级备份存储 -&gt;BCJ -&gt; 二级备份存储 -&gt;BCJ -&gt; 三级备份存储）</p>
+<p>答：在创建 Backup Copy Job 的对象选择时，选择“from Infrastructure”，指定 Source Repository，选择二级备份存储设备作为三级备份存储的读取源。</p>
+<p>Replication</p>
+<p>问：请问 Replication 数据流的流向顺序？</p>
+<p>答：磁盘&gt; 源 proxy &gt; 网络&gt; 目标 proxy &gt; 磁盘</p>
+<p>问：我能使用同一个 Proxy 同时作为同一个 Replication Job 的源 Proxy 和目标 Proxy 吗？</p>
+<p>答：可以。但是仅限于在同一个本地站点内的复制。在这种情况下，VBR 会尝试使用同一个 Proxy。</p>
+<p>SureBackup</p>
+<p>问：有关 Surebackup 的基本理论和概念？</p>
+<p>答：请参阅以下文档《<a href="http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483830&amp;idx=1&amp;sn=3fee7103411facb64c243c32b0e0ff65&amp;chksm=fdf0a763ca872e75b75ca65be5f81791549bac6322e5f161ec5becc5be23eef27833ea47b9f3&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">备份存档能不能被恢复，这件事情上只有真正做过才知道</a>》。</p>
+<p>问：Surebackup Job 中哪些内容被自动验证了？虚拟机可用性、系统启动状态以及应用程序？</p>
+<p>答：以上这些都会验证。在恢复验证中包含以下 4 个步骤：</p>
+<ol>
+<li>检查虚拟机是否被成功启动。比如，如果虚拟磁盘在恢复时丢失、虚拟磁盘描述文件损坏等等这些，直接导致虚拟机开机报错，这时候 vCenter 会告诉 Surebackup Job 这个状况。</li>
+<li>通过检测虚拟机心跳，确定操作系统是否正常启动。如果系统没有正常启动，VMware tools 的相关服务就不会启动，也就不会出现虚拟机心跳。</li>
+<li>通过 Ping 包检测虚拟机的网络连接状况。如果 ping 不通虚拟机，那么说明相关网络服务上存在问题。</li>
+<li>通过脚本运行，检测虚拟机的相关应用程序和服务是否正常启动。如果脚本返回结果和预期的结果不同，那么说明应用程序恢复启动存在一些问题。</li>
+</ol>
+<p>问：这些检测都是强制必须进行的吗？</p>
+<p>答：不是，您可以为每一台虚拟机、容器对象以及 Backup Job 定义不同的检测内容。</p>
+<p>问：哪些虚拟机会被 Surebackup Job 验证？</p>
+<p>答：所有 Application Group 中和所有 Linked backup jobs 中包含的虚拟机都会被验证。</p>
+<p>问：我发现在设置 Surebackup 时，可以不指定使用 Application Group，这是用来做什么的？</p>
+<p>答：如果您不关心应用的可恢复性，只是想检测一下虚拟机是否能够被启动，那么你可以不需要启动这些应用程序的依赖组件，也就是说不需要使用 Application Group。在配置 Surebackup Job 时，不选择 Application Group 同时禁用脚本检测，这样在检测报告中就不会收的应用程序的相关错误信息。</p>
+<p>问：如果我的域控制器没有做虚拟化，那么如何在 Virtual Lab 中启动相关虚拟机？</p>
+<p>答：你必须得至少做一台虚拟化的域控制器。</p>
+<p>问：我如果收的一份报告，告诉我其中有一台或者几台虚拟机验证失败了，我怎么样才能知道，问题出在哪里？</p>
+<p>答：打开 Surebackup Job 的会话，找到有问题的虚拟机，右键点击该虚拟机，启动它，这样他会在排错模式中启动，然后您可以通过 vsphere client 或者其他手段连接进虚拟机进行一些排错。</p>
+<p>问：我们的一些应用程序的检测必须通过一些手工过程，并不能通过脚本检测，有没有适合这样的方法？</p>
+<p>答：可以为这些应用程序创建一个独立的 Application Group，然后创建一个 Surebackup Job，使用这个 Application Group，并勾选 Keep VM running 的复选框，然后为这个 Job 设定计划任务。这样当验证开始后，该虚拟机就会被启动并在那边等待您手工介入执行必要的测试步骤。</p>
+<p>重复数据删除</p>
+<p>问：Veeam 执行什么类型的重复数据删除？</p>
+<p>答：我们执行无代理的、数据块级别的、内联的（在线传输时）重复数据删除。该重删技术同时会在源端和目标端进行。在数据被发送到备份存储之前，会先进行数据块之间的重删，而在被发送到目标端时，会根据同一个 Job 中的多台 VM 上的数据进行再一次重删。</p>
+<p>问：通常的重删压缩率是多少？</p>
+<p>答：重删压缩率一般会相比原始数据在 10 倍左右，但是这还是取决于原始数据的实际情况，其中决定因素会非常多，比如一个任务中的虚拟机数量、这些虚拟机的相似度、虚拟磁盘的内容。而一段时间的备份，一般认为 2 倍左右已经是一个可以接受的数值了。</p>
+<p>问：对于软件来说，10 倍的重删率已经很不错了，但是其他厂商经常宣称有 100 倍的重删率？</p>
+<p>答：让他们来提供一下他们所谓的重删率的计算公式吧。对于 Veeam 来说，10 倍是对于单个全备份文件来说的重删率，通常这个是按预备写入这个全备份文件的字节除以实际落盘的字节得到的结果。其他厂商通常会为了市场宣传去放大这个数值。这个通常做法是假设每次备份都是执行一个全备份，也就是说没有增量备份这个概念。如果把这个概念套用在 Veeam 上，那么你可以这么来评估一下，比如数据保留 30 天，做 30 天的备份，最终得到磁盘上存放的数据会活动 300 倍的“市场宣传”重删率。这是因为 Veeam 可以做到无论备份保留多少天多少份，在磁盘上永远只放 1 份全备份数据。</p>
+<p>问：Veeam 在哪个层面去做这个重删？</p>
+<p>答：我们在数据块层面做可变数据块的重删。数据块大小可配置为 4096KB,1024KB,512KB 或 256KB，这个是在 Job 内进行，不能跨不同的 Backup Job。而如果 Backup Repository 被配置为“per-VM backup files”，那么重删是基于每个 VM 级别去进行。</p>
+<p>问：别人告诉我，因为使用大数据块切片所以 Veeam 的重删效率很差？</p>
+<p>答：Veeam 的重删是被设计和压缩一起工作的，因此您应该考虑整体的数据缩减率，而不是单独看重删。大数据块可以实现更高的处理性能和更优秀的压缩率。这样的设计使得 Veeam 能够达成对同一个数据处理时占用更小的资源开销并最终获得几乎和小数据块切片一样的效果。您可以去看看 EMC 的相关研究报告，了解和压缩一起工作的重删技术，在随着工作数据块的增大，在其最终获得的数据缩减效果上几乎是完全相同的。这其实是因为压缩算法的收益更多来自一个数据块中的数据量。</p>
+<p><a href="https://www.usenix.org/system/files/conference/hotstorage12/hotstorage12-final38_0.pdf" target="_blank" rel="noopener noreffer ">https://www.usenix.org/system/files/conference/hotstorage12/hotstorage12-final38_0.pdf</a></p>
+<p>问：怎么做我才能实现最佳的重删率？</p>
+<p>答：把内容相似的虚拟机放在一个备份任务里面，比如虚拟机的操作系统相同、或者从同一个模板克隆出来的。每个任务尽量去多放几个虚拟机，这比每个任务放一两个虚拟机获得的重删率要好很多。另外还不能启用“per-VM backup files”这个选项。</p>
+<p>问：我的虚拟机不是从同一个模板中部署出来的，这样的情况重删还能起作用吗？</p>
+<p>答：可以起作用。因为我们的重删是基于数据块的，它不会区分虚拟机是否来自同一个模板还是手工部署出来的。重删技术对于任何相似的数据块都会起作用，即使这些虚拟机的操作系统完全不同。</p>
+<p>问：重删技术会在 Replication 任务中使用吗？还是仅适用于 Backup 任务？</p>
+<p>答：重删技术只适用于 Backup 任务。因为复制副本会以虚拟化平台源生的格式存放数据，因此对于那些存档重删技术不适用。</p>
+<p>问：因为 Veeam 有自己的重删技术，那么对于那些使用硬件重删设备的 Veeam 用户，这个技术有什么影响？</p>
+<p>答：没有影响，用户可以使用硬件设备的重删技术，并且从这些重删设备中获得全局重删的能力，也就是说每个备份存档之间都能实现重删。一般来说，对于长期归档存放 Veeam 备份存档重删设备是最佳选择。而绝大多数重删设备，不适合作为一级备份存储。因为和裸磁盘设备不同，这些设备并不是为提供最佳的 IOPS 而设计，往往会成为整个备份架构中的主要瓶颈而影响备份性能，进而影响您的备份窗口。同样，某些重删设备的随机读取 I/O 性能较差会直接影响虚拟机的还原性能。</p>
+<p>问：你们有没有和重删技术厂商做过产品整合测试，比如 EMC DataDomain、HPE StoreOnce、ExaGrid、Quantum、Quest 等等？</p>
+<p>答：是的，我们和绝大多数重删设备厂商有合作。此外，许多版本都有明显的性能提升。</p>
+<p>问：当我备份至重删设备时，我是否应该禁用 Veeam 内置的重删技术？</p>
+<p>答：如果您使用 Veeam 集成的重删设备（例如 EMC DataDomain、ExaGrid、HPE StoreOnce， Quantum DXi）这些设定会自动根据最佳实践被调整。而如果是其他品牌的重删设备或者协议，请根据最佳实践手册进行设定。
+<a href="https://bp.veeam.expert/repository_server/repository_types/repository_type_dedupe" target="_blank" rel="noopener noreffer ">https://bp.veeam.expert/repository_server/repository_types/repository_type_dedupe</a></p>
+<p>内置的广域网加速器</p>
+<p>问：预期的带宽节省大约为多少？</p>
+<p>答：大约能够达到 50 倍甚至更多的数据缩减率，但是这会受很多因素影响诸如内容的相似程度等。一般常规估算的节省带宽约为十倍左右。</p>
+<p>问：带宽超过 100Mbit/s 的广域网链路，使用广域网加速器是否有意义？</p>
+<p>答：绝大多数情况下，没意义。根据不同的环境，你会发现传输时间并没有被节省，吞吐量会保持在 50-100Mbit/s。但是使用广域网加速器你依然能够获得带宽节省的效果。</p>
+<p>问：目标端的广域网加速器需要配置多大的缓存？</p>
+<p>答：我们建议为需要传输数据的每一种操作系统配置 10GB 的容量作为缓存（Windows2012、2012R2、2016 等等）。而所有 Linux 则被计算成 1 个操作系统类型。</p>
+<p>问：源端的广域网加速器需要配置多大的缓存？</p>
+<p>答：源端不需要使用全局缓存。但是也至少需要预留 5GB。请注意处理 1TB 数据一般需要 20GB 的缓存存放数据块的指纹信息。磁盘空间消耗是动态的，并且在启用广域网加速的作业中添加（或删除）特定虚拟机时会发生更改</p>
+<p>镜像的应用感知处理</p>
+<p>问：镜像的应用感知处理是什么意思？</p>
+<p>答：镜像的应用感知处理是 Veeam 特有的技术，能够以应用感知的方式创建镜像级备份存档。这里包含了很多步骤来处理过程：</p>
+<ol>
+<li>首先它会侦测在虚拟机内运行了什么应用程序；</li>
+<li>使用微软 VSS 执行应用程序层面状态静默确保每个应用程序状态一致性；</li>
+<li>应用特定于应用程序的设置，以准备每个应用程序在下次 VM 启动时执行 VSS 感知还原；</li>
+<li>最后，如果备份成功，则对某些应用程序执行事务日志修剪。</li>
+</ol>
+<p>整个过程完全自动化。</p>
+<p>问：为什么 Veeam 中的镜像的应用感知处理功能很重要？它比 VMware Tools VSS 集成好在何处？</p>
+<p>答：Microsoft VSS 当初设计并未考虑镜像级备份和还原，而是用于文件级备份和还原过程。对于某些应用程序，除了基本的 VSS 静默之外，当执行镜像级完整备份和还原时还需要额外的步骤来处理。</p>
+<p>问：我是否需要在每个我要备份的虚拟机中安装持久的代理程序来实现镜像的应用感知处理？</p>
+<p>答：不需要。Veeam 不需要在虚拟机内部安装持续运行的代理程序。相反，Veeam 会在备份开始时自动为每个虚拟机注入小型运行时环境协调进程，并在备份完成后立即将其删除。这能够使你从代理程序管理（诸如部署、配置、升级、监控、排错）中解放出来。实际 VM 在日常使用中绝大多数时间内并没有第三方程序在其中运行。</p>
+<p>问：Veeam 是否在每个客户机内安装你们自己的 VSS Provider？</p>
+<p>答：不，我们利用每台机器上已有的微软默认的 VSS Provider。</p>
+<p>问：什么是微软 VSS，它是如何在镜像级备份时提供事物一致性？</p>
+<p>答：请参考以下入门向导</p>
+<p><a href="http://www.backupcentral.com/windows-vss-overview/" target="_blank" rel="noopener noreffer ">http://www.backupcentral.com/windows-vss-overview/</a></p>
+<p>问：您支持哪些应用程序用于事务一致性备份？</p>
+<p>答：任何 VSS 感知的运行在 Windows XP/2003 以上操作系统内的应用程序。所有微软的服务器应用程序都是 VSS 感知的，另外许多第三方厂商也会发布含有 VSS Writer 的服务器应用程序。</p>
+<p>问：我如何知道我的应用程序是否支持 VSS？</p>
+<p>答：它应该部署了 VSS Writer 并在 Microsoft VSS 框架中安装和注册。请在被备份的虚拟机中打开命令提示符，然后运行** vssadmin list writers **查询 VSS 感知的应用程序列表</p>
+<p>问：您知道 Oracle 拥有 VSS Writer 吗？</p>
+<p>答：是的，Oracle 11g 拥有名为“Oracle VSS Writer”的组件，需要在 Oracle 11g 的安装向导中选上 Windows OCI Componets。这个支持从 Oracle 10g 的 10.2.0.3 补丁包至最新的 12c，18c。</p>
+<p>File Level Recovery - Windows</p>
+<p>问：文件级恢复（FLR）是否要求在恢复之前提取并在磁盘或内存中暂存备份文件内容？</p>
+<p>答：不需要，文件级还原是直接从备份文件提取数据，而不需要预先解压。</p>
+<p>问：是否备份任务必须启用了客户机文件系统索引，虚拟机才能进行文件级恢复？</p>
+<p>答：不需要，和其他解决方案不同，Veeam indexing 完全是个可选项，对于文件级恢复来说并不是必须的。然而，如果启用了 Indexing，可以让您通过 Web UI 来执行一键还原文件。</p>
+<p>问：源生的 Windows 文件级恢复是如何工作的？</p>
+<p>答：源生的 Windows 文件级恢复将备份文件的内容直接以文件夹的形式挂载到备份服务器上。您可以将任意的应用程序的访问指向到这些文件夹中，然后像普通文件一样使用他们（无论您做任何操作，备份存档则保持只读状态）。</p>
+<p>问：文件的权限是否能够正确的被还原？</p>
+<p>答：是的，有这个选项可以选择。</p>
+<p>问：即时文件级恢复支持哪些文件系统？</p>
+<p>答：FAT、NTFS、ReFS</p>
+<p>问：是否支持 GPT 磁盘？</p>
+<p>答：是的，从 6.1 版本起就支持了。</p>
+<p>问：是否支持 Windows 动态磁盘？</p>
+<p>答：是的，从 6.5 版本起就支持了。</p>
+<p>File Level Recovery - 其他 OS</p>
+<p>问：Multi-OS 文件级恢复是如何工作的？</p>
+<p>答：因为 Windows 本身无法读取其他类型的文件系统，我们发明了一个专利技术，使用一个特殊的 FLR 辅助设备，该设备运行一个被极其精简的 Linux（启动大约需要 10 秒）但是它足够智能以至于能够读取超过 17 种文件系统的数据。</p>
+<p>要还原的虚拟机的虚拟磁盘文件直接从备份文件挂载到 FLR 辅助设备（而不需要预先提取解压）。</p>
+<p>问：文件的权限是否能够正确的被还原？</p>
+<p>答：是的，当执行直接还原至 Linux 主机时，这个选项可以在 multi-OS 文件级还原向导中找到。</p>
+<p>问：即时文件级恢复支持哪些文件系统？</p>
+<p>答：用于 Windows、Linux、Solaris、BSD、Unix、Novell 和 Mac 操作系统的 17 种常见的文件系统。</p>
+<p>问：是否支持从 Novell 或 Micro Focus OES 的 NSS 卷执行即时文件恢复？</p>
+<p>答：是的。具体可以查看 Release Note 或 User Guide 查看受支持的文件系统。</p>
+<p>一键文件还原 （Enterprise Manager 网页界面）</p>
+<p>问：客户机系统索引在所有作业中已启用，为什么我的一键还原按钮（还原或下载）不可用？</p>
+<p>答：这是我们产品的 Enterprise Edition 以上版本中才具有的主要功能。如果您使用的是 Standard Edition，请使用 B&amp;R 控制台来执行即时虚拟机还原。</p>
+<p>问：一键文件还原是如何工作的？</p>
+<p>答：通过从备份的虚拟机存档中浏览或者搜索客户机文件系统索引内容，Enterprise Manager web UI 的使用者选择一个或多个希望还原的文件，进行还原。然后 Enterprise Manager 在备份服务器上自动创建一个任务，接着备份服务器将使用内置的文件级还原功能将文件还原至目的地。</p>
+<p>问：如果要还原文件至原始位置，我需要在客户机内安装代理吗？</p>
+<p>答：不需要，一键文件还原是无代理的。</p>
+<p>问：为了启用一键文件还原功能，是否必须要在备份虚拟机时启用客户机文件索引功能？</p>
+<p>答：是的，一键文件还原功能需要在备份虚拟机时就启用客户机文件索引。</p>
+<p>问：一键文件还原功能在还原时是保留原始文件还是覆盖原始文件？</p>
+<p>答：是的，源文件将会被加上后缀*_original*。</p>
+<p>问：如果源文件被某些进程锁住了，无法重命名，将会发生什么情况？</p>
+<p>答：如果是这种情况，我们还原的这个文件，我们会加上后缀*_restored*。然后记录一个警告，来通知还原操作人员。</p>
+<p>问：我怎样才能将某人设置为文件还原操作者？</p>
+<p>答：在 Enterprise Manager 的 Configuration 页面，可以授予用户相应的角色。该用户随后就可以登录到 Enterprise Manager web UI。 文件还原操作员只能看到 web UI 的一部分（只能看到文件标签卡）。</p>
+<p>问：文件还原操作员需要拥有被还原的文件、客户机、虚拟机或者主机的操作权限才能执行原位置恢复？</p>
+<p>答：不需要。</p>
+<p>问：我能否限制文件还原操作员只能还原特定的文件类型？禁止他们下载被还原的文件？将还原文件限制在特定的虚拟机内？</p>
+<p>答：是的。这些都可以在 Enterprise Manager 上设定。</p>
+<p>问：在执行原位置恢复时（还原至原始虚拟机内），能否保留文件的权限和所有者？</p>
+<p>答：可以</p>
+<p>问：一键文件还原的系统需求是什么？</p>
+<p>答：和 Windows 文件级还原要求一致，使用同一个引擎。</p>
+<p>客户机文件系统索引和查找</p>
+<p>问：我需要在每台虚拟机内安装代理程序来实现客户机文件系统索引吗？</p>
+<p>答：不需要安装代理。你只要在备份向导中选择相应的复选框，然后指定这台虚拟机的管理员凭据。</p>
+<p>问：开启索引功能后，会显著降低我的备份速度吗？</p>
+<p>答：通常不会。我们从 NTFS 的 MFT 中直接抓取索引数据，这是客户机操作系统静默处理的其中一部分，而不是通过扫描整个文件系统来实现索引（这和一些竞争对手的解决方案完全不同）。对于一个典型的虚拟机，这部分数据被抓取和处理几乎是接近即时的，因此我们通常称之为即时索引。</p>
+<p>问：即时索引功能是否只在 Veeam Enterprise Manager 中提供？</p>
+<p>答：您并不需要 Enterprise Manager 来创建本地的编目，但是您需要安装 Enterprise Manager 服务器来从备份存档中浏览和查找客户机文件，同时对跨多个备份服务器的全局编目进行维护。同时你也可以查看标准版和企业版的微小差异来了解不同许可版本下该功能的不同之处。</p>
+<p>问：我有多个备份服务器。客户机文件搜索结果会显示所有备份服务器的存档吗？</p>
+<p>答：是的，只要你的所有备份服务器都注册到 Enterprise Manager 中。</p>
+<p>问：索引的数据库存放在哪里？</p>
+<p>答：本地编目直接存放在 Veeam 备份服务器上。具体位置在安装过程中可以设定。全局的编目存放在 Enterprise Manager 服务器上。另外，索引同样存放在备份文件内（所以对于 Imported backup，索引同样有效）。</p>
+<p>问：我需要如何备份才能保护我的索引数据库？</p>
+<p>答：您需要备份 Enterprise Manager 服务器，因为它存放着全局编目信息（跨所有备份服务器）。Veeam 备份服务器本地的索引数据没必要进行备份，因为新的索引数据会立刻被自动复制到全局编目数据库中。</p>
+<p>问：看上去好像客户机文件索引的时候会漏掉某些文件？</p>
+<p>答：我们默认不会对 Windows 系统和 Temp 文件夹进行索引，这样做能够减少索引的大小。</p>
+<p>Instant VM Recovery</p>
+<p>问：什么是即时虚拟机恢复（Instant VM Recovery）？</p>
+<p>答：Instant VM Recovery 允许您通过直接从备份文件运行虚拟机，立即将任何虚拟机恢复到生产环境中。打个比方，<em>它为您提供“备用轮胎”，以便您可以到达维修店，您不能全速前进，但您仍然需要去，而不是原地不动。</em> 要完成还原，您可以使用源生的虚拟化功能将恢复的虚拟机迁移（vMotion）到生产存储上，且不会对用户产生任何影响（这就像将备胎改为真正的轮胎一样）。或者，您可以使用 Veeam Quick Migration 在非工作时间内将虚拟机移至生产存储，并缩短停机时间（这就像是转移到维修店更换轮胎）。即时虚拟机恢复支持批量操作（一次多个虚拟机）。</p>
+<p>问：对于从复制（Replication）启动虚拟机和从备份文件启动虚拟机，是否有个百分比的描述，说明一下两者的性能区别？</p>
+<p>答：这取决于很多因素（比如备份文件位置，Veeam 备份服务器性能，当前并行运行的即时虚拟机还原任务）。通常来说，一些对 IO 要求比较低的服务器（比如 DC、DNS、DHCP、WWW、杀毒软件服务器、打印服务器）这个性能差异几乎无法被感知到。而对于一些高 IO 要求的服务器，这个性能差异就比较显著了，因为 vPower 引擎的吞吐量是有限的。</p>
+<p>问：我们 Hypervisor 的许可并不包含迁移能力，或者说当前条件下无法执行迁移工作。那我有什么办法能够完成恢复吗？</p>
+<p>答：简单来说，就是在有维护窗口的时间段，我们来做这个迁移操作。Veeam 会使用 Quick Migration 功能来实现迁移。和 Hypervisor 的迁移功能不同，我们需要一小段的停机时间。然而，这依然是带来了很大帮助，因为这可以将计划外停机时间变成计划内停机时间，能够显著降低企业的成本。</p>
+<p>问：Storage vMotion 或者 Quick Migration 会处理虚拟机磁盘的最新变化状态吗（包括虚拟机从备份存档启动后的差异数据）？</p>
+<p>答：当然，这些都是全自动完成的。</p>
+<p>问：当你使用即时虚拟机恢复时，备份服务器宕机了，会发生什么事？</p>
+<p>答：就像你的生产存储宕机一样，没有其他特别。请记住，只要备份服务器修复并且没有损坏，那就不会丢失任何数据。</p>
+<p>问：当你的 vPower NFS 写缓存空间不足时，会发生什么？</p>
+<p>答：这时，这个虚拟机很可能就崩溃了。这时候请不要做任何操作（特别是停止即时虚拟机恢复），然后立刻致电 Veeam Support。Support 同事还有机会可能帮您处理这个问题。</p>
+<p>问：有了即时虚拟机恢复，那还需要复制（Replication）功能吗？</p>
+<p>答：有两大理由：1. 运行虚拟机不需要依赖 vPower 引擎；2. 需要灾备恢复时立刻获得完整的 I/O 性能。（这对应大规模灾难特别有用）</p>
+<p>问：即时虚拟机恢复能够支持被备份的 RDM 卷吗？</p>
+<p>答：可以。虚拟模式的 RDM 通常被作为 VMDK 来进行备份。而物理兼容模式则会在备份时被忽略。但是这个问题不大，通常即时虚拟机恢复后，只要继续讲这个 RDM 挂载到被恢复的虚拟机上即可使用了。</p>
+<p>手工恢复验证</p>
+<p>问：我只有标准版的 VBR。我能不能做“手工”的 SureBackup 恢复验证？这该如何做？</p>
+<p>答：要执行手动恢复验证，您可以使用即时虚拟机恢复功能。比如说，做一个简单虚拟机启动测试，只需要通过即时虚拟机恢复向导启动虚拟机，但是不要选择连接虚拟机到网络的选项。</p>
+<p>问：我按照上面的方法做了启动测试，虚拟机启动正常，但是绝大多数程序无法启动？</p>
+<p>答：这是正常的，因为没有网络连接，因此应用程序无法与域控制器，DNS 服务器及其依赖的其他服务建立连接。如果要测试应用程序恢复，请在打开电源之前创建隔离网络并立即编辑已恢复的虚拟机网络配置。对运行相关应用程序（例如 DC 和 DNS）的所有必要的虚拟机执行这个操作时，将它们全部放在同一个隔离网络内，然后按正确顺序启动它们（例如，DNS&gt; DC&gt;应用程序）。</p>
+<p>问：这和我们在月度/季度/年度灾备测试中所做的步骤非常相似。那这有什么不一样？</p>
+<p>答：这个不一样的地方在于，使用 Veeam，您无需花费大量时间将虚拟机从备份存档中解压至生产存储，而是直接从备份文件中运行虚拟机。往往找一些额外的可用磁盘空间（用来提取备份存档）也是一大挑战。因此，以往花费整个周末才能做完的还原测试，现在只需要少于 30 分钟就能完成。</p>
+<p>问：对于每一份备份存档、每一个虚拟机，这个手动验证的步骤看上去非常复杂。</p>
+<p>答：是的。所以我们的企业版以上产品提供了全自动恢复验证功能，能够完全自动化的完成以上的所有验证过程，包括在每个虚拟机中运行必要的测试脚本。这可以使您在每台都执行必要的 DR 测试，而整个过程您只需要查看验证任务的邮件报告结果就行了。</p>
+<p>Virtual Lab（虚拟实验室）</p>
+<p>问：我需要为即时虚拟机恢复创建 Virtual Lab 吗？</p>
+<p>答：不需要，即时虚拟机恢复功能包含在标准版产品中，这个版本无法创建 Virtual Lab。</p>
+<p>问：这个“Virtual Lab”究竟是什么？</p>
+<p>答：Virtual Lab 我们是指全自动管理的，完全隔离的环境，在这个环境中，虚拟机能够直接从备份文件运行起来用于诸如通用应用程序对象恢复（U-Air），Surebackup（恢复验证）和 On-Demand Sandbox。虚拟实验室使用镜像生产网络的隔离虚拟网络，并且使用代理设备为隔离网络和生产网络之间，以及隔离网络和隔离网络之间建立路由。每个虚拟实验室将所有临时的虚拟机放置在指定的文件夹和资源池中。您可以使用资源池来控制虚拟实验室中虚拟机的资源使用情况。</p>
+<p>问：代理设备是如何工作的？</p>
+<p>答：代理设备允许在生产网络中的计算机和在隔离网络中从备份运行的临时虚拟机之间路由流量。您可以把代理设备想象成你家里的路由器，它负责您家里网络和互联网之间的路由。</p>
+<p>问：您是否临时更改了虚拟机的 IP 地址以防止和生产中运行的虚拟机发生 IP 冲突？</p>
+<p>答：实际上，隔离网络中的所有临时虚拟机都具有与生产网络中完全相同的 IP 地址。 IP 地址根本不可能冲突，因为生产和隔离网络的 VLAN 是完全不同的。</p>
+<p>问：如果两个网络中的虚拟机具有相同的 IP 地址，如何从生产网络访问隔离网络中的临时虚拟机？</p>
+<p>答：每个临时虚拟机都从伪装网络中被分配了一个“伪装地址”，伪装网络是虚拟实验室设定的其中一部分。在备份服务器上，路由表会被自动更新，代理设备的生产网络 IP 地址被作为伪装网络的网关地址。代理设备像网关一样工作，它同时执行地址转换，将隔离网络中的真实 IP 地址替换为伪装 IP 地址。这个听上去挺复杂的，而实际上来说，这个对于使用者却是透明的。</p>
+<p>问：如果我希望网络上的所有计算机都能够访问虚拟实验室中运行的临时虚拟机，该如何设置？</p>
+<p>答：首先您需要为代理设备设置静态 IP 地址，然后在您的生产路由器设置通过代理设备的这个 IP 地址，转发所有的请求至该伪装网络。或者，如果你只需要访问隔离网络中某几个特定的虚拟机，你可以使用虚拟实验室的静态地址映射功能，将生产网络上某几个可用的 IP 地址指向到隔离网络中某几个特定虚拟机的 IP 地址。代理设备将为其生产网络接口获取指定的生产 IP 地址，并将自动处理路由。</p>
+<p>问：是否可以在虚拟实验室内启用互联网访问？</p>
+<p>答：是的，您将在虚拟实验室的 Proxy 步骤中看到相应的设置。</p>
+<p>Application Group（应用组）</p>
+<p>问：什么是 Application Group？</p>
+<p>答：应用程序组是我们为在隔离环境中运行的虚拟机解决应用程序依赖关系的一种方法。最简单的一个例子，微软的 Exchange 服务器，如果你在一个隔离的环境中启动它的时候，并没有它能够访问的 DNS 服务器和域控制器，邮箱服务将无法启动。</p>
+<p>问：您能否举个例子，对于一个小型的 Windows 环境，典型的应用组是什么样的？</p>
+<p>答：应用组通常包含至少一个 DNS 服务器用于域名解析，一个目录服务器用于身份认证。在小型 Windows 环境中，通常这两个服务都是有域控制器来提供。因此这个应用组顺序可能会像这样：</p>
+<p>Exchange：DC&gt;Exchange</p>
+<p>FTP Server：DC&gt;File Server&gt;IIS</p>
+<p>Sharepoint: DC&gt;SQL&gt;SharePoint</p>
+<p>问：您能否举个例子，对于一个小型的 Linux 环境，典型的应用组是什么样的？</p>
+<p>答：应用组通常包含至少一个 DNS 服务器用于域名解析，应用组可能会是这样：</p>
+<p>CMS: DNS&gt;MySQL&gt;Apache w/CMS code</p>
+<p>CRM: DNS&gt;Oracle&gt;CRM Server</p>
+<p>问：我的虚拟化环境很小且不怎么变化，上面只有几个虚拟机，我应该如何配置应用组？</p>
+<p>答：简单来说，只要把你所有的虚拟机放在几个应用组里面就可以了，不过需要注意他们的启动顺序。你可以为每个应用程序创建一个应用组，也可以把多个应用程序放在一个组或者把所有的应用程序放在一个组。</p>
+<p>问：我有一个大型的动态环境，上面每天都有虚拟机的创建和删除。所以精细化管理应用能几乎不可能。</p>
+<p>答：这方面我们已经考虑到。这种情况下，你的应用组只要包含基础的基础架构服务（比如：DNS 和域控制器等这些几乎每个应用程序都依赖的服务器）。现在，Surebackup 提供将应用组和一个或者多个备份任务关联在一起的能力。通过这样的配置，Surebackup 首先启动应用里面的这些虚拟机，并且保持他们持续运行，然后按顺序启动被关联的备份任务执行验证。因此，当您在环境中添加或删除虚拟机时，它们将自动添加到备份作业（请确保基于容器的备份作业设置），然后下一步它们将会被自动在 Surebackup 中验证，而不需要你每次修改作业设定。</p>
+<p>On-Demand Sandbox（按需沙盒）</p>
+<p>问：请问按需沙盒怎么设置？</p>
+<p>答：创建一个应用组，然后把需要放到沙盒里面的这些虚拟机都放到这个应用组中，创建一个 Surebackup 任务，选择刚刚新创建的这个应用组，然后选择“Keep  VM Running”复选框。接下去只要运行这个 Surebackup 任务。当这个任务中的所有虚拟机都运行起来后，你的沙盒就可以使用了。你可以正常的从控制台打开这些虚拟机，也可以做任何你想要做的事情，或者你可以用任何常用的管理工具去连接使用这些应用程序。</p>
+<p>问：当我启动 Surebackup 任务的时候，它总是使用最新的备份存档。我能否使用一周前的存档？</p>
+<p>答：要使用 Surebackup，启动除了最新备份存档之外的还原点，请右键点击 Surebackup 任务，选择“Start to”快捷菜单，然后选择期望的日期和时间来启动任务。</p>
+<p>问：我可以从备份服务器上通过伪装 IP 址址 Ping 通并访问隔离环境中运行的沙盒虚拟机，但是从其他计算机无法访问？</p>
+<p>答：这是因为路由表会随着 Surebackup 任务执行的在备份服务器上自动被更新。如果你执行 route print 命令，你会发现有一条路由指向到了代理设备的生产网络 ip 地址。因此为了让其他计算机能够访问沙盒中的虚拟机，你应该更新他们本地的路由表（这可以通过 U-AIR 向导来自动完成），或者在路由器上配置合适的路由策略允许访问沙盒内的计算机（然而，更简单的方法是在 Virtual lab 配置中使用静态地址映射）。</p>
+<p>应用所有者或者开发人员直接恢复</p>
+<p>问：假如无法从文件级还原或者 Veeam Explorer 中恢复数据，开发者或者工程师如何能从应用程序中恢复数据？</p>
+<p>答：简单来说，你需要按要求创建一个一直运行的 Surebackup 任务包含这个特定的应用程序，然后为它提供一个方便访问的 DNS 名称。</p>
+<ol>
+<li>创建一个应用组包含需要的应用程序和它的依赖组件。</li>
+<li>创建一个 Surebackup 任务并且勾选“Keep Application Group running”，然后将计划任务设置为在备份任务完成后执行它。</li>
+<li>打开这个 Surebackup 任务所需要用到的 Virtual Lab 的设置，然后编辑静态地址映射功能，将生产环境中一个空闲的 IP 地址配置为隔离网络的静态映射。</li>
+<li>更新生产网络的 DNS 记录，为上一步设定的这个 IP 地址配置一个容易记忆使用的 DNS 名称，比如：“exchange-yesterday”。这样设置完成后，任何生产环境的用户能够使用这个 DNS 名称访问这个从最新备份存档中直接运行的服务器。任何虚拟机按照这种方式被发布的，将会持续运行，一直到下一次备份任务开始。下一个备份作业会自动停止任何一个被关联了这个备份任务的 Surebackup 作业，然后执行备份。在备份完成后，这个 Surebackup 任务又将使用刚刚生成的最新的备份存档启动起来，然后再继续运行一整天直到下一次备份开始。实际上来说，你会获得一份昨晚完成的备份的运行状态的虚拟机，然后为它配置一个好记的 DNS 名称，让使用它的用户能够登陆并访问，从里面提取需要恢复的数据。这套系统可以说几乎不需要任何维护就能自动运行。</li>
+</ol>
+<p>问：有什么场景可以使用这个功能？</p>
+<p>答：这只是一些想法，我们相信您可以以此创造出各种各样的使用场景 - 欢迎通过各种方式来和我们分享。</p>
+<ol>
+<li>在一些未知的变更应用在生产的 PostgreSQL 上后，你想检查下当前的生产环境和昨晚的备份存档之间的差异。</li>
+<li>开发环境。发布昨天的 MySQL 数据的拷贝，然后让开发人员测试新的代码，查找之前的状态、比较数据库架构等等这些。每天这个系统无需任何的人工维护，在这个 DNS 记录后面的服务器会运行昨晚备份下来的 MySQL 拷贝，并且让他能够非常简单和方便的被访问。任何这个数据库上的变动和更改会随着 Surebackup 任务被停止而丢弃掉。</li>
+</ol>
+<p>虚拟实验室自助服务和 U-AIR 向导</p>
+<p><strong>问：从开发人员或者应用使用者角度，这个组件是如何工作的？</strong></p>
+<p>答：开发人员是这样操作的：</p>
+<ol>
+<li>在用户的电脑上安装 U-AIR 向导（这可以在 VBR 的 ISO 镜像中找到）。</li>
+<li>右键点击任务栏 Virtual Lab Manager 图标，创建新的虚拟实验室请求。</li>
+<li>设定描述、预估需要时间、需要的虚拟机、还原点，然后提交请求。</li>
+<li>等待申请被备份管理员批准，然后虚拟实验室就会启动起来。</li>
+<li>使用 U-AIR 向导，用于各种您想要做的操作，包括但不限于测试、升级、还原一个 Veeam Explorer 无法恢复的对象或者文件等等。</li>
+<li>如果需要更长时间继续使用，只需要延长 Virtual Lab 时间即可。</li>
+<li>如果使用完毕，只需要撤销这个 Virtual Lab 就行了，如果忘记做这个操作也没关系，Virtual Lab 也会在指定的过期时间自动被回收。</li>
+</ol>
+<p><strong>问：从备份管理员角度，这个组件是如何工作的？</strong></p>
+<p>答：对于备份管理员，他是这样工作的：</p>
+<ol>
+<li>通过邮件接收到新的 Virtual Lab 请求。</li>
+<li>打开 Enterprise Manager，批准或者拒绝虚拟实验室申请。</li>
+<li>仔细检查请求审批向导，按需调整申请中的一些设置内容，比如实验室自动回收时间。</li>
+<li>管理活动的虚拟实验室，比如在紧急情况下，需要从同一个还原点进行还原，而同时开发测试又在使用这个还原点，用于开发测试调试，这时候可以手工进行终止，同时将虚拟实验室停止后发布给还原管理员。</li>
+<li>不用花太多精力去管理这个 Lab，在使用结束后它会自动回收。</li>
+</ol>
+<p><strong>问：备份软件后台系统，这个组件是如何工作的？</strong></p>
+<p>答：以下所有的步骤都是全自动进行，而对于用户来说，是完全看不到的，透明的。</p>
+<ol>
+<li>U-AIR 向导生成虚拟实验室申请，然后传递给 Virtual Lab Manager（VLM），然后它会把请求发送给 Enterprise Manager。</li>
+<li>管理员通过选择合适的 SureBackup 任务，来批准申请。</li>
+<li>Enterprise Manager 会为选定的 SureBackup 任务自动定位 Veeam Backup Server，然后运行这个 SureBackup 任务。</li>
+<li>一旦所有的依赖组件，包括被请求的虚拟机处于正常状态（此处正常状态是指所有恢复验证都正常成功）。Veeam Backup Server 发通知给 Enterprise Manager。</li>
+<li>Enterprise Manager 通知发起请求的 VLM，然后为 Virtual Lab 准备合适的网络参数（根据请求的虚拟机的网络，准备合适的代理设备 IP 和伪装 IP）。</li>
+<li>VLM 更新本地路由表，然后通知用户一切准备就绪，可以使用了。</li>
+<li>这时候用户就可以通过 U-AIR 向导执行各种应用程序对象恢复了。</li>
+<li>当请求的时间耗尽时，虚拟实验室自动过期（除非用户延长使用期或者请求回收实验室）。</li>
+</ol>
+<p><strong>问：通用恢复是如何工作的？</strong></p>
+<p>答：一旦虚拟实验室准备完成，U-AIR 向导会为申请的虚拟机提供能够访问隔离环境的伪装 IP 地址，并且为当前的计算机更新静态路由。然后您可以使用任何应用程序源生的管理工具访问并提取需要的对象，然后将它们放回到生产的服务器上。比如，你可以使用免费的 Oracle SQL Developer 来执行 Oracle 数据库的对象恢复，或者使用 Microsoft SQL Management Studio 来执行 Microsoft SQL database 对象还原，也可以使用 MySQL Workbench 来执行 MySQL 数据库的对象还原。任何应用程序都能够支持这种方式。</p>
+<p><strong>问：我以前从来没接触过数据库，有没有个 demo，让我能更好理解这样的使用方式，这样我能更好的解释给我的同事们听？</strong></p>
+<p>答：这里有个录像的链接</p>
+<p><a href="https://www.veeam.com/videos/automating-backup-recoverability-of-vsphere-vms-70.html" target="_blank" rel="noopener noreffer ">https://www.veeam.com/videos/automating-backup-recoverability-of-vsphere-vms-70.html</a></p>
+<p>demo 内容从 28 分 10 秒开始。这里演示者通过一个 SQL Management Studio 同时连接生产和 DataLab 中的 SQL 数据库来实现对象的提取操作（录像内容比较老，但是这个理论一直用到现在没有改变，你可以用于各种应用程序）。</p>
+<p><strong>问：我需要在 VBR 上安装 U-AIR 向导吗？</strong></p>
+<p>答：不需要，U-AIR 通常只需要安装到那些发起虚拟实验室请求的用户的客户端上。比如你可以安装到开发人员的工作站上。</p>
+<p>瓶颈分析</p>
+<p><strong>问：任务数据统计告诉我，我这里存在一个瓶颈，但是无论我怎么调整都无法优化。请问我哪里做的不对？</strong></p>
+<p>答：您的操作没有错。即使是最强大的备份基础架构都有可能有瓶颈 – 就像任何瓶子，不管多大，总归会有比较细的部分。我们只是将您的链路上最弱的部分告诉你，这能让你做未来考虑升级的时候可以准确的提升处理性能。然而，只要你对现在的备份性能和备份窗口满意，你完全可以不用理会这些（这只是给你提供个参考）。</p>
+<p><strong>问：每个 VM 数据统计中的 4 个负载的数据代表什么含义？</strong></p>
+<p>答：这个数字是处理数据消耗时间对比等待其他组件处理消耗时间所得的结果。永远不要期望所有的处理阶段达到 100%，因为这个繁忙程度都是独立计算的。</p>
+<p><strong>问：什么是数据处理阶段？</strong></p>
+<p>答：无论你的任务如何在运行，你部署了什么产品，这里都会有 4 个主要的数据处理阶段。Source &gt; Proxy &gt; Network &gt; Target 。每个处理阶段都分配了独立的负载监控计数器。</p>
+<p><strong>Source</strong> 是源端生产数据读取组件。这个百分比表示源端磁盘读取占用的时间。比如 99%表示整个备份过程中，源端磁盘一直处于数据读取状态，因为其他阶段性能足够好，完全能够处理完源端每一刻读取出来的数据。这意味着，源端数据提取目前是主要瓶颈。相反的，如果这个数值是 1%则表示源端只用了 1%的时间来读取数据，而其他时间都处于等待状态，等待其他组件处理完这 1%时间内读取出来的数据（这意味着，其他组件上存在着瓶颈）。</p>
+<p><strong>Proxy</strong> 是指 Backup Proxy Server。Proxy 会对从 source 端提取的数据执行数据重删和压缩，这可能对资源消耗要求比较高，特别是几百 MB/s 的情况下。这里的百分比是指 Proxy 的 CPU 负载。比如 Proxy 显示 99%，意味着 Proxy CPU 已经处于过载状态，很可能它是整个数据处理过程中的主要瓶颈。</p>
+<p><strong>Network</strong> 是指网络列队写入组件。这个组件从 Proxy 上获取数据，然后将它通过网络传输到对应的目标端（比如存储库）。这个百分比数值表示网络上写数据至网络堆栈列队的繁忙程度。比如 99%表示网络上一直有数据中往网络堆栈列队中写入数据，因为这时候之前的数据还未被传输至目标端设备，而处于等待状态，所以数据只能进入网络堆栈进行排队。这意味着，您的网络吞吐量不足，网络成为整个数据传输中的瓶颈。</p>
+<p><strong>Target</strong> 是指磁盘写组件，通常是指备份存储或者复制存储。这个百分比表示目标磁盘写组件中写入数据时占用的时间。比如，如果 target 显示 99%繁忙，这意味着目标磁盘写入组件一直处于写数据进入备份文件状态。这意味着你的目标存储速度是整个备份架构中的瓶颈。所有等待的 I/O 操作无法快速的被完成，这也有可能是存储光纤网络限制。因为这个原因，整个备份网络一直有一些数据等待在传入列队中，等待被写入磁盘。</p>
+<p><strong>问：我能看到实时负载数据吗？</strong></p>
+<p>答：如果你把鼠标悬浮到实时数据窗口显示瓶颈数值的位置，你会看到当前数据的提示。然而，因为数据是实时的，所以经常会受到一些特殊情况的影响，比如中任务开始时的系统缓存。在任务结束后的会话日志中，则会记录平均负载数据，这个内容会更有帮助和更科学。</p>
+<p>磁 带</p>
+<p><strong>问：Veeam 支持哪些磁带机或者磁带库？</strong></p>
+<p>答：Veeam 支持 LTO 兼容的设备，包括物理或虚拟的。你可以查看磁带论坛，找到关于磁带机和磁带库的支持列表，这是由用户反馈的工作状况。</p>
+<p><strong>问：多路径故障切换支持吗？</strong></p>
+<p>答： Veeam Backup &amp; Replication 支持磁带设备的多路径故障切换，包括多驱动器和多个 SAN 网络的多路径。</p>
+<p><strong>问：我应该使用哪个设备驱动？</strong></p>
+<p>答：Veeam Backup &amp; Replication 同时支持自定义供应商驱动和通用 Windows 驱动。然后，我们建议使用非独占模式安装供应商驱动。</p>
+<p><strong>问：WORM 介质支持吗？</strong></p>
+<p>答：是的，从 9.5U4 开始支持。</p>
+<p><strong>问：Veeam 能否和第三方磁带解决方案共享一个磁带库？</strong></p>
+<p>答：如果磁带库支持分区，那就可以。通过分区技术，Veeam 只能够看到自己这部分，而第三方磁带解决方案则看到另外一部分。</p>
+<p><strong>问：我能做 Veeam 服务器上安装其他备份软件来同时使用磁带设备吗？</strong></p>
+<p>答：不能，这个操作不可能实现。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2019-03-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2019/03/veeam-faq/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F03%2Fveeam-faq%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F03%2Fveeam-faq%2F&amp;text=Veeam&#43;FAQ&#43;%E7%B3%BB%E5%88%97%E8%BD%AC%E8%BD%BD" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F03%252Fveeam-faq%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F03%252Fveeam-faq%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2019/03/cloud-tier-02/" class="prev" rel="prev" title="Veeam Cloud Tier – 云对象存储使用详解（二）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Cloud Tier – 云对象存储使用详解（二）</a>
+            <a href="/2019/06/ransomeware-attack/" class="next" rel="next" title="不知勒索病毒的攻击原理，怎知如何防御？">不知勒索病毒的攻击原理，怎知如何防御？<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

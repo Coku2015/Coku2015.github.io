@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO 基础入门（二） -  安装与部署 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/05/vro-v6-guide-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VRO 基础入门（二） -  安装与部署">
+  <meta property="og:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 VRO 安装包获取 Veeam 官网可以直接下载 VRO 试用版，**Veeam Data Platform — Premium **的安装包就是我今天文章中用到的安装包，直达电梯 在此，可以直接前往下载。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-05-25T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VRO 基础入门（二） -  安装与部署">
+  <meta name="twitter:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 VRO 安装包获取 Veeam 官网可以直接下载 VRO 试用版，**Veeam Data Platform — Premium **的安装包就是我今天文章中用到的安装包，直达电梯 在此，可以直接前往下载。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-02/" /><link rel="prev" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-01/" /><link rel="next" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO 基础入门（二） -  安装与部署",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/05\/vro-v6-guide-02\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  1742 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/05\/vro-v6-guide-02\/","datePublished": "2023-05-25T00:00:00+00:00","dateModified": "2023-05-25T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO 基础入门（二） -  安装与部署</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-25">2023-05-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1742 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#系列目录">系列目录：</a></li>
+    <li><a href="#vro-安装包获取">VRO 安装包获取</a></li>
+    <li><a href="#安装前提条件">安装前提条件</a></li>
+    <li><a href="#安装方法">安装方法</a></li>
+    <li><a href="#初始化配置">初始化配置</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="系列目录">系列目录：</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
+</ul>
+<h2 id="vro-安装包获取">VRO 安装包获取</h2>
+<p>Veeam 官网可以直接下载 VRO 试用版，**Veeam Data Platform — Premium **的安装包就是我今天文章中用到的安装包，<a href="https://www.veeam.com/downloads.html" target="_blank" rel="noopener noreffer ">直达电梯</a> 在此，可以直接前往下载。</p>
+<p>这个安装包是一套完整的 VRO 套件，其中包括 VRO 主程序、内嵌的 VBR 以及内嵌的 VeeamONE，需要注意的是，这个安装包虽然包含了<code>内嵌的 VBR</code>和<code>内嵌的 VeeamONE</code>但是这两个软件都无法被提取出来单独安装，这两个内嵌的软件都是 VRO 工作的必要组件，它们是跟着 VRO 一起工作的。</p>
+<p>这两个内嵌的 VBR 和 VeeamONE 和正常的软件没有任何区别，在安装完 VRO 后可以使用 VBR 或者 VeeamONE 控制台的访问方式远程访问使用，目前在这个安装包中包含的 VBR 是 V12 版本，VeeamONE 是 V12 版本。</p>
+<h2 id="安装前提条件">安装前提条件</h2>
+<p>非常重要的三点提示：</p>
+<blockquote>
+<ul>
+<li>请不要在已经安装了 VBR 或者 VeeamONE 的服务器上安装 VRO 软件包。</li>
+<li>请不要在域控制器上安装 VRO 软件包。</li>
+<li>请不要在一台已经安装了 PostgreSQL 的服务器上安装 VRO</li>
+</ul>
+</blockquote>
+<p>一般来说，我建议如果是进行 VRO 的安装，都应该准备一台全新的 Windows 服务器来安装 VRO 的安装包。</p>
+<p>安装完成后，可以将您原来的 VBR 加入到 VRO 环境中来由 VRO 纳管，也可以使用 VRO 内嵌的 VBR 来进行常规的备份和复制任务。</p>
+<p>其他更多的安装前提条件，请参考官网的 <a href="https://helpcenter.veeam.com/docs/vdro/userguide/system_requirements.html?ver=60" target="_blank" rel="noopener noreffer ">前提条件说明</a>。</p>
+<h2 id="安装方法">安装方法</h2>
+<p>安装包是个 ISO 文件，通过挂载 ISO 的方式打开这个镜像后自动运行，可以找到 VRO 的安装按钮：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_splash.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_splash.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_splash.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_splash.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_splash.png"
+        title="installing_vao_splash.png" /></p>
+<p>整个安装过程非常简单，和 Veeam 其他产品的安装一样，跟着向导无脑点完下一步就能做完最基础的安装。</p>
+<p>需要注意的是，在安装过程中会要求输入用户名密码，此处的用户名密码为 VRO、VBR、VeeamONE 的服务和它们的数据库需要使用的用户名密码，因此此密码要求的最小权限为这台 VRO Server 的 Windows 本地管理员权限，隶属于本地 Administrators 组即可。</p>
+<p>这个账号虽然和后续灾备所使用的灾备管理员的账号没有任何关系，但是在后续的初始化配置的第一步需要输入此账号来登入 VRO 的 UI 界面。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_account.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_account.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_account.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_account.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/installing_vao_account.png"
+        title="installing_vao_account.png" /></p>
+<p>整个安装过程根据不同的硬件能力会大约持续 20-30 分钟，安装完成后这台服务器上就可以使用 VRO 了。由于 VRO 都是基于浏览器的访问，因此我一般会推荐我们从其他电脑的桌面端，通过 Chrome 或者 Edge 浏览器来打开 VRO 的控制台。</p>
+<h2 id="初始化配置">初始化配置</h2>
+<ol>
+<li>
+<p>安装结束后，请先不要去打开内置的 VBR 和 VeeamONE 的控制台，而是打开浏览器进入 VRO 的控制台开始初始化配置，系统只有在初始化配置完成后才能够正常工作，进入初始化配置的界面请访问：https://VROIP:9898/
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/accessing_vao_ui.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/accessing_vao_ui.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/accessing_vao_ui.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/accessing_vao_ui.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/accessing_vao_ui.png"
+        title="accessing_vao_ui.png" />
+这时候浏览器会提示输入凭据，请使用上图安装时所用到的凭据作为初始化登入使用的凭据。特别注意，这个凭据只在初始化配置时使用 1 次，在初始化配置完成后，将会使用初始化配置步骤 3 中设定的 VRO 灾备管理员的凭据。</p>
+</li>
+<li>
+<p>登入账号后，系统进入初始化向导，在 Welcome 页面中描述了这个基础配置向导的一些任务，点击 Next 进入下一步服务器配置。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_welcome01.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_welcome01.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_welcome01.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_welcome01.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_welcome01.png"
+        title="initial_config_welcome01.png" /></p>
+</li>
+<li>
+<p>在服务器配置步骤中，有两个重要内容要选择，一个是选择灾备管理员，通过图中“Choose users and groups”按钮打开添加向导，在右边配置用户属于哪个域（Domain），选择 Account Type 是 User 还是 group，最后从 Account 列表中选取合适的账号点击 Add 即可完成用户配置。这里配置的账号将会用户此次初始化配置之后的 VRO 使用和访问。
+在 Server Details 中，可以为 VRO 服务器配置一些基础信息，这些信息会在报表中被使用到。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_agent_creds01.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_agent_creds01.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_agent_creds01.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_agent_creds01.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_agent_creds01.png"
+        title="initial_config_agent_creds01.png" /></p>
+</li>
+<li>
+<p>在基础架构配置步骤中，可以添加用于连接基础架构系统的凭据（Add Credentials）、部署 Orchestrator Agent（其实这个步骤就是添加 VBR）、连接 vCenter 以及连接存储系统。在这个步骤中添加的 vCenter 和存储系统的配置会被自动同步至内嵌的 VBR 和 VeeamONE 中，因此内嵌的 VBR 和 VeeamONE 组件中不需要做任何额外的配置。当然，这些步骤都是可选步骤，我们可以在这个向导里完成最初始的设定，也可以在后期从 VRO 的 Configuration 中再进行调整和配置。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_service_creds01.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_service_creds01.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_service_creds01.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_service_creds01.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_service_creds01.png"
+        title="initial_config_service_creds01.png" /></p>
+</li>
+<li>
+<p>配置完以上步骤后，点击 Finish 就能完成所有的初始化配置。在点击完 Finish 后，网页将会重新刷新回到最开始的 VRO UI 登入界面，使用上面第二步中设定的账号密码就能登入 VRO 正式的 UI 界面了。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_finish01.png"
+        data-srcset="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_finish01.png, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_finish01.png 1.5x, https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_finish01.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/vdro/userguide/images/initial_config_finish01.png"
+        title="images/initial_config_finish01.png" /></p>
+</li>
+</ol>
+<p>欢迎各位来到 VRO！接下去就可以正式开始使用 VRO 了。在下一篇中，我会详细介绍 VRO 的各个组件。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/05/vro-v6-guide-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F05%2Fvro-v6-guide-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F05%2Fvro-v6-guide-02%2F&amp;text=VRO&#43;%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%8C%EF%BC%89&#43;-&#43;&#43;%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F05%252Fvro-v6-guide-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F05%252Fvro-v6-guide-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/05/vro-v6-guide-01/" class="prev" rel="prev" title="VRO 基础入门（一） -  简介"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO 基础入门（一） -  简介</a>
+            <a href="/2023/05/vro-v6-guide-03/" class="next" rel="next" title="VRO 基础入门（三） -  基本组件 · 上篇">VRO 基础入门（三） -  基本组件 · 上篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

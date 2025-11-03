@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VeeamON on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/VeeamON/</link>
+    <description>Recent content in VeeamON on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Fri, 16 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/VeeamON/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VeeamON 2017 系列之另类 VPN -- Veeam PN</title>
+      <link>http://192.168.16.79:1313/2017/06/veeam-pn-intro/</link>
+      <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2017/06/veeam-pn-intro/</guid>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;&#xA;&lt;p&gt;在上个月的 VeeamON 大会上，Veeam 发布了一个全新的产品，这个产品其实和备份是完全没有关系，叫 Veeam PN，全称是 Veeam Powered Network。这是一款轻量级的 SDN 解决方案，能够迅速打通多个站点，实现站点-站点之间的通讯，也可以实现终端-站点的通讯。由于此解决方案功能过于强大，本文不想展开全面介绍，详细内容可以参考 Veeam KB2271 和 VeeamPN 帮助手册。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

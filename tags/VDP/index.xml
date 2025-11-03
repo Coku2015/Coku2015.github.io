@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VDP on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/VDP/</link>
+    <description>Recent content in VDP on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Thu, 07 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/VDP/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam全线产品2023年下半年度重磅更新</title>
+      <link>http://192.168.16.79:1313/2023/12/vdp23h2-update/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2023/12/vdp23h2-update/</guid>
+      <description>&lt;p&gt;就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

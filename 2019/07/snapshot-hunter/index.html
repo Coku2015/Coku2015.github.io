@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>黑科技 | 激活隐藏在 VBR 中的快照猎手 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2019/07/snapshot-hunter/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="黑科技 | 激活隐藏在 VBR 中的快照猎手">
+  <meta property="og:description" content="好久好久没更新这个黑科技系列了，今天带来一篇想写了很久的功能。
+这项创造性科技我认为是可以在 Veeam 功能实用性排行榜上排上前三的。而绝大多数 Veeam 使用者我相信也几乎不知道有这个科技的存在。它就像个默默无闻的老黄牛，出现在每一个 Backup/Replication 的作业中，为每一台 VM 保驾护航。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-07-24T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-07-24T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="黑科技 | 激活隐藏在 VBR 中的快照猎手">
+  <meta name="twitter:description" content="好久好久没更新这个黑科技系列了，今天带来一篇想写了很久的功能。
+这项创造性科技我认为是可以在 Veeam 功能实用性排行榜上排上前三的。而绝大多数 Veeam 使用者我相信也几乎不知道有这个科技的存在。它就像个默默无闻的老黄牛，出现在每一个 Backup/Replication 的作业中，为每一台 VM 保驾护航。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2019/07/snapshot-hunter/" /><link rel="prev" href="http://192.168.16.79:1313/2019/07/secure-restore/" /><link rel="next" href="http://192.168.16.79:1313/2020/02/how-to-upgrade-vbr/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "黑科技 | 激活隐藏在 VBR 中的快照猎手",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2019\/07\/snapshot-hunter\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1441 ,
+        "url": "http:\/\/192.168.16.79:1313\/2019\/07\/snapshot-hunter\/","datePublished": "2019-07-24T00:00:00+00:00","dateModified": "2019-07-24T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">黑科技 | 激活隐藏在 VBR 中的快照猎手</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-07-24">2019-07-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1441 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#snapshot-基础知识">Snapshot 基础知识</a></li>
+        <li><a href="#快照猎手">快照猎手</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>好久好久没更新这个黑科技系列了，今天带来一篇想写了很久的功能。</p>
+<p>这项创造性科技我认为是可以在 Veeam 功能实用性排行榜上排上前三的。而绝大多数 Veeam 使用者我相信也几乎不知道有这个科技的存在。它就像个默默无闻的老黄牛，出现在每一个 Backup/Replication 的作业中，为每一台 VM 保驾护航。</p>
+<h3 id="snapshot-基础知识">Snapshot 基础知识</h3>
+<p>VMware 的 Snapshot，自从有了虚拟化技术之后，可以说是虚拟化领域最具争议的技术。很多人因为喜欢快照技术开始入门虚拟化，很多人因为痛恨快照技术弃用一些解决方案和功能。而对于备份软件来说，想做好虚拟化的备份，不得不面对快照技术，修炼快照基本功是一门必修课！</p>
+<p>Veeam 产品中大量使用 VMware 快照技术，在任务发起时，会通过 API 接口发送快照指令给 vSphere，这时候有个名叫***“VEEAM BACKUP TEMPORARY SNAPSHOT”***会出现在虚拟机的快照管理器中。而任务结束时，Veeam 会再一次发送指令要求 VMware 删除该快照。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnrp8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnrp8.png, https://s2.ax1x.com/2020/02/13/1qnrp8.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnrp8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnrp8.png"
+        title="1qnrp8.png" /></p>
+<p>这时候，因为涉及到基础架构中多个产品之间的互相通讯，往往会出现一个结果，就是这个临时快照并没有被删除，甚至是出现一些“假删除”的情况。也就是说，表面上从快照管理器中看到已经不存在快照了，而实际上在 vSphere Datastore 中，依旧存在 00001.vmdk 这样的快照差异磁盘文件。VMware 中，这种快照文件一般被称为<strong>孤立的快照</strong>（Orphaned snapshot），通常这种快照如果存在，后续的正常的快照都会受影响，而 VMware 的快照管理器中也会提供相应的“<strong>整合快照选项</strong>”。</p>
+<p>然而情况往往并没有那么乐观，这个问题不那么容易被发现，而这个整合也不那么顺利能进行。在有些时候往往就会碰到报错而进行不下去的状况，这种情况我们统称为** Snapshot issue**。而出现这种情况多数是因为没有及时去处理这个潜在的 Orphaned Snapshot。</p>
+<p>我这里提供几个 VMware 官网的 KB，算是小福利哦，能够帮大家更快处理这类 issue。</p>
+<blockquote>
+<p><a href="https://kb.vmware.com/s/article/1005049" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1005049</a></p>
+<p><a href="https://kb.vmware.com/s/article/1006847" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1006847</a></p>
+<p><a href="https://kb.vmware.com/s/article/1038963" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1038963</a></p>
+<p><a href="https://kb.vmware.com/s/article/2003638" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/2003638</a></p>
+</blockquote>
+<h3 id="快照猎手">快照猎手</h3>
+<p>如果不想那么麻烦，手工去做这么复杂的快照整合操作，那么可以试试 Veeam Backup &amp; Replication。在 VBR 中，有个特殊功能，能够全自动处理这些 Snapshot issue，我们称他为“<strong>快照猎手</strong>”。</p>
+<p>通常这个功能会在每个备份和复制的 Job 中自动执行，因此对于一般用户而言，这个功能在后台全自动的进行。Veeam 会全自动处理可能碰到的一切快照 Issue。它的处理过程分为两大类：</p>
+<ol>
+<li>检测是否有上次备份后残留的 Veeam 辅助快照“<em><strong>VEEAM BACKUP TEMPORARY SNAPSHOT</strong></em>”，如果有，将会在备份之前提前删除该快照。这个过程确保历史任务中遗留的 Veeam 快照会被处理干净。</li>
+<li>检测是否存在孤立的快照，如果有，尝试将它整合。这个过程确保除了上一种情况之外的所有情况都会被政策修复。</li>
+</ol>
+<p>而对于第二步过程，Veeam 又会采用一组复杂的整合算法，这个算法是综合了上文提到的 4 个 VMware 官方 KB 的精华。</p>
+<ol>
+<li>普通的 VMware 快照整合方法
+这个和 VMware 菜单上的 Consolidation 按钮功能完全相同，如果正常能用 VMware 菜单上 Consolidation 按钮整合完成的，那么事情非常简单，Veeam 会用这个功能立刻完成整合。</li>
+<li>强制整合，不带静默
+如果上一种方式失败，Veeam 就会执行第二种方法，这种方法 Veeam 会借助快照技术，创建一个新的快照，然后调用 VMware 的*** Delete all snapshot***命令，通过这种方式一把移除所有孤立快照，恢复磁盘状态。</li>
+<li>强制整合，带静默
+如果上一种方式还是失败，Veeam 会执行第三种方法，这种方法会创建 VMware 静默快照，然后再次使用*** Delete all snapshot ***命令。</li>
+<li>如果以上 3 种方法都失败
+Veeam 会发失败警告给用户，建议手工处理孤立快照，避免生产存储被撑爆。</li>
+</ol>
+<p>最后，我还会有个视频，来给大家 Demo 一下快照猎手，近距离感受下快照猎手的强大。</p>
+<p>好了，感谢收看今天的内容，下期再会！</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2019-07-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2019/07/snapshot-hunter/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F07%2Fsnapshot-hunter%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F07%2Fsnapshot-hunter%2F&amp;text=%E9%BB%91%E7%A7%91%E6%8A%80&#43;%7C&#43;%E6%BF%80%E6%B4%BB%E9%9A%90%E8%97%8F%E5%9C%A8&#43;VBR&#43;%E4%B8%AD%E7%9A%84%E5%BF%AB%E7%85%A7%E7%8C%8E%E6%89%8B" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F07%252Fsnapshot-hunter%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F07%252Fsnapshot-hunter%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2019/07/secure-restore/" class="prev" rel="prev" title="恢复 | 让那些病毒木马无所遁形"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>恢复 | 让那些病毒木马无所遁形</a>
+            <a href="/2020/02/how-to-upgrade-vbr/" class="next" rel="next" title="Veeam 备份服务器升级指南">Veeam 备份服务器升级指南<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam全线产品2023年下半年度重磅更新 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/12/vdp23h2-update/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam全线产品2023年下半年度重磅更新">
+  <meta property="og:description" content="就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-12-07T00:00:00+00:00">
+    <meta property="article:tag" content="VDP">
+    <meta property="article:tag" content="VBR">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam全线产品2023年下半年度重磅更新">
+  <meta name="twitter:description" content="就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/12/vdp23h2-update/" /><link rel="prev" href="http://192.168.16.79:1313/2023/11/vro-v6-guide-10/" /><link rel="next" href="http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam全线产品2023年下半年度重磅更新",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/12\/vdp23h2-update\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VDP, VBR, Backup","wordcount":  2354 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/12\/vdp23h2-update\/","datePublished": "2023-12-07T00:00:00+00:00","dateModified": "2023-12-07T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam全线产品2023年下半年度重磅更新</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-07">2023-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2354 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#主要功能更新">主要功能更新</a>
+      <ul>
+        <li><a href="#网络安全的探测和发现">网络安全的探测和发现</a></li>
+        <li><a href="#加强从勒索事件恢复响应能力">加强从勒索事件恢复响应能力</a></li>
+        <li><a href="#确保安全和合规性">确保安全和合规性</a></li>
+        <li><a href="#其他主要更新">其他主要更新</a></li>
+      </ul>
+    </li>
+    <li><a href="#其他更新">其他更新</a></li>
+    <li><a href="#支持平台更新">支持平台更新</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png"
+        data-srcset="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png, https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png 1.5x, https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png"
+        title="image-20231207110403710" /></p>
+<p>本次产品更新最重要的部分当然是VDP旗舰平台的v12.1更新了，距离上次大版本v12更新一年不到的时间，Veeam研发团队为我们送上了新增功能仅次于大版本更新的v12.1，其中最耀眼的是今年超级火热的AI大模型技术，在备份、恢复、容灾甚至是日常操作中都集成了AI/ML技术，来提升备份系统的能力，可以说这个更新让您的数据保护平台更聪明了。</p>
+<h2 id="主要功能更新">主要功能更新</h2>
+<h3 id="网络安全的探测和发现">网络安全的探测和发现</h3>
+<ul>
+<li><strong>在线流式恶意软件探测</strong> - 在备份数据传输过程中，对数据流进行内容分析，并且可以和已知的历史数据流状态进行对比分析，判断出数据块从未加密到被加密的状态变化，利用内置在产品中的Veeam训练的AI模型，来区分恶意加密行为，探测恶意攻击信号。</li>
+<li><strong>可疑文件系统行为探测</strong> - 和流式分析不同，在数据备份完成后，对于备份下来的文件系统，通过Index的索引技术，快速扫描分析已知恶意软件的扩展名、勒索通告单，以及恶意软件标志物。这个分析技术一样可以进行历史备份数据的比较，通过不同时间的数据活动进行进一步分析，实现可疑行为的判断。这个技术Veeam内置了类似杀毒软件厂商的病毒库定义，并且支持在线和离线更新病毒库。</li>
+<li><strong>早期威胁探测</strong> - 开放了一个全新的Incident API，和第三方的EDR工具集成，这个包括现在主流的NDR、MDR、XDR等等，一旦在其他系统上发现攻击信号，这些第三方系统就能拉响警报，通知备份系统进行“关门打狗”。</li>
+</ul>
+<h3 id="加强从勒索事件恢复响应能力">加强从勒索事件恢复响应能力</h3>
+<ul>
+<li><strong>YARA引擎扫描</strong> - 除了可以用杀毒软件扫描备份存档外，这次更新还加入了业界流行的YARA引擎，这个能让扫描恶意软件变的更加的方便和有效率。同时这个引擎的扫描也更智能了，提供了3种不同的扫描模式。</li>
+<li><strong>避免二次感染</strong> - 根据不同事件的勒索行为追踪，Veeam内置了恶意感染的重要爬虫标记，在图形化界面中能够清晰的看到哪些存档是有感染风险的，哪些是安全的。在恢复时，可以快速选中干净的还原点，避免二次感染。</li>
+<li><strong>事件转发能力</strong> - 集成了Syslog标准服务能力，可以将大多数的事件全部转发给Syslog系统，进行进一步响应和分析。</li>
+</ul>
+<h3 id="确保安全和合规性">确保安全和合规性</h3>
+<ul>
+<li><strong>四眼授权</strong> - 两人四眼，也叫A-B角双人授权，这是IT中的传统安全流程，在备份系统中，Veeam也引入了这样的安全管理方式，对于重要的操作，需要A-B角色共同授权才能完成。</li>
+<li><strong>KMS密钥管理系统集成</strong> - 消除人工密码管理的不安全性，通过密钥管理系统来进行数据的加密解密，Veeam通过标准的KMIP 1.4协议支持业界主流的KMS密钥管理系统对备份数据进行加密，避免备份数据泄露风险。</li>
+<li><strong>备份系统安全合规监控</strong> - 加入了超过20项的安全自查，这部分是v12的能力增强，备份系统会自查安全性，并且将安全报告定期发送给客户，确保整个安全架构符合要求，没有被破坏。</li>
+<li><strong>Veeam威胁中台</strong> - 全新的中台面板展示，将3-2-1-1-0的最佳实践直接直观的展示在控制台上，每天上班看一眼，就能知道现在数据安不安全。</li>
+</ul>
+<h3 id="其他主要更新">其他主要更新</h3>
+<ul>
+<li><strong>对象存储备份</strong> - 非结构化数据备份新成员，特别是云原生应用、图床、智能视频监控系统、静态网站托管等等各种对象存储使用的场景，现在Veeam平台能够将这些数据都实现备份和恢复了。</li>
+<li><strong>CDP能力增强</strong> - 性能和功能都大大提升了，实验室数据显示，单个VBR支持7000台左右的VM秒级实时复制，实现连续数据保护毫无压力。并且v12.1的CDP还支持文件级恢复、应用对象恢复、全自动数据实验室恢复验证等Veeam广受好评的常规功能，更重要的是v12.1中加入的流式恶意软件探测系统在这里也能工作，发现IO异常后能以秒级的精度还原到历史时间点，大大减少数据丢失。</li>
+<li><strong>Veeam AI助手</strong> - 内置大模型GPT，这个大模型是基于Veeam的官网操作手册训练的，专治各种不明白，拿到软件不会用，第一件事情就是打开助手问问题。</li>
+</ul>
+<h2 id="其他更新">其他更新</h2>
+<p>说说我最喜欢的几个小更新吧。</p>
+<ul>
+<li><strong>即时磁盘发布</strong> - 其实这个是之前的数据集成API，目前已经变成图形化界面中可以直接操作的即时磁盘恢复了，这样任何Veeam的磁盘镜像存档都可以直接挂载给任何的Windows和Linux机器了，挂载完成后，可以进行数据恢复、数据挖掘、数据分析等等操作。</li>
+<li><strong>数据实验室Lite版</strong> - 专为安全扫描和YARA扫描提供的轻量级数据实验室，没有虚拟化环境都能用。</li>
+<li><strong>即时PostgreSQL数据库恢复</strong> - Veeam Explorer for PostgreSQL 的第二个版本，把这个Veeam的看家本领给补上。</li>
+<li><strong>Linux Agent 部署器</strong> - 部署小工具，可以不需要在VBR上输入密码就集中管理Linux Agent。</li>
+<li><strong>Veeam Plugin 新增DB2支持</strong> - 同时支持Linux和AIX的DB2，对单节点、HADR架构、IBM PowerHA、TSA和Pacemaker等复杂架构都能支持。</li>
+<li><strong>Veeam Explorer 新增SAP HANA支持</strong> - SAP HANA全图形化操作来了，备份和恢复都可以在VBR控制台轻松进行了。</li>
+<li><strong>Enterprise Manager 中文版支持</strong> - 日常使用的控制台，Enterprise Manager，完全中文版本，可管理、可备份、可恢复，甚至可以做自助服务，能做的不能做的在这里都有。</li>
+</ul>
+<h2 id="支持平台更新">支持平台更新</h2>
+<ul>
+<li>完整全功能支持VMware vSphere 8.0 U2</li>
+<li>完整全功能支持VMware Cloud Director 10.5</li>
+<li>完整功能支持Microsoft Windows 11 23H2版本</li>
+<li>Linux 部分，完全支持Debian 12.1、12.2，Fedora 39，RHEL 8.9、9.2和9.3，Ubuntu 23.10</li>
+<li>macOS 14 Sonoma 支持</li>
+</ul>
+<p>其他更新还有很多，我就不一一在这里全部列举了，有兴趣的朋友可以去官网看详细的<a href="https://www.veeam.com/veeam_backup_12_1_whats_new_wn.pdf" target="_blank" rel="noopener noreffer ">What&rsquo;s New</a>手册，也可以直接下载试用版动手试一试​。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/12/vdp23h2-update/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F12%2Fvdp23h2-update%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F12%2Fvdp23h2-update%2F&amp;text=Veeam%E5%85%A8%E7%BA%BF%E4%BA%A7%E5%93%812023%E5%B9%B4%E4%B8%8B%E5%8D%8A%E5%B9%B4%E5%BA%A6%E9%87%8D%E7%A3%85%E6%9B%B4%E6%96%B0" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F12%252Fvdp23h2-update%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F12%252Fvdp23h2-update%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VDP/">VDP</a>,&nbsp;<a href="/tags/VBR/">VBR</a>,&nbsp;<a href="/tags/backup/">Backup</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/11/vro-v6-guide-10/" class="prev" rel="prev" title="VRO 基础入门（十） -  使用 VRO 搭配 K10 实现全自动容器灾备"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO 基础入门（十） -  使用 VRO 搭配 K10 实现全自动容器灾备</a>
+            <a href="/2023/12/mysql-backup-and-restore/" class="next" rel="next" title="VBR备份和恢复MySQL最佳实践">VBR备份和恢复MySQL最佳实践<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

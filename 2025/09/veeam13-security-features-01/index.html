@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam13-security-features-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略">
+  <meta property="og:description" content="v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。
+今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-25T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="http://192.168.16.79:1313/2025/09/veeam13-security-features-01/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/2025/09/veeam13-security-features-01/featured-image.png">
+  <meta name="twitter:title" content="让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略">
+  <meta name="twitter:description" content="v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。
+今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam13-security-features-01/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "让 VBR 登陆更安全：v13 版本 SAML + Azure EntraID 集成全攻略",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam13-security-features-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  2289 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam13-security-features-01\/","datePublished": "2025-09-25T00:00:00+00:00","dateModified": "2025-09-25T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">让 VBR 登陆更安全：v13 版本 SAML + Azure EntraID 集成全攻略</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-25">2025-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2289 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/09/veeam13-security-features-01/featured-image.png"
+        data-srcset="/2025/09/veeam13-security-features-01/featured-image.png, /2025/09/veeam13-security-features-01/featured-image.png 1.5x, /2025/09/veeam13-security-features-01/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/09/veeam13-security-features-01/featured-image.png"
+        title="/2025/09/veeam13-security-features-01/featured-image.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置准备">配置准备</a></li>
+    <li><a href="#配置方法">配置方法</a>
+      <ul>
+        <li><a href="#在-vbr-中生成-sp-信息并导出-metadata">在 VBR 中生成 SP 信息并导出 Metadata</a></li>
+        <li><a href="#在-azure-entraid-中上传-sp-metadata-并分配用户">在 Azure EntraID 中上传 SP Metadata 并分配用户。</a></li>
+        <li><a href="#回-vbr更新配置-idp-信息">回 VBR，更新配置 IdP 信息</a></li>
+        <li><a href="#在-azure-中查看登录审计信息">在 Azure 中查看登录审计信息</a></li>
+      </ul>
+    </li>
+    <li><a href="#配置小结">配置小结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。</p>
+<p>今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。</p>
+<h2 id="配置准备">配置准备</h2>
+<p>要配置和使用 SAML 集成，前提条件非常简单，使用最新上线的 Veeam Software Appliance 安装 VBR 即可。当然因为使用网络服务，这时候配置 SSO 还是有些必要条件的：</p>
+<ul>
+<li>VBR 服务器必须能够访问 Azure 的 EntraID 的相关 endpoint。</li>
+<li>时间同步，VBR 上必须正确配置 NTP 服务器，时间不能有偏差，SAML 是基于时间戳的，如果偏差会认证失败。</li>
+<li>Azure EntraID 的管理员账号，要有创建企业应用和分配用户的权限。</li>
+<li>VBR 管理员权限，这是配置 VBR 账号和身份集成的基础。</li>
+<li>VBR Console 所在的 Windows 必须正确解析 VBR 的主机名或者 FQDN，否则 SP/IdP Metadata 里的 URL 对不上。</li>
+</ul>
+<h2 id="配置方法">配置方法</h2>
+<p>以下配置，分为 Azure 部分和 VBR 部分，并且有一定的顺序，因此推荐按顺序进行。</p>
+<h3 id="在-vbr-中生成-sp-信息并导出-metadata">在 VBR 中生成 SP 信息并导出 Metadata</h3>
+<ol>
+<li>首先用 veeamadmin 账号登入 VBR 控制台，在 VBR 中，打开左上角三条横线的汉堡图标，在下拉菜单中选择<code>Users and Roles</code></li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/qy8vVwXd1gTJCUZ.png"
+        data-srcset="https://s2.loli.net/2025/09/24/qy8vVwXd1gTJCUZ.png, https://s2.loli.net/2025/09/24/qy8vVwXd1gTJCUZ.png 1.5x, https://s2.loli.net/2025/09/24/qy8vVwXd1gTJCUZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/qy8vVwXd1gTJCUZ.png"
+        title="Xnip2025-09-24_17-55-19" /></p>
+<ol start="2">
+<li>切换到 v13 新增的 Identity Provider 界面，默认情况下，这里的<code>Enable SAML Authentication</code>处于未被选中的状态，勾选启用，然后在下面先看到 Service Provider（SP）Information 部分。在身份认证中，VBR 现在就相当于是应用程序的服务提供者（SP），因此我们在这里要先为 VBR 安装一个证书，点击 Install。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/vPmNyV2KuMIeaSf.png"
+        data-srcset="https://s2.loli.net/2025/09/24/vPmNyV2KuMIeaSf.png, https://s2.loli.net/2025/09/24/vPmNyV2KuMIeaSf.png 1.5x, https://s2.loli.net/2025/09/24/vPmNyV2KuMIeaSf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/vPmNyV2KuMIeaSf.png"
+        title="Xnip2025-09-24_17-57-13" /></p>
+<ol start="3">
+<li>可以从本地的证书库中选择一个，选择<code>Select an existing certificate from the certificate store</code>，点击下一步。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/pmOMAduU3aLvrSh.png"
+        data-srcset="https://s2.loli.net/2025/09/24/pmOMAduU3aLvrSh.png, https://s2.loli.net/2025/09/24/pmOMAduU3aLvrSh.png 1.5x, https://s2.loli.net/2025/09/24/pmOMAduU3aLvrSh.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/pmOMAduU3aLvrSh.png"
+        title="Xnip2025-09-24_18-05-26" /></p>
+<ol start="4">
+<li>在证书库中，找到 Friendly Name 为<code>Veeam Backup Server Certificate</code>的这个证书后，点击 Finish 完成。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/qQ36kWyloODrenZ.png"
+        data-srcset="https://s2.loli.net/2025/09/24/qQ36kWyloODrenZ.png, https://s2.loli.net/2025/09/24/qQ36kWyloODrenZ.png 1.5x, https://s2.loli.net/2025/09/24/qQ36kWyloODrenZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/qQ36kWyloODrenZ.png"
+        title="Xnip2025-09-24_19-28-09" /></p>
+<ol start="5">
+<li>此时，SP Information 部分会看到 Certificate 已经有信息出现了，<code>CN=&lt;备份服务器FQDN&gt;</code>。接下去的操作，我们需要点击 Install 下方的 Download 按钮，将 SP 这边的 xml 文件下载下来，保存好。这个文件会在稍后 Azure 那边配置时使用到。</li>
+</ol>
+<h3 id="在-azure-entraid-中上传-sp-metadata-并分配用户">在 Azure EntraID 中上传 SP Metadata 并分配用户。</h3>
+<ol>
+<li>首先来为 VBR 创建一个安全组，命名为 VBR Users。并为这个组添加一个 User，比如我把我自己的账号加了进来。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/6ArDuKk4c5nmC9j.png"
+        data-srcset="https://s2.loli.net/2025/09/24/6ArDuKk4c5nmC9j.png, https://s2.loli.net/2025/09/24/6ArDuKk4c5nmC9j.png 1.5x, https://s2.loli.net/2025/09/24/6ArDuKk4c5nmC9j.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/6ArDuKk4c5nmC9j.png"
+        title="Xnip2025-09-24_19-40-09" /></p>
+<ol start="2">
+<li>在 EntraID 中，找到 Enterprise apps，我们需要为 VBR 的身份认证，创建一个新的 Application，点击<code>New Application</code>来创建。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/1oCcNp9ZVa4HSA2.png"
+        data-srcset="https://s2.loli.net/2025/09/24/1oCcNp9ZVa4HSA2.png, https://s2.loli.net/2025/09/24/1oCcNp9ZVa4HSA2.png 1.5x, https://s2.loli.net/2025/09/24/1oCcNp9ZVa4HSA2.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/1oCcNp9ZVa4HSA2.png"
+        title="Xnip2025-09-24_19-42-30" /></p>
+<ol start="3">
+<li>在创建时，不要从 catalog 中选择，点击<code>Create your own application</code>然后在右边的弹框中，输入 app 名称，然后选择<code>Integrate any other application you don't find in the gallery(Non-gallery)</code>,比如我的叫 vbrsso。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/9ip6ufav1oPqAb4.png"
+        data-srcset="https://s2.loli.net/2025/09/24/9ip6ufav1oPqAb4.png, https://s2.loli.net/2025/09/24/9ip6ufav1oPqAb4.png 1.5x, https://s2.loli.net/2025/09/24/9ip6ufav1oPqAb4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/9ip6ufav1oPqAb4.png"
+        title="Xnip2025-09-24_19-44-43" /></p>
+<ol start="4">
+<li>这个 Application 创建完成后，会自动转到 Application Overview 界面，上面的 Getting Started 界面已经清楚的列出了接下去的步骤。可以按照上面 1、2、3、4、5 的步骤根据需要逐个配置。对于 VBR 来说，我们只需要配置两个<code>Assign users and groups</code>和<code>Set up single sign on</code>。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/5U38hXekxZHgv9f.png"
+        data-srcset="https://s2.loli.net/2025/09/24/5U38hXekxZHgv9f.png, https://s2.loli.net/2025/09/24/5U38hXekxZHgv9f.png 1.5x, https://s2.loli.net/2025/09/24/5U38hXekxZHgv9f.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/5U38hXekxZHgv9f.png"
+        title="Xnip2025-09-24_19-53-39" /></p>
+<ol start="5">
+<li>将第一步中创建的 Group，VBR Users 分配给这个应用后，点击第二个步骤，<code>Set up single sign on</code>，会进入单点登陆的配置界面，在这里，我们选择 SAML 这个选项来和 VBR 集成。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/MVTL9FXKoy5keui.png"
+        data-srcset="https://s2.loli.net/2025/09/24/MVTL9FXKoy5keui.png, https://s2.loli.net/2025/09/24/MVTL9FXKoy5keui.png 1.5x, https://s2.loli.net/2025/09/24/MVTL9FXKoy5keui.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/MVTL9FXKoy5keui.png"
+        title="Xnip2025-09-24_19-55-58" /></p>
+<ol start="6">
+<li>进入 SAML 配置界面后，这里清晰的列出了 1-2-3-4 的步骤，然而我们不需要逐个去编辑这里的内容，只需要找到上方<code>Upload metadata file</code>，点击后将我们刚刚从 VBR 上导出的 xml 文件上传后保存，即可完成这里单点登陆的配置。上传后可以看到 Basic SAML Configuration 中 URL 已经被正确的更新成我的 VBR 的 FQDN 了。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/xhUFLdrAP82qXSI.png"
+        data-srcset="https://s2.loli.net/2025/09/24/xhUFLdrAP82qXSI.png, https://s2.loli.net/2025/09/24/xhUFLdrAP82qXSI.png 1.5x, https://s2.loli.net/2025/09/24/xhUFLdrAP82qXSI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/xhUFLdrAP82qXSI.png"
+        title="Xnip2025-09-24_19-59-11" /></p>
+<ol start="7">
+<li>接下去，找到上图中第三步中的 SAML Certificates 框里的最后一行，Federation Metadata XML 旁边的 Download 按钮，再从 Azure EntraID 中下载一份自动生成的 XML 文件。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/Usl1VRH9LrATicq.png"
+        data-srcset="https://s2.loli.net/2025/09/24/Usl1VRH9LrATicq.png, https://s2.loli.net/2025/09/24/Usl1VRH9LrATicq.png 1.5x, https://s2.loli.net/2025/09/24/Usl1VRH9LrATicq.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/Usl1VRH9LrATicq.png"
+        title="Xnip2025-09-24_20-03-36" /></p>
+<p>至此，Azure 上的设置就全部完成了。</p>
+<h3 id="回-vbr更新配置-idp-信息">回 VBR，更新配置 IdP 信息</h3>
+<ol>
+<li>还是回到 VBR 中 Users &amp; Roles 下的 Identity Provider 界面，找到 Identity Provider（IdP）Information 设置，这是单点登陆中身份提供商的信息，也就是 Azure EntraID 来作为这个身份提供商。点击旁边的 Browse，上传刚刚从 Azure 中下载下来的 XML 文件。上传完成后，会看到下面所有 IdP 的信息已经正确更新成微软的网址了。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/5fZX7jxBQDIrSah.png"
+        data-srcset="https://s2.loli.net/2025/09/24/5fZX7jxBQDIrSah.png, https://s2.loli.net/2025/09/24/5fZX7jxBQDIrSah.png 1.5x, https://s2.loli.net/2025/09/24/5fZX7jxBQDIrSah.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/5fZX7jxBQDIrSah.png"
+        title="Xnip2025-09-24_20-10-12" /></p>
+<ol start="2">
+<li>点击 OK 完成设置后，我们就可以重新再打开<code>Users and Roles</code>，来增加 User 了。点击<code>Add...</code>后，会出现<code>External user or group</code>的选项，我们选择它。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/Ha4YEzhSA27O1tR.png"
+        data-srcset="https://s2.loli.net/2025/09/24/Ha4YEzhSA27O1tR.png, https://s2.loli.net/2025/09/24/Ha4YEzhSA27O1tR.png 1.5x, https://s2.loli.net/2025/09/24/Ha4YEzhSA27O1tR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/Ha4YEzhSA27O1tR.png"
+        title="Xnip2025-09-24_20-15-01" /></p>
+<ol start="3">
+<li>在弹出的 Add User 对话框中，输入完整的 Azure EntraID 的邮箱，比如我的是<code>lei.wei@xbbm365.backupnext.cloud</code>。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/RC9eID4i5OmVzSN.png"
+        data-srcset="https://s2.loli.net/2025/09/24/RC9eID4i5OmVzSN.png, https://s2.loli.net/2025/09/24/RC9eID4i5OmVzSN.png 1.5x, https://s2.loli.net/2025/09/24/RC9eID4i5OmVzSN.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/RC9eID4i5OmVzSN.png"
+        title="Xnip2025-09-24_20-17-04" /></p>
+<ol start="4">
+<li>这样，整个配置就完成了，我们来试试登陆。打开 VBR 客户端，我们能看到客户端上已经出现<code>Sign in with SSO</code>选项，我们直接点击这个。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/gIzswZoxpBbDqiP.png"
+        data-srcset="https://s2.loli.net/2025/09/24/gIzswZoxpBbDqiP.png, https://s2.loli.net/2025/09/24/gIzswZoxpBbDqiP.png 1.5x, https://s2.loli.net/2025/09/24/gIzswZoxpBbDqiP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/gIzswZoxpBbDqiP.png"
+        title="Xnip2025-09-24_20-20-38" /></p>
+<ol start="5">
+<li>点击后，登陆窗口会自动弹出标准的微软登陆界面，输入密码后，还会弹出微软的 MFA 批准登陆。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/WyT7Rhi4qKlXbDI.png"
+        data-srcset="https://s2.loli.net/2025/09/24/WyT7Rhi4qKlXbDI.png, https://s2.loli.net/2025/09/24/WyT7Rhi4qKlXbDI.png 1.5x, https://s2.loli.net/2025/09/24/WyT7Rhi4qKlXbDI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/WyT7Rhi4qKlXbDI.png"
+        title="Xnip2025-09-24_20-22-44" /></p>
+<ol start="6">
+<li>手机 Authenticator 批准后，VBR Console 就能顺利跳转登陆啦。</li>
+<li>我们再打开网页试试看，在 WebUI 中，我们一样能看到有新的 Sign in With SSO 选项啦。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/Pqj25XhY68Mok31.png"
+        data-srcset="https://s2.loli.net/2025/09/24/Pqj25XhY68Mok31.png, https://s2.loli.net/2025/09/24/Pqj25XhY68Mok31.png 1.5x, https://s2.loli.net/2025/09/24/Pqj25XhY68Mok31.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/Pqj25XhY68Mok31.png"
+        title="Xnip2025-09-24_20-26-16" /></p>
+<ol start="8">
+<li>同样，批准登陆后，我们能够访问 Veeam 权限的 Web UI，而在 Web UI 的右上角，我们还能看到已经正确显示访问用户的账号和邮箱了。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/JDPmahNHG849E6B.png"
+        data-srcset="https://s2.loli.net/2025/09/24/JDPmahNHG849E6B.png, https://s2.loli.net/2025/09/24/JDPmahNHG849E6B.png 1.5x, https://s2.loli.net/2025/09/24/JDPmahNHG849E6B.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/JDPmahNHG849E6B.png"
+        title="Xnip2025-09-24_20-29-11" /></p>
+<h3 id="在-azure-中查看登录审计信息">在 Azure 中查看登录审计信息</h3>
+<p>在 Azure EntraID 的管理审计界面中，能够清晰的看到 VBR 中登陆的信息。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/24/U8HrSw5j374KCmk.png"
+        data-srcset="https://s2.loli.net/2025/09/24/U8HrSw5j374KCmk.png, https://s2.loli.net/2025/09/24/U8HrSw5j374KCmk.png 1.5x, https://s2.loli.net/2025/09/24/U8HrSw5j374KCmk.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/24/U8HrSw5j374KCmk.png"
+        title="Xnip2025-09-24_20-50-56" /></p>
+<h2 id="配置小结">配置小结</h2>
+<p>按照以上方法，VBR 和 Azure EntraID 的集成就能轻松配置完成。需要注意的是，这样配置的用户它仅仅是备份系统的用户，它并不能像 veeamadmin 和 veeamso 账号一样去登陆 Appliance 的 Veeam Management Console，这个 SSO 账号是无法管理 Appliance 的。</p>
+<p>从安全上来看，这样的配置能够有效的分离备份系统的权限，备份系统的身份认证和备份基础架构的账号完全分离开来了，这也更加符合大型企业和组织的使用规范。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam13-security-features-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam13-security-features-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam13-security-features-01%2F&amp;text=%E8%AE%A9&#43;VBR&#43;%E7%99%BB%E9%99%86%E6%9B%B4%E5%AE%89%E5%85%A8%EF%BC%9Av13&#43;%E7%89%88%E6%9C%AC&#43;SAML&#43;%2B&#43;Azure&#43;EntraID&#43;%E9%9B%86%E6%88%90%E5%85%A8%E6%94%BB%E7%95%A5" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam13-security-features-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam13-security-features-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam-software-appliance-06/" class="prev" rel="prev" title="深度解读：Veeam V13 的发布策略与部署选择"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>深度解读：Veeam V13 的发布策略与部署选择</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>备份存档能不能被恢复，这件事情上只有真正做过才知道。 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2018/03/surebackup/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="备份存档能不能被恢复，这件事情上只有真正做过才知道。">
+  <meta property="og:description" content="Veeam 有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。
+该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="备份存档能不能被恢复，这件事情上只有真正做过才知道。">
+  <meta name="twitter:description" content="Veeam 有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。
+该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2018/03/surebackup/" /><link rel="prev" href="http://192.168.16.79:1313/2018/01/centrilized-agent-management/" /><link rel="next" href="http://192.168.16.79:1313/2018/03/vpower-nfs/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "备份存档能不能被恢复，这件事情上只有真正做过才知道。",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2018\/03\/surebackup\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  4360 ,
+        "url": "http:\/\/192.168.16.79:1313\/2018\/03\/surebackup\/","datePublished": "2018-03-05T00:00:00+00:00","dateModified": "2018-03-05T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">备份存档能不能被恢复，这件事情上只有真正做过才知道。</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-03-05">2018-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4360 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#如何工作">如何工作？</a></li>
+        <li><a href="#验证过程中的组件">验证过程中的组件</a></li>
+        <li><a href="#surebackup-实战">SureBackup 实战</a>
+          <ul>
+            <li><a href="#application-group">Application Group</a></li>
+            <li><a href="#virtual-lab">Virtual Lab</a>
+              <ul>
+                <li><a href="#proxy-appliance"><strong>Proxy Appliance</strong></a></li>
+                <li><a href="#ip-masquerading"><strong>IP Masquerading</strong></a></li>
+                <li><a href="#static-ip-mapping"><strong>Static IP Mapping</strong></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Veeam 有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        title="1blqUA.png" /></p>
+<p>该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。</p>
+<p>Veeam SureBackup 适用于 VMware 和 Hyper-V 的备份，本文仅以 VMware 环境为例说明 SureBackup 的技术原理以及使用方法。</p>
+<h3 id="如何工作">如何工作？</h3>
+<p>Veeam SureBackup 在工作时，会依次执行以下步骤完成整个验证过程：</p>
+<blockquote>
+<ol>
+<li>Veeam Backup &amp; Replication 会将 Application Group 和被验证的虚拟机发布到一个隔离的沙盒环境中，通常我们称作为“数据实验室（DataLab.）”。这些虚拟机是直接从备份存储库的被压缩重删后的备份文件中启动，而不需要被预先还原至 VMware 的 Datastore 中。实现这一功能需要依赖 Veeam 的 Instant VM Recovery 和 vPower NFS Service。</li>
+<li>Veeam Backup &amp; Replication 对 Application Group 和被验证的虚拟机执行一系列的自动化校验测试，通常包含虚拟机心跳、网络 ping 和应用程序脚本测试，其中应用程序脚本可以通过自定义的方式加入。</li>
+<li>在基础验证完成后，还可以选择让 Veeam SureBackup 对备份存档从文件层面执行一次 CRC 校验，确保在执行任务的过程中未修改原始备份存档。</li>
+<li>在 SureBackup 任务结束后，Veeam Backup &amp; Replication 对这些虚拟机执行“Unpublish“动作，并且生成一份测试报告，此报告会通过 Email 的方式发送给指定的管理员。</li>
+</ol>
+</blockquote>
+<p>在整个验证过程中，Veeam 会保证所有虚拟机的备份存档处于只读状态，所有因虚拟机运行产生的数据会存放在虚拟机 Redo Log 中，这些 Redo Log 通常会存放于 VMware 的生成存储上，而当验证过程结束时，Veeam 会删除这些 Redo Log，释放临时空间。</p>
+<h3 id="验证过程中的组件">验证过程中的组件</h3>
+<p>和通常备份的基础架构不一样的是，执行 Veeam SureBackup 时，会需要用到几个 SureBackup 专用的对象。</p>
+<ol>
+<li>Application Group - 在验证某些虚拟机时，这些虚拟机需要依赖一些其他的虚拟机才能正常启动和工作，Application Group 就是为这些虚拟机正常工作提供所需的其他依赖应用程序和服务。通常我们会将运行这些应用程序和服务的虚拟机放入应用组，为验证提供依赖条件。举例来说，当我们需要去验证一台 Exchange 服务器时，该 Exchange 服务的启动需要有 AD 和 DNS 服务，因此，我们可以在 Application   Group 中加入提供 AD 和 DNS 服务的虚拟机，用来为 Exchange 提供启动依赖。</li>
+<li>Virtual Lab - 这是一个隔离的虚拟化沙盒环境，Application Group 中的虚拟机和被验证的虚拟机都会在这个沙盒中启动起来。</li>
+<li>SureBackup Job - 这是来自动或者手动执行验证备份存档的任务。它能够定时定期执行，也能够手动执行。</li>
+</ol>
+<h3 id="surebackup-实战">SureBackup 实战</h3>
+<p>如上面提到的，SureBackup 有 3 个专用对象，因此在使用和配置 SureBackup 过程中显然需要进行这 3 个对象的设置。</p>
+<h4 id="application-group">Application Group</h4>
+<p>这也是整个生产环境基础架构中最最重要的服务之一，其他应用程序的启动和运行都依赖这些机器。简单来说，Application Group 就是定义一组虚拟机，这组虚拟机非常重要，其他被验证的虚拟机没有这组虚拟机无法工作。也就是当我们的环境中存在这样的虚拟机，那我们就需要将他定义为 Application Group，以便其他机器在被校验时能够访问到这些虚拟机和服务。</p>
+<p>当然，Application Group 中的这些虚拟机也是从备份镜像中启动起来，需要预先被备份，而不是直接使用生产环境的虚拟机。SureBackup 对于 Application Group 中的虚拟机，也会定义一系列的校验和检测，确保 Application Group 中的虚拟机首先正常工作，然后才开始后续的其他虚拟机验证。当 Application Group 中的虚拟机验证失败的情况下，SureBackup 将会中止工作，不会继续后续的虚拟机验证，这是因为 SureBackup 默认 Application Group 无法正常工作的情况下其他被验证的虚拟机也无法正常启动。因此，请不要在 Application Group 中放置非必要的虚拟机；如果被验证的虚拟机无需其他应用程序和服务依赖，则请不要在 Application Group 中放置虚拟机。</p>
+<ul>
+<li><strong>配置方法</strong></li>
+</ul>
+<p>Application Group 的创建非常简单，将 Veeam Backup &amp;Replication 主界面切换到 Backup Infrastructure 下，在清单面板中选择 SureBackup 节点，这时候在右边的内容显示区域，可以找到 Add Application Group。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPjR1.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPjR1.png, https://s2.ax1x.com/2020/02/12/1HPjR1.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPjR1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPjR1.png"
+        title="1HPjR1.png" /></p>
+<p>点击这个链接会弹出 Veeam 经典的向导设置界面。</p>
+<p>首先是设定 Application Group Name 和 Description，这个可以根据需要设定，没什么特别要求，方便识别和符合企业/组织的命名规范即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPvxx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPvxx.png, https://s2.ax1x.com/2020/02/12/1HPvxx.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPvxx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPvxx.png"
+        title="1HPvxx.png" /></p>
+<p>接下来是设定这个 Application Group 中有哪些虚拟机，这就如上文解释的，我们可以将备份存档、复制存档或存储快照存档中的 VM 加入到 Application Group 中，这 3 种添加模式分别对应了 Veeam SureBackup 的 3 种分支功能：SureBackup/SureReplica/Ondemand Sandbox for StorageSnapshot。此处暂且不详细展开去讨论这 3 种分支功能的具体使用。我们就是用通常备份验证中用的最多的 From Backup。这也是上文中提到，Application Group 中的虚拟机也必须是预先被备份，而不能是直接选择生产环境中的相关虚拟机。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPqIJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPqIJ.png, https://s2.ax1x.com/2020/02/12/1HPqIJ.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPqIJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPqIJ.png"
+        title="1HPqIJ.png" /></p>
+<p>选择完虚拟机后，可以为这些选择的虚拟机设定一些验证选项，这也是上文提到的，Application Group 中的虚拟机必须首先被验证能正常工作，才能进行后续操作。这里的验证选项包括内置的一些服务器角色，比如 DNS Server、Domain Controller、Global Catalog、Mail Server、SQL Server、Web Server 等，选中这些服务器角色时，Veeam 会自动使用适合这些角色的预定义脚本验证这些角色服务器。（关于 Domain Controller 的 Authoritative Restore 和 Non-Authoritative Restore 知识点，本文不详细阐述，读者可自行百度。）</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiPde.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiPde.png, https://s2.ax1x.com/2020/02/12/1HiPde.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiPde.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiPde.png"
+        title="1HiPde.png" /></p>
+<p>在这个验证选项中还有启动选项、测试脚本和账户凭据设置，在此就不一一详述，这些都是对应验证过程中一些详细的设定选项，对于特别的应用程序在测试中有帮助，具体可以参考 Veeam 官网手册说明。</p>
+<p>这样，一个 Application Group 就基本设置完成了，可以通过最后一个 Summary 页面回顾下设定的内容。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HipqO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HipqO.png, https://s2.ax1x.com/2020/02/12/1HipqO.png 1.5x, https://s2.ax1x.com/2020/02/12/1HipqO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HipqO.png"
+        title="1HipqO.png" /></p>
+<h4 id="virtual-lab">Virtual Lab</h4>
+<p>这是被验证的虚拟机所运行的隔离环境，在这个环境中 Veeam Backup &amp; Replication 将会逐个启动 Application Group 中的虚拟机，然后再启动需要被验证的虚拟机。</p>
+<p>Virtual Lab 本身其实几乎不消耗任何资源，它可以在任意的 ESXi 主机上被部署，当需要被验证的虚拟机启动的时候，Virtual Lab 才会请求计算资源分配给这些虚拟机。Virtual Lab 会在隔离环境中创造出一套网络，它将生产环境中的网络完整的镜像至 Virtual Lab 创造出来的这套网络中，在 Virtual Lab 中启动的虚拟机和原虚拟机拥有一模一样的 IP 地址配置，因此在 Virtual Lab 中启动的这些虚拟机能够和生产环境一样正常的工作。</p>
+<p>在 Virtual Lab 之中，有非常重要的概念，分别是：Proxy Appliance、IP Masquerading、Static IP Mapping。</p>
+<h5 id="proxy-appliance"><strong>Proxy Appliance</strong></h5>
+<p>为了和生产网络能够通讯，Veeam Backup &amp; Replication 又使用了一个 Proxy appliance。这个 Proxy Appliance 是一个基于 Linux 的轻量级虚拟机，它会被创建在每一个 Virtual Lab 中，通过这个 Proxy Appliance 的多个网卡将 Virtual Lab 中的虚拟机和生产环境进行连通。</p>
+<h5 id="ip-masquerading"><strong>IP Masquerading</strong></h5>
+<p>Veeam 建立起一套规则，让生产网络能够通过特定的 IP 地址访问隔离网络，同时又不用修改隔离网络内的 IP 地址配置，那么这套重要规则就是 IP Masquerading。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiAJA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiAJA.png, https://s2.ax1x.com/2020/02/12/1HiAJA.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiAJA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiAJA.png"
+        title="1HiAJA.png" /></p>
+<p>每一个生产网络中的 IP 地址，在隔离网络中，都会通过 IP Masquerading 建立起一个一一对应的地址，比如生产网络中的地址是 172.16.10.10，IP Masquerading 规则是 172.16.10.X/24 对应 172.18.10.X/24，那么这台虚拟机的备份存档在 Virtual Lab 中启动起来后的 Masquerade IP 地址会自动被分配为 172.18.10.10。</p>
+<p>这个规则会通过静态路由的形式被添加至 VBR 备份服务器和 Virtual Lab Client 的所运行的桌面上。当有网络访问 172.18.10.10 时，Proxy Appliance 会充当一个 NAT 服务器的角色，将访问转发至 Virtual Lab 内的这台虚拟机上。而实际上 Virtual Lab 内的这台虚拟机此时启动后的 IP 地址本身并没有发生变化。</p>
+<h5 id="static-ip-mapping"><strong>Static IP Mapping</strong></h5>
+<p>上面提到这样的静态路由仅会被添加至 VBR 备份服务器和 Virtual Lab Client，那么当有很多客户端的都需要访问这个 Virtual Lab 中的虚拟机时，手动逐台添加静态路由会很不方便。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiERI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiERI.png, https://s2.ax1x.com/2020/02/12/1HiERI.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiERI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiERI.png"
+        title="1HiERI.png" /></p>
+<p>这时候，在这种场景下 Veeam 提供 Static IP Mapping 为更多的虚拟机的访问提供方便快速的设置方法。我们可以利用 172.16.10.X 网络中其中一个空闲的 IP：172.16.10.99 做一个静态映射，将其映射给 172.18.10.10，这时候网络上的所有客户的都可以通过 172.16.10.99 这个 IP 地址访问到 Virtual Lab 中的这台虚拟机，而不用逐台添加 172.18.10.X 的静态路由。</p>
+<ul>
+<li><strong>配置 Virtual Lab</strong></li>
+</ul>
+<p>因为 Virtual Lab 的配置有 3 种不同模式，本文不详细讨论 3 种模式的区别，仅以最常用的 Advanced Single-Host Virtual Lab 为例介绍配置方法。</p>
+<p>将 Veeam Backup &amp;Replication 主界面切换到 Backup Infrastructure 下，在清单面板中选择 SureBackup 节点，这时候在右边的内容显示区域，可以找到 Add Virtual Lab。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blyB4.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blyB4.png, https://s2.ax1x.com/2020/02/12/1blyB4.png 1.5x, https://s2.ax1x.com/2020/02/12/1blyB4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blyB4.png"
+        title="1blyB4.png" /></p>
+<p>点击这个链接会弹出 Veeam 经典的向导设置界面。</p>
+<p>首先是设定 Virtual Lab Name 和 Description，这个可以根据需要设定，没什么特别要求，方便识别和符合企业/组织的命名规范即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl6HJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl6HJ.png, https://s2.ax1x.com/2020/02/12/1bl6HJ.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl6HJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl6HJ.png"
+        title="1bl6HJ.png" /></p>
+<p>选择主机，选择此 Virtual Lab 是运行哪一个 ESXi 主机上，每一个 Virtual Lab 仅允许运行在一个 ESXi 主机上。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blsuF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blsuF.png, https://s2.ax1x.com/2020/02/12/1blsuF.png 1.5x, https://s2.ax1x.com/2020/02/12/1blsuF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blsuF.png"
+        title="1blsuF.png" /></p>
+<p>选择数据存储，Virtual Lab 中产生的临时数据和 Virtual Lab 必要的一些运行文件会存放在这个 Datastore 中，包括临时的虚拟机 Redo log 也会存放在这个 Datastore 中。它的容量主要还是取决于 Virtual Lab 开启后数据的改变情况，在一般没有太多改变的时候，这个容量要求并不太高。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blDjU.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blDjU.png, https://s2.ax1x.com/2020/02/12/1blDjU.png 1.5x, https://s2.ax1x.com/2020/02/12/1blDjU.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blDjU.png"
+        title="1blDjU.png" /></p>
+<p>设置 Proxy Appliance，这一步需要设置是否使用 Proxy Appliance 以及如何将 Proxy Appliance 连接到生产网络。一般来说，全自动的验证和数据实验室都是需要 Proxy Appliance 的，因此默认都会启用 Proxy Appliance。而在不选择使用 Proxy Appliance 的场景中，则所有的验证都需要通过手工进入虚拟机内控制台去操作实现。在启用 Proxy Appliance 后，需要配置 Proxy Appliance 的虚拟机名称、IP 地址设定以及是否通过 Internet 代理连接互联网。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blh36.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blh36.png, https://s2.ax1x.com/2020/02/12/1blh36.png 1.5x, https://s2.ax1x.com/2020/02/12/1blh36.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blh36.png"
+        title="1blh36.png" /></p>
+<p>设置隔离网络，在这里配置所有 Application Group 和需要被验证的虚拟机所连接的网络至隔离网络的一一对应关系。假设在生产环境中有 4 个不同的端口组，那么在这个隔离网络设置中就需要 4 个不同端口组与之对应。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blBcT.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blBcT.png, https://s2.ax1x.com/2020/02/12/1blBcT.png 1.5x, https://s2.ax1x.com/2020/02/12/1blBcT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blBcT.png"
+        title="1blBcT.png" /></p>
+<p>Network Setting，这个步骤中，为 Proxy Appliance 连接到每个隔离网络的那块 vNIC 设定 IP 地址，并且为每个隔离网络设置 IP Masquerading 规则。一般来说连接到隔离网络的那块 vNIC 都会指定实际生产网络中该网段的网关地址，这样的网络配置不会产生冲突也不需要对 Virtual Lab 中启动的虚拟机进修改。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blgE9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blgE9.png, https://s2.ax1x.com/2020/02/12/1blgE9.png 1.5x, https://s2.ax1x.com/2020/02/12/1blgE9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blgE9.png"
+        title="1blgE9.png" /></p>
+<p>Static IP Mapping，这里按需进行定义即可，如果没有很多客户端访问的时候，可以不作任何设定。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl4gK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl4gK.png, https://s2.ax1x.com/2020/02/12/1bl4gK.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl4gK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl4gK.png"
+        title="1bl4gK.png" /></p>
+<p>如此，查看下此 Virtual Lab 配置后，即可完成设定。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blouD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blouD.png, https://s2.ax1x.com/2020/02/12/1blouD.png 1.5x, https://s2.ax1x.com/2020/02/12/1blouD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blouD.png"
+        title="1blouD.png" /></p>
+<p>SureBackup Job</p>
+<p>最后，就是设定哪些虚拟机需要进行验证、在哪个 Virtual Lab 中验证以及在什么时候验证。这个工作全部在 SureBackup Job 中进行。</p>
+<p>启动 SureBackup Job 的创建向导</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1Himsf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1Himsf.png, https://s2.ax1x.com/2020/02/12/1Himsf.png 1.5x, https://s2.ax1x.com/2020/02/12/1Himsf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1Himsf.png"
+        title="1Himsf.png" /></p>
+<p>设定 SureBackup Job 名称和描述。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blY7j.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blY7j.png, https://s2.ax1x.com/2020/02/12/1blY7j.png 1.5x, https://s2.ax1x.com/2020/02/12/1blY7j.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blY7j.png"
+        title="1blY7j.png" /></p>
+<p>选择在哪个 Virtual Lab 中运行 SureBackup Job</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blUNn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blUNn.png, https://s2.ax1x.com/2020/02/12/1blUNn.png 1.5x, https://s2.ax1x.com/2020/02/12/1blUNn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blUNn.png"
+        title="1blUNn.png" /></p>
+<p>选择是否需要 Application Group、需要哪个 Application Group 才能运行</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiVzt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiVzt.png, https://s2.ax1x.com/2020/02/12/1HiVzt.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiVzt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiVzt.png"
+        title="1HiVzt.png" /></p>
+<p>选择哪个备份 Job 在备份完成后需要被验证</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blJBQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blJBQ.png, https://s2.ax1x.com/2020/02/12/1blJBQ.png 1.5x, https://s2.ax1x.com/2020/02/12/1blJBQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blJBQ.png"
+        title="1blJBQ.png" /></p>
+<p>这里还能对备份 Job 中单个 VM 进行详细设定，设定的内容是和 Application Group 中类似。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blahq.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blahq.png, https://s2.ax1x.com/2020/02/12/1blahq.png 1.5x, https://s2.ax1x.com/2020/02/12/1blahq.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blahq.png"
+        title="1blahq.png" /></p>
+<p>设置验证完成后如何通知管理员</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl3jS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl3jS.png, https://s2.ax1x.com/2020/02/12/1bl3jS.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl3jS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl3jS.png"
+        title="1bl3jS.png" /></p>
+<p>置 SureBackup Job 在什么时候运行，通常可以选择 After this Job 选项，选择在备份结束后立刻跟着验证备份结果。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blNAs.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blNAs.png, https://s2.ax1x.com/2020/02/12/1blNAs.png 1.5x, https://s2.ax1x.com/2020/02/12/1blNAs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blNAs.png"
+        title="1blNAs.png" /></p>
+<p>如此，SureBackup 就设定完成了。如果设置的内容一切正常，配置正确，那么 SureBackup 验证就会自动进行，确保备份时有效可用的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl03V.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl03V.png, https://s2.ax1x.com/2020/02/12/1bl03V.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl03V.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl03V.png"
+        title="1bl03V.png" /></p>
+<p>而在邮箱中就能收到如下的报告哦。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blw90.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blw90.png, https://s2.ax1x.com/2020/02/12/1blw90.png 1.5x, https://s2.ax1x.com/2020/02/12/1blw90.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blw90.png"
+        title="1blw90.png" /></p>
+<p>最后，SureBackup 这一功能包含在 Veeam Backup &amp;Replication 产品的 Enterprise 和 Enterprise Plus 版本中，而在 Standard 版本中并不包含此功能，在 Standard 版本中如需验证备份存档可用性，那只能通过完全手动的方式进行喽。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2018-03-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2018/03/surebackup/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F03%2Fsurebackup%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F03%2Fsurebackup%2F&amp;text=%E5%A4%87%E4%BB%BD%E5%AD%98%E6%A1%A3%E8%83%BD%E4%B8%8D%E8%83%BD%E8%A2%AB%E6%81%A2%E5%A4%8D%EF%BC%8C%E8%BF%99%E4%BB%B6%E4%BA%8B%E6%83%85%E4%B8%8A%E5%8F%AA%E6%9C%89%E7%9C%9F%E6%AD%A3%E5%81%9A%E8%BF%87%E6%89%8D%E7%9F%A5%E9%81%93%E3%80%82" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F03%252Fsurebackup%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F03%252Fsurebackup%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2018/01/centrilized-agent-management/" class="prev" rel="prev" title="新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解</a>
+            <a href="/2018/03/vpower-nfs/" class="next" rel="next" title="Veeam 黑科技之 vPower NFS">Veeam 黑科技之 vPower NFS<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

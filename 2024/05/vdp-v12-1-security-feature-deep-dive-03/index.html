@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/05/vdp-v12-1-security-feature-deep-dive-03/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控">
+  <meta property="og:description" content="在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-06T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-05-06T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控">
+  <meta name="twitter:description" content="在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/05/vdp-v12-1-security-feature-deep-dive-03/" /><link rel="prev" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/" /><link rel="next" href="http://192.168.16.79:1313/2024/07/vmware-explore-barcelona/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/05\/vdp-v12-1-security-feature-deep-dive-03\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1951 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/05\/vdp-v12-1-security-feature-deep-dive-03\/","datePublished": "2024-05-06T00:00:00+00:00","dateModified": "2024-05-06T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-06">2024-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1951 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#security--compliance-analyzer">Security &amp; Compliance Analyzer</a>
+          <ul>
+            <li><a href="#使用方法">使用方法</a></li>
+            <li><a href="#检测后的处理">检测后的处理</a></li>
+          </ul>
+        </li>
+        <li><a href="#threat-center-威胁检测中台">Threat Center 威胁检测中台</a>
+          <ul>
+            <li><a href="#threat-center-展示内容">Threat Center 展示内容</a></li>
+            <li><a href="#threat-center-配置方法">Threat Center 配置方法</a>
+              <ul>
+                <li><a href="#data-platform-打分表配置">Data Platform 打分表配置</a></li>
+                <li><a href="#恶意攻击检测侦测地图配置">恶意攻击检测侦测地图配置</a></li>
+                <li><a href="#rpo-异常分析配置">RPO 异常分析配置</a></li>
+                <li><a href="#sla-合规性状态配置">SLA 合规性状态配置</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。</p>
+<h3 id="security--compliance-analyzer">Security &amp; Compliance Analyzer</h3>
+<p>这个组件在 v12 中就已经有了，当时的名称是 Best Practices Analyzer，但是第一个版本中功能不算太完善，检测能力稍显薄弱。在新版本中，Best Practices Analyzer 改名为 Security &amp; Compliance Analyzer，并且能力大大加强了。</p>
+<p>在 v12.1 中 Security &amp; Compliance Analyzer 包含 31 项安全检测，分别检查 VBR 所在的操作系统以及备份基础架构的安全最佳实践。</p>
+<h4 id="使用方法">使用方法</h4>
+<p>Security &amp; Compliance Analyzer 使用非常简单，在 VBR 控制台的 Home 界面中，上方的工具栏按钮点击即可进入。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png"
+        data-srcset="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png, https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png 1.5x, https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png"
+        title="Xnip2024-05-06_13-23-06" /></p>
+<p>进入后，Security &amp; Compliance Analyzer 就开始自动扫描当前的环境，几分钟后扫描就会完成，在右边的状态栏分别显示每一项检测的结果。绿色的✅为检查通过，符合安全最佳实践；而红色的❌表示该项最佳实践检测失败，当前环境需要优化；另外还会有一种黄色的⚠️状态，表示当前环境无法检测。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/xnipshot/20240506-001.png"
+        data-srcset="/images/posts/xnipshot/20240506-001.png, /images/posts/xnipshot/20240506-001.png 1.5x, /images/posts/xnipshot/20240506-001.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/xnipshot/20240506-001.png"
+        title="/images/posts/xnipshot/20240506-001.png" /></p>
+<p>关于这 31 项检测内容，可以参考<a href="https://helpcenter.veeam.com/docs/backup/vsphere/best_practices_analyzer.html?ver=120" target="_blank" rel="noopener noreffer ">官网手册</a>，了解详细。</p>
+<p>除了打开界面检测外，这个 Security &amp; Compliance Analyzer 还支持定时计划任务扫描检测当前环境，系统自动在每天的某个时间运行所有检测，检测完成后，发送通知到指定的管理员邮箱。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/xnipshot/20240506-002.png"
+        data-srcset="/images/posts/xnipshot/20240506-002.png, /images/posts/xnipshot/20240506-002.png 1.5x, /images/posts/xnipshot/20240506-002.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/xnipshot/20240506-002.png"
+        title="/images/posts/xnipshot/20240506-002.png" /></p>
+<p>这样做能确保环境中所有的安全措施是持续被管理和监控的，避免随意修改和破坏系统配置。</p>
+<h4 id="检测后的处理">检测后的处理</h4>
+<p>在这个检测中提示的一些安全问题，可以通过相关的操作系统安全加固手段完成备份系统的安全加固，为了便于管理员更方便的处理，Veeam 特别收集了这些加固的操作方法，并且制作成了一键加固的脚本，管理员可以参考并根据实际需求修改这个脚本进行系统加固。这个脚本可以到这个知识库链接中找到：<a href="https://www.veeam.com/kb4525" target="_blank" rel="noopener noreffer ">KB4525</a>。</p>
+<p>当然，安全和方便永远都是相对的，如果有些选项管理员认为必须保留，那么 Veeam 也提供了 Suppress 按钮，用于排除检测。</p>
+<h3 id="threat-center-威胁检测中台">Threat Center 威胁检测中台</h3>
+<p>在 VDP 高级版中（此功能需要激活高级版许可，并正确安装和配置了 VeeamONE 组件），加入了全新的集成了 Veeam ONE 的仪表盘面板。备份和安全管理员无需切换控制台至 Veeam ONE Dashboard 就可以立刻查看到当前备份系统中安全相关的重要信息。</p>
+<p>在 VBR 的控制台中，导航栏多了一个栏目<code>Analytics</code>，在这个视图下面，内置了 4 个仪表盘，分别是 Threat Center、Overview、Backup Heatmap 和 Jobs Calendar，这些仪表盘都是来自 Veeam ONE Dashboard，管理员也可以直接通过 Veeam ONE Dashboard 找到这些仪表盘。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png"
+        data-srcset="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png, https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png 1.5x, https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png"
+        title="Xnip2024-05-06_15-54-09" /></p>
+<p>在目前发布的第一个版本中，VBR 内嵌的这个 Threat Center 还有一些些小问题，上面的内容暂时不支持自定义配置，如果对于显示内容有一定要求的，可以进入 Veeam ONE Dashboard 的 Threat Center 页面，在这里可以自由定制相关内容。</p>
+<h4 id="threat-center-展示内容">Threat Center 展示内容</h4>
+<p>Threat Center 由 4 部分组成，左上角是一个 Data Platform 的打分表，Veeam ONE 根据收集到的数据从平台安全合规性、数据可恢复性的健康度、数据保护状态以及备份不可变状态这几个维度出发对整个平台以百分比的形式进行得分计算，分数过低，会给出黄色和红色的状态。</p>
+<p>右上角是一个恶意攻击检测侦测地图，根据 Repository 所在位置，Threat Center 通过世界地图展示出潜在的恶意攻击行为发生的地理位置。</p>
+<p>左下角是 RPO 异常分析表，这个表会将所有需要保护的 workload，根据设定的 RPO，帮我们找出那些 RPO 没有达到预期的业务系统。</p>
+<p>在右下角，是 SLA 合规性状态，假如有任何备份作业出现失败的情况下，在这个红绿的 Heatmap 中就会有异常的红色区块显示，那么在过去的一段时间，曾经出现的问题在这个区域会被醒目的罗列出来。</p>
+<h4 id="threat-center-配置方法">Threat Center 配置方法</h4>
+<p>在 Veeam ONE Dashboard 中，可以配置 Threat Center 所显示的内容和数据采集的范围。在上面提到的这四个部分，是仪表盘的 4 个小组件，在这 4 个小组件的右上角，都有一个配置的按钮，可以打开相关的配置向导。</p>
+<h5 id="data-platform-打分表配置">Data Platform 打分表配置</h5>
+<p>Scorecard 得分有 4 部分组成，因此这里小组件的向导中，有对应 4 个不同的得分的相关配置，包括了采集数据的对象和类型等。管理员可以根据自己关心的内容调整 Scorecard 的计分范围。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png"
+        data-srcset="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png, https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png 1.5x, https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png"
+        title="Xnip2024-05-06_16-33-47" /></p>
+<h5 id="恶意攻击检测侦测地图配置">恶意攻击检测侦测地图配置</h5>
+<p>这个小组件的配置包含两部分，一部分是侦测的时间范围和显示方式，另外一部分是关于地理位置的配置。在这里，地理位置是内置在 Veeam ONE 中的离线地名数据库，管理员可以使用已经内置的英文地名，也可以通过 Custom 按钮设置自定义的地名以及地理经纬度坐标。在为每一个 Repository 设定完位置之后，该小组件就能够在地图上醒目的显示受感染的数据中心了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png"
+        data-srcset="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png, https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png 1.5x, https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png"
+        title="Xnip2024-05-06_16-37-49" /></p>
+<h5 id="rpo-异常分析配置">RPO 异常分析配置</h5>
+<p>这个设置支持基础架构对象的选择、RPO 的时间范围和前 N 工作负载的排序，管理员能够根据自己实际关心的数据进行内容展示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png"
+        data-srcset="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png, https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png 1.5x, https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png"
+        title="Xnip2024-05-06_16-40-48" /></p>
+<h5 id="sla-合规性状态配置">SLA 合规性状态配置</h5>
+<p>这个设置支持集成架构对象的选择、作业类型的选择、统计时间范围和目标 SLA 值，管理员可以根据实际啥情况设定最关心的数据。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png"
+        data-srcset="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png, https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png 1.5x, https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png"
+        title="Xnip2024-05-06_16-41-03" /></p>
+<p>由于 Veeam ONE 是个多用户系统，以上这些配置仅对当前登录用户生效，因此，不同的用户需要根据实际情况做相应设置。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-05-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/05/vdp-v12-1-security-feature-deep-dive-03/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F05%2Fvdp-v12-1-security-feature-deep-dive-03%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F05%2Fvdp-v12-1-security-feature-deep-dive-03%2F&amp;text=VDP&#43;v12.1&#43;%E5%AE%89%E5%85%A8%E5%8A%9F%E8%83%BD%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89-&#43;%E5%85%A8%E9%9D%A2%E5%A8%81%E8%83%81%E7%9B%91%E6%8E%A7" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F05%252Fvdp-v12-1-security-feature-deep-dive-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F05%252Fvdp-v12-1-security-feature-deep-dive-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/" class="prev" rel="prev" title="VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</a>
+            <a href="/2024/07/vmware-explore-barcelona/" class="next" rel="next" title="VMware Explore Barcelona 前瞻">VMware Explore Barcelona 前瞻<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

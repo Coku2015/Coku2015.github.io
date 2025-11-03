@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO 基础入门（六） -  成功灾备计划的第一步 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/06/vro-v6-guide-05/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VRO 基础入门（六） -  成功灾备计划的第一步">
+  <meta property="og:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 通过之前的配置，我们的 VRO 就可以开始正常使用了，我们可以用 Administrator 或者 Plan Authors 角色的用户登入到 VRO 控制台。在控制台中，可以访问 VRO 定制的仪表盘，包括灾备的执行计划（Plan）、灾备的状态检查（Readiness Check）、灾备测试情况（Datalab Testing）以及灾备的 SLA（RPO 和 RTO 情况）。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-06-01T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VRO 基础入门（六） -  成功灾备计划的第一步">
+  <meta name="twitter:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 通过之前的配置，我们的 VRO 就可以开始正常使用了，我们可以用 Administrator 或者 Plan Authors 角色的用户登入到 VRO 控制台。在控制台中，可以访问 VRO 定制的仪表盘，包括灾备的执行计划（Plan）、灾备的状态检查（Readiness Check）、灾备测试情况（Datalab Testing）以及灾备的 SLA（RPO 和 RTO 情况）。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/06/vro-v6-guide-05/" /><link rel="prev" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-04/" /><link rel="next" href="http://192.168.16.79:1313/2023/06/vro-v6-guide-06/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO 基础入门（六） -  成功灾备计划的第一步",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/06\/vro-v6-guide-05\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  2242 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/06\/vro-v6-guide-05\/","datePublished": "2023-06-01T00:00:00+00:00","dateModified": "2023-06-01T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO 基础入门（六） -  成功灾备计划的第一步</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-01">2023-06-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2242 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#系列目录">系列目录：</a></li>
+    <li><a href="#创建-orchestration-plan-的方法">创建 Orchestration Plan 的方法</a></li>
+    <li><a href="#管理-orchestration-plan">管理 Orchestration Plan</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="系列目录">系列目录：</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
+</ul>
+<p>通过之前的配置，我们的 VRO 就可以开始正常使用了，我们可以用 Administrator 或者 Plan Authors 角色的用户登入到 VRO 控制台。在控制台中，可以访问 VRO 定制的仪表盘，包括灾备的执行计划（Plan）、灾备的状态检查（Readiness Check）、灾备测试情况（Datalab Testing）以及灾备的 SLA（RPO 和 RTO 情况）。</p>
+<p>在主控制台中，管理员还能查看基础架构清单，根据各个角色定义的内容，分别能够从 Inventory 中查看到自己所管理的机器（Group）以及自己的灾备环境（Recovery Location）。</p>
+<p>接下去，我来介绍下 VRO 的最主要的能力和具体的使用方法 - Orchestration Plan。</p>
+<h2 id="创建-orchestration-plan-的方法">创建 Orchestration Plan 的方法</h2>
+<p>我们在最开始的简介中有提到过，Orchestration Plan 有五大类，所有自动化的操作过程都将会通过这个 Plan 加入到灾备中去。在这里，我建议首先第一步，尽可能的不要加入太复杂的自动化脚本，而是用系统自带的 Plan Steps，用最少的流程来认识这些 Plan，等到熟悉了系统的工作机制后，再来逐步逐步添加适合的自定义脚本。</p>
+<p>操作步骤：</p>
+<ol>
+<li>
+<p>创建 Orchestration Plan，进入左边的 Orchestration Plans，在右边内容显示区域，会看到顶部的一排 4 个按钮，其中在 Manage 按钮所在的下拉菜单中，可以找到 New 的按钮。通过这个按钮可以启动 Orchestration Plan 的创建向导。
+<a href="https://imgse.com/i/p9zkvDO" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkvDO.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkvDO.png, https://s1.ax1x.com/2023/06/01/p9zkvDO.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkvDO.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkvDO.png"
+        title="p9zkvDO.png" /></a></p>
+</li>
+<li>
+<p>打开向导后，首先需要设定 Plan Info，此处的内容一般来说按照实际的情况填写，这些都会在 Report 中被使用到。
+<a href="https://imgse.com/i/p9zAF2t" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zAF2t.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zAF2t.png, https://s1.ax1x.com/2023/06/01/p9zAF2t.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zAF2t.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zAF2t.png"
+        title="p9zAF2t.png" /></a></p>
+</li>
+<li>
+<p>在向导的 Scope 步骤中，需要选取使用哪个 Scope 来创建这个 Orchestration Plan，就像基础组件中提到，每个 Scope 中包含了灾备的一系列元素，而 Orchestration Plan 则是把这些元素组合起来，形成一个可执行的计划，Scope 的选择决定了哪些用户可以访问这个 Plan。今天的例子中，我们选择 Admin 这个 Scope。
+<a href="https://imgse.com/i/p9zAi8I" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zAi8I.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zAi8I.png, https://s1.ax1x.com/2023/06/01/p9zAi8I.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zAi8I.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zAi8I.png"
+        title="p9zAi8I.png" /></a></p>
+</li>
+<li>
+<p>在向导的 Plan Type 步骤中，就可以选择 5 大分类的其中一种，今天的例子中，我们选择 Restore 进入下一步，其余的一些选项在后面的向导中会略有不同，留给大家自行探索。
+<a href="https://imgse.com/i/p9zAPPA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zAPPA.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zAPPA.png, https://s1.ax1x.com/2023/06/01/p9zAPPA.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zAPPA.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zAPPA.png"
+        title="p9zAPPA.png" /></a></p>
+</li>
+<li>
+<p>在向导的 Recovery Location 步骤中，选择一个 DR 的 Location，我们将会把我们备份的机器恢复至 DR 站点的 ESXi 中。关于 Recovery Location 的设定，可以参考上一期的内容。
+<a href="https://imgse.com/i/p9zApUH" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zApUH.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zApUH.png, https://s1.ax1x.com/2023/06/01/p9zApUH.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zApUH.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zApUH.png"
+        title="p9zApUH.png" /></a></p>
+</li>
+<li>
+<p>在向导的 VM Group 步骤中，当前 Scope 下能看到的所有可用 VM Groups 都会列在 Available Group 中，通过 Add 按钮将需要的 Group 添加至右边的 Plan Groups 窗格中。也可以通过 View VMs 来详细查看当前选定的 VM Groups 中所包含的 VM。
+<a href="https://imgse.com/i/p9zASVe" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zASVe.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zASVe.png, https://s1.ax1x.com/2023/06/01/p9zASVe.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zASVe.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zASVe.png"
+        title="p9zASVe.png" /></a></p>
+</li>
+<li>
+<p>在 VM Recovery Options 步骤中，需要设置四个内容：</p>
+<ul>
+<li>If any VM recovery fails then：如果 Plan 中有多台 VM 需要恢复，假如其中有一台 VM 恢复失败，此选项决定了后续的 Plan 如何操作，可以继续执行计划恢复其他 VM 或者是直接停止计划。</li>
+<li>Recover the VMs in each Group: 按顺序恢复还是同时恢复。如果选择 In parallel 是同时进行，如果是选择 In Sequence 则是按顺序执行。</li>
+<li>Recover simultaneously max of VMs：选择合适的数量，默认是 10 个，一般来说，管理员需要根据自己的计算资源情况，合理选择，最好执行一些测试后最后决定这里的数量。</li>
+<li>Restore VM Tags：这个复选框下有个⚠️，一般来说恢复至新位置成为一个新 VM 则大多是不会选择这个恢复 Tags，避免和生产的 VM 混起来。</li>
+</ul>
+<p><a href="https://imgse.com/i/p9zkxbD" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkxbD.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkxbD.png, https://s1.ax1x.com/2023/06/01/p9zkxbD.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkxbD.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkxbD.png"
+        title="p9zkxbD.png" /></a></p>
+</li>
+<li>
+<p>在 VM Steps 步骤中，可以选择很多恢复过程中的可以用到的 Steps，默认情况下，系统自动会选上 Restore VM 和 Check VM Heartbeat 这两个 Step。我建议刚开始熟悉 VRO 的管理员逐项逐项的添加各种 Step，以测试每一种操作的功能，确定了某个需要的 Step 之后，再将其设计到自己的最终 Plan 之中。在这个步骤中，管理员可以加入各种各样的自定义 Powershell 脚本，借助这样的扩展，管理员可以灵活的控制和管理各种各样的系统。
+<a href="https://imgse.com/i/p9zA95d" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zA95d.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zA95d.png, https://s1.ax1x.com/2023/06/01/p9zA95d.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zA95d.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zA95d.png"
+        title="p9zA95d.png" /></a></p>
+</li>
+<li>
+<p>在 Protect VM Groups 步骤中，可以加入自动化的保护恢复出来的灾备资源设置，这步操作对于全自动运行的灾备系统非常重要，确保了对灾备恢复后的下一步保护。今天的例子中，我们暂时保持这个选项默认，不做选择，进入下一步。
+<a href="https://imgse.com/i/p9zkLgx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkLgx.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkLgx.png, https://s1.ax1x.com/2023/06/01/p9zkLgx.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkLgx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkLgx.png"
+        title="p9zkLgx.png" /></a></p>
+</li>
+<li>
+<p>在 RPO 和 RTO 步骤中，管理员可以设定期望的 SLA，VRO 系统会全自动的去监控备份系统和灾备系统，确保管理员期望的 RPO 和 RTO。当出现任何不符合预期的状况，VRO 将会通过告警通知提醒管理员进行进一步处理。在个步骤我们也保持默认数值，1 小时的 RTO,24 小时的 RPO。
+<a href="https://imgse.com/i/p9zkq81" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkq81.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkq81.png, https://s1.ax1x.com/2023/06/01/p9zkq81.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkq81.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkq81.png"
+        title="p9zkq81.png" /></a></p>
+</li>
+<li>
+<p>在 Report Template 中，管理员可以为整个 Plan 的动态文档设定相关的 Template，系统已经内置了多国语言版本的文档 Template，管理员也可以通过 Microsoft Word 来自定义这个 Template，我们将会在后续的介绍中详细说明 Template 的创建和编辑方法。在这个步骤中，我们选择中文的默认模板。
+<a href="https://imgse.com/i/p9zkOv6" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkOv6.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkOv6.png, https://s1.ax1x.com/2023/06/01/p9zkOv6.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkOv6.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkOv6.png"
+        title="p9zkOv6.png" /></a></p>
+</li>
+<li>
+<p>在 Report Scheduling 步骤中，可以设定 Plan Report 的创建时间，也不做修改保持默认。
+<a href="https://imgse.com/i/p9zkjKK" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/01/p9zkjKK.png"
+        data-srcset="https://s1.ax1x.com/2023/06/01/p9zkjKK.png, https://s1.ax1x.com/2023/06/01/p9zkjKK.png 1.5x, https://s1.ax1x.com/2023/06/01/p9zkjKK.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/01/p9zkjKK.png"
+        title="p9zkjKK.png" /></a></p>
+</li>
+<li>
+<p>以上就是所有设定步骤，在 Summary 中查看详细设置后点击 Finish 就能完成创建。创建完成后，这个 Plan 将会出现在 Orchestration Plan 的页面中。</p>
+</li>
+</ol>
+<h2 id="管理-orchestration-plan">管理 Orchestration Plan</h2>
+<p>对于创建好的 Plan，管理员可以对它做以下操作：</p>
+<p>Launch ：Run、Halt、Undo 和 Schedule</p>
+<p>Manage：Enable、Disable、New、Edit、Reset、Delete 和 Properties</p>
+<p>Verity：Datalab test 和 Readiness check</p>
+<p>Report 操作</p>
+<p>一般来说，新创建的 Orchestration Plan 是处于 Disable 状态，也就是前面的图标是灰色的，需要点击 Manage-&gt;Enable 选项来激活它才能正常工作。</p>
+<p>做了恢复或者故障切换操作之后，管理员需要通过 Manage-&gt;Reset 按钮来重制这个 Plan 使其能继续工作，或者管理员还可以删除之前已经完成的 Plan，重新定义新的 Plan。</p>
+<p>以上就是今天的内容，Orchestration Plan 的基本创建方法，今天的例子中只是简单介绍了 Restore Plan 的方法，剩下的其他四种 Plan 留给大家自己探索。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-06-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/06/vro-v6-guide-05/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F06%2Fvro-v6-guide-05%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F06%2Fvro-v6-guide-05%2F&amp;text=VRO&#43;%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AD%EF%BC%89&#43;-&#43;&#43;%E6%88%90%E5%8A%9F%E7%81%BE%E5%A4%87%E8%AE%A1%E5%88%92%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AD%A5" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F06%252Fvro-v6-guide-05%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F06%252Fvro-v6-guide-05%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/05/vro-v6-guide-04/" class="prev" rel="prev" title="VRO 基础入门（四） -  基本组件 · 下篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO 基础入门（四） -  基本组件 · 下篇</a>
+            <a href="/2023/06/vro-v6-guide-06/" class="next" rel="next" title="VRO 基础入门（六）-  数据实验室">VRO 基础入门（六）-  数据实验室<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

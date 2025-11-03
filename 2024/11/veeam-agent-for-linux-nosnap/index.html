@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux">
+  <meta property="og:description" content="Linux 高度自由的开源系统让每个人都有自己使用它自己的使用方式，这让对于操作系统深度依赖的备份软件变的各种不适。细微的一些变化就会引起备份失败，因此备份软件通常都会有一个兼容列表，不在列表中的系统通常无法工作。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-11-25T00:00:00+00:00">
+    <meta property="article:tag" content="备份">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux">
+  <meta name="twitter:description" content="Linux 高度自由的开源系统让每个人都有自己使用它自己的使用方式，这让对于操作系统深度依赖的备份软件变的各种不适。细微的一些变化就会引起备份失败，因此备份软件通常都会有一个兼容列表，不在列表中的系统通常无法工作。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/" /><link rel="prev" href="http://192.168.16.79:1313/2024/10/veeam-hardened-repository-iso-2/" /><link rel="next" href="http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/11\/veeam-agent-for-linux-nosnap\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "备份","wordcount":  2388 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/11\/veeam-agent-for-linux-nosnap\/","datePublished": "2024-11-25T00:00:00+00:00","dateModified": "2024-11-25T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-11-25">2024-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2388 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#去哪里找这个-agent">去哪里找这个 Agent?</a></li>
+        <li><a href="#安装和配置">安装和配置</a></li>
+        <li><a href="#备份模式">备份模式</a></li>
+        <li><a href="#lvm-快照前提条件">LVM 快照前提条件</a></li>
+        <li><a href="#备份和恢复">备份和恢复</a></li>
+        <li><a href="#bmr-恢复过程">BMR 恢复过程</a></li>
+        <li><a href="#注意事项">注意事项</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Linux 高度自由的开源系统让每个人都有自己使用它自己的使用方式，这让对于操作系统深度依赖的备份软件变的各种不适。细微的一些变化就会引起备份失败，因此备份软件通常都会有一个兼容列表，不在列表中的系统通常无法工作。</p>
+<p>这类问题普遍存在于开源世界，虽然没办法一把解决这个问题，但是如果能解决大部分，那也是不错的，不是吗？</p>
+<p>在 Veeam Linux Agent 中，有一种非常特殊的工作模式，我把它称为万金油模式。它不需要加载 Veeamsnap 驱动程序，不需要使用 dkms 模块编译驱动程序，因此能够适配绝大多数环境，实现非标准环境的数据备份。</p>
+<p>我们知道，Veeam 官方支持的 Linux 操作系统列表有限，国内常见的欧拉、龙晰、统信、麒麟等系统，按照常规的 Veeam Linux Agent 配置步骤来进行是肯定无法安装的，这时候手工安装 Veeam Linux Agent no-snap 的模式，就能解决这个问题，让这些系统也能够备份至 Veeam 的存储库中。</p>
+<p>另外，如果稍稍加一些小条件，还能实现整机备份和 BMR 恢复。</p>
+<p>本文以 OpenEuler 为例，来给大家详细说说整个过程以及其中的注意事项。</p>
+<h3 id="去哪里找这个-agent">去哪里找这个 Agent?</h3>
+<p>和其他的 Veeam Agent for Linux 一样，我们有两种方式可以获取到这个 Agent 安装包。
+一种是在 VBR 的控制台上，我们只需创建一个类型为<code>Computers with pre-installed backup agents</code>的 Protection group。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png"
+        data-srcset="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png, https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png 1.5x, https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png"
+        title="Xnip2024-11-23_13-15-37" /></p>
+<p>在创建向导中，可以找到各种 Linux 版本的 Nosnap 的 Agent，本次实验我们用于 Red Hat 系魔改的 Euler 系统，所以我们选择<code>Red Hat 9 x64 no-snap - 6.2.0.101</code>即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png"
+        data-srcset="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png, https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png 1.5x, https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png"
+        title="Xnip2024-11-23_13-18-08" /></p>
+<p>在设置完 Export 路径后，就可以点击 Apply 生成 no-snap 的安装包，在 Export path 中，就能找到对应的这个 rpm 包。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png"
+        data-srcset="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png, https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png 1.5x, https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png"
+        title="Xnip2024-11-23_13-18-33" /></p>
+<p>另外，我们还能够在 Veeam 官方的软件 repository 中，直接下载到这个 nosnap 的包。</p>
+<p>网址如下：https://repository.veeam.com/backup/linux/agent/rpm/el/9/x86_64/</p>
+<p>最新版本需要下载两个文件，一个是 veeam-nosnap-6.2.0.101-1.el9.x86_64.rpm，另外一个是 veeam-libs-6.2.0.101-1.x86_64.rpm。</p>
+<h3 id="安装和配置">安装和配置</h3>
+<p>这个包安装非常简单，直接一个<code>yum install ~/nosnap/veeam*</code>命令即可。yum 会自动解析当前需要的依赖包，一般来说也没什么额外的依赖包需要，安装在几秒钟内顺利完成。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png"
+        data-srcset="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png, https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png 1.5x, https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png"
+        title="Xnip2024-11-23_16-54-58" /></p>
+<p>安装完成后，我们可以回到 VBR 控制台上，找一个合适的 Protection Group 或者新建一个 Protection Group，然后再将这台机器添加进来，这样 VBR 就能管理这台 OpenEuler 了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png"
+        data-srcset="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png, https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png 1.5x, https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png"
+        title="Xnip2024-11-23_16-59-37" /></p>
+<p>为新的 Protection Group 起个名字：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png"
+        data-srcset="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png, https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png 1.5x, https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png"
+        title="Xnip2024-11-23_17-00-01" /></p>
+<p>以 IP 地址的方式添加目标计算机：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png"
+        data-srcset="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png, https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png 1.5x, https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png"
+        title="Xnip2024-11-23_17-05-49" /></p>
+<p>添加后，走完向导，VBR 会检测下目标服务器上已经安装的 Agent，发现已经安装后，就不会再去检测兼容性和安装条件了，直接使用已安装的配置。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png"
+        data-srcset="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png, https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png 1.5x, https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png"
+        title="Xnip2024-11-23_17-07-32" /></p>
+<p>这时候，VBR 控制台上正确的显示了当前的操作系统为 OpenEuler。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png"
+        data-srcset="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png, https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png 1.5x, https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png"
+        title="Xnip2024-11-23_17-07-53" /></p>
+<h3 id="备份模式">备份模式</h3>
+<p>no-snap Linux agent 其实并不是完全没有 snap，这个 Agent 它其实有两种工作模式，一种是真的不拍快照，这样对于有些处于打开状态的文件，比如备份那一刻，某个文件正在编辑，那么这个文件可能就只能被跳过了；而另外一种则是不调用 Veeamsnap，使用 LVM 卷的 snapshot 替代 Veeamsnap 进行工作，这个模式几乎就和 Veeamsnap 非常相似了，不同之处在于，两者快照技术的不同，LVM snapshot 的所有前提条件都需要被正常满足才能让这个模式正常工作。</p>
+<h3 id="lvm-快照前提条件">LVM 快照前提条件</h3>
+<p>简单来说，一句话，有足够的 Free PE. 大家可以通过 vgdisplay 命令查到这个空间，如下图。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png"
+        data-srcset="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png, https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png 1.5x, https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png"
+        title="Xnip2024-11-23_16-58-44" /></p>
+<p>LVM 卷快照，会将快照的变化数据存放在这个区域，因此在做 LVM 分区规划的时候需要提前考虑这部分区域空间分配，至少要留出总磁盘容量的 10%~20%。</p>
+<h3 id="备份和恢复">备份和恢复</h3>
+<p>备份恢复没有什么特别的，Veeam Agent 能够自动感知到底层的配置，自动使用 LVM 卷的快照能力备份数据。而在恢复选项上，所有常规能使用的恢复手段，对于这个备份存档也都可用，包括 BMR 恢复。</p>
+<p>使用 LVM 卷快照备份，我们可以在备份作业设置时，选择<code>Entire Machine</code>或者<code>Volume level backup</code>模式。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png"
+        data-srcset="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png, https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png 1.5x, https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png"
+        title="Xnip2024-11-23_17-09-07" /></p>
+<p>这样在备份作业进行时，能够正常调用快照进行备份。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png"
+        data-srcset="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png, https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png 1.5x, https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png"
+        title="Xnip2024-11-23_17-17-05" /></p>
+<p>备份完成后，正常的所有恢复选项都可以使用，包括 BMR、FLR、应用程序对象恢复、跨平台迁移等等、</p>
+<p>如果需要进行裸机 BMR 恢复，就需要到 Veeam 官方的软件仓库中下载合适的 Recovery Media 来引导裸机服务器。下载地址为：</p>
+<p><a href="https://repository.veeam.com/backup/linux/agent/veeam-recovery-media/x64/veeam-recovery-amd64-6.0.0.iso" target="_blank" rel="noopener noreffer ">https://repository.veeam.com/backup/linux/agent/veeam-recovery-media/x64/veeam-recovery-amd64-6.0.0.iso</a></p>
+<h3 id="bmr-恢复过程">BMR 恢复过程</h3>
+<p>我们用这个下载的 ISO 引导服务器后，目标服务器会立刻自动进入 Veeam 的引导界面，这个界面上，我们选择第一项<code>Veeam recovery 6.1.0-23-amd64</code>就行了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png"
+        data-srcset="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png, https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png 1.5x, https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png"
+        title="Xnip2024-11-24_15-03-40" /></p>
+<p>选择后，系统会提示 SSH 连接，如果不方便控制台操作，可以选择 Start SSH now，这样 Veeam Recovery Media 也支持远程 SSH 控制进行恢复。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png"
+        data-srcset="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png, https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png 1.5x, https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png"
+        title="Xnip2024-11-24_15-03-55" /></p>
+<p>接下来，会有个使用前的惯例，接受许可协议。两个选项都选上<code>X</code>后选<code>Continue</code>继续。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png"
+        data-srcset="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png, https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png 1.5x, https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png"
+        title="Xnip2024-11-24_15-04-42" /></p>
+<p>这时候系统会进入 Veeam Recovery Media 的恢复主菜单，上面有卷恢复、文件恢复、设置网络、退回到 shell 以及重启关机这些菜单。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png"
+        data-srcset="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png, https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png 1.5x, https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png"
+        title="Xnip2024-11-24_15-04-59" /></p>
+<p>使用前，我们先配置下网络，这样我们一会儿就能通过网卡连接到 VBR 服务器上读取备份存档。网络配置也不复杂，常规的 IPv4 的 IP 地址即可，同时根据需要配置上 DNS 服务器。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png"
+        data-srcset="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png, https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png 1.5x, https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png"
+        title="Xnip2024-11-24_15-06-23" /></p>
+<p>配置完成 IP 后，直接点 restore Volume 就会弹出选择备份位置的窗口，这里我们选 VBR 备份服务器。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png"
+        data-srcset="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png, https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png 1.5x, https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png"
+        title="Xnip2024-11-24_15-07-03" /></p>
+<p>需要注意的是，为了更安全的恢复，我们需要从备份服务器上为相关的备份存档创建一个 Token。Token 创建后，需要妥善保存，默认可以使用 24 小时。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png"
+        data-srcset="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png, https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png 1.5x, https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png"
+        title="Xnip2024-11-24_15-08-38" /></p>
+<p>在备份服务器的连接界面上，输入 IP 地址和端口，选择 Recovery Token 并输入刚刚生成的 Token 后点击 Next 来连接。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png"
+        data-srcset="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png, https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png 1.5x, https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png"
+        title="Xnip2024-11-24_15-11-32" /></p>
+<p>如果自签名证书不信任的情况下，系统有可能会像我一样弹出一个警告，这搞关系不大，直接选 Accept 即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png"
+        data-srcset="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png, https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png 1.5x, https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png"
+        title="Xnip2024-11-24_15-11-54" /></p>
+<p>这时候，我们的还原点就会出现，选择这个还原点进行下一步。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png"
+        data-srcset="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png, https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png 1.5x, https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png"
+        title="Xnip2024-11-24_15-12-27" /></p>
+<p>这时候系统自动读取当前分区，如果分区大小相同的情况下，这时候，自动选择右边的相关设备进行 Mapping 即可。Mapping 完成后按 S 键就能开始进行自动还原了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png"
+        data-srcset="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png, https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png 1.5x, https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png"
+        title="Xnip2024-11-24_15-13-52" /></p>
+<p>其他的恢复方法，还有即时虚拟机恢复、文件级恢复，导出成 VHD 和 VMDK 等等。</p>
+<h3 id="注意事项">注意事项</h3>
+<p>以上的 no-snap 的方式进行数据备份和恢复，Veeam 官方的系统支持列表依然非常重要，不在官方支持列表中的各种操作系统，虽然能够正常工作了，但是 Veeam 官方售后不会对这些操作系统进行售后支持，任何技术问题，可能需要我们聪明的 Linux 系统管理员自己搞定了。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-11-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/11/veeam-agent-for-linux-nosnap/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F11%2Fveeam-agent-for-linux-nosnap%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F11%2Fveeam-agent-for-linux-nosnap%2F&amp;text=%E4%BD%BF%E7%94%A8%E6%97%A0%E5%BF%AB%E7%85%A7%E6%A8%A1%E5%9D%97%E7%9A%84&#43;Veeam&#43;Agent&#43;for&#43;Linux&#43;%E5%A4%87%E4%BB%BD%E5%90%84%E7%A7%8D%E9%AD%94%E6%94%B9&#43;Linux" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F11%252Fveeam-agent-for-linux-nosnap%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F11%252Fveeam-agent-for-linux-nosnap%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/10/veeam-hardened-repository-iso-2/" class="prev" rel="prev" title="【社区预览版】Managed Hardened Repository ISO by Veeam（下）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>【社区预览版】Managed Hardened Repository ISO by Veeam（下）</a>
+            <a href="/2024/12/vdp-v12-other-security-features-deep-dive-01/" class="next" rel="next" title="VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理">VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agent on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/Agent/</link>
+    <description>Recent content in Agent on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Wed, 03 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/Agent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>送 | 从送你的备份中恢复数据方法详解</title>
+      <link>http://192.168.16.79:1313/2019/07/agent-backup-and-restore/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2019/07/agent-backup-and-restore/</guid>
+      <description>&lt;p&gt;昨天的推送中，介绍了《&lt;a href=&#34;http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247484028&amp;amp;idx=1&amp;amp;sn=c88b416a54456eb8df03733e22104ed6&amp;amp;chksm=fdf0a4a9ca872dbf1ac970478b6eaa2e9ec0a61bc5dc8324beaf460a6ce6b6b5ef8886758d30&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;备份软件的安装和备份方法&lt;/a&gt;》。不讲一下恢复，我觉得大家一定会认为我在耍流氓。那么今天的这篇，我就来详解下 Veeam Agent for Microsoft Windows 免费版的数据恢复方法。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>送 | 为裸奔中的电脑送一个备份保护</title>
+      <link>http://192.168.16.79:1313/2019/07/agent-backup/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2019/07/agent-backup/</guid>
+      <description>&lt;h3 id=&#34;上一个时代的-norton-ghost&#34;&gt;上一个时代的 Norton Ghost&lt;/h3&gt;&#xA;&lt;p&gt;不知道有多少人还记得 Norton Ghost，我对于 Ghost 的记忆要追溯到刚接触到 PC 那段时间，差不多 20 年前吧，那是在电脑城装完组装机，第一件事情就是使用 Ghost 做一个系统备份。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解</title>
+      <link>http://192.168.16.79:1313/2018/01/centrilized-agent-management/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2018/01/centrilized-agent-management/</guid>
+      <description>&lt;h1 id=&#34;vbr-中的-agent-集中管理&#34;&gt;VBR 中的 Agent 集中管理&lt;/h1&gt;&#xA;&lt;p&gt;本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp;amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp;amp; Cloud Infrastructure 下。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

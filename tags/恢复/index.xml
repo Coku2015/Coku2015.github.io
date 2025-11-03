@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>恢复 on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/%E6%81%A2%E5%A4%8D/</link>
+    <description>Recent content in 恢复 on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Thu, 20 Apr 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/%E6%81%A2%E5%A4%8D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>文件级恢复的秘密</title>
+      <link>http://192.168.16.79:1313/2017/04/secret-in-file-level-recovery/</link>
+      <pubDate>Thu, 20 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2017/04/secret-in-file-level-recovery/</guid>
+      <description>&lt;p&gt;虚拟机备份后，通常会有很多种恢复方法，分别适用于不同的恢复场景。其中有一种广为使用的方法叫文件级恢复，这种方法并不是什么新技术，早在虚拟化备份刚刚诞生的时候，就有了这样的需求，也很早被各大备份软件厂商所实现。粗看这个技术无任何门槛，然而实际上在真正需要恢复时，Veeam可以帮到很多忙。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

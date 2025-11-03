@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VBR备份和恢复MySQL最佳实践 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VBR备份和恢复MySQL最佳实践">
+  <meta property="og:description" content="在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-12-11T00:00:00+00:00">
+    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="VBR">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VBR备份和恢复MySQL最佳实践">
+  <meta name="twitter:description" content="在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/" /><link rel="prev" href="http://192.168.16.79:1313/2023/12/vdp23h2-update/" /><link rel="next" href="http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VBR备份和恢复MySQL最佳实践",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/12\/mysql-backup-and-restore\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "MySQL, VBR, Backup","wordcount":  4907 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/12\/mysql-backup-and-restore\/","datePublished": "2023-12-11T00:00:00+00:00","dateModified": "2023-12-11T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VBR备份和恢复MySQL最佳实践</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-11">2023-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4907 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mysql数据存储引擎">MySQL数据存储引擎</a></li>
+    <li><a href="#veeam数据保护平台">Veeam数据保护平台</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#mysql的备份">MySQL的备份</a></li>
+            <li><a href="#veeam-cdp技术在mysql实时同步中的应用">Veeam CDP技术在MySQL实时同步中的应用</a></li>
+            <li><a href="#mysql的数据恢复">MySQL的数据恢复</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#vbr中mysql备份恢复实战">VBR中MySQL备份恢复实战</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#环境说明">环境说明</a></li>
+            <li><a href="#数据备份---innodb">数据备份 - InnoDB</a></li>
+            <li><a href="#数据恢复一-整机故障">数据恢复一 ：整机故障</a></li>
+            <li><a href="#数据恢复二mysql数据整库恢复">数据恢复二：MySQL数据整库恢复</a></li>
+            <li><a href="#数据恢复三单表恢复">数据恢复三：单表恢复</a></li>
+            <li><a href="#数据恢复四point-in-time恢复">数据恢复四：Point-in-time恢复</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。</p>
+<h2 id="mysql数据存储引擎">MySQL数据存储引擎</h2>
+<p>说MySQL备份之前，得先来讲一下MySQL的数据存储引擎，因为不同的引擎直接决定了MySQL数据备份和恢复的能力。在MySQL中，默认情况下<code>InnoDB</code>是最常用的存储引擎，<code>Create Table</code>命令如果不接<code>Engine</code>参数情况下创建的表默认都会使用<code>InnoDB</code>引擎，并且Oracle官方也推荐除非有特殊需求，在通常使用MySQL时都使用<code>InnoDB</code>这个引擎。当然除了这个引擎之外，特殊情况下，MySQL也支持其他引擎，比如MyISAM、MEMORY、CSV、BLACKHOLE等引擎，关于更多的存储引擎信息，可以查看<a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html" target="_blank" rel="noopener noreffer ">官方文档</a>。</p>
+<p>InnoDB引擎的自我恢复能力非常强，目前市面上针对MySQL在线物理热备份的解决方案都是针对InnoDB引擎的恢复特性来设计的，Veeam也同样利用了这个特点来实现MySQL的数据备份。</p>
+<p>使用InnoDB引擎的数据库在出现服务器非正常关机后，恢复数据库只需要简单的启动MySQL服务，这时候InnoDB会自动检查数据库的Redo log和undo log，进入crash recovery流程，关于这个流程的详情可以参考官网<a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-recovery.html" target="_blank" rel="noopener noreffer ">InnoDB Recovery说明</a>。这个特性对于Veeam的快照备份，无论是无代理的虚拟机快照还是Linux Agent的Veeamsnap快照来说，都非常适用，我们知道快照状态属于crash consisitent状态，这时候从这个状态启动的MySQL Server自然能非常顺利的进入自我crash recovery流程，然后完成服务启动，无需任何人工干预。</p>
+<p>这个过程在系统恢复后，可以通过/var/log/mysql/error.log文件查询到以下信息：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013576<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has started.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013577<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has ended.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010229<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Starting XA crash recovery...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010232<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> XA crash recovery finished.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010931<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld: ready <span class="k">for</span> connections. Version: <span class="s1">&#39;8.0.35-0ubuntu0.20.04.1&#39;</span>  socket: <span class="s1">&#39;/var/run/mysqld/mysqld.sock&#39;</span>  port: <span class="m">3306</span>  <span class="o">(</span>Ubuntu<span class="o">)</span>.</span></span></code></pre></div></div>
+<p>对于MyISAM引擎来说，因为其存储格式，也能够支持到通过物理备份的方式进行备份。唯一一点差异是，MyISAM引擎的一致性处理并不像InnoDB那么宽松，因此在物理备份复制文件之前，需要进行一个锁表的操作，来确保数据库的一致性。</p>
+<h2 id="veeam数据保护平台">Veeam数据保护平台</h2>
+<h4 id="mysql的备份">MySQL的备份</h4>
+<p>因此，在Veeam软件中，备份MySQL数据库也需要进行分开讨论：</p>
+<ul>
+<li>
+<p>InnoDB引擎 - 整个备份过程可以直接以整机的方式进行，正常执行磁盘或者文件系统的快照，在快照后将快照点的所有文件备份出来后，数据库就同时完成了备份，不需要任何额外的设置和步骤。</p>
+</li>
+<li>
+<p>MyISAM引擎 - 通常会建议加入<code>FLUSH TABLES tbl_list WITH READ LOCK;</code>命令来执行锁表操作，在锁表后MyISAM的表文件*.MYD, *.MYI, *.SDI只需要被按照文件方式备份即可。在使用无代理虚拟机快照的时候，通常会加入pre-freeze和post-unfreeze 脚本来处理锁表和解锁操作，而在使用Veeam Agent备份时，则只需要开启应用感知，那么Veeam Agent就能自动判断当前MySQL的存储引擎，自动为MyISAM引擎的表执行以上锁表和解锁操作。</p>
+</li>
+</ul>
+<p>数据库管理员可能这时候会疑惑，那么增量备份怎么办？备份数据有压缩吗？其实这些完全不用担心，Veeam的Change Block Tracking技术和重删压缩技术在整机镜像备份中应用的非常好，备份管理员能够轻松完成数据的重删压缩处理。</p>
+<h4 id="veeam-cdp技术在mysql实时同步中的应用">Veeam CDP技术在MySQL实时同步中的应用</h4>
+<p>如果您的MySQL运行在VMware vSphere中，那么恭喜您，VeeamCDP技术可以无缝应用到MySQL的实时同步复制的容灾场景中了，这时候完全不需要担心使用InnoDB引擎的MySQL的一致性，所有操作全部交给基础架构管理员托管给Veeam和VMware来完成。而在使用了Veeam B&amp;R 12.1后，甚至还能通过文件级恢复回滚到MySQL每2秒的任意一个状态，并且对于MySQL的容灾演练来说，SureReplica技术也能在CDP副本上发挥全自动演练的作用，确保数据的可恢复性。</p>
+<h4 id="mysql的数据恢复">MySQL的数据恢复</h4>
+<p>通过Veeam进行备份后，MySQL的数据恢复也非常方便，可以使用的手段会非常的多。</p>
+<ul>
+<li>整机故障 - 即时虚拟机恢复</li>
+<li>数据盘故障 - 即时磁盘恢复</li>
+<li>DB故障 - 即时磁盘恢复、磁盘发布、文件级恢复</li>
+<li>数据逻辑错误 - 结合数据实验室和文件级恢复等多种手段</li>
+</ul>
+<h2 id="vbr中mysql备份恢复实战">VBR中MySQL备份恢复实战</h2>
+<p>接下来我通过一个实际的例子来具体看看MySQL数据库是怎么备份和恢复的。</p>
+<h4 id="环境说明">环境说明</h4>
+<p>虚拟化平台: VMware vSphere 7.0</p>
+<p>OS: Ubuntu 20.04</p>
+<p>MySQL: 8.0.35</p>
+<p>VBR: v12.1</p>
+<h4 id="数据备份---innodb">数据备份 - InnoDB</h4>
+<p>为了模拟在数据不断写入过程中的数据库热备份，我准备了一个Python脚本来每一秒插入一行时间数据。这个table非常简单，如下：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; SELECT * from <span class="nb">time</span> LIMIT 5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">5</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:06:26 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">6</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:07:04 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">7</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:14 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">8</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:15 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">9</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:16 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>Python脚本如下：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-python">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">MySQLdb</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="s2">&#34;lei&#34;</span><span class="p">,</span> <span class="s2">&#34;P@ssw0rd&#34;</span><span class="p">,</span> <span class="s2">&#34;leitestdb&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">curs</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curs</span><span class="o">.</span><span class="n">execute</span> <span class="p">(</span><span class="s2">&#34;&#34;&#34;INSERT INTO time
+</span></span></span><span class="line"><span class="cl"><span class="s2">                values(0, CURRENT_DATE(), NOW())&#34;&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></span></span></code></pre></div></div>
+<p>VBR中的备份任务没什么特别的，一个普通的VMware虚拟机备份作业，不需要开启应用感知，直接进行备份。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png"
+        data-srcset="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png, https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png 1.5x, https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png"
+        title="Xnip2023-12-15_11-05-43" /></p>
+<h4 id="数据恢复一-整机故障">数据恢复一 ：整机故障</h4>
+<p>出现了系统级的故障后，通过VBR可以执行整机的即时恢复，不仅服务器能够恢复，数据库也能完美恢复。在VBR控制台中启动即时虚拟机恢复后，MySQL能在2分钟内恢复上线。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png"
+        data-srcset="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png, https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png 1.5x, https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png"
+        title="Xnip2023-12-15_11-27-59" /></p>
+<p>我们来看看恢复后的数据库，数据库成功通过InnoDB的自我恢复模式使用crash recovery恢复。</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lei@MySQL-01:~$ sudo cat /var/log/mysql/error.log
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> lei: 
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:54.523723Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010116<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld <span class="o">(</span>mysqld 8.0.35-0ubuntu0.20.04.1<span class="o">)</span> starting as process <span class="m">936</span>
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:54.603505Z <span class="m">1</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013576<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has started.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.634428Z <span class="m">1</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013577<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has ended.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.892988Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010229<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Starting XA crash recovery...
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.901965Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010232<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> XA crash recovery finished.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.971499Z <span class="m">0</span> <span class="o">[</span>Warning<span class="o">]</span> <span class="o">[</span>MY-010068<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> CA certificate ca.pem is self signed.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.971547Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013602<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Channel mysql_main configured to support TLS. Encrypted connections are now supported <span class="k">for</span> this channel.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:56.039984Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-011323<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> X Plugin ready <span class="k">for</span> connections. Bind-address: <span class="s1">&#39;127.0.0.1&#39;</span> port: 33060, socket: /var/run/mysqld/mysqlx.sock
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:56.040153Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010931<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld: ready <span class="k">for</span> connections. Version: <span class="s1">&#39;8.0.35-0ubuntu0.20.04.1&#39;</span>  socket: <span class="s1">&#39;/var/run/mysqld/mysqld.sock&#39;</span>  port: <span class="m">3306</span>  <span class="o">(</span>Ubuntu<span class="o">)</span>.</span></span></code></pre></div></div>
+<p>我们再来看看备份的数据点位于哪个时间点：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; <span class="k">select</span> * from <span class="nb">time</span> order by id desc LIMIT 10<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id  <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">361</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:20:00 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">360</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:59 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">359</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:58 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">358</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:57 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">357</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:56 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">356</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:55 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">355</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:54 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">354</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:53 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">353</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:52 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">352</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:51 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">10</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>可以看到，备份数据的最后一条记录在2023-12-14的10:20:00写入，而前面备份时的虚拟机快照完成时间正好是10:20:21。</p>
+<h4 id="数据恢复二mysql数据整库恢复">数据恢复二：MySQL数据整库恢复</h4>
+<p>这个场景多数出现于主机环境正常，而数据库出现了问题，这时候在Veeam中恢复的操作方法选择也非常多样。我们先来看看从备份管理员角度最舒服的操作方式：Veeam文件级恢复。</p>
+<p>找到VBR控制台的MySQL存档，在右键菜单中，选择<code>Restore guest files-&gt; Linux and other...</code>，就能打开MySQL的文件级还原向导。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png"
+        data-srcset="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png, https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png 1.5x, https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png"
+        title="Xnip2023-12-15_11-55-18" /></p>
+<p>打开后，在图形化恢复界面中，可以快速找到/var/lib/mysql的数据目录，看到其中的详细每一个文件。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png"
+        data-srcset="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png, https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png 1.5x, https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png"
+        title="Xnip2023-12-15_12-46-34" /></p>
+<p>选择文件或者目录后，把/var/lib/mysql整个目录还原回源机或者新服务器，即可完成数据还原。完成数据还原后，在MySQL服务器上，检查下目录的权限，如果owner和group不正确，就通过以下命令调整一下权限，然后启动mysql即可。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ chown -R mysql:mysql /var/lib/mysql</span></span></code></pre></div></div>
+<h4 id="数据恢复三单表恢复">数据恢复三：单表恢复</h4>
+<p>单表恢复在MySQL中会比较复杂一点，但是利用Veeam的强大功能，我们可以轻松实现。具体原理，还是基于<a href="https://dev.mysql.com/doc/refman/8.2/en/innodb-table-import.html" target="_blank" rel="noopener noreffer ">MySQL 官网的InnoDB引擎的恢复说明</a></p>
+<p>首先，我们需要用数据实验室生成一份要恢复表的metadata，关于数据实验室的配置，可以参考我之前的帖子。</p>
+<p>在数据实验室中，MySQL机器能够正常被启动，我们通过ssh连接进入机器，然后执行mysql命令来生成metadata：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; use leitestdb<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Reading table information <span class="k">for</span> completion of table and column names
+</span></span><span class="line"><span class="cl">You can turn off this feature to get a quicker startup with -A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Database changed
+</span></span><span class="line"><span class="cl">mysql&gt; FLUSH TABLES <span class="nb">time</span> FOR EXPORT<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>这时候，需要注意的是，暂时还不能退出mysql控制台，我们需要先将生成的time.cfg文件拷贝出来，存放备用。因为退出mysql控制台后，这个文件就被自动删除了。</p>
+<p>接着，我们开始正式恢复单表数据。</p>
+<p>要恢复MySQL的单个表，首先我们需要在数据库里把表结构创建一下，比如我的这张表如下：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">time</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="nb">date</span><span class="o">`</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="n">time</span><span class="o">`</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">5</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span></span></span></code></pre></div></div>
+<p>然后我们用discard命令丢弃下这个表的表空间：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; ALTER TABLE <span class="nb">time</span> DISCARD TABLESPACE<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>接着，我们找到备份数据中的time.idb文件，如图做一个单文件的文件级恢复：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png"
+        data-srcset="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png, https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png 1.5x, https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png"
+        title="Xnip2023-12-15_13-18-21" /></p>
+<p>恢复至对应的数据库目录下以后，VBR中能够看到恢复成功信息如图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png"
+        data-srcset="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png, https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png 1.5x, https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png"
+        title="Xnip2023-12-15_13-22-49" /></p>
+<p>然后我们需要将刚刚从数据实验室中取出来的time.cfg文件一样还原至/var/lib/mysql/leitestdb/目录下，确保还原后该目录下内容如下：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@MySQL-01:~# ls -ahl /var/lib/mysql/leitestdb/
+</span></span><span class="line"><span class="cl">total 120K
+</span></span><span class="line"><span class="cl">drwxr-x--- <span class="m">2</span> mysql mysql   <span class="m">38</span> Dec <span class="m">15</span> 14:07 .
+</span></span><span class="line"><span class="cl">drwx------ <span class="m">8</span> mysql mysql 4.0K Dec <span class="m">15</span> 00:00 ..
+</span></span><span class="line"><span class="cl">-rw-r----- <span class="m">1</span> mysql mysql  <span class="m">772</span> Dec <span class="m">15</span> 13:55 time.cfg
+</span></span><span class="line"><span class="cl">-rw-r----- <span class="m">1</span> mysql mysql 112K Dec <span class="m">13</span> 15:00 time.ibd</span></span></code></pre></div></div>
+<p>回到MySQL控制台，我们再用Import命令导入下刚刚恢复的表空间。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; ALTER TABLE <span class="nb">time</span> IMPORT TABLESPACE<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.01 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>查询下数据看看：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; SELECT * from <span class="nb">time</span> order by id desc LIMIT 5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id  <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">341</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:40 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">320</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">319</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">318</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">317</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>可以看到这个表已经被恢复了，和前面整机恢复的稍有不同，因为镜像级备份的表数据并不包含redo.log和undo.log中的数据，因此这种表恢复会丢失一些还未被commit的数据。</p>
+<h4 id="数据恢复四point-in-time恢复">数据恢复四：Point-in-time恢复</h4>
+<p>在VBR备份时，我们备份了整个机器包含了MySQL的整个数据目录，因此每次镜像级备份会同样将mysql binlog一起备份下来。通过文件级恢复或者磁盘发布命令，我们能够很轻松的读取到备份中的数据。</p>
+<p>接下来，我们来试试v12.1中的新功能：虚拟磁盘发布。</p>
+<p>在VBR控制台中找到MySQL的存档，右键恢复菜单中，能看到<code>Publish Disks</code>选项。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png"
+        data-srcset="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png, https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png 1.5x, https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png"
+        title="Xnip2023-12-15_14-23-16" /></p>
+<p>简单跟着向导输入一些目标机器的信息，磁盘就能备发布挂载至对应的Linux服务器的/tmp目录下了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png"
+        data-srcset="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png, https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png 1.5x, https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png"
+        title="Xnip2023-12-15_14-26-00" /></p>
+<p>我们回到MySQL服务器上，进入这个目录看一看</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lei@MySQL-01:~$ ls -ahl /tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/
+</span></span><span class="line"><span class="cl">total 4.0K
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">33</span> Dec <span class="m">15</span> 14:25 .
+</span></span><span class="line"><span class="cl">drwxrwxrwt <span class="m">18</span> root root 4.0K Dec <span class="m">15</span> 14:25 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">19</span> root root  <span class="m">292</span> Apr  <span class="m">4</span>  <span class="m">2022</span> ubuntu-vg-ubuntu-lv
+</span></span><span class="line"><span class="cl">lei@MySQL-01:~$ <span class="nb">cd</span> /tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df$ <span class="nb">cd</span> ubuntu-vg-ubuntu-lv/
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ ls
+</span></span><span class="line"><span class="cl">bin   cdrom  etc   lib    lib64   media  opt   root  sbin  srv       sys  usr
+</span></span><span class="line"><span class="cl">boot  dev    home  lib32  libx32  mnt    proc  run   snap  swap.img  tmp  var
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ ls -ahl /var/lib/mysql/
+</span></span><span class="line"><span class="cl">ls: cannot open directory <span class="s1">&#39;/var/lib/mysql/&#39;</span>: Permission denied
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ sudo -i ls -ahl /var/lib/mysql/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> lei: 
+</span></span><span class="line"><span class="cl">total 90M
+</span></span><span class="line"><span class="cl">drwx------  <span class="m">8</span> mysql mysql 4.0K Dec <span class="m">15</span> 00:00  .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">48</span> root  root  4.0K Dec <span class="m">15</span> 10:57  ..
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql   <span class="m">56</span> Dec <span class="m">13</span> 11:11  auto.cnf
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">180</span> Dec <span class="m">13</span> 11:12  binlog.000001
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">404</span> Dec <span class="m">13</span> 11:12  binlog.000002
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  17K Dec <span class="m">13</span> 14:26  binlog.000003
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 5.2K Dec <span class="m">13</span> 14:31  binlog.000004
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  75K Dec <span class="m">13</span> 14:48  binlog.000005
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">157</span> Dec <span class="m">13</span> 15:01  binlog.000006
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  26K Dec <span class="m">15</span> 00:00  binlog.000007
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 2.1K Dec <span class="m">15</span> 14:07  binlog.000008
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">128</span> Dec <span class="m">15</span> 00:00  binlog.index
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  ca-key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  ca.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  client-cert.pem
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  client-key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> root  root     <span class="m">0</span> Dec <span class="m">13</span> 11:12  debian-5.7.flag
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 192K Dec <span class="m">15</span> 14:09 <span class="s1">&#39;#ib_16384_0.dblwr&#39;</span>
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 8.2M Dec <span class="m">15</span> 14:07 <span class="s1">&#39;#ib_16384_1.dblwr&#39;</span>
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 3.6K Dec <span class="m">13</span> 14:26  ib_buffer_pool
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  12M Dec <span class="m">15</span> 14:07  ibdata1
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  12M Dec <span class="m">13</span> 15:01  ibtmp1
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql 4.0K Dec <span class="m">13</span> 15:01 <span class="s1">&#39;#innodb_redo&#39;</span>
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql  <span class="m">187</span> Dec <span class="m">13</span> 15:01 <span class="s1">&#39;#innodb_temp&#39;</span>
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql   <span class="m">38</span> Dec <span class="m">15</span> 14:07  leitestdb
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql  <span class="m">143</span> Dec <span class="m">13</span> 11:11  mysql
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql    <span class="m">4</span> Dec <span class="m">13</span> 15:01  MySQL-01.pid
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  25M Dec <span class="m">15</span> 14:07  mysql.ibd
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql 8.0K Dec <span class="m">13</span> 11:11  performance_schema
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  private_key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql  <span class="m">452</span> Dec <span class="m">13</span> 11:11  public_key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  server-cert.pem
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  server-key.pem
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql   <span class="m">28</span> Dec <span class="m">13</span> 11:11  sys
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  16M Dec <span class="m">15</span> 14:09  undo_001
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  16M Dec <span class="m">15</span> 14:09  undo_002
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ </span></span></code></pre></div></div>
+<p>在这里，我们能够看到所有的文件都已经被mount上来了，接下去，我们只需要用常规的Linux cp命令，就能提取相关的binlog文件进行数据恢复啦。</p>
+<p>在恢复结束后，不要忘记在VBR中取消磁盘发布。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png"
+        data-srcset="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png, https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png 1.5x, https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png"
+        title="Xnip2023-12-15_14-31-01" /></p>
+<h2 id="总结">总结</h2>
+<p>使用Veeam进行MySQL备份时，如果您的环境只有InnoDB引擎，那么这时候您完全不需要考虑任何备份过程的特殊处理操作，直接用镜像级的快照备份就能完美处理各种MySQL的备份和恢复场景；而当您的环境中有MyISAM引擎时，可以有两种选择，一种是使用Veeam Agent的方式由Veeam Agent来做锁表和解锁操作，另外一种您可以通过虚拟机备份应用感知中的脚本功能，在快照前后来手工加入锁表和解锁操作；而当您的环境中有其他类型的存储引擎时，我建议您最好通过暂停数据库的脚本通过冷备份的方式来进行，这样虽然会带来分钟级的短暂停机但是能确保数据的一致性。</p>
+<p>以上就是Veeam备份恢复MySQL的最佳实践，欢迎关注我的博客，了解更多Veeam的备份技术。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/12/mysql-backup-and-restore/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F12%2Fmysql-backup-and-restore%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F12%2Fmysql-backup-and-restore%2F&amp;text=VBR%E5%A4%87%E4%BB%BD%E5%92%8C%E6%81%A2%E5%A4%8DMySQL%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F12%252Fmysql-backup-and-restore%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F12%252Fmysql-backup-and-restore%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/MySQL/">MySQL</a>,&nbsp;<a href="/tags/VBR/">VBR</a>,&nbsp;<a href="/tags/backup/">Backup</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/12/vdp23h2-update/" class="prev" rel="prev" title="Veeam全线产品2023年下半年度重磅更新"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam全线产品2023年下半年度重磅更新</a>
+            <a href="/2024/02/veeam-hardened-ubuntu/" class="next" rel="next" title="Ubuntu系统用于Veeam加固存储库的进一步安全加固">Ubuntu系统用于Veeam加固存储库的进一步安全加固<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

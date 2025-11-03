@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Cloud Tier – 云对象存储使用详解（一） - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2019/02/cloud-tier-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam Cloud Tier – 云对象存储使用详解（一）">
+  <meta property="og:description" content="2019 年 1 月 23 日 Veeam 发布了其产品历史上功能最多的一次 Update 包 VBR 9.5U4，其中包含了一系列和云相关的功能模块，本文将会详细讨论其中最主要的一个特性：云对象存储。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-02-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-02-21T00:00:00+00:00">
+    <meta property="article:tag" content="对象存储">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam Cloud Tier – 云对象存储使用详解（一）">
+  <meta name="twitter:description" content="2019 年 1 月 23 日 Veeam 发布了其产品历史上功能最多的一次 Update 包 VBR 9.5U4，其中包含了一系列和云相关的功能模块，本文将会详细讨论其中最主要的一个特性：云对象存储。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2019/02/cloud-tier-01/" /><link rel="prev" href="http://192.168.16.79:1313/2018/07/van-02/" /><link rel="next" href="http://192.168.16.79:1313/2019/03/cloud-tier-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Cloud Tier – 云对象存储使用详解（一）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2019\/02\/cloud-tier-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "对象存储","wordcount":  1669 ,
+        "url": "http:\/\/192.168.16.79:1313\/2019\/02\/cloud-tier-01\/","datePublished": "2019-02-21T00:00:00+00:00","dateModified": "2019-02-21T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Cloud Tier – 云对象存储使用详解（一）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-02-21">2019-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1669 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#云对象存储的定位">云对象存储的定位</a></li>
+    <li><a href="#工作原理">工作原理</a></li>
+    <li><a href="#管理和操作">管理和操作</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>2019 年 1 月 23 日 Veeam 发布了其产品历史上功能最多的一次 Update 包 VBR 9.5U4，其中包含了一系列和云相关的功能模块，本文将会详细讨论其中最主要的一个特性：云对象存储。</p>
+<p>在 VBR 9.5U4 中，可以使用 Amazon S3、Microsoft Azure Blob、IBM Cloud Object Storage 以及其他各种兼容 S3 协议的对象存储，因此，对于我们国内用户 AliCloud OSS 和 Tencent Cloud COS 也能够完美支持。</p>
+<h2 id="云对象存储的定位">云对象存储的定位</h2>
+<p>在 VBR 中有三大类 Repository，分别是 Backup Repository、External Repository 和 Scale-Out Backup Repository（SOBR）。我相信对于绝大多数 Veeam 使用者，Backup Repository 是再熟悉不过了，那是 Veeam 存放备份数据的磁盘位置，也是以往被使用最多的数据存放方式。External Repository 是 VBR 9.5U4 新增的，这个并不是本文云对象存储涉及到的部分，本文暂且不讨论。而 SOBR，在以前的 VBR 版本中，可能鲜有提及，而在未来，这将可能成为 Veeam 最主要的数据存储方式。</p>
+<p>在了解云对象存储之前，我觉得有必要来回顾一下 SOBR 的组成，每个 SOBR 都会由 1 个以上的 Extents 组成，每个 Extents 其实就是一个常规的 Backup Repository，也就是说，SOBR 就是一个 Backup Repository 的集合，这是以往 SOBR 的基本组成。</p>
+<p>在这个全新的 SOBR 中，Veeam 把它分成两个层级，分别是 Performance Tier 和 Capacity Tier，所有本地磁盘组成的 Extend 都被归类为 Performance Tier，而云对象存储组成的 Extents 则被归类为 Capacity Tier。</p>
+<h2 id="工作原理">工作原理</h2>
+<p>简单来说，含有云对象存储的 SOBR 必须由 1 个以上的 Extents 组成，然后必须包含 1 个云对象存储。</p>
+<ul>
+<li>每隔 4 小时，Veeam 会根据 SOBR 中的保留策略设定自动运行 SOBR Offload 任务，将本地需要上传至云端的数据上传至云端的对象存储中。</li>
+<li>相对的，SOBR Download 任务则对应可以将云对象存储中的数据取回本地 Extents 之中。</li>
+</ul>
+<p>而在还原过程中，云对象存储可以说是近乎于透明状态的存在，它和以往任何的存储解决方案都会不一样，在 Veeam 中，云对象存储上的还原点，可以保留其原有的任何还原能力，以完全源生平滑的方式来进行数据还原。</p>
+<p>我们来看一个实际的例子：当进行数据还原时，选择的还原点位于云对象存储上时，Veeam 首先会去读取本地的数据索引（Index），这个 Index 会告诉 Veeam，哪些数据同时存在于云上和本地，那么在读写数据时，Veeam 将会优先去使用本地的数据作为数据源，而只会从云中获取那些本地不存在的数据。这将大大减少云对象存储的使用费用，因为绝大多数的云对象存储的使用计费会更多的按照请求和回流来计算。</p>
+<h2 id="管理和操作">管理和操作</h2>
+<ol>
+<li>添加云对象存储</li>
+</ol>
+<p>上文提到过，云对象存储也是属于 SOBR 的一个 Extents，而 Extents 则是一个 Backup repository，因此添加云对象存储的入口就是 Add Repository。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnKT1.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnKT1.png, https://s2.ax1x.com/2020/02/13/1qnKT1.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnKT1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnKT1.png"
+        title="1qnKT1.png" /></p>
+<p>在 Add Backup Repository 中会新增一个向导 Object Storage，这就是添加云对象存储，其中包含了上文提到的 4 种不同的协议。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnQFx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnQFx.png, https://s2.ax1x.com/2020/02/13/1qnQFx.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnQFx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnQFx.png"
+        title="1qnQFx.png" /></p>
+<p>添加过程非常简单，如同任何 Veeam 功能一样，以交互的方式填入合适的信息即可完成配置，本文就不做官方 User Guide 的复读机了，可以根据实际使用的云对象存储选择合适的存储类型进行添加。</p>
+<p><a href="https://helpcenter.veeam.com/docs/backup/vsphere/new_object_storage.html?ver=95u4" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/new_object_storage.html?ver=95u4</a></p>
+<ol start="2">
+<li>配置 SOBR 和 Capacity Tier</li>
+</ol>
+<p>在 Backup Infrastructure 中找到 Scale-Out Backup Repository，然后点击 Add 来新增，这时候需要首先配置 Performance Tier。关于 Performance Tier 的配置详细选项，本文就不展开进行详细讨论，有需要的可以查看官方 User Guide 中的相关章节。</p>
+<p><a href="https://helpcenter.veeam.com/docs/backup/vsphere/sorb_add_extents.html?ver=95u4" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/sorb_add_extents.html?ver=95u4</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnlY6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnlY6.png, https://s2.ax1x.com/2020/02/13/1qnlY6.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnlY6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnlY6.png"
+        title="1qnlY6.png" /></p>
+<p>选择默认的 Placement Policy 后，就可以进入 Capacity Tier 的配置，这时，在上一步中配置的云对象存储库就会出现在下图的 List 中，同时在这个页面上我们也可以配置如何去进行 SOBR Offload 任务，也就是我们前面提到的 SOBR 的保留策略。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qn1fK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qn1fK.png, https://s2.ax1x.com/2020/02/13/1qn1fK.png 1.5x, https://s2.ax1x.com/2020/02/13/1qn1fK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qn1fK.png"
+        title="1qn1fK.png" /></p>
+<p>设置完本页内容之后，云对象存储的配置就完成了。</p>
+<ol start="3">
+<li>使用操作</li>
+</ol>
+<p>日常备份中，我们不需要过多的操作，系统后台会定时 4 小时去检查是否有数据需要 Offload，如果没有数据需要 Offload，或者说没有数据满足 Offload 条件，那么这个 SOBR Offload task 会迅速完成。</p>
+<p>当然我们有手工进行数据传输的方式，可以按需进行数据的 Offload 和 Download。</p>
+<p>举个例子，如图我们已经有一组备份存档，部分位于云对象存储中，部分位于本地磁盘上。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnYOH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnYOH.png, https://s2.ax1x.com/2020/02/13/1qnYOH.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnYOH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnYOH.png"
+        title="1qnYOH.png" /></p>
+<p>这时候，对于云上的数据，我们可以做 Copy to Performance Tier 操作，这个操作就是 SOBR Download 任务。在 Download 过程中，Veeam 依旧是通过 Index 最优化取回数据，可以通过本地磁盘中重组的数据，就不会从线上取回。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnGlD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnGlD.png, https://s2.ax1x.com/2020/02/13/1qnGlD.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnGlD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnGlD.png"
+        title="1qnGlD.png" /></p>
+<p>以上就是今天的内容，下一期我们会更深入的探讨 Veeam 云对象存储使用。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2019-02-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2019/02/cloud-tier-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F02%2Fcloud-tier-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F02%2Fcloud-tier-01%2F&amp;text=Veeam&#43;Cloud&#43;Tier&#43;%E2%80%93&#43;%E4%BA%91%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F02%252Fcloud-tier-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F02%252Fcloud-tier-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/">对象存储</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2018/07/van-02/" class="prev" rel="prev" title="Veeam Availability for Nutanix AHV 配置和使用系列（二）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Availability for Nutanix AHV 配置和使用系列（二）</a>
+            <a href="/2019/03/cloud-tier-02/" class="next" rel="next" title="Veeam Cloud Tier – 云对象存储使用详解（二）">Veeam Cloud Tier – 云对象存储使用详解（二）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

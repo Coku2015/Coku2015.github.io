@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>文件级恢复的秘密 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/04/secret-in-file-level-recovery/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="文件级恢复的秘密">
+  <meta property="og:description" content="虚拟机备份后，通常会有很多种恢复方法，分别适用于不同的恢复场景。其中有一种广为使用的方法叫文件级恢复，这种方法并不是什么新技术，早在虚拟化备份刚刚诞生的时候，就有了这样的需求，也很早被各大备份软件厂商所实现。粗看这个技术无任何门槛，然而实际上在真正需要恢复时，Veeam可以帮到很多忙。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-04-20T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-04-20T00:00:00+00:00">
+    <meta property="article:tag" content="恢复">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="文件级恢复的秘密">
+  <meta name="twitter:description" content="虚拟机备份后，通常会有很多种恢复方法，分别适用于不同的恢复场景。其中有一种广为使用的方法叫文件级恢复，这种方法并不是什么新技术，早在虚拟化备份刚刚诞生的时候，就有了这样的需求，也很早被各大备份软件厂商所实现。粗看这个技术无任何门槛，然而实际上在真正需要恢复时，Veeam可以帮到很多忙。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/04/secret-in-file-level-recovery/" /><link rel="next" href="http://192.168.16.79:1313/2017/04/veeam-quick-migration/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "文件级恢复的秘密",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/04\/secret-in-file-level-recovery\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "恢复","wordcount":  599 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/04\/secret-in-file-level-recovery\/","datePublished": "2017-04-20T00:00:00+00:00","dateModified": "2017-04-20T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">文件级恢复的秘密</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据恢复</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-04-20">2017-04-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 599 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>虚拟机备份后，通常会有很多种恢复方法，分别适用于不同的恢复场景。其中有一种广为使用的方法叫文件级恢复，这种方法并不是什么新技术，早在虚拟化备份刚刚诞生的时候，就有了这样的需求，也很早被各大备份软件厂商所实现。粗看这个技术无任何门槛，然而实际上在真正需要恢复时，Veeam可以帮到很多忙。</p>
+<p>我们来看一下这样子的情况，我打开了文件级还原的浏览器，这一般都是由备份软件厂商提供的界面：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/qaP6TMz4NSYJ8nc.png"
+        data-srcset="https://s2.loli.net/2024/04/30/qaP6TMz4NSYJ8nc.png, https://s2.loli.net/2024/04/30/qaP6TMz4NSYJ8nc.png 1.5x, https://s2.loli.net/2024/04/30/qaP6TMz4NSYJ8nc.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/qaP6TMz4NSYJ8nc.png"
+        title="1473Gt.png" /></p>
+<p>我们会发现，这里有一堆的PDF格式的文件，不过好像这些文件是啥我都不知道唉(⊙o⊙)…光看文件名，看不懂是啥，我想在恢复之前，能不能先打开看看咧？万一不对，是不是这个恢复就白做了呢？</p>
+<p>好像这事在备份软件厂商提供的界面上，我们无法完成哎。不过，Veeam FLR有个灰常灰常强大的按钮，请大家看看这里：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/5JpoutZQCYdE1zw.png"
+        data-srcset="https://s2.loli.net/2024/04/30/5JpoutZQCYdE1zw.png, https://s2.loli.net/2024/04/30/5JpoutZQCYdE1zw.png 1.5x, https://s2.loli.net/2024/04/30/5JpoutZQCYdE1zw.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/5JpoutZQCYdE1zw.png"
+        title="147KVH.png" /></p>
+<p>这是一个神奇的按钮，当我们点下去这个按钮后，我们竟然这样了：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/10/1471PI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/10/1471PI.png, https://s2.ax1x.com/2020/02/10/1471PI.png 1.5x, https://s2.ax1x.com/2020/02/10/1471PI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/10/1471PI.png"
+        title="1471PI.png" /></p>
+<p>然后，我发现，这些我无法打开的pdf，我可以在我的本地先打开看看内容，再决定恢复啦~。是不是很棒？</p>
+<p>再来一个，好像zip包，我其实只想恢复zip包内的文件，这时候咋办？</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/10/147QIA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/10/147QIA.png, https://s2.ax1x.com/2020/02/10/147QIA.png 1.5x, https://s2.ax1x.com/2020/02/10/147QIA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/10/147QIA.png"
+        title="147QIA.png" /></p>
+<p>一样神通广大的这个按钮来干这事</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/10/147Mad.png"
+        data-srcset="https://s2.ax1x.com/2020/02/10/147Mad.png, https://s2.ax1x.com/2020/02/10/147Mad.png 1.5x, https://s2.ax1x.com/2020/02/10/147Mad.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/10/147Mad.png"
+        title="147Mad.png" /></p>
+<p>这是一个神奇的按钮，可以为恢复提供无限多想象，各种只有特殊应用程序才能识别的对象，只要预先安装了应用程序，能识别数据格式，这一神奇的按钮，就能帮我们提取对象，恢复内容。数据内容才是我们信息化的核心，任何不关心内容的恢复都是赤裸裸的欺骗，所以，请在恢复之前用一下这个按钮！</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-04-20</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/04/secret-in-file-level-recovery/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F04%2Fsecret-in-file-level-recovery%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F04%2Fsecret-in-file-level-recovery%2F&amp;text=%E6%96%87%E4%BB%B6%E7%BA%A7%E6%81%A2%E5%A4%8D%E7%9A%84%E7%A7%98%E5%AF%86" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F04%252Fsecret-in-file-level-recovery%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F04%252Fsecret-in-file-level-recovery%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%81%A2%E5%A4%8D/">恢复</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/2017/04/veeam-quick-migration/" class="next" rel="next" title="Veeam 黑科技之 Quick Migration">Veeam 黑科技之 Quick Migration<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测">
+  <meta property="og:description" content="去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-04-28T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测">
+  <meta name="twitter:description" content="去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-01/" /><link rel="prev" href="http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/" /><link rel="next" href="http://192.168.16.79:1313/2024/04/vdp-v12-1-security-feature-deep-dive-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/04\/vdp-v12-1-security-feature-deep-dive-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1858 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/04\/vdp-v12-1-security-feature-deep-dive-01\/","datePublished": "2024-04-28T00:00:00+00:00","dateModified": "2024-04-28T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-28">2024-04-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1858 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#inline-entropy-scan">Inline Entropy Scan</a>
+          <ul>
+            <li><a href="#工作原理">工作原理</a></li>
+            <li><a href="#启用方法和排除方法">启用方法和排除方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#index-scan">Index Scan</a>
+          <ul>
+            <li><a href="#工作原理-1">工作原理</a></li>
+            <li><a href="#启用方法和排除方法-1">启用方法和排除方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#恶意事件管理">恶意事件管理</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。</p>
+<p>本次第一篇，先来说说勒索攻击侦测部分，在这个版本中，加入的这个功能模块叫 Malware Detection，从功能分类上来说，由两大类组成。其中一个叫 Inline Entropy Scan，另外一个叫 Index Scan。</p>
+<h3 id="inline-entropy-scan">Inline Entropy Scan</h3>
+<p>首先来看下 Inline Entropy Scan。默认情况下，Inline Entropy Scan 是处于被禁用状态，管理员需要手工打开该选项进行激活。而激活后，它是一个全局选项，所有支持的备份源都会在备份时进行 Inline Entropy Scan。</p>
+<p>Inline Scan 会根据 Veeam 多年的数据保护经验训练的数据分析大模型在备份过程中对备份数据进行实时扫描，当源数据中发现有以下几种状况时，系统就会发出警告，通知侦测到异常状况：</p>
+<ul>
+<li>发现大量数据正在被加密，这个数据量有个 5 档敏感度设定，当灵敏度调高时，就算比较少的数据被加密，系统都会发出警告。</li>
+</ul>
+<p><a href="https://imgse.com/i/pkPXLT0" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXLT0.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXLT0.png, https://s21.ax1x.com/2024/04/27/pkPXLT0.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXLT0.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXLT0.png"
+        title="pkPXLT0.png" /></a></p>
+<ul>
+<li>当勒索攻击创建了相关文本内容后，系统会发出警告，这主要包括类似于 V3 版本的洋葱地址，勒索通知等。</li>
+</ul>
+<p><a href="https://imgse.com/i/pkPXXkV" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXXkV.md.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXXkV.md.png, https://s21.ax1x.com/2024/04/27/pkPXXkV.md.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXXkV.md.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXXkV.md.png"
+        title="pkPXXkV.md.png" /></a></p>
+<h4 id="工作原理">工作原理</h4>
+<p>这个扫描会在备份作业运行的时候进行，VBR 会对每一个备份过程中接收到的数据块进行分析，VBR Server 上会加入一个全新的服务 Veeam Data Analyzer Service 来管理这个分析。</p>
+<ol>
+<li>这个数据分析会发生在 Backup Proxy 或者 Agent 端，在分析数据开始后，Proxy 上会存放一个临时的 RIDX 文件，这个文件会包含扫描到的磁盘源数据和勒索数据，比如加密的数据、文件类型、洋葱地址、勒索通知等。</li>
+<li>备份完成后，这个数据会被发送到 VBR 上的 VBRCatalog 文件夹中。</li>
+<li>VBR 将收到的 RIDX 文件和存放在 VBRCatalog 文件夹中的历史存档将进行比较，确定是否有恶意攻击发生，如果侦测到异常，就会发出事件通知，将备份存档标记为 Suspicious。</li>
+</ol>
+<h4 id="启用方法和排除方法">启用方法和排除方法</h4>
+<p>在 VBR 控制台的左上角，打开 VBR 的全局设置菜单，可以找到 v12.1 新增的 Malware Detection 选项，打开这个设置选项就可以看到如下图的配置复选框和滑块。默认情况下，复选框是没有被启用的，要打开扫描，可以勾上复选框。滑块是设置扫描灵敏度的，默认被置于 Normal 级别，可以根据实际情况调整灵敏度。</p>
+<p><a href="https://imgse.com/i/pkPXjYT" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXjYT.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXjYT.png, https://s21.ax1x.com/2024/04/27/pkPXjYT.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXjYT.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXjYT.png"
+        title="pkPXjYT.png" /></a></p>
+<p>如果有些特殊机器，不希望进行扫描，可以通过全局排除选项进行排除。和上面的启用方法一样，在 VBR 控制台的左上角，打开 VBR 的 Global Exclusion，可以找到 v12.1 全新的 Malware Exclusion 选项。</p>
+<p><a href="https://imgse.com/i/pkPX7Os" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPX7Os.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPX7Os.png, https://s21.ax1x.com/2024/04/27/pkPX7Os.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPX7Os.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPX7Os.png"
+        title="pkPX7Os.png" /></a></p>
+<p>在这里可以添加需要排除的虚拟机，也可以添加需要排除的 Veeam Agent。</p>
+<p><a href="https://imgse.com/i/pkPjFTx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPjFTx.md.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPjFTx.md.png, https://s21.ax1x.com/2024/04/27/pkPjFTx.md.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPjFTx.md.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPjFTx.md.png"
+        title="pkPjFTx.md.png" /></a></p>
+<h3 id="index-scan">Index Scan</h3>
+<p>除了上面的 Inline 方式进行扫描之外，VBR 还能够利用文件系统的 Index 记录功能来进行恶意文件分析。这个分析借助了 VBR 的 Guest Processing 中 Index guest files 的功能，默认情况下全局选项是打开的，但是它需要配合每一个备份作业中 Guest Processing 选项来一起工作，如果备份作业的 Guest Processing 步骤中的 Index guest files 复选框没有启用，那么 Index Scan 对于该备份作业也不会生效。</p>
+<p>Index Scan 的扫描会针对以下几种异常状况：</p>
+<ul>
+<li>Index Scan 在工作时，会调用 VBR 中 SuspiciousFiles.xml 文件中已知的可疑文件扩展名进行匹配，发现已知的可疑文件后，系统会发出警告。</li>
+<li>如果有超过 200 个文件被重命名，并且重命名后都带有同样的扩展名，系统会发出警告。</li>
+<li>如果有包含特殊扩展名的 25 个文件以上或者 50% 的文件被删除，系统会发出警告。</li>
+</ul>
+<h4 id="工作原理-1">工作原理</h4>
+<p>这个扫描会在备份作业运行的时候进行，因为是 Guest Processing 服务，因此它会在每一台虚拟机或者物理机上抓取文件的索引信息，传输到 VBR 的 VBRCatalog 目录中，并由 VBR 的 Veeam Data Analyzer Service 来分析这个数据。</p>
+<p>在工作时，SuspiciousFiles.xml 相当于是这个扫描的病毒库，VBR 在安装后，内置了出厂的库，备份管理员可以通过在线或者离线的方式来更新这个文件。</p>
+<h4 id="启用方法和排除方法-1">启用方法和排除方法</h4>
+<p>全局的启用选项和前面的 Inline Scan 一样，在 VBR 控制台的左上角，打开 VBR 的全局设置菜单，找到 Malware detection 选项，第二部分就是这个 Index Scan 的功能。默认情况下，这个复选框是选上的。在这个复选框下面，还有一个复选框是在线更新 SuspiciousFiles.xml 文件的，如果 VBR 能连接互联网，那么这个文件可以定期被自动更新。如果需要手工更新这个文件，可以参考 <a href="https://www.veeam.com/kb4514" target="_blank" rel="noopener noreffer ">https://www.veeam.com/kb4514</a>。
+<a href="https://imgse.com/i/pkPXvfU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXvfU.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXvfU.png, https://s21.ax1x.com/2024/04/27/pkPXvfU.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXvfU.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXvfU.png"
+        title="pkPXvfU.png" /></a></p>
+<p>在全局启用后，每个备份任务中，需要额外启用 Index 功能，因此如果不想扫描，只需要在备份任务中不启用 Index 即可。</p>
+<p><a href="https://imgse.com/i/pkPjMnA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPjMnA.md.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPjMnA.md.png, https://s21.ax1x.com/2024/04/27/pkPjMnA.md.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPjMnA.md.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPjMnA.md.png"
+        title="pkPjMnA.md.png" /></a></p>
+<h3 id="恶意事件管理">恶意事件管理</h3>
+<p>以上两种扫描，如果触发了告警之后，在 Inventory 界面的 Malware Detection 中会出现黑体加粗的恶意攻击警告，对应的虚拟机或者物理机会在这里列出来。以上两种扫描的结果会被标记成 Suspicious 状态。</p>
+<p><a href="https://imgse.com/i/pkPXqwq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXqwq.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXqwq.png, https://s21.ax1x.com/2024/04/27/pkPXqwq.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXqwq.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXqwq.png"
+        title="pkPXqwq.png" /></a></p>
+<p>在 History 中，也会有一大类新的事件，会列出每次备份中各种事件扫描到的内容。每个事件选择后，上方的工具栏或者右键菜单，都有事件详情的选项，可以打开详情查看具体发生了什么恶意事件。</p>
+<p><a href="https://imgse.com/i/pkPXbmn" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s21.ax1x.com/2024/04/27/pkPXbmn.png"
+        data-srcset="https://s21.ax1x.com/2024/04/27/pkPXbmn.png, https://s21.ax1x.com/2024/04/27/pkPXbmn.png 1.5x, https://s21.ax1x.com/2024/04/27/pkPXbmn.png 2x"
+        data-sizes="auto"
+        alt="https://s21.ax1x.com/2024/04/27/pkPXbmn.png"
+        title="pkPXbmn.png" /></a></p>
+<p>在详情中，会记录更加详细的事件记录的具体日志文件。</p>
+<p>以上就是 VBR v12.1 中，在线勒索攻击的侦测方法，希望大家在启用功能后，永远别扫描到有数据被攻击。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F04%2Fvdp-v12-1-security-feature-deep-dive-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F04%2Fvdp-v12-1-security-feature-deep-dive-01%2F&amp;text=VDP&#43;v12.1&#43;%E5%AE%89%E5%85%A8%E5%8A%9F%E8%83%BD%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89-&#43;%E5%8B%92%E7%B4%A2%E6%94%BB%E5%87%BB%E4%BE%A6%E6%B5%8B" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F04%252Fvdp-v12-1-security-feature-deep-dive-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F04%252Fvdp-v12-1-security-feature-deep-dive-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/" class="prev" rel="prev" title="一键部署脚本：K3S&#43;vSphere CSI"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>一键部署脚本：K3S+vSphere CSI</a>
+            <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/" class="next" rel="next" title="VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描">VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

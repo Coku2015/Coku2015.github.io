@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Instant Recovery on 虚化人生</title>
+    <link>http://192.168.16.79:1313/tags/Instant-Recovery/</link>
+    <description>Recent content in Instant Recovery on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Wed, 21 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/tags/Instant-Recovery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一键部署脚本：K3S&#43;vSphere CSI</title>
+      <link>http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/</link>
+      <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/</guid>
+      <description>&lt;p&gt;之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复</title>
+      <link>http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-02/</link>
+      <pubDate>Sun, 05 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-02/</guid>
+      <description>&lt;p&gt;上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。&lt;/p&gt;&#xA;&lt;h2 id=&#34;k10-安装和配置&#34;&gt;K10 安装和配置&lt;/h2&gt;&#xA;&lt;p&gt;首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建</title>
+      <link>http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-01/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-01/</guid>
+      <description>&lt;p&gt;还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

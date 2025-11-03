@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>好消息好消息，Veeam 又通过一项 VMware Ready 认证！ - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/06/another-vmware-ready/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="好消息好消息，Veeam 又通过一项 VMware Ready 认证！">
+  <meta property="og:description" content="上周，前方又传来一个激动人心的消息，Veeam 通过了 vSphere 6.5 刚刚开放的 VMware Web Client Plug-in Ready 认证。厉害了，这个太厉害了。具体 VMware 官网查询链接 https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-06-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-06-30T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="好消息好消息，Veeam 又通过一项 VMware Ready 认证！">
+  <meta name="twitter:description" content="上周，前方又传来一个激动人心的消息，Veeam 通过了 vSphere 6.5 刚刚开放的 VMware Web Client Plug-in Ready 认证。厉害了，这个太厉害了。具体 VMware 官网查询链接 https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/06/another-vmware-ready/" /><link rel="prev" href="http://192.168.16.79:1313/2017/06/veeam-pn-intro/" /><link rel="next" href="http://192.168.16.79:1313/2017/07/direct-nfs-access/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "好消息好消息，Veeam 又通过一项 VMware Ready 认证！",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/06\/another-vmware-ready\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  848 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/06\/another-vmware-ready\/","datePublished": "2017-06-30T00:00:00+00:00","dateModified": "2017-06-30T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">好消息好消息，Veeam 又通过一项 VMware Ready 认证！</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据备份</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-06-30">2017-06-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 848 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>上周，前方又传来一个激动人心的消息，Veeam 通过了 vSphere 6.5 刚刚开放的 VMware Web Client Plug-in Ready 认证。厉害了，这个太厉害了。具体 VMware 官网查询链接 <a href="https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp" target="_blank" rel="noopener noreffer ">https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0COx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0COx.png, https://s2.ax1x.com/2020/02/11/1T0COx.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0COx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0COx.png"
+        title="1T0COx.png" /></p>
+<p>什么？什么？你还不知道啥是 VMware Ready？好吧，我先来普及下这个认证。简单来说使用通过认证的 plug-in 有这么几个好处：</p>
+<ol>
+<li>符合 VMware Web Plug-in 的最佳实践，会被收录至各种白皮书、教科书。</li>
+<li>用户体验极佳，可以说是几乎和 VMware 原厂软件完全一致。</li>
+<li>插件经过 VMware 原厂严格测试，使用该插件，完全不会影响 vCenter 的性能，不用担心非原厂插件破坏 vCenter。</li>
+<li>插件故障，VMware 给保修，这个很重要。一站式解决问题。</li>
+</ol>
+<p>那么，这么好的插件，它能做点啥呢，我们来看下这个功能强大的小插件。</p>
+<p>这个插件部署完成之后，会在 vSphere Web Client 上出现一个新的图标，和其他的 Web Client 插件一样，点击即可进入。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0961.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0961.png, https://s2.ax1x.com/2020/02/11/1T0961.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0961.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0961.png"
+        title="1T0961.png" /></p>
+<p>在这个插件中，我们能够查看到当前的备份基础架构情况：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0Sp9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0Sp9.png, https://s2.ax1x.com/2020/02/11/1T0Sp9.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0Sp9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0Sp9.png"
+        title="1T0Sp9.png" /></p>
+<p>能够看到最近 24 小时、7 天、14 天的虚拟机备份情况：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0plR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0plR.png, https://s2.ax1x.com/2020/02/11/1T0plR.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0plR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0plR.png"
+        title="1T0plR.png" /></p>
+<p>能够看到备份任务的执行和计划情况：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1TwjkF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1TwjkF.png, https://s2.ax1x.com/2020/02/11/1TwjkF.png 1.5x, https://s2.ax1x.com/2020/02/11/1TwjkF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1TwjkF.png"
+        title="1TwjkF.png" /></p>
+<p>还能够看到最近 7 天、14 天、1 个月处理的虚拟机数量：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0im6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0im6.png, https://s2.ax1x.com/2020/02/11/1T0im6.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0im6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0im6.png"
+        title="1T0im6.png" /></p>
+<p>能够查看备份存储库的容量，再也不担心日常运维的时候忘记存储快满了：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0F0K.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0F0K.png, https://s2.ax1x.com/2020/02/11/1T0F0K.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0F0K.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0F0K.png"
+        title="1T0F0K.png" /></p>
+<p>并且以上这些内容，如果有部署 Veeam ONE，能够直接点击跳转查看完整的相关报告。如此这样，基础架构运维，是不是突然发现，简单了好多？</p>
+<p>除此之外，该插件还提供了快速备份的功能，在每个 VM 的右键菜单中，我们可以找到 Backup 选项：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0kTO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0kTO.png, https://s2.ax1x.com/2020/02/11/1T0kTO.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0kTO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0kTO.png"
+        title="1T0kTO.png" /></p>
+<p>VeeamZIP，立即执行 Active Full 类型的全备份，是一种快速备份的简单方法。</p>
+<p>VeeamZIP to &hellip; 则会跳转至 ZIP 设置界面，该界面也集成在 vSphere Web Client 中，而不用进入 Veeam Console。</p>
+<p>Quick Backup 则是进行快速的增量或反向增量备份，用于单次的即时备份。</p>
+<p>最后来看下 VeeamZIP 设置界面，该界面位于每台 VM 的 Manage 选项卡下的最后一项 VeeamZIP 中，如图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0EkD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0EkD.png, https://s2.ax1x.com/2020/02/11/1T0EkD.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0EkD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0EkD.png"
+        title="1T0EkD.png" /></p>
+<p>这里可以简单设置备份服务器、备份存储库、Key、VeeamZIP 删除时间、压缩级别、是否进行客户端静默等选项，几乎与 Veeam Console 中的 VeeamZIP 设置选项一致。同时这里也提供 VeeamZIP 任务触发按钮。当执行 VeeamZIP 任务或者 Quick Backup 任务时，vSphere Web Client 的任务栏还会出现 Veeam 的任务进度：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T0ZfH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T0ZfH.png, https://s2.ax1x.com/2020/02/11/1T0ZfH.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0ZfH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T0ZfH.png"
+        title="1T0ZfH.png" /></p>
+<p>好了，以上就是全部 Veeam vSphere Web Client Plugin 的功能，简单小巧，又非常好用，还带保修。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-06-30</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/06/another-vmware-ready/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F06%2Fanother-vmware-ready%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F06%2Fanother-vmware-ready%2F&amp;text=%E5%A5%BD%E6%B6%88%E6%81%AF%E5%A5%BD%E6%B6%88%E6%81%AF%EF%BC%8CVeeam&#43;%E5%8F%88%E9%80%9A%E8%BF%87%E4%B8%80%E9%A1%B9&#43;VMware&#43;Ready&#43;%E8%AE%A4%E8%AF%81%EF%BC%81" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F06%252Fanother-vmware-ready%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F06%252Fanother-vmware-ready%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/06/veeam-pn-intro/" class="prev" rel="prev" title="VeeamON 2017 系列之另类 VPN -- Veeam PN"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VeeamON 2017 系列之另类 VPN -- Veeam PN</a>
+            <a href="/2017/07/direct-nfs-access/" class="next" rel="next" title="Veeam 黑科技之 Direct NFS Access">Veeam 黑科技之 Direct NFS Access<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,96 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>虚化人生</title>
+        <link>http://192.168.16.79:1313/</link>
+        <description>欢迎访问虚化人生</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Thu, 30 Oct 2025 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="http://192.168.16.79:1313/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam13-security-features-01/</link>
+    <pubDate>Thu, 25 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam13-security-features-01/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
+            </div><p>v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。</p>
+<p>今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。</p>]]></description>
+</item>
+<item>
+    <title>深度解读：Veeam V13 的发布策略与部署选择</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/</link>
+    <pubDate>Tue, 23 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/</guid>
+    <description><![CDATA[<p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p>]]></description>
+</item>
+<item>
+    <title>把复杂留给 Veeam：Infrastructure Appliance 上手指南</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/</link>
+    <pubDate>Mon, 22 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/</guid>
+    <description><![CDATA[<p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p>]]></description>
+</item>
+<item>
+    <title>让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/</link>
+    <pubDate>Tue, 09 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/</guid>
+    <description><![CDATA[<p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p>]]></description>
+</item>
+<item>
+    <title>你必须知道的：Veeam Software Appliance 全新的管理使用方法</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/</link>
+    <pubDate>Mon, 08 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/</guid>
+    <description><![CDATA[<p>在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。</p>]]></description>
+</item>
+<item>
+    <title>有手就能装！Veeam Software Appliance 一步一步带你部署</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/</link>
+    <pubDate>Fri, 05 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/</guid>
+    <description><![CDATA[<p>在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 <strong>Veeam Software Appliance</strong> 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 <strong>Veeam Software Appliance</strong> 的部署和使用。</p>]]></description>
+</item>
+<item>
+    <title>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</title>
+    <link>http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/</link>
+    <pubDate>Thu, 04 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/</guid>
+    <description><![CDATA[<h2 id="前言veeam-software-appliance-发布背景">前言：Veeam Software Appliance 发布背景</h2>
+<p>昨天 Veeam 官网悄悄上线了一个新产品：<a href="https://www.veeam.com/blog/veeam-software-appliance.html" target="_blank" rel="noopener noreffer ">Veeam Software Appliance</a>。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 + 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。</p>]]></description>
+</item>
+<item>
+    <title>使用 Azure EntraID 为 Kasten 控制台提供多因子验证</title>
+    <link>http://192.168.16.79:1313/2025/05/kasten-and-azure-entraid-integration/</link>
+    <pubDate>Mon, 26 May 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2025/05/kasten-and-azure-entraid-integration/</guid>
+    <description><![CDATA[<p>Kasten 在安全方面提供全面的管理能力，其中很重要的一部分是用户的账号访问管理，使用 Kasten 的用户可以灵活的借助 OIDC 的协议完成身份认证。本文以 Azure EntraID 为例，通过为 Kasten 配置 Azure EntraID 的集成，实现 Kasten 控制台的多因子验证。</p>]]></description>
+</item>
+<item>
+    <title>VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</title>
+    <link>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
+    <pubDate>Mon, 16 Dec 2024 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
+    <description><![CDATA[<h2 id="系列目录">系列目录</h2>
+<p>数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。</p>]]></description>
+</item>
+<item>
+    <title>VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号</title>
+    <link>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
+    <pubDate>Mon, 09 Dec 2024 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
+    <description><![CDATA[<h2 id="系列目录">系列目录</h2>
+<p>数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。</p>]]></description>
+</item>
+</channel>
+</rss>

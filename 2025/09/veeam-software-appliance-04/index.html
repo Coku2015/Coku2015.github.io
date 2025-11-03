@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略">
+  <meta property="og:description" content="在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-09T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略">
+  <meta name="twitter:description" content="在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-04\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  1429 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-04\/","datePublished": "2025-09-09T00:00:00+00:00","dateModified": "2025-09-09T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-09">2025-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1429 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一为什么要自己搭建更新仓库">一、为什么要自己搭建更新仓库</a></li>
+    <li><a href="#二在-ubuntu-上部署-nginx--自签名证书--镜像同步">二、在 Ubuntu 上部署 nginx + 自签名证书 + 镜像同步</a></li>
+    <li><a href="#三在-veeam-software-appliance-中配置本地仓库">三、在 Veeam Software Appliance 中配置本地仓库</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p>
+<h2 id="一为什么要自己搭建更新仓库">一、为什么要自己搭建更新仓库</h2>
+<p>Veeam Software Appliance 自带的 Veeam Updater 服务每天会自动连到 <code>https://repository.veeam.com</code> 拉取补丁和元数据，这对有外网的环境很方便。但在隔离区、测试区或者合规要求不能访问公网的场景，就会面临补丁滞后、手工更新麻烦的问题。</p>
+<p>本地更新仓库的作用就是：在内网搭一个“翻版”的 Veeam 官方仓库，用 HTTPS 提供服务，并且让 Appliance 信任它，这样即使断网也能自动检查和安装更新。你只需要周期性地把官方仓库镜像下来，内网的 Appliance 就能像连公网一样更新了。</p>
+<h2 id="二在-ubuntu-上部署-nginx--自签名证书--镜像同步">二、在 Ubuntu 上部署 nginx + 自签名证书 + 镜像同步</h2>
+<p>本教程演示如何在 Ubuntu 虚拟机 上搭建一套完整的 Veeam 官方仓库镜像服务：</p>
+<ul>
+<li>使用 nginx 提供 HTTPS 访问；</li>
+<li>通过 自签名证书（或替换为 Let’s Encrypt 证书）提供传输安全，满足 Veeam 官方要求；</li>
+<li>利用 wget 镜像模式定时同步官方仓库内容；</li>
+</ul>
+<p>我这里的实验室环境是 Proxmox 上的 虚拟机，CPU 和内存配置按需即可，磁盘空间需预留足够（例如 rocky 仓库约 17 GB，完整仓库可能超 100 GB）。</p>
+<p>接下来就可以按以下步骤操作。</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装 nginx</span>
+</span></span><span class="line"><span class="cl">apt install nginx -y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建存放镜像和证书的目录</span>
+</span></span><span class="line"><span class="cl">mkdir -p /var/www/veeam-repo
+</span></span><span class="line"><span class="cl">mkdir -p /etc/nginx/ssl
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /etc/nginx/ssl
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成自签名证书</span>
+</span></span><span class="line"><span class="cl">openssl genrsa -out veeamrepo.key <span class="m">2048</span>
+</span></span><span class="line"><span class="cl">openssl req -new -key veeamrepo.key -out veeamrepo.csr <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -subj <span class="s2">&#34;/C=CN/ST=Beijing/L=Beijing/O=Lab/OU=IT/CN=veeamupdater.backupnext.home&#34;</span>
+</span></span><span class="line"><span class="cl">openssl x509 -req -days <span class="m">3650</span> -in veeamrepo.csr -signkey veeamrepo.key -out veeamrepo.crt</span></span></code></pre></div></div>
+<p>其中这里 veeamupdater.backupnext.home 这里是我家里的域名解析，如果大家自己搭建镜像服务器，可以根据自己的情况设置域名。在后面的步骤中，会需要用到这个域名。</p>
+<p>配置 nginx 虚拟主机（<code>/etc/nginx/sites-available/veeamrepo.conf</code>）：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-nginx">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-nginx" data-lang="nginx"><span class="line"><span class="cl"><span class="k">server</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">listen</span> <span class="mi">443</span> <span class="s">ssl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">server_name</span> <span class="s">veeamupdater.backupnext.home</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">ssl_certificate</span>     <span class="s">/etc/nginx/ssl/veeamrepo.crt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">ssl_certificate_key</span> <span class="s">/etc/nginx/ssl/veeamrepo.key</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">root</span> <span class="s">/var/www/veeam-repo</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">index</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">autoindex</span> <span class="no">on</span><span class="p">;</span>             
+</span></span><span class="line"><span class="cl">    <span class="kn">autoindex_exact_size</span> <span class="no">off</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">autoindex_localtime</span> <span class="no">on</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">allow</span> <span class="s">all</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">server</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">server_name</span> <span class="s">veeamupdater.backupnext.home</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">return</span> <span class="mi">301</span> <span class="s">https://</span><span class="nv">$host$request_uri</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>启用并检查配置：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ln -s /etc/nginx/sites-available/veeamrepo.conf /etc/nginx/sites-enabled/
+</span></span><span class="line"><span class="cl">nginx -t <span class="o">&amp;&amp;</span> systemctl reload nginx</span></span></code></pre></div></div>
+<p>接下来编写镜像同步脚本（只同步需要的路径，这里以 <code>rocky</code> 为例）：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">MIRROR_DIR</span><span class="o">=</span><span class="s2">&#34;/var/www/veeam-repo&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&#34;/root/sync_vbr_only.log&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">URL</span><span class="o">=</span><span class="s2">&#34;https://repository.veeam.com/rocky/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$MIRROR_DIR</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">wget -m -c -np -nH --cut-dirs<span class="o">=</span><span class="m">0</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     -e <span class="nv">robots</span><span class="o">=</span>off <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     -t <span class="m">3</span> -T <span class="m">30</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     -R <span class="s2">&#34;index.html*&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     -l inf <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>     <span class="s2">&#34;</span><span class="nv">$URL</span><span class="s2">&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Sync completed at </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span> &gt;&gt; <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span></span></span></code></pre></div></div>
+<p>给脚本执行权限，并通过 crontab 定时执行：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x /root/sync_veeam_vbr.sh
+</span></span><span class="line"><span class="cl">crontab -e
+</span></span><span class="line"><span class="cl"><span class="c1"># 每天早上 9 点同步一次</span>
+</span></span><span class="line"><span class="cl"><span class="m">0</span> <span class="m">9</span> * * * /root/sync_veeam_vbr.sh</span></span></code></pre></div></div>
+<p>第一次可以手动运行脚本立即下载，约 17 GB，取决于网速。下载后无需重启 nginx，目录内容更新后 Web 服务即可直接提供新文件。</p>
+<hr>
+<h2 id="三在-veeam-software-appliance-中配置本地仓库">三、在 Veeam Software Appliance 中配置本地仓库</h2>
+<p>镜像服务器准备就绪后，接下来就是在 Veeam Software Appliance 中启用它。操作思路很简单：把自签名证书导入控制台 → 指定镜像地址 → 测试更新。</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>将刚才在 nginx 服务器上生成的 <code>veeamrepo.crt</code> 自签名证书拷贝到 Veeam Backup Console 所在的服务器；</li>
+<li>打开 Veeam Backup Console，进入 <strong>Update Settings</strong> 界面。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/09/pXIACFlKvNPoOqD.png"
+        data-srcset="https://s2.loli.net/2025/09/09/pXIACFlKvNPoOqD.png, https://s2.loli.net/2025/09/09/pXIACFlKvNPoOqD.png 1.5x, https://s2.loli.net/2025/09/09/pXIACFlKvNPoOqD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/09/pXIACFlKvNPoOqD.png"
+        title="Xnip2025-09-09_13-37-10" /></p>
+<ol start="3">
+<li>点击下方的 Software repository 设置，，在“Mirror repository”里填写你的地址（例如 <code>https://veeamupdater.backupnext.home/rocky</code>）；</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/09/hlHxmOBCsk7T4Z5.png"
+        data-srcset="https://s2.loli.net/2025/09/09/hlHxmOBCsk7T4Z5.png, https://s2.loli.net/2025/09/09/hlHxmOBCsk7T4Z5.png 1.5x, https://s2.loli.net/2025/09/09/hlHxmOBCsk7T4Z5.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/09/hlHxmOBCsk7T4Z5.png"
+        title="Xnip2025-09-09_13-38-01" /></p>
+<ol start="4">
+<li>
+<p>上传 <code>.crt</code> 证书并保存设置；</p>
+</li>
+<li>
+<p>在 Console 左上角，继续点击“检查更新”，跳转到 updater 的网页。点击<code>Check update</code>如果提示成功并能正常下载更新，说明内网镜像仓库已配置完成。</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/09/57GOvJ9KkzDBAmT.png"
+        data-srcset="https://s2.loli.net/2025/09/09/57GOvJ9KkzDBAmT.png, https://s2.loli.net/2025/09/09/57GOvJ9KkzDBAmT.png 1.5x, https://s2.loli.net/2025/09/09/57GOvJ9KkzDBAmT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/09/57GOvJ9KkzDBAmT.png"
+        title="Xnip2025-09-09_13-39-40" /></p>
+<ol start="6">
+<li>这个过程也可以在 web Console 中设置。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/09/KO1kZY2o3WbPfmJ.png"
+        data-srcset="https://s2.loli.net/2025/09/09/KO1kZY2o3WbPfmJ.png, https://s2.loli.net/2025/09/09/KO1kZY2o3WbPfmJ.png 1.5x, https://s2.loli.net/2025/09/09/KO1kZY2o3WbPfmJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/09/KO1kZY2o3WbPfmJ.png"
+        title="Xnip2025-09-09_13-40-10" /></p>
+<p>以上，即便在完全隔离的内网环境中，<strong>Veeam Software Appliance</strong> 也能像在公网下一样自动获取补丁与更新，无需再手工下载导入。同时，这个内网更新服务不仅适用于单台 Appliance，还可以为整个 <strong>Veeam Infrastructure Appliance</strong> 环境提供统一的更新源——所有设备的更新请求都会自动重定向到你的内网镜像仓库，真正实现集中、快速又安全的升级体验。</p>
+<p>在下一篇文章中，我将继续深入，带大家了解 <strong>Veeam Infrastructure Appliance</strong> 的使用与管理。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-04/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-04%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-04%2F&amp;text=%E8%AE%A9&#43;Veeam&#43;%E6%9B%B4%E6%96%B0%E6%97%A2%E5%AE%89%E5%85%A8%E5%8F%88%E5%BF%AB%E9%80%9F%EF%BC%9A%E6%9C%AC%E5%9C%B0%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E5%85%A8%E6%94%BB%E7%95%A5" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-04%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-04%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam-software-appliance-03/" class="prev" rel="prev" title="你必须知道的：Veeam Software Appliance 全新的管理使用方法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>你必须知道的：Veeam Software Appliance 全新的管理使用方法</a>
+            <a href="/2025/09/veeam-software-appliance-05/" class="next" rel="next" title="把复杂留给 Veeam：Infrastructure Appliance 上手指南">把复杂留给 Veeam：Infrastructure Appliance 上手指南<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

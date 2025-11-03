@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO 基础入门（四） -  基本组件 · 下篇 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/05/vro-v6-guide-04/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VRO 基础入门（四） -  基本组件 · 下篇">
+  <meta property="og:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 资源分组 - Compute Resource/Storage Resource/VM Group 在详细介绍 Scope 的那些操作权限之前，今天我想先来说说资源的分组方法，因为这些特殊的分组方法将会在后面的这些操作权限中用到。这个分组方法分别对 VM、Host 以及 Storage 有效，VRO 中要用到的这些分组都会从内嵌的 VeeamONE 中读取，因此实际上就是在 Veeam ONE 中完成这些分组。大致上这里的具体操作方法可以分为两大类：">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-05-30T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VRO 基础入门（四） -  基本组件 · 下篇">
+  <meta name="twitter:description" content="系列目录： VRO 基础入门（一）- 简介 VRO 基础入门（二）- 安装与部署 VRO 基础入门（三）- 基本组件 · 上篇 VRO 基础入门（四）- 基本组件 · 下篇 VRO 基础入门（五）- 成功灾备计划的第一步 VRO 基础入门（六）- 数据实验室 VRO 基础入门（七）- Plan Step · 上篇 VRO 基础入门（八）- Plan Step · 下篇 VRO 基础入门（九）- 文档模板解析 VRO 基础入门（十）- 使用 VRO 搭配 K10 实现全自动容器灾备 资源分组 - Compute Resource/Storage Resource/VM Group 在详细介绍 Scope 的那些操作权限之前，今天我想先来说说资源的分组方法，因为这些特殊的分组方法将会在后面的这些操作权限中用到。这个分组方法分别对 VM、Host 以及 Storage 有效，VRO 中要用到的这些分组都会从内嵌的 VeeamONE 中读取，因此实际上就是在 Veeam ONE 中完成这些分组。大致上这里的具体操作方法可以分为两大类：">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-04/" /><link rel="prev" href="http://192.168.16.79:1313/2023/05/vro-v6-guide-03/" /><link rel="next" href="http://192.168.16.79:1313/2023/06/vro-v6-guide-05/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO 基础入门（四） -  基本组件 · 下篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/05\/vro-v6-guide-04\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  3637 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/05\/vro-v6-guide-04\/","datePublished": "2023-05-30T00:00:00+00:00","dateModified": "2023-05-30T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO 基础入门（四） -  基本组件 · 下篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-30">2023-05-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3637 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#系列目录">系列目录：</a></li>
+    <li><a href="#资源分组---compute-resourcestorage-resourcevm-group">资源分组 - Compute Resource/Storage Resource/VM Group</a></li>
+    <li><a href="#scope-inclusions">Scope Inclusions</a>
+      <ul>
+        <li><a href="#groups">Groups</a></li>
+        <li><a href="#recovery-locations">Recovery Locations</a></li>
+      </ul>
+    </li>
+    <li><a href="#plan-steps">Plan Steps</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#template-jobs">Template Jobs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="系列目录">系列目录：</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
+</ul>
+<h2 id="资源分组---compute-resourcestorage-resourcevm-group">资源分组 - Compute Resource/Storage Resource/VM Group</h2>
+<p>在详细介绍 Scope 的那些操作权限之前，今天我想先来说说资源的分组方法，因为这些特殊的分组方法将会在后面的这些操作权限中用到。这个分组方法分别对 VM、Host 以及 Storage 有效，VRO 中要用到的这些分组都会从内嵌的 VeeamONE 中读取，因此实际上就是在 Veeam ONE 中完成这些分组。大致上这里的具体操作方法可以分为两大类：</p>
+<ul>
+<li>
+<p>第一类可以通过 Veeam ONE Business View 原生的分组方法来进行分组。</p>
+</li>
+<li>
+<p>第二类可以通过 vSphere Tags 将 ESXi 或者 Cluster、Datastore 进行分组，分组完成后 VRO 就能读取到这些信息。</p>
+</li>
+</ul>
+<p>不管有没有使用 vSphere Tags，我更推荐使用 Veeam ONE Business View 上的 Categorization 来完成资源分组的设定，下面我以 Compute Resources 分组为例来介绍这个分组的方法。</p>
+<p>操作方法如下：</p>
+<ol>
+<li>
+<p>通过 Veeam ONE Monitor Client 打开 VRO 内嵌的 Veeam ONE 控制台，找到 Business View 视图中的 Hosts 分类，右键点击，在弹出的右键菜单中找到 Add Category&hellip; 菜单。</p>
+</li>
+<li>
+<p>在弹出的 Add Category 向导的第一步 Name and Object type，填入分类的名称，比如我在这里填了 DR Compute，Type 保持 Host 不变，点击下一步。</p>
+</li>
+<li>
+<p>在向导第二步 Categorization Method 中，选择第二项 Multiple conditions，点击下一步。（当然这一步也可以选择其他，今天的这个例子中，我就不详细展开介绍这些分类方法了）。</p>
+</li>
+<li>
+<p>在向导第三步 Grouping Criteria 中，点击右边的 Add&hellip; 来添加新的分组，这一步非常非常重要，在这里添加的分组将会出现在 VRO 的 Recovery Location 设定向导的 Compute Resources 中。</p>
+</li>
+<li>
+<p>点击 Add 后，会出现一个新的向导来添加分组。先为这个分组起个名称。比如我这里设置了“Compute Resource Group 1”，点击下一步。</p>
+</li>
+<li>
+<p>在分组向导的第二步 Grouping Conditions 中会有一个默认的 Condition 出现，我们需要选中它，然后点击右边的 Remove 按钮，我们今天的例子中，会通过手工选取的方式来分组。删除这个 Condition 后，点击下一步。</p>
+</li>
+<li>
+<p>在分组向导的第三步 Notification 中，保持默认选项，不做任何更改，这里的 Notification 设定在 VRO 中用不到，不需要设置。点击 Save 完成就行了。
+<a href="https://imgse.com/i/p9XqLGR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/nLQdXmbzAIUE79K.png"
+        data-srcset="https://s2.loli.net/2024/04/30/nLQdXmbzAIUE79K.png, https://s2.loli.net/2024/04/30/nLQdXmbzAIUE79K.png 1.5x, https://s2.loli.net/2024/04/30/nLQdXmbzAIUE79K.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/nLQdXmbzAIUE79K.png"
+        title="p9XqLGR.png" /></a></p>
+</li>
+<li>
+<p>回到 Add Category 向导的第三步 Grouping Criteria 步骤中，重复以上 4-7 步来添加多个分组，或者使用 Clone 按钮来进行分组克隆，克隆后修改名称即可。最后点击 Save 保存分类设定。
+<a href="https://imgse.com/i/p9Xqqi9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xqqi9.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xqqi9.png, https://s1.ax1x.com/2023/05/29/p9Xqqi9.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xqqi9.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xqqi9.png"
+        title="p9Xqqi9.png" /></a></p>
+</li>
+<li>
+<p>在完成分类设定后，在 Business View 的 Hosts 下面，会看到刚刚设定的 Category 和 Group，这时候因为我们会使用手工的方法进行分类，所以在 Group 下面暂时还没出现对应的 Host。我们选中 Business View 里的 Hosts，在右边的内容显示区中，找到并切换到标签卡 Hosts。</p>
+</li>
+<li>
+<p>在 Hosts 列表中，找到要分组的主机，右键点击主机，在右键菜单中选择 Manual Categorization。
+<a href="https://imgse.com/i/p9XqOR1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqOR1.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqOR1.png, https://s1.ax1x.com/2023/05/29/p9XqOR1.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqOR1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqOR1.png"
+        title="p9XqOR1.png" /></a></p>
+</li>
+<li>
+<p>在弹出的 Edit Categorization 对话框中，在左边选择 Not Mapped 分类，然后在右边选择 Group 名字，点击 Ok。这样分组就完成了，可以在 VRO 中使用了。
+<a href="https://imgse.com/i/p9XqHIJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqHIJ.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqHIJ.png, https://s1.ax1x.com/2023/05/29/p9XqHIJ.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqHIJ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqHIJ.png"
+        title="p9XqHIJ.png" /></a></p>
+</li>
+</ol>
+<p>对于 VM Group 和 Storage Resources 的设定，一样可以通过上面的方法完成。</p>
+<h2 id="scope-inclusions">Scope Inclusions</h2>
+<p>接下来说说 Scope Inclusions，也就是 VRO 灾备系统的权限管理中，有哪些具体的操作可以做。在之前的版本中，这个模块叫做 Plan Components，v6 改名成了 Scope Inclusions，其实内容基本相同。</p>
+<p>以下这些组件，需要针对每个 Scope 进行设置，上一篇中已经介绍了具体设置位置，接下来我们来看看这些对象都有些什么以及他们的设置方法。</p>
+<h3 id="groups">Groups</h3>
+<p>Groups 定义了在每个 Scope 下面，能管理哪些机器。但是和 VBR 中选机器不一样的是，在 Groups 中虚拟机或者物理机并不是以它原有的结构和名称来呈现，在 VRO 的 Groups 中自动列出了以下几类对象：</p>
+<ul>
+<li>Veeam 备份作业保护的虚拟机或者物理机 - 这类以 [作业名称 - VBR 主机名] 这个方式出现在清单中。</li>
+<li>Veeam Replication 或者 CDP 保护的虚拟机 - 这类以 [作业名称 - VBR 主机名] 这个方式出现在清单中。</li>
+<li>vSphere Datastore 所包含的虚拟机 - 这类以 [Datastore] 方式出现在清单中。</li>
+<li>Veeam agent 保护组 - 这类以 [保护组名称 - VBR 主机名] 这个方式出现在清单中。</li>
+<li>vCenter Server 标签 - 这类以 [类别名 - 标签名] 这个方式出现在清单中。</li>
+</ul>
+<p>除了自动分类之外，管理员还能够通过内嵌的 Veeam ONE 的 Business View 进行手工分类，这时候分类就更加灵活了，甚至是配置上复杂的正则表达式来实现复杂的筛选和分组。</p>
+<p>这些分类里，Agent 作业和 Agent 保护组中都会出现 Agent 的对应的 Windows 或者 Linux 机器，会有重复的机器出现；而虚拟机部分备份作业、Datastore 或者 vCenter 标签也会有重复的虚拟机出现。实际在设定 Orchestration Plan 时，不同类型的分类可以混合在一个 Plan 中，重复的机器不会被计算两次，Orchestration Plan 能够自动从 Repository 中提取合适的 Restore Point 或者 Replica 进行还原。</p>
+<p>这样的对象选择方式，虽然有点烧脑，但是却能够给管理员提供极大的分组自由度，选择非常多。</p>
+<h3 id="recovery-locations">Recovery Locations</h3>
+<p>Recovery Locations 是我们的 Orchestration Plan 恢复时所要使用的物理计算资源，它包括了 Compute、Storage、Network 三大核心资源。转换成 vSphere 上，分别有如下的对应关系：</p>
+<table>
+  <thead>
+      <tr>
+          <th>VRO Recovery Locations 名称</th>
+          <th>vSphere 资源</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Compute</td>
+          <td>ESXi、Cluster</td>
+      </tr>
+      <tr>
+          <td>Storage</td>
+          <td>Datastore</td>
+      </tr>
+      <tr>
+          <td>Network</td>
+          <td>虚拟交换机上的端口组名称</td>
+      </tr>
+  </tbody>
+</table>
+<p>在 VRO 中，我们并不能直接选择某个 ESXi、Datastore 作为我们的 Recovery Location，只能通过 VRO 内嵌的 Veeam ONE 中的 Business View 引擎来获取的，这也就是本篇开头部分介绍的资源分组方法。我们首先要通过本篇开头的资源分组方法，将 Compute Resource 和 Storage Resource 按照一定规则进行分组，在这些分组设置完成后，才可以创建 Recovery Location 了。Recovery Locations 的设置需要进入 Administration 界面，找到右边的 Configuration 分类。</p>
+<p>进入 Recovery Location 界面后，会看到 VRO 已经内置了一个默认的 Recovery Location，名字叫“Original VM Location”，这是还原到虚拟机的原始所在位置，对于这个默认的 Recovery Location，我们只能对他做编辑操作，并不能删除它，而编辑操作可调整的内容也非常少。</p>
+<p>我们可以新建新的 Recovery Location 用于还原到一个新的位置。我们可以在这里创建多个 Recovery Location。通过 Add 按钮，我们可以打开添加向导：</p>
+<ol>
+<li>
+<p>这里的 Recovery Location 有三种类型，分别是 Storage、Restore 和 Cloud。我的这个例子里，我们就选择 Restore 这个场景，Storage 和 Cloud 这两个场景有兴趣的朋友可以看看官网手册详细了解。
+<a href="https://imgse.com/i/p9Xq7a4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xq7a4.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xq7a4.png, https://s1.ax1x.com/2023/05/29/p9Xq7a4.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xq7a4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xq7a4.png"
+        title="p9Xq7a4.png" /></a></p>
+</li>
+<li>
+<p>在 Recovery Location Name 步骤中，填入合适的名称，点击下一步。
+<a href="https://imgse.com/i/p9XqTZF" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqTZF.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqTZF.png, https://s1.ax1x.com/2023/05/29/p9XqTZF.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqTZF.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqTZF.png"
+        title="p9XqTZF.png" /></a></p>
+</li>
+<li>
+<p>在 Recovery Option 步骤中，默认选中了可以用于 Agent 和 vSphere 的恢复，保持不变，点击下一步。
+<a href="https://imgse.com/i/p9XqIqU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqIqU.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqIqU.png, https://s1.ax1x.com/2023/05/29/p9XqIqU.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqIqU.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqIqU.png"
+        title="p9XqIqU.png" /></a></p>
+</li>
+<li>
+<p>在 Compute Resources 步骤中，选择从 Veeam ONE 中读取过来的 Compute Resource 的分组，点击 Add。这里可以多选添加多个，并且可以通过 View Resource 按钮查看添加的集群或者主机。添加完成后点击下一步。
+<a href="https://imgse.com/i/p9Xq4MV" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xq4MV.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xq4MV.png, https://s1.ax1x.com/2023/05/29/p9Xq4MV.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xq4MV.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xq4MV.png"
+        title="p9Xq4MV.png" /></a></p>
+</li>
+<li>
+<p>在 Storage Resources 步骤中，同样，选择合适 Storage 分组。添加完成后点击下一步。
+<a href="https://imgse.com/i/p9Xqfx0" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xqfx0.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xqfx0.png, https://s1.ax1x.com/2023/05/29/p9Xqfx0.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xqfx0.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xqfx0.png"
+        title="p9Xqfx0.png" /></a></p>
+</li>
+<li>
+<p>在 Storage Options 步骤中，可以设定 vSphere Storage 使用的上限，确保不会耗尽 vSphere 的存储。同时在这个步骤中还能设置是否使用 DR site 的 backup copy 作为还原的数据源，如果是从 DR site 进行恢复，这个选项必选。
+<a href="https://imgse.com/i/p9XqW2q" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqW2q.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqW2q.png, https://s1.ax1x.com/2023/05/29/p9XqW2q.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqW2q.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqW2q.png"
+        title="p9XqW2q.png" /></a></p>
+</li>
+<li>
+<p>在 Agent Network 步骤中，可以为 Agent 恢复的机器选择网络的 Mapping 规则，从源网络对应至 vSphere 中合适的端口组，比如我在源网络中设置了所有来自 10.10.1.0/24 的机器，对应到 VLAN1 的端口组。
+<a href="https://imgse.com/i/p9Xq5rT" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xq5rT.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xq5rT.png, https://s1.ax1x.com/2023/05/29/p9Xq5rT.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xq5rT.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xq5rT.png"
+        title="p9Xq5rT.png" /></a></p>
+</li>
+<li>
+<p>在 VM Network 步骤中，和上一步的设置一样，只是适用于虚拟化的环境，源端的选择是源端 vCenter 上的端口组。
+<a href="https://imgse.com/i/p9Xqc5j" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xqc5j.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xqc5j.png, https://s1.ax1x.com/2023/05/29/p9Xqc5j.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xqc5j.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xqc5j.png"
+        title="p9Xqc5j.png" /></a></p>
+</li>
+<li>
+<p>在 Re-IP 步骤中可以为 Windows 机器设置修改 IP 的规则，这一步我的这个例子中就不添加了，恢复后不修改 IP 地址。
+<a href="https://imgse.com/i/p9XqyVg" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XqyVg.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XqyVg.png, https://s1.ax1x.com/2023/05/29/p9XqyVg.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XqyVg.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XqyVg.png"
+        title="p9XqyVg.png" /></a></p>
+</li>
+<li>
+<p>在 Data Sovereignty 步骤是设定恢复数据恢复的物理位置的，通过 VBR 的 Location 功能来实现数据恢复的合规性。这里也不勾选，保持默认。
+<a href="https://imgse.com/i/p9Xq6aQ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xq6aQ.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xq6aQ.png, https://s1.ax1x.com/2023/05/29/p9Xq6aQ.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xq6aQ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xq6aQ.png"
+        title="p9Xq6aQ.png" /></a></p>
+</li>
+<li>
+<p>最后 Summary 看下设置是否正确，就完成了 Recovery Location 的创建。
+<a href="https://imgse.com/i/p9Xq2Ps" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xq2Ps.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xq2Ps.png, https://s1.ax1x.com/2023/05/29/p9Xq2Ps.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xq2Ps.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xq2Ps.png"
+        title="p9Xq2Ps.png" /></a></p>
+</li>
+</ol>
+<p>在 Configuration 下面创建完 Recovery Locations 之后，我们需要在 Scope Inclusions 中，为某个 Scope 选择所能用的 Recovery Locations，和 Groups 一样，切换到 Recovery Locations 标签卡后，勾选需要的 Recovery Locations 之后，点击 Include 即可。</p>
+<h2 id="plan-steps">Plan Steps</h2>
+<p>Plan Steps 是所有我们在 Orchestration Plan 中可以用的操作，Veeam 系统内置了绝大多数恢复或者验证系统时要用的步骤。当然我们也可以额外再添加一些新的自定义脚本。添加新的自定义脚本需要通过管理员账号进入 Administration，找到 Configuration 下面的 Plan Steps，在这里进行新的 Step 的定义。关于自定义 Step，涉及到更多的脚本方面的内容，我计划在后面的详细 DR 实例中再进行详细介绍，这里就不展开了。</p>
+<p>定义完成之后，还是需要回到 Scope Inclusions 中，为某个 Scope 选择所能使用的 Plan Step，在 Plan Steps 标签卡下，勾选需要的 Step 后，点击 Include，确保已经包含即可。</p>
+<h2 id="credentials">Credentials</h2>
+<p>Credentials 是我们在灾备中需要用到的用户名密码，用于执行一些操作系统内的自动化脚本，这里 VRO 会从 VBR 中将所有已经设置的用户名密码继承过来，稍微有些不同的是，对于用户名密码，我们可以在这个标签卡下点击 Add 来新增。我们在这个标签卡下需要做的事情也很简单，只需将需要使用到的用户名密码在这里勾选点击 Include 即可。目前来说，这里的 Credentials 仅限 Windows 类型的用户名密码，但是这些 Simple 类型的用户名密码有时候也能作为参数传递给 Linux Server 用户用户名密码的验证，而更安全的 key pair 方式的登录认证暂时在这个密码箱里不受支持。</p>
+<h2 id="template-jobs">Template Jobs</h2>
+<p>VRO 在做完灾备切换和灾备恢复后，能第一时间即刻对新恢复出来的系统进行数据保护，确保第一时间系统时处于被保护的状态，这一功能需要 VRO 有一个 VBR 备份作业的模板作为参考。在每一个 Scope 中，都可以设定需要使用的 Template Job。这个 Template Job 并不是在 VRO 中设定的，它是直接从 VBR 中进行获取，获取的规则也很简单，只要 VBR 的 Backup Job 中作业的 Description 中写入了* [VDRO Template] *字样就能被 VRO 正确获取。</p>
+<p>以上就是 VRO 所有的基础组件，谢谢阅读并关注。</p>
+<p><a href="https://imgse.com/i/p9XjXkD" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XjXkD.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XjXkD.png, https://s1.ax1x.com/2023/05/29/p9XjXkD.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XjXkD.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XjXkD.png"
+        title="p9XjXkD.png" /></a>
+<a href="https://imgse.com/i/p9XjLTO" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XjLTO.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XjLTO.png, https://s1.ax1x.com/2023/05/29/p9XjLTO.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XjLTO.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XjLTO.png"
+        title="p9XjLTO.png" /></a>
+<a href="https://imgse.com/i/p9Xjjte" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xjjte.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xjjte.png, https://s1.ax1x.com/2023/05/29/p9Xjjte.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xjjte.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xjjte.png"
+        title="p9Xjjte.png" /></a>
+<a href="https://imgse.com/i/p9XjvfH" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XjvfH.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XjvfH.png, https://s1.ax1x.com/2023/05/29/p9XjvfH.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XjvfH.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XjvfH.png"
+        title="p9XjvfH.png" /></a>
+<a href="https://imgse.com/i/p9Xjzpd" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xjzpd.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xjzpd.png, https://s1.ax1x.com/2023/05/29/p9Xjzpd.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xjzpd.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xjzpd.png"
+        title="p9Xjzpd.png" /></a>
+<a href="https://imgse.com/i/p9XvS1A" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9XvS1A.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9XvS1A.png, https://s1.ax1x.com/2023/05/29/p9XvS1A.png 1.5x, https://s1.ax1x.com/2023/05/29/p9XvS1A.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9XvS1A.png"
+        title="p9XvS1A.png" /></a>
+<a href="https://imgse.com/i/p9Xvp6I" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xvp6I.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xvp6I.png, https://s1.ax1x.com/2023/05/29/p9Xvp6I.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xvp6I.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xvp6I.png"
+        title="p9Xvp6I.png" /></a>
+<a href="https://imgse.com/i/p9Xv9Xt" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/29/p9Xv9Xt.png"
+        data-srcset="https://s1.ax1x.com/2023/05/29/p9Xv9Xt.png, https://s1.ax1x.com/2023/05/29/p9Xv9Xt.png 1.5x, https://s1.ax1x.com/2023/05/29/p9Xv9Xt.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/29/p9Xv9Xt.png"
+        title="p9Xv9Xt.png" /></a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-30</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/05/vro-v6-guide-04/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F05%2Fvro-v6-guide-04%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F05%2Fvro-v6-guide-04%2F&amp;text=VRO&#43;%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89&#43;-&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6&#43;%C2%B7&#43;%E4%B8%8B%E7%AF%87" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F05%252Fvro-v6-guide-04%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F05%252Fvro-v6-guide-04%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/05/vro-v6-guide-03/" class="prev" rel="prev" title="VRO 基础入门（三） -  基本组件 · 上篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO 基础入门（三） -  基本组件 · 上篇</a>
+            <a href="/2023/06/vro-v6-guide-05/" class="next" rel="next" title="VRO 基础入门（六） -  成功灾备计划的第一步">VRO 基础入门（六） -  成功灾备计划的第一步<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

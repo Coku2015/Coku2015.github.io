@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>有手就能装！Veeam Software Appliance 一步一步带你部署 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="有手就能装！Veeam Software Appliance 一步一步带你部署">
+  <meta property="og:description" content="在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 Veeam Software Appliance 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 Veeam Software Appliance 的部署和使用。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-05T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="有手就能装！Veeam Software Appliance 一步一步带你部署">
+  <meta name="twitter:description" content="在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 Veeam Software Appliance 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 Veeam Software Appliance 的部署和使用。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "有手就能装！Veeam Software Appliance 一步一步带你部署",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-02\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  3035 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-02\/","datePublished": "2025-09-05T00:00:00+00:00","dateModified": "2025-09-05T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">有手就能装！Veeam Software Appliance 一步一步带你部署</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-05">2025-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3035 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备工作获取-iso-镜像">准备工作：获取 ISO 镜像</a>
+      <ul>
+        <li><a href="#不同系统的比对方法">不同系统的比对方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#iso-使用方式详解">ISO 使用方式详解</a></li>
+    <li><a href="#安装和初始化配置">安装和初始化配置</a>
+      <ul>
+        <li><a href="#引导安装">引导安装</a></li>
+        <li><a href="#初始化配置">初始化配置</a></li>
+        <li><a href="#使用-webui-进行高级配置">使用 WebUI 进行高级配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#小结--下期预告">小结 &amp; 下期预告</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 <strong>Veeam Software Appliance</strong> 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 <strong>Veeam Software Appliance</strong> 的部署和使用。</p>
+<p>Veeam 官方为这个 Appliance 提供了两种部署方式：<strong>ISO 镜像</strong>和 <strong>OVA 模板</strong>。为了不让大家一上来就“菜单太多”，本篇我们先专注在 <strong>ISO 镜像</strong>这种方式上。和我们平时在操作系统里“挂载一个 ISO 文件”不一样，这个 ISO 是一张完整的系统引导盘，你需要用它来启动服务器或虚拟机，就像给一台新电脑装系统一样。</p>
+<h2 id="准备工作获取-iso-镜像">准备工作：获取 ISO 镜像</h2>
+<p>上一篇我们已经给出了下载链接，这里就不再重复贴地址，但在正式动手之前，我一定要<strong>郑重提醒大家一件事</strong>：无论你从哪里下载 Veeam Software Appliance 的 ISO，<strong>一定要校验你下载的 ISO 文件的 MD5/SHA-1 校验值！</strong></p>
+<p>为什么要这么做？
+在今天的网络环境里，下载大文件并不总是“干干净净”的。比如：</p>
+<ul>
+<li>
+<p>有些公共 Wi-Fi 或被恶意软件感染的电脑，会<strong>劫持浏览器的下载请求</strong>，把你重定向到看似一样的“下载地址”；</p>
+</li>
+<li>
+<p>攻击者也可能在中间链路里“掉包”，把原本的官方包替换成植入后门的恶意版本；</p>
+</li>
+<li>
+<p>即便是官方站点，如果遭遇短暂的入侵或 DNS 污染，也有可能导致你拿到的不是原版文件。
+这些情况用户肉眼完全看不出来，界面、文件名、大小都可能一模一样。</p>
+<p><strong>唯一可靠的办法</strong>就是比对 Veeam 官网提供的 MD5 或 SHA-1 校验码——就像比对“指纹”，指纹一致才是真身。</p>
+</li>
+</ul>
+<h3 id="不同系统的比对方法">不同系统的比对方法</h3>
+<p>无论是 Windows、Linux 还是 macOS 用户，现在我们都有非常方便的比对方法，这里大家一定要记得快速比较下载到的文件。下面我把比较方法列出，不同的系统只要复制粘贴到命令行，就能直接比较啦。</p>
+<p>💻 <strong>Windows</strong>
+在 PowerShell 中执行（官网文件名为 <code>VeeamSoftwareAppliance_13.0.0.4967_20250822.iso</code>）：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># 校验 MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">VeeamSoftwareAppliance_13</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">4967_20250822</span><span class="p">.</span><span class="py">iso</span> <span class="n">-Algorithm</span> <span class="n">MD5</span><span class="p">).</span><span class="py">Hash</span><span class="p">.</span><span class="py">ToLower</span><span class="p">()</span> <span class="o">-eq</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;✅ MD5 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;❌ MD5 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># 校验 SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">VeeamSoftwareAppliance_13</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">4967_20250822</span><span class="p">.</span><span class="py">iso</span> <span class="n">-Algorithm</span> <span class="n">SHA1</span><span class="p">).</span><span class="py">Hash</span><span class="p">.</span><span class="py">ToLower</span><span class="p">()</span> <span class="o">-eq</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;✅ SHA-1 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;❌ SHA-1 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>🍏<strong>macOS</strong></p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 校验 MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>md5 -q VeeamSoftwareAppliance_13.0.0.4967_20250822.iso<span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ MD5 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ MD5 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 校验 SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>shasum -a <span class="m">1</span> VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ SHA-1 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ SHA-1 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
+<p>💻<strong>Linux</strong></p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 校验 MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>md5sum VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ MD5 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ MD5 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 校验 SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha1sum VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ SHA-1 校验一致&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ SHA-1 校验不一致，请重新下载&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
+<p>校验码就是“官方指纹”，只有完全一致才能确定拿到的是真正的官方原版文件，这是避开网上下载的程序被植入恶意程序的唯一方法。</p>
+<h2 id="iso-使用方式详解">ISO 使用方式详解</h2>
+<p>在文章开头我们提到过，这个 ISO 与以往的 Veeam 软件安装包不同，它并不是单纯的软件 ISO，而是<strong>包含操作系统和 Veeam 软件的一体化镜像</strong>。换句话说，这个 ISO 本身就能像全新的操作系统安装盘一样，引导服务器或虚拟机启动，并进行完整的系统部署。</p>
+<p>由于如今大家很少有“全新装系统”的需求，很多读者朋友拿到这种 ISO 可能会一时不知如何下手。其实，它大致有三种典型的使用场景：</p>
+<ol>
+<li><strong>光盘刻录</strong>（传统方式，方法简单，这里不展开）</li>
+<li><strong>虚拟机挂载 ISO</strong>（直接在虚拟化平台加载 ISO 启动，方法也很直观）</li>
+<li><strong>制作可启动 U 盘</strong>（将 ISO 烧录进 U 盘，插入服务器用 U 盘引导即可安装）</li>
+</ol>
+<p>前两种方式相对容易操作，这里就不详细展开了；<strong>我们重点介绍第三种方式——用 Rufus 制作启动 U 盘</strong>。
+Rufus 是一款非常轻量级、无需安装、功能强大的 U 盘启动盘制作工具，尤其值得一提的是，它内置了 <strong>MD5 与 SHA-1 校验功能</strong>，正好可以配合我们上一章节中提到的校验方法，帮助你快速验证下载的 ISO 文件完整性。下面我们就来看看 Rufus 的下载安装与使用步骤。</p>
+<p>Rufus 使用步骤非常简单：</p>
+<ol>
+<li>打开 Rufus 官方网站：<a href="https://rufus.ie/" target="_blank" rel="noopener noreffer ">https://rufus.ie/</a></li>
+<li>在页面中选择最新版本的 <strong>类型是便携版</strong> 下载到本地。</li>
+<li>下载完成后，双击即可直接运行，无需安装，它有全中文的使用界面，非常友好。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png"
+        data-srcset="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png, https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png 1.5x, https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png"
+        title="Xnip2025-09-05_10-17-20" /></p>
+<h2 id="安装和初始化配置">安装和初始化配置</h2>
+<h3 id="引导安装">引导安装</h3>
+<p>当我们用刚才制作好的 U 盘引导服务器或虚拟机时，屏幕上出现的不是传统操作系统安装界面，而是 <strong>Veeam Software Appliance</strong> 的专用安装菜单。这张 ISO 里已经把操作系统和 Veeam 软件打包在一起，启动后就是“一体化”的安装体验。</p>
+<p>主菜单清晰列出了两个主要组件：</p>
+<ul>
+<li>**Veeam Backup &amp; Replication **</li>
+<li><strong>Veeam Backup Enterprise Manager</strong></li>
+<li>**UEFI Firmware Settings **</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png"
+        data-srcset="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png, https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png 1.5x, https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png"
+        title="Xnip2025-09-05_10-30-48" /></p>
+<p>为了方便，还附带了一个 <strong>UEFI 设置选项</strong>，可以在不退出安装程序的情况下调整引导参数。</p>
+<p>在 VBR 或 Enterprise Manager 的子菜单中，你会看到两个操作：</p>
+<ul>
+<li><strong>Install</strong> – 全新安装，删除所有数据（推荐在新环境使用）</li>
+<li><strong>Reinstall</strong> – 保留数据的重新安装</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png"
+        data-srcset="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png, https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png 1.5x, https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png"
+        title="Xnip2025-09-05_10-32-10" /></p>
+<p>如果你选择 <strong>Install</strong>，系统会立刻弹出提示：<strong>“即将清空当前服务器挂载磁盘上的所有数据”</strong>。只要你点击 <strong>Yes</strong> 确认，之后就进入全自动安装流程</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png"
+        data-srcset="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png, https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png 1.5x, https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png"
+        title="Xnip2025-09-05_10-33-09" /></p>
+<p>没有繁琐的分区、没有一堆选项，全程几乎无需操作，就像给电脑做一个 Ghost 还原一样简单。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png"
+        data-srcset="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png, https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png 1.5x, https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png"
+        title="Xnip2025-09-05_10-33-30" /></p>
+<p>安装完成后，右下角的 Reboot System 就会亮起，点击或者等待几秒后系统自动重启，即可进入 VBR。</p>
+<p>这个 Appliance 安装完成之后，默认会包含两个常规的设备管理控制台，一个是酷炫纯文本的界面（TUI），另外一个是浏览器访问的 Web 界面（WebUI）</p>
+<h3 id="初始化配置">初始化配置</h3>
+<p>重启后进入系统，会直接进入 TUI，在这里需要首先做一些初始化配置，才能正常使用备份服务器。</p>
+<p>在初始化配置向导的第一步，首先是 Veeam EULA 和一些第三方许可的确认界面，直接用键盘方向键操作或者 Tab 键操作即可，选中 Accept 进入下一步。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png"
+        data-srcset="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png, https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png 1.5x, https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png"
+        title="Xnip2025-09-05_10-46-17" /></p>
+<p>第二步是配置主机名，像我这里，配置了完整的 FQDN，并在我的 DNS Server 上做好了解析。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png"
+        data-srcset="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png, https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png 1.5x, https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png"
+        title="Xnip2025-09-05_10-47-14" /></p>
+<p>下一步是配置网络，我的环境中，没有 IPv6 的要求，我就只配置了 IPv4 的地址。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png"
+        data-srcset="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png, https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png 1.5x, https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png"
+        title="Xnip2025-09-05_10-49-19" /></p>
+<p>配置完成后，可以点击 Next 进入下一步。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png"
+        data-srcset="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png, https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png 1.5x, https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png"
+        title="Xnip2025-09-05_10-50-41" /></p>
+<p>再往下是时区和时间配置，这个对于备份系统来说非常重要，时间同步不仅用于登陆时的多因子验证，还要用于日常备份的各种操作，包括数据不可变。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png"
+        data-srcset="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png, https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png 1.5x, https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png"
+        title="Xnip2025-09-05_10-51-26" /></p>
+<p>然后是设置第一个管理员的密码，默认管理员用户名叫 veeamadmin，密码有非常严格的复杂度要求，为了 lab 环境使用方便，我一般会设置为：</p>
+<ul>
+<li><code>123Q123q123!123</code></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png"
+        data-srcset="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png, https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png 1.5x, https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png"
+        title="Xnip2025-09-05_10-52-01" /></p>
+<p>接下来会提示绑定多因子验证的设备，大家可以任选合适的手机上的 MFA 工具扫码绑定，我一般喜欢用微软的 Authenticator，这个支持备份数据，还是比国内的一些 App 要靠谱。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png"
+        data-srcset="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png, https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png 1.5x, https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png"
+        title="Xnip2025-09-05_10-54-57" /></p>
+<p>下一步是 Security Officer 选项，这个在复杂的生产环境是比较建议配置的，我的 Lab 我就直接勾选 Skip setting 了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png"
+        data-srcset="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png, https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png 1.5x, https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png"
+        title="Xnip2025-09-05_10-55-28" /></p>
+<p>最后来到 Summary 界面，做一些配置检查后，点击 Finish 就可以完成初始化配置了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png"
+        data-srcset="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png, https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png 1.5x, https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png"
+        title="Xnip2025-09-05_10-55-48" /></p>
+<p>配置完成后，就进入了日常待机的主画面。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png"
+        data-srcset="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png, https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png 1.5x, https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png"
+        title="Xnip2025-09-05_11-41-09" /></p>
+<p>接下去，我们就可以通过主画面的提示进一步进入 TUI 的高级配置中，进行一些主机配置的维护和调整，其中包括了主机配置、远程访问配置、修改密码、重启系统等等常规维护功能。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png"
+        data-srcset="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png, https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png 1.5x, https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png"
+        title="Xnip2025-09-05_11-42-47" /></p>
+<h3 id="使用-webui-进行高级配置">使用 WebUI 进行高级配置</h3>
+<p>在 TUI 上提示了两个地址，一个是 Host Management console，另外一个是 Veeam Backup &amp; Replication web UI。对于 Appliance 的进阶高级管理配置，可以通过 Host Management console 进入进行配置。进入的时候一样会提示输入密码和 MFA 的验证码。</p>
+<p>以上，Veeam Backup &amp; Replication 就安装完成了，至于 Veeam Backup Enterprise Manager，安装过程类似，就不在这里详细说明了，留给大家自己探索喽。</p>
+<h2 id="小结--下期预告">小结 &amp; 下期预告</h2>
+<p>这一期，我带大家从头到尾走了一遍 <strong>Veeam Software Appliance</strong> 的 ISO 使用流程：</p>
+<p>从官网下载镜像并校验完整性 → 使用 Rufus 制作启动 U 盘 → 引导服务器自动安装 → 在 TUI 界面完成最基础的初始化与管理。
+你会发现整个过程几乎不需要复杂操作，只要准备好介质、跟着步骤点几下，任何人都能完成。</p>
+<p>下一期，我们将正式走进 <strong>V13 版本</strong>的产品界面，深入体验它们的功能与新特性，看看全新版本到底有多强大。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-02%2F&amp;text=%E6%9C%89%E6%89%8B%E5%B0%B1%E8%83%BD%E8%A3%85%EF%BC%81Veeam&#43;Software&#43;Appliance&#43;%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E5%B8%A6%E4%BD%A0%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam-software-appliance-01/" class="prev" rel="prev" title="Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</a>
+            <a href="/2025/09/veeam-software-appliance-03/" class="next" rel="next" title="你必须知道的：Veeam Software Appliance 全新的管理使用方法">你必须知道的：Veeam Software Appliance 全新的管理使用方法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

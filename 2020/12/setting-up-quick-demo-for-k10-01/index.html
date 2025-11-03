@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2020/12/setting-up-quick-demo-for-k10-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境">
+  <meta property="og:description" content="Release Notes: v1.2 2021/06/04 - 加入本地 Registry，内置 K10 v4.0.3 镜像，可以在安装 k10 时使用--set global.airgapped.repository=localhost:5000 来直接调用本地的 docker 镜像库
+Virtual Appliance 版本更新为 v1.2，对应网盘中文件为： UbuntuK10-v1.2.ova">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-12-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-12-07T00:00:00+00:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境">
+  <meta name="twitter:description" content="Release Notes: v1.2 2021/06/04 - 加入本地 Registry，内置 K10 v4.0.3 镜像，可以在安装 k10 时使用--set global.airgapped.repository=localhost:5000 来直接调用本地的 docker 镜像库
+Virtual Appliance 版本更新为 v1.2，对应网盘中文件为： UbuntuK10-v1.2.ova">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2020/12/setting-up-quick-demo-for-k10-01/" /><link rel="prev" href="http://192.168.16.79:1313/2020/09/veeam-linux-agent-101/" /><link rel="next" href="http://192.168.16.79:1313/2021/02/vmware-vaio-overview/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2020\/12\/setting-up-quick-demo-for-k10-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Kubernetes","wordcount":  1907 ,
+        "url": "http:\/\/192.168.16.79:1313\/2020\/12\/setting-up-quick-demo-for-k10-01\/","datePublished": "2020-12-07T00:00:00+00:00","dateModified": "2020-12-07T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-12-07">2020-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1907 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#release-notes-v12">Release Notes: v1.2</a></li>
+            <li><a href="#release-notes-v11">Release Notes: v1.1</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#虚拟一体机使用说明">虚拟一体机使用说明：</a></li>
+    <li><a href="#这些脚本都用来干啥">这些脚本都用来干啥？</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#0-miniosh">0-minio.sh</a></li>
+            <li><a href="#1-createk8ssh">1-createk8s.sh</a></li>
+            <li><a href="#2-loadimagesh">2-loadimage.sh</a></li>
+            <li><a href="#3-storagesh">3-storage.sh</a></li>
+            <li><a href="#4-wordpresssh">4-wordpress.sh</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h4 id="release-notes-v12">Release Notes: v1.2</h4>
+<p><em>2021/06/04 - 加入本地 Registry，内置 K10 v4.0.3 镜像，可以在安装 k10 时使用</em><code>--set global.airgapped.repository=localhost:5000</code> <em>来直接调用本地的 docker 镜像库</em></p>
+<p><em>Virtual Appliance 版本更新为 v1.2，对应网盘中文件为：
+UbuntuK10-v1.2.ova</em></p>
+<h4 id="release-notes-v11">Release Notes: v1.1</h4>
+<p><em>2021/05/03 日 - 尝试了 Stateful MySQL 的部署，将一体机中内置的 Demo 应用改成了 Helm 安装的 MySQL，这样，可以通过这个 vApp 来快速 Demo 和测试有状态应用的备份和恢复。</em></p>
+<p><em>Virtual Appliance 版本更新为 v1.1，对应网盘中文件为：
+UbuntuK10-v1.1.ova</em></p>
+<p>自从 Veeam 收购 Kasten 之后，最近玩 K8S 特别多，最大的体会是，茫茫多的各种命令和对互联网的强烈需求，假如连不了网，特别是连不了国外的容器镜像站点时，通常的情况就是抓瞎，啥都干不了。当然，这在各位 K8S 和容器大拿眼里，并不是什么问题，而对于广大非软件开发专业的系统管理员和系统工程师来说，挑战着实不小。</p>
+<p>要搭建一套 Kasten K10 的 Lab 环境，其基础条件是 K8S 群集，Kasten K10 是原生的云应用，它赖以运行的环境和备份恢复的对象都是 K8S。因此，摆在我们面前的难题变成了简单快速不费劲的搭建一套 K8S 环境并且部署一个简单的有状态应用。这在没有网络的情况下，实在是太为难了。不过，办法总比困难多，不是吗？这点小小的阻碍完全难不倒熟练使用虚拟化技术的虚拟化管理员，在做了一番功课之后，我借鉴了 Veeam 日本的同事分享的快速部署脚本，使用了虚拟化中独特的 OVF（Open Virtualization Format）方式，将这个过程封装成了一个虚拟一体机（Virtual Appliance），让这个 Demo Lab 的搭建过程大大简化，实现了不需要任何网络下载，即可搭建出这样一套单节点群集，并且内置了包含 MySQL 数据库的 WordPress 应用。</p>
+<p>先放上这个虚拟一体机的下载链接：</p>
+<p><a href="https://cloud.189.cn/t/mAnyMrA36vam" target="_blank" rel="noopener noreffer ">https://cloud.189.cn/t/mAnyMrA36vam</a>（访问码：wd69）</p>
+<p>需要说明的一点是，这个虚拟一体机为个人测试研究所用，不得用于任何商业目的，本人不保证这个设备的安全性、可靠性和稳定性，请各位使用者自行判断。</p>
+<h2 id="虚拟一体机使用说明">虚拟一体机使用说明：</h2>
+<p>熟练使用 VMware 虚拟化的管理员，可以将该 OVA 文件导入到 VMware vSphere 或者 VMware Workstation，导入过程中，导入向导会提示配置网络和 IP 地址信息如下图，特别注意其中 Netmask 需要用 CIDR 格式：</p>
+<p><a href="https://imgchr.com/i/DziVDU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2020/12/07/DziVDU.png"
+        data-srcset="https://s3.ax1x.com/2020/12/07/DziVDU.png, https://s3.ax1x.com/2020/12/07/DziVDU.png 1.5x, https://s3.ax1x.com/2020/12/07/DziVDU.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2020/12/07/DziVDU.png"
+        title="DziVDU.png" /></a></p>
+<p>在导入完成后，虚拟一体机的首次启动中，会自动配置设备的 IP 地址。等到配置完成后，可以使用 ssh 连接登入系统进行 K8S 环境的基础配置。访问的初始用户名密码为：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-PlainTXT">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code class="language-PlainTXT" data-lang="PlainTXT">username: k10
+Password: P@ssw0rd</code></pre></div>
+<p>进入系统后，使用<code>sudo -i</code>命令进入 root 用户。</p>
+<p>K8S 群集初始化需要按顺序执行/root/目录下的 5 个脚本文件，分别是：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-PlainTXT">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code class="language-PlainTXT" data-lang="PlainTXT">0-minio.sh
+1-createk8s.sh
+2-loadimage.sh
+3-storage.sh
+4-wordpress.sh</code></pre></div>
+<p>脚本执行过程中所涉及到的需要用到的相关文件，我已经全部放置在/root/目录下了，脚本会自动调用这些文件。</p>
+<h2 id="这些脚本都用来干啥">这些脚本都用来干啥？</h2>
+<h4 id="0-miniosh">0-minio.sh</h4>
+<p>这个脚本会使用开源对象存储领域第一块招牌 minio(<a href="https://minio.io" target="_blank" rel="noopener noreffer ">https://minio.io</a>) ，创建出一套本地的对象存储，命令执行后，对象存储就运行起来了，可以通过 https://&lt;虚拟一体机 IP&gt;:9000 来访问对象存储的 web 界面，web 界面的初始用户名密码：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-PlainTXT">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code class="language-PlainTXT" data-lang="PlainTXT">username: minioadmin
+Password: minioadmin</code></pre></div>
+<h4 id="1-createk8ssh">1-createk8s.sh</h4>
+<p>这个脚本是使用 Kind 技术（K8S in Docker），在容器中运行 K8S 的节点来快速部署 K8S 的群集，K8S 所用到的容器镜像已经提前被内置在这个一体机中，因此不需要去网上下载 1.3G 左右的 K8S docker 镜像。可以在运行脚本之前通过以下命令来确认 K8S docker image 已经就位：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker images list <span class="p">|</span> grep kind</span></span></code></pre></div></div>
+<p>在脚本运行完成后，就可以正常使用 kubectl 的命令来查看所有 K8S 的资源了，这时候 kubectl 的所有命令都能正常使用了。比如，你可以试试这个：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl get nodes</span></span></code></pre></div></div>
+<h4 id="2-loadimagesh">2-loadimage.sh</h4>
+<p>这个脚本其实没什么特别秘密，纯粹是为后面第四第五个脚本做准备，它会将本地的 docker 镜像 push 到<code>localhost:5000</code>这个本地镜像库中，同时将内置在本地 Ubuntu 中的部分 docker images 加载到 Kind 中，供 Kind 使用。</p>
+<h4 id="3-storagesh">3-storage.sh</h4>
+<p>这个脚本为 K8S 群集创建本地的 CSI Hostpath driver，其用到的脚本可以在（https://github.com/kubernetes-csi/csi-driver-host-path）中找到，我对这个脚本要用到的互联网下载链接做了修改，更改为所有 yaml 文件都用本地/root/文件夹中的文件，并且对于这个脚本中用到的所有 docker image，也提前从互联网上 pull 下来并在上一步加载至 Kind 中。</p>
+<p>在运行脚本前，可以通过以下命令查询部署前的 storage class：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl get sc</span></span></code></pre></div></div>
+<p>在脚本运行完成后，可以通过再次运行这个命令，查看到新配置好的 storage class。</p>
+<p>另外，这一步中会部署多个 pod 到 default 的 namespace，查看这一步部署状况的另外一个有用命令为：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl get pod</span></span></code></pre></div></div>
+<h4 id="4-wordpresssh">4-wordpress.sh</h4>
+<p>该脚本作用也很简单，部署一个 WordPress 应用，内置 Stateful 的 MySQL 数据库，部署完成后，需要运行以下命令进行端口转发后，使用浏览器访问以下地址进行后续配置 http://&lt;虚拟一体机 IP&gt;。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl port-forward --address 0.0.0.0 svc/wordpress 80:80 -n wordpress</span></span></code></pre></div></div>
+<p>以上就是这个虚拟 k8s 一体机的简要使用说明，在部署完这套环境后，即可使用（https://docs.kasten.io）上的文档进行 Kasten 的正常安装配置使用了。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/12/setting-up-quick-demo-for-k10-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2020%2F12%2Fsetting-up-quick-demo-for-k10-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2020%2F12%2Fsetting-up-quick-demo-for-k10-01%2F&amp;text=Kasten&#43;K10&#43;%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97&#43;01&#43;-&#43;%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA&#43;K8S&#43;%E5%8D%95%E8%8A%82%E7%82%B9%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2020%252F12%252Fsetting-up-quick-demo-for-k10-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2020%252F12%252Fsetting-up-quick-demo-for-k10-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/09/veeam-linux-agent-101/" class="prev" rel="prev" title="Veeam Agent for Linux 基础知识"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Agent for Linux 基础知识</a>
+            <a href="/2021/02/vmware-vaio-overview/" class="next" rel="next" title="VMware VAIO 技术概览">VMware VAIO 技术概览<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>改造 HOME LAB 之把 ESXi 装进 M6400 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/08/esxi-in-m4800/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="改造 HOME LAB 之把 ESXi 装进 M6400">
+  <meta property="og:description" content="上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-08-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-08-27T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="改造 HOME LAB 之把 ESXi 装进 M6400">
+  <meta name="twitter:description" content="上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/08/esxi-in-m4800/" /><link rel="prev" href="http://192.168.16.79:1313/2017/08/speed-up-02/" /><link rel="next" href="http://192.168.16.79:1313/2018/01/centrilized-agent-management/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "改造 HOME LAB 之把 ESXi 装进 M6400",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/08\/esxi-in-m4800\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  769 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/08\/esxi-in-m4800\/","datePublished": "2017-08-27T00:00:00+00:00","dateModified": "2017-08-27T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">改造 HOME LAB 之把 ESXi 装进 M6400</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Categories</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-08-27">2017-08-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 769 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。</p>
+<p>不过犹豫再三，觉得平时 LAB 里面还是需要保留一套 Hyper-V，公司配备的 Dell M4800 工作站内置的硬盘做成 VMFS 有点可惜了，正巧手边有一块退休的 USB3.0 移动硬盘，萌生了 1 套 LAB 硬件同时做 Hyper-V 和 VMware 的念头。Google 一小会儿，把自己的想法验证下，看看是否有一些素材能够支持这样的做法，一点不意外，完全可行。</p>
+<p><strong>M4800 配置：</strong></p>
+<p>CPU：i7-4710MQ@ 2.5GHz</p>
+<p>MEM：32GB</p>
+<p>Disk（internal）：SAMSUNG SSD 500G</p>
+<p>​                Seagate SATA 500G</p>
+<p>Network：Intel i217-LM</p>
+<p><strong>外置设备：</strong></p>
+<p>USB Stick：U 盘 8GB，用于启动系统</p>
+<p>USB HDD：WD 2TB SATA，通过 USB3.0 接入至 M4800，用于 local datastore</p>
+<p>DELL customized ESXi：可以至 Dell 官网查找下载，<strong>阅读原文</strong>可以快速跳转</p>
+<p>动手开干！</p>
+<p>部署 ESXi 过程非常简单，顺利的引导，识别出 8GB 的 U 盘，5 分钟后安装完成。进系统配 IP、主机名等一系列初始化工作，完成之后加入到现有的 VC 中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ITHO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ITHO.png, https://s2.ax1x.com/2020/02/12/17ITHO.png 1.5x, https://s2.ax1x.com/2020/02/12/17ITHO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ITHO.png"
+        title="17ITHO.png" /></p>
+<p>接下去要解决重头戏，添加 External USB HDD，事实上在 VMware 官方来说，是并不支持使用 USB HDD 作为 datastore 用于生产环境，但是作为 Home LAB 来说，这可是一个好功能啊~</p>
+<p>添加过程如下（注意以下过程仅适合 ESXi 6.0）：</p>
+<ol>
+<li>
+<p>打开 ESXi 的 SSH，并连接上。</p>
+</li>
+<li>
+<p>[root@esxim4800:~] ls /dev/disks</p>
+</li>
+</ol>
+<p>​    找到输出中有相应的 usb hdd 信息：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>mpx.vmhba38:C0:T0:L0
+mpx.vmhba38:C0:T0:L0:1
+mpx.vmhba38:C0:T0:L0:2</code></pre></div>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[root@esxim4800:~] partedUtil mklabel/dev/disks/mpx.vmhba38\:C0\:T0\:L0 gpt</code></pre></div>
+<ol start="3">
+<li>计算 vmfs 卷的 end sector</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[root@esxim4800:~] eval expr $(partedUtilgetptbl /dev/disks/mpx.vmhba38\:C0\:T0\:L0 | tail -1 | awk &#39;{print $1 &#34;\\* &#34; $2 &#34; \\* &#34; $3}&#39;) – 13907024064</code></pre></div>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[root@esxim4800:~] partedUtil setptbl/dev/disks/mpx.vmhba38\:C0\:T0\:L0 gpt &#34;12048 3907024064 AA31E02A400F11DB9590000C2911D1B8 </code></pre></div>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[root@esxim4800:~] vmkfstools -C vmfs5 -SUSB-LOCAL /dev/disks/mpx.vmhba38\:C0\:T0\:L0:1</code></pre></div>
+<p>至此，回到 vSphere Client 中就能看的已经添加的名字叫 USB-LOCAL 的 datastore 了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17IbUe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17IbUe.png, https://s2.ax1x.com/2020/02/12/17IbUe.png 1.5x, https://s2.ax1x.com/2020/02/12/17IbUe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17IbUe.png"
+        title="17IbUe.png" /></p>
+<p>双系统改造完成，只要选择从本地硬盘启动即可回到 Windows2016 的 Hyper-V，而平时将会一直运行 ESXi。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-08-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/08/esxi-in-m4800/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F08%2Fesxi-in-m4800%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F08%2Fesxi-in-m4800%2F&amp;text=%E6%94%B9%E9%80%A0&#43;HOME&#43;LAB&#43;%E4%B9%8B%E6%8A%8A&#43;ESXi&#43;%E8%A3%85%E8%BF%9B&#43;M6400" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F08%252Fesxi-in-m4800%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F08%252Fesxi-in-m4800%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/08/speed-up-02/" class="prev" rel="prev" title="加速！加速！加速！（二）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>加速！加速！加速！（二）</a>
+            <a href="/2018/01/centrilized-agent-management/" class="next" rel="next" title="新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解">新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

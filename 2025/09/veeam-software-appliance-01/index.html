@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级">
+  <meta property="og:description" content="前言：Veeam Software Appliance 发布背景 昨天 Veeam 官网悄悄上线了一个新产品：Veeam Software Appliance。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 &#43; 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-04T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级">
+  <meta name="twitter:description" content="前言：Veeam Software Appliance 发布背景 昨天 Veeam 官网悄悄上线了一个新产品：Veeam Software Appliance。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 &#43; 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-01/" /><link rel="prev" href="http://192.168.16.79:1313/2025/05/kasten-and-azure-entraid-integration/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  1822 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-01\/","datePublished": "2025-09-04T00:00:00+00:00","dateModified": "2025-09-04T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-04">2025-09-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1822 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言veeam-software-appliance-发布背景">前言：Veeam Software Appliance 发布背景</a></li>
+    <li><a href="#亮相新品veeam-software-appliance-概览">亮相新品：Veeam Software Appliance 概览</a></li>
+    <li><a href="#官网全面焕新下载与文档手册新体验">官网全面焕新：下载与文档手册新体验</a>
+      <ul>
+        <li><a href="#软件下载页">软件下载页</a>
+          <ul>
+            <li><a href="#veeam-software-appliance-本体下载">Veeam Software Appliance 本体下载</a></li>
+            <li><a href="#veeam-infrastructure-appliance">Veeam Infrastructure Appliance</a></li>
+            <li><a href="#veeamone-v13">VeeamONE v13</a></li>
+          </ul>
+        </li>
+        <li><a href="#v13-使用手册">V13 使用手册</a></li>
+      </ul>
+    </li>
+    <li><a href="#系列文章预告与快速上手指南">系列文章预告与快速上手指南</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言veeam-software-appliance-发布背景">前言：Veeam Software Appliance 发布背景</h2>
+<p>昨天 Veeam 官网悄悄上线了一个新产品：<a href="https://www.veeam.com/blog/veeam-software-appliance.html" target="_blank" rel="noopener noreffer ">Veeam Software Appliance</a>。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 + 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。</p>
+<h2 id="亮相新品veeam-software-appliance-概览">亮相新品：Veeam Software Appliance 概览</h2>
+<p>本次更新，Veeam 官方一次性放出“三件套”。如果大家平时用 Veeam 做备份，看到名字可能有点懵，下面我简单捋一捋：</p>
+<ul>
+<li><strong>Veeam Software Appliance</strong>
+这是这次的“主角”，也就是我们熟悉的 Veeam 备份软件本体，包含了备份服务器（Veeam Backup &amp;Replication）和企业管理器（Enterprise Manager）。不同的是，现在不用再在 Windows 上装一堆安装包了，而是直接提供了一个 ISO 或者 OVA 镜像，服务器用它引导后，就能进入系统安装界面，一次性把系统和软件都装好，省心又安全。</li>
+<li><strong>Veeam Infrastructure Appliance</strong>
+这个可以理解成备份基础架构的“扩展包”。在 Veeam 环境里，支持分布式部署各种角色服务器，比如 Proxy、Tape Server、Gateway Server、Mount Server，还有最关键的数据存储库——Hardened Repository，现在通过这个 Appliance 可以用于安装这些角色。它和 Software Appliance 一样，都是基于 Rocky Linux 预先构建好的，拿来就能用，部署和维护成本都降下来了。</li>
+<li><strong>Veeam ONE v13</strong>
+这个并不是 Software Appliance 版本，它和以前一样，是 Windows 下的安装包，这个算是常规升级版，负责监控和分析整个备份/恢复环境。可以从 V12 的 Veeam ONE 升级到 v13，同时能兼容旧版（V12 Windows 版 VBR）的监控，也能支持新版 Appliance 的监控。对于我们要同时管理老环境和新环境的小伙伴来说，这点特别重要，对于想提前尝鲜 V13 的，能实现平滑过渡。</li>
+</ul>
+<p>需要注意的是，对于备份服务器来说，本次 Software Appliance 的 v13 版本仅支持全新安装，已有的 v12 版本暂时还不支持升级和迁移，如果是已经在使用 Veeam 朋友想升级的话，可能还需要等待一段时间，在下次更新时，Veeam 会推出平滑过渡的升级方案。</p>
+<p>另外，Veeam Software Appliance 将不再支持社区版许可，因此就算想试用，都需要额外从官网下载测试许可导入才能让这个 Appliance 工作起来。</p>
+<h2 id="官网全面焕新下载与文档手册新体验">官网全面焕新：下载与文档手册新体验</h2>
+<p>伴随新品发布，Veeam 官网也进行了一些调整。无论是产品下载入口、文档手册页面还是手册内部结构，这可能会对大家造成一定困扰。接下来我们来看看具体的一些变化吧。</p>
+<h3 id="软件下载页">软件下载页</h3>
+<p>按照这次发布的内容，一共三个组件，下载位置有点不同。</p>
+<h4 id="veeam-software-appliance-本体下载">Veeam Software Appliance 本体下载</h4>
+<p>在 Veeam 中文官网的右上角下载按钮，可以进入下载页，进入后找到 Veeam Data Platform 的下载，直达电梯 (<a href="https://www.veeam.com/cn/products/data-platform-trial-download.html?tab=extensions" target="_blank" rel="noopener noreffer ">https://www.veeam.com/cn/products/data-platform-trial-download.html?tab=extensions</a>)，这时候可以看到下载选项中多了一个<code>Pre-Hardened Software Appliance（Linux）</code>标签卡，点击切换就能找到备份服务器本体下载，如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/04/6zKVev3XusdPBcZ.png"
+        data-srcset="https://s2.loli.net/2025/09/04/6zKVev3XusdPBcZ.png, https://s2.loli.net/2025/09/04/6zKVev3XusdPBcZ.png 1.5x, https://s2.loli.net/2025/09/04/6zKVev3XusdPBcZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/04/6zKVev3XusdPBcZ.png"
+        title="image-20250904160720733" /></p>
+<p>这里可以找到这个 Appliance 的版本发布说明，也可以选择 ISO 或者 OVA 格式下载，在最右边还可以申请许可证密钥，如果没有购买正式许可，请务必在这里点击申请密钥申请测试许可，才能使用这个 Appliance。</p>
+<h4 id="veeam-infrastructure-appliance">Veeam Infrastructure Appliance</h4>
+<p>在上面这个页面下方，可以看到有个更多下载，切换到<code>扩展程序及其他</code>，可以看到有个 Veeam Infrastructure Appliance，点击前面的 + 号，可以打开这个组件的下载框进行下载。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/04/swqNxkVcCljIQBe.png"
+        data-srcset="https://s2.loli.net/2025/09/04/swqNxkVcCljIQBe.png, https://s2.loli.net/2025/09/04/swqNxkVcCljIQBe.png 1.5x, https://s2.loli.net/2025/09/04/swqNxkVcCljIQBe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/04/swqNxkVcCljIQBe.png"
+        title="Xnip2025-09-04_16-12-43" /></p>
+<h4 id="veeamone-v13">VeeamONE v13</h4>
+<p>Veeam ONE 的下载页面藏的比较深，如果官网首页直接找的话，可能会找不到，这里给一个直达的电梯 (<a href="https://www.veeam.com/cn/products/free/monitoring-analytics-download.html" target="_blank" rel="noopener noreffer ">https://www.veeam.com/cn/products/free/monitoring-analytics-download.html</a>)，虽然是社区版，但是产品安装包是同一个。熟悉 Veeam 网站的朋友也可以从 my.veeam.com 中进入找到 v13 的下载。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/04/FR9mAehSBdMwX8b.png"
+        data-srcset="https://s2.loli.net/2025/09/04/FR9mAehSBdMwX8b.png, https://s2.loli.net/2025/09/04/FR9mAehSBdMwX8b.png 1.5x, https://s2.loli.net/2025/09/04/FR9mAehSBdMwX8b.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/04/FR9mAehSBdMwX8b.png"
+        title="Xnip2025-09-04_17-35-06" /></p>
+<h3 id="v13-使用手册">V13 使用手册</h3>
+<p>除了软件下载之外，官网文档也有明显优化，Software Appliance 和 Veeam ONE 都推出了对应 v13 的新文档。文档结构也进行了重组，而不是以前大部分功能都写在 vSphere 备份的文档中，毕竟 Veeam 现在的功能已经不再是 VMware 专用备份工具啦。</p>
+<p>文档入口：</p>
+<p>Veeam Software Appliance 使用手册</p>
+<p><a href="https://helpcenter.veeam.com/docs/vbr/userguide/overview.html?ver=13" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/vbr/userguide/overview.html?ver=13</a></p>
+<p>Enterprise Manager 使用手册</p>
+<p><a href="https://helpcenter.veeam.com/docs/vbr/em/introduction.html?ver=13" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/vbr/em/introduction.html?ver=13</a></p>
+<p>Veeam Explorer 使用手册</p>
+<p><a href="https://helpcenter.veeam.com/docs/vbr/explorers/explorers_introduction.html?ver=13" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/vbr/explorers/explorers_introduction.html?ver=13</a></p>
+<p>Proxmox 备份使用手册</p>
+<p><a href="https://helpcenter.veeam.com/docs/vbproxmoxve/userguide/overview.html?ver=2" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/vbproxmoxve/userguide/overview.html?ver=2</a></p>
+<p>VeeamONE v13 使用手册</p>
+<p><a href="https://helpcenter.veeam.com/docs/one/userguide/about_one.html?ver=13" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/one/userguide/about_one.html?ver=13</a></p>
+<h2 id="系列文章预告与快速上手指南">系列文章预告与快速上手指南</h2>
+<p>本系列文章将在后续深入讲解 Veeam Software Appliance 的功能亮点、部署要点以及全面的使用介绍，帮助读者更高效地利用 Veeam 的最新资源。如果你也正在探索如何快速掌握新版 Veeam 体验，敬请关注接下来的更新</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-01%2F&amp;text=Veeam&#43;%E9%87%8D%E7%A3%85%E5%8F%91%E5%B8%83&#43;Software&#43;Appliance%EF%BC%9A%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E4%B8%8E%E6%96%87%E6%A1%A3%E7%BB%93%E6%9E%84%E5%A4%A7%E5%8D%87%E7%BA%A7" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/05/kasten-and-azure-entraid-integration/" class="prev" rel="prev" title="使用 Azure EntraID 为 Kasten 控制台提供多因子验证"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>使用 Azure EntraID 为 Kasten 控制台提供多因子验证</a>
+            <a href="/2025/09/veeam-software-appliance-02/" class="next" rel="next" title="有手就能装！Veeam Software Appliance 一步一步带你部署">有手就能装！Veeam Software Appliance 一步一步带你部署<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

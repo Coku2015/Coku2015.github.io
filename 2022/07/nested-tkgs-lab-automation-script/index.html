@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>虚拟化嵌套 TKGs 实验环境自动化脚本 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2022/07/nested-tkgs-lab-automation-script/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="虚拟化嵌套 TKGs 实验环境自动化脚本">
+  <meta property="og:description" content="学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-07-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-07-03T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Tanzu">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="虚拟化嵌套 TKGs 实验环境自动化脚本">
+  <meta name="twitter:description" content="学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2022/07/nested-tkgs-lab-automation-script/" /><link rel="prev" href="http://192.168.16.79:1313/2022/03/pvc-and-fcd/" /><link rel="next" href="http://192.168.16.79:1313/2023/03/v12update-hidden-key/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "虚拟化嵌套 TKGs 实验环境自动化脚本",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2022\/07\/nested-tkgs-lab-automation-script\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Tanzu","wordcount":  4278 ,
+        "url": "http:\/\/192.168.16.79:1313\/2022\/07\/nested-tkgs-lab-automation-script\/","datePublished": "2022-07-03T00:00:00+00:00","dateModified": "2022-07-03T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">虚拟化嵌套 TKGs 实验环境自动化脚本</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-03">2022-07-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4278 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-条件准备">0. 条件准备</a></li>
+    <li><a href="#part-1-vsphere-with-tanzu-基础架构搭建">Part 1. vSphere with Tanzu 基础架构搭建</a></li>
+    <li><a href="#part-2-启用-tanzu-kubernetes-cluster">Part 2. 启用 Tanzu Kubernetes Cluster</a>
+      <ul>
+        <li><a href="#21-启用-supervisor-cluster">2.1 启用 Supervisor Cluster</a></li>
+        <li><a href="#22-部署-tanzu-kubernetes-cluster">2.2 部署 Tanzu Kubernetes Cluster</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。</p>
+<p>先放出本文涉及到的脚本的 Github 地址：</p>
+<p><a href="https://github.com/Coku2015/Nested-TKGs-automate-deployment" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/Nested-TKGs-automate-deployment</a></p>
+<p>本文的脚本改编自 <a href="https://williamlam.com/2020/11/complete-vsphere-with-tanzu-homelab-with-just-32gb-of-memory.html" target="_blank" rel="noopener noreffer ">William Lam</a> 的博客，原版的脚本适用于自动化部署 VMware 完整的 Tanzu Kubernetes 产品，适应的场景会比较丰富，有强大脚本能力的小伙伴可以参考大神的脚本进行按需改编。</p>
+<p>本文分为上下两部分，其中第一部分为虚拟化基础架构搭建，第二部分为 Tanzu Kubernetes Cluster 创建。对于环境准备条件，将在本文开头一次性给出。</p>
+<h2 id="0-条件准备">0. 条件准备</h2>
+<p>本文中环境为 vSphere 虚拟化嵌套环境，所有 VM 将会被部署至 vSphere vCenter 管理的物理 ESXi 服务器上，因此在宿主机上建议预留以下资源用于部署：</p>
+<ul>
+<li>vCPU：9 个</li>
+<li>内存：40.5GB</li>
+<li>磁盘：1421GB（分配容量）</li>
+</ul>
+<p>这套环境部署完成后，将会生成 4 个虚拟机，分别是：</p>
+<ul>
+<li>Nested ESXi （基本配置）：4vCPU/24GB 内存/1TB 磁盘/3 个网卡</li>
+<li>vCenter（基本配置）：2vCPU/12GB 内存/400GB 磁盘</li>
+<li>haproxy: 2vCPU/4GB 内存/5GB 磁盘</li>
+<li>openwrt router: 1vCPU/0.5G 内存/1GB 磁盘</li>
+</ul>
+<p>在嵌套的 ESXi 中，将会部署 Tanzu Kubernetes 环境：</p>
+<ul>
+<li>1 台 Supervisor VM：2vCPU/8GB 内存</li>
+<li>1 台 K8S Control Plane：2vCPU/4GB 内存</li>
+<li>2 台 K8S Worker Node：2vCPU/4GB 内存</li>
+</ul>
+<p>部署完成后整个环境的拓扑如下：</p>
+<p><a href="https://imgtu.com/i/j1npXq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1npXq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1npXq.png, https://s1.ax1x.com/2022/07/02/j1npXq.png 1.5x, https://s1.ax1x.com/2022/07/02/j1npXq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1npXq.png"
+        title="j1npXq.png" /></a></p>
+<p>在环境准备中，我们一共会需要以下镜像，这些镜像需要提前下载：</p>
+<ul>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://download3.vmware.com/software/vmw-tools/nested-esxi/Nested_ESXi7.0u3c_Appliance_Template_v1.ova" target="_blank" rel="noopener noreffer ">Nested ESXi 7.0u3c</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://my.vmware.com/web/vmware/downloads." target="_blank" rel="noopener noreffer ">vCenter 7.0u3e</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://cdn.haproxy.com/download/haproxy/vsphere/ova/haproxy-v0.2.0.ova" target="_blank" rel="noopener noreffer ">haproxy.ova</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://github.com/Coku2015/Nested-TKGs-automate-deployment/raw/main/tkgrouter.ova" target="_blank" rel="noopener noreffer ">Openwrt router</a></li>
+</ul>
+<p>在本文的第二部分中，系统还会全自动的在 Nested ESXi 中开启一组虚拟机，这些虚拟机属于 vSphere with Tanzu 管理。这需要订阅 VMware 官方的 Content Library，当然也可以手工下载 Content Library 中的内容，创建自己的本地的 Content Library。</p>
+<p>在宿主机的环境中，需要准备一个接入 IP，这个接入 IP 将会被这套嵌套环境用于上联口，在我的环境中我使用 SHLAB_NET1 这个端口组来提供这个接入；而环境中的其他网络地址，都将会使用没有上联口的内部通讯地址。</p>
+<p>因此，需要在宿主机 ESXi 上创建一个包含 3 个端口组的虚拟交换机，比如我的环境中，如下图所示。这 3 个端口组所在的虚拟交换机还需要打开混杂模式，用于嵌套的 ESXi 的通讯访问。</p>
+<p><a href="https://imgtu.com/i/j1upPe" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1upPe.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1upPe.png, https://s1.ax1x.com/2022/07/02/j1upPe.png 1.5x, https://s1.ax1x.com/2022/07/02/j1upPe.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1upPe.png"
+        title="j1upPe.png" /></a></p>
+<p>最后，我们还需要一台 VM 控制台，这台 VM 需要同时能够访问宿主机的 vCenter 和 Tanzu Lab 内部网络，我们将会在这台 VM 上运行本文提到的自动化脚本。</p>
+<p>这个脚本全自动部署这套环境时，会用到 VMware vSphere PowerCLI 脚本，这首先需要安装 <a href="https://github.com/PowerShell/PowerShell" target="_blank" rel="noopener noreffer ">Powershell 7</a>。</p>
+<p>在 Powershell 7 中，执行在线安装命令，就能快速安装最新版的 VMware PowerCLI：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">PS </span><span class="n">C:</span><span class="p">\&gt;</span> <span class="nb">Install-Module</span> <span class="n">VMware</span><span class="p">.</span><span class="py">PowerCLI</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span></span></span></code></pre></div></div>
+<p>关于 PowerCLI 的配置和安装，可以参考：</p>
+<p><a href="https://www.altaro.com/vmware/vmware-powercli-guide/" target="_blank" rel="noopener noreffer ">Getting Started with VMware PowerCLI – A Beginner’s Guide</a></p>
+<p>所以最终当我搭建完成这个 Lab 后，环境网络连接如下：</p>
+<p><a href="https://imgtu.com/i/j1GANq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1GANq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1GANq.png, https://s1.ax1x.com/2022/07/02/j1GANq.png 1.5x, https://s1.ax1x.com/2022/07/02/j1GANq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1GANq.png"
+        title="j1GANq.png" /></a></p>
+<h2 id="part-1-vsphere-with-tanzu-基础架构搭建">Part 1. vSphere with Tanzu 基础架构搭建</h2>
+<p>在准备完以上条件后，我们还需要根据实际环境，将脚本中的一些参数进行设置：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># vCenter Server used to deploy vSphere with Tanzu  Basic Lab</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIServer</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.20&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIUsername</span> <span class="p">=</span> <span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span></span></span></code></pre></div></div>
+<p>这段设置用于部署这套环境的物理 ESXi 主机所在的 vCenter。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Full Path to both the Nested ESXi 7.0 VA, Extracted VCSA 7.0 ISO &amp; HA Proxy OVAs</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiApplianceOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\Nested_ESXi7.0u3c_Appliance_Template_v1.ova&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAInstallerPath</span> <span class="p">=</span> <span class="s2">&#34;E:\&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\haproxy-v0.2.0.ova&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tkgrouterOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\tkgrouter.ova&#34;</span></span></span></code></pre></div></div>
+<p>这段需要配置所有 OVA 镜像的目录，其中 VCSA 需要将 ISO 挂载，并指定挂载后的 ISO 路径。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># TKG Content Library URL</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGContentLibraryName</span> <span class="p">=</span> <span class="s2">&#34;TKG-Content-Library&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGContentLibraryURL</span> <span class="p">=</span> <span class="s2">&#34;https://wp-content.vmware.com/v2/latest/lib.json&#34;</span></span></span></code></pre></div></div>
+<p>这段为新建的 tkg vc 配置 Content Library，用于全自动部署 K8S 虚拟机。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">#tkgrouter configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tkgrouterdisplayname</span> <span class="p">=</span> <span class="s2">&#34;tkgopenwrt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANNETWORK</span> <span class="p">=</span> <span class="s2">&#34;SHASELAB_NET01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANIP</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.149&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANGW</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANDNS1</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANDNS2</span> <span class="p">=</span> <span class="s2">&#34;172.19.192.10&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANNETMASK</span> <span class="p">=</span> <span class="s2">&#34;255.255.255.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGMGMTNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-MGMT&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGMGMTIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGWORKLOADNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-Workload&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGWORKLOADIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGFRONTENDNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-Frontend&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGFRONTENDIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.1&#34;</span></span></span></code></pre></div></div>
+<p>这段为 Openwrt 路由器配置相关网络。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Nested ESXi VMs to deploy</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiHostnameToIPs</span> <span class="p">=</span> <span class="vm">@</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;tkgesxi1&#34;</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.100&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>这段设定 Nested ESXi 主机的主机名和 IP 地址，当需要部署多个 ESXi 的时候，只需要每行加一个即可。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Nested ESXi VM Resources</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXivCPU</span> <span class="p">=</span> <span class="s2">&#34;4&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXivMEM</span> <span class="p">=</span> <span class="s2">&#34;24&#34;</span> <span class="c">#GB</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiCapacityvDisk</span> <span class="p">=</span> <span class="s2">&#34;1000&#34;</span> <span class="c">#GB</span></span></span></code></pre></div></div>
+<p>ESXi 最小的资源配置，可以根据实际需求增加相关资源。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># VCSA Deployment Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSADeploymentSize</span> <span class="p">=</span> <span class="s2">&#34;tiny&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSADisplayName</span> <span class="p">=</span> <span class="s2">&#34;tkgsvc&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.101&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAHostname</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.101&#34;</span> <span class="c">#Change to IP if you don&#39;t have valid DNS</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAPrefix</span> <span class="p">=</span> <span class="s2">&#34;24&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSODomainName</span> <span class="p">=</span> <span class="s2">&#34;tkg.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSOPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSARootPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSHEnable</span> <span class="p">=</span> <span class="s2">&#34;true&#34;</span></span></span></code></pre></div></div>
+<p>VCSA 的配置。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># HA Proxy Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyDisplayName</span> <span class="p">=</span> <span class="s2">&#34;tkghaproxy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyHostname</span> <span class="p">=</span> <span class="s2">&#34;haproxy.tkg.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyDNS</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.102/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Frontend&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.2/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Workload&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.2/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyLoadBalanceIPRange</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.64/26&#34;</span> <span class="c"># Format is Network CIDR Notation</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyOSPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyPort</span> <span class="p">=</span> <span class="s2">&#34;5556&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyUsername</span> <span class="p">=</span> <span class="s2">&#34;wcp&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span></span></span></code></pre></div></div>
+<p>3 网卡的 HAproxy 的配置，分别对应 3 个网段，其中 10.10.3.x 为 Load Balance 使用。这段的内容非常重要，里面的很多信息，将在 Part 2 中手工填写步骤中用到。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># General Deployment Configuration for Nested ESXi, VCSA &amp; HA Proxy VM</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDatacenter</span> <span class="p">=</span> <span class="s2">&#34;SHALABDC&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMCluster</span> <span class="p">=</span> <span class="s2">&#34;SHALAB&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDatastore</span> <span class="p">=</span> <span class="s2">&#34;SHASEESX_DS_01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNetmask</span> <span class="p">=</span> <span class="s2">&#34;255.255.255.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDNS</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNTP</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDomain</span> <span class="p">=</span> <span class="s2">&#34;shlab.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMSyslog</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMFolder</span> <span class="p">=</span> <span class="s2">&#34;Lab Infra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c"># Applicable to Nested ESXi only</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMSSH</span> <span class="p">=</span> <span class="s2">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMVMFS</span> <span class="p">=</span> <span class="s2">&#34;false&#34;</span></span></span></code></pre></div></div>
+<p>通用环境参数设置，需要特别注意的时候，环境中必须能够访问 NTP Server，不管是内部还是外部，否则 vCenter 服务部署将会失败。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Name of new vSphere Datacenter/Cluster when VCSA is deployed</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCDatacenterName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-dc&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCVSANClusterName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-Cluster&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCVDSName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-VDS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCMgmtPortgroupName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCWorkloadPortgroupName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-workload&#34;</span></span></span></code></pre></div></div>
+<p>新 vCenter 上网络端口组的设置</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Tanzu Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-storage-policy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyTagCategory</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-tag-category&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyTagName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-storage&#34;</span></span></span></code></pre></div></div>
+<p>Tanzu 存储策略的设置。</p>
+<p>在这些脚本参数设定完成后，可以直接在 Powershell 7 中运行这个脚本。脚本启动后，会提示当前即将部署的环境概括，询问是否继续，回答 Y 之后，就开始全自动的部署了。</p>
+<p><a href="https://imgtu.com/i/j3gfFx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3gfFx.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3gfFx.png, https://s1.ax1x.com/2022/07/03/j3gfFx.png 1.5x, https://s1.ax1x.com/2022/07/03/j3gfFx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3gfFx.png"
+        title="j3gfFx.png" /></a></p>
+<p>部署过程根据不同的硬件性能和资源状况大概会历时 30~45 分钟，在我的环境中，整个部署过程历时 40 分钟，整个过程会有一些黄色的 Warning 警告，那些可以忽略，如下图：</p>
+<p><a href="https://imgtu.com/i/j3zkff" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3zkff.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3zkff.png, https://s1.ax1x.com/2022/07/03/j3zkff.png 1.5x, https://s1.ax1x.com/2022/07/03/j3zkff.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3zkff.png"
+        title="j3zkff.png" /></a></p>
+<p><a href="https://imgtu.com/i/j3zwA1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3zwA1.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3zwA1.png, https://s1.ax1x.com/2022/07/03/j3zwA1.png 1.5x, https://s1.ax1x.com/2022/07/03/j3zwA1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3zwA1.png"
+        title="j3zwA1.png" /></a></p>
+<p>安装完成后，可以通过浏览器访问 vCenter web Client，检查安装完成后各组件的情况。</p>
+<p>在脚本安装完成后，我们还需要通过 SSH 连接到 haproxy 这台虚拟机中，进行一些调整，调整可以通过脚本完成。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">touch /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl">chmod +x /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="k">$(</span>sysctl -a <span class="p">|</span> grep rp_filter <span class="p">|</span> grep 1<span class="k">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">SYSCTL_SETTING</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Update live system</span>
+</span></span><span class="line"><span class="cl">    sysctl -w <span class="si">${</span><span class="nv">SYSCTL_SETTING</span><span class="si">}</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Persist settings upon reboot</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SYSCTL_SETTING</span><span class="si">}</span><span class="s2">=0&#34;</span> &gt;&gt; /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div></div>
+<p>另外，默认情况下，Tanzu 在启用 Supervisor Cluster 的时候，会部署 3 个 Supervisor VM，这对于测试环境来说，有点浪费资源，从 vSphere 7.0U3 开始，可以进行一些调整，降低这个资源的需求。我们需要在开启 Supervisor Cluster 之前 ssh 进入 vCenter Appliance 进行调整，方法如下：</p>
+<ul>
+<li>ssh 进入 vCenter Appliance，编辑文件/etc/vmware/wcp/wcpsvc.yaml</li>
+<li>找到文件中的<code>minmasters</code>和<code>maxmasters</code>这两个值默认都是 3，我们将这两个值都修改成 1</li>
+<li>找到文件中<code>controlplane_vm_disk_provisioning</code>默认是 thick，可以将这个修改成 thin，节省磁盘空间。</li>
+<li>修改完成后保存，然后执行<code>service-control --restart wcp</code>重启 wcp 服务。</li>
+</ul>
+<p>到目前为止，启用 Supervisor Cluster 前的准备都已经完成。</p>
+<h2 id="part-2-启用-tanzu-kubernetes-cluster">Part 2. 启用 Tanzu Kubernetes Cluster</h2>
+<h3 id="21-启用-supervisor-cluster">2.1 启用 Supervisor Cluster</h3>
+<p>进入 vCenter 后，在主页面导航栏中找到 Worload Management，从这里进去开始 Tanzu Kubernetes 的管理。点击右边的<code>Get Started</code>开始创建 Supervisor Cluster。当然这个过程也完全可以通过 Powershell 脚本方式来完成，这个不在本文中展开讨论，本文通过 GUI 图形化界面来完成 Supervisor Cluster 的创建。</p>
+<p><a href="https://imgtu.com/i/j8V3yq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8V3yq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8V3yq.png, https://s1.ax1x.com/2022/07/03/j8V3yq.png 1.5x, https://s1.ax1x.com/2022/07/03/j8V3yq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8V3yq.png"
+        title="j8V3yq.png" /></a></p>
+<p>Supervisor Cluster 的创建会进入一个 8 个步骤的向导。</p>
+<ol>
+<li>
+<p>vCenter Server and Network 步骤，这里我们的这个 Lab 没有 NSX，只能选择 VDS。点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8VTnP" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8VTnP.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8VTnP.png, https://s1.ax1x.com/2022/07/03/j8VTnP.png 1.5x, https://s1.ax1x.com/2022/07/03/j8VTnP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8VTnP.png"
+        title="j8VTnP.png" /></a></p>
+</li>
+<li>
+<p>Cluster 步骤，选择 tkgs-Cluster，点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8ZfET" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8ZfET.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8ZfET.png, https://s1.ax1x.com/2022/07/03/j8ZfET.png 1.5x, https://s1.ax1x.com/2022/07/03/j8ZfET.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8ZfET.png"
+        title="j8ZfET.png" /></a></p>
+</li>
+<li>
+<p>Storage 步骤，选择 Control Plane Storage Policy 为<code>tkgs-demo-storage-policy</code>。点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8Zv5D" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8Zv5D.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8Zv5D.png, https://s1.ax1x.com/2022/07/03/j8Zv5D.png 1.5x, https://s1.ax1x.com/2022/07/03/j8Zv5D.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8Zv5D.png"
+        title="j8Zv5D.png" /></a></p>
+</li>
+<li>
+<p>Load Balancer 步骤，这里需要填入 haproxy 的相关信息，Name 中填入 tkghaproxy，Load Balancer Type 修改为 HAproxy，Management IP Address 为 Part 1 中配置信息里<code>$HAProxyManagementIPAddress = &quot;10.10.1.102/24&quot;</code>的地址，同时需要补充默认的 HAProxy 的服务端口<code>5556</code>，Username 为<code>wcp</code>，Password 为<code>P@ssw0rd</code>，Virtual IP Ranges 为<code>10.10.3.64-10.10.3.127</code>。
+HAProxy Management TLS Certificate 的内容，需要 ssh 至 HAProxy 中找到/etc/haproxy/ca.crt 文件获取。
+点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8udMj" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8udMj.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8udMj.png, https://s1.ax1x.com/2022/07/03/j8udMj.png 1.5x, https://s1.ax1x.com/2022/07/03/j8udMj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8udMj.png"
+        title="j8udMj.png" /></a></p>
+</li>
+<li>
+<p>Management Network 步骤，Network Mode 选择 Static，Network 选择 TKGs-MGMT，为 Supervisor 配置一个静态 IP。点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8u5e1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8u5e1.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8u5e1.png, https://s1.ax1x.com/2022/07/03/j8u5e1.png 1.5x, https://s1.ax1x.com/2022/07/03/j8u5e1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8u5e1.png"
+        title="j8u5e1.png" /></a></p>
+</li>
+<li>
+<p>Workload Network 步骤，选择 Network Mode 为 DHCP，Portgroup 为 tkgs-workload。点击 Next 进入下一步。
+<a href="https://imgtu.com/i/j8uLSe" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8uLSe.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8uLSe.png, https://s1.ax1x.com/2022/07/03/j8uLSe.png 1.5x, https://s1.ax1x.com/2022/07/03/j8uLSe.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8uLSe.png"
+        title="j8uLSe.png" /></a></p>
+</li>
+<li>
+<p>Tanzu Kubernetes Grid Service 步骤，选择 Content Library 为 TKG-Content-Library。点击 Next 进入最后一步。
+<a href="https://imgtu.com/i/j8uxeI" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8uxeI.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8uxeI.png, https://s1.ax1x.com/2022/07/03/j8uxeI.png 1.5x, https://s1.ax1x.com/2022/07/03/j8uxeI.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8uxeI.png"
+        title="j8uxeI.png" /></a></p>
+</li>
+<li>
+<p>Review and Confirm 步骤，将 Control Plane Size 从 Small 更改为 Tiny，这时候需要注意的是，还需要回到步骤 6 中，重新点下 Next 按钮，使 Internal Network for Kubernetes Services 从 10.96.0.0/23 自动更新为 10.96.0.0/24。
+<a href="https://imgtu.com/i/j8KD6H" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8KD6H.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8KD6H.png, https://s1.ax1x.com/2022/07/03/j8KD6H.png 1.5x, https://s1.ax1x.com/2022/07/03/j8KD6H.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8KD6H.png"
+        title="j8KD6H.png" /></a></p>
+</li>
+<li>
+<p>点击 Finish 后，Supervisor Cluster 就开始进入自动部署过程，Workload Management 界面切换成如下图：
+<a href="https://imgtu.com/i/j8KIXj" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8KIXj.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8KIXj.png, https://s1.ax1x.com/2022/07/03/j8KIXj.png 1.5x, https://s1.ax1x.com/2022/07/03/j8KIXj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8KIXj.png"
+        title="j8KIXj.png" /></a></p>
+</li>
+</ol>
+<h3 id="22-部署-tanzu-kubernetes-cluster">2.2 部署 Tanzu Kubernetes Cluster</h3>
+<p>等待大约 30 分钟后，就能看到 Tanzu Supervisor Cluster 进入 Running 状态，Control Plane Node 获取到了正确的 ip 地址。
+<a href="https://imgtu.com/i/j8lO4P" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8lO4P.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8lO4P.png, https://s1.ax1x.com/2022/07/03/j8lO4P.png 1.5x, https://s1.ax1x.com/2022/07/03/j8lO4P.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8lO4P.png"
+        title="j8lO4P.png" /></a></p>
+<ol>
+<li>
+<p>这时候我们可以切换到 Namespace 标签卡下，创建 Namespace 了，需要注意的是，这个 Namespace 并非 Kubernetes 的 Namespace，这是 vSphere Tanzu 的 Namespace，我们的 Tanzu Kubernetes Cluster 将会创建在这个 Namespace 之下。
+<a href="https://imgtu.com/i/j8114x" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8114x.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8114x.png, https://s1.ax1x.com/2022/07/03/j8114x.png 1.5x, https://s1.ax1x.com/2022/07/03/j8114x.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8114x.png"
+        title="j8114x.png" /></a></p>
+</li>
+<li>
+<p>创建完 Namespace，会看到当前这个 Namespace 的 config Status，为了进行接下去的配置，我们需要在 Namespace 的管理中进行 3 项设置，分别是 Permissions、Storage 和 VM Service 设置。首先是 Permissions，我们通过 Add Permissions 按钮添加一个管理员用户。
+<a href="https://imgtu.com/i/j81fVs" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j81fVs.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j81fVs.png, https://s1.ax1x.com/2022/07/03/j81fVs.png 1.5x, https://s1.ax1x.com/2022/07/03/j81fVs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j81fVs.png"
+        title="j81fVs.png" /></a></p>
+</li>
+<li>
+<p>通过 Add Storage 按钮，为 Namespace 新增数据存储空间。
+<a href="https://imgtu.com/i/j81LqJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j81LqJ.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j81LqJ.png, https://s1.ax1x.com/2022/07/03/j81LqJ.png 1.5x, https://s1.ax1x.com/2022/07/03/j81LqJ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j81LqJ.png"
+        title="j81LqJ.png" /></a></p>
+</li>
+<li>
+<p>通过 Add VM Class 按钮，为 Namespace 添加各种规格的 VM，后续的 Kubernetes 的 Node 都会自动根据选择的规格来配置相应的 CPU 和内存。推荐可以将这里默认的 16 个规格都选择上。
+<a href="https://imgtu.com/i/j83ise" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83ise.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83ise.png, https://s1.ax1x.com/2022/07/03/j83ise.png 1.5x, https://s1.ax1x.com/2022/07/03/j83ise.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83ise.png"
+        title="j83ise.png" /></a></p>
+</li>
+<li>
+<p>通过 Add Content Library 按钮，将 Tanzu Content Library 再次关联上。
+<a href="https://imgtu.com/i/j83mJP" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83mJP.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83mJP.png, https://s1.ax1x.com/2022/07/03/j83mJP.png 1.5x, https://s1.ax1x.com/2022/07/03/j83mJP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83mJP.png"
+        title="j83mJP.png" /></a></p>
+</li>
+<li>
+<p>Namespace 全部配置完成后，如下图，这时候就完成了我们 Tanzu Kubernetes Cluster 创建的所有准备工作了。
+<a href="https://imgtu.com/i/j83NWV" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83NWV.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83NWV.png, https://s1.ax1x.com/2022/07/03/j83NWV.png 1.5x, https://s1.ax1x.com/2022/07/03/j83NWV.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83NWV.png"
+        title="j83NWV.png" /></a></p>
+</li>
+<li>
+<p>在上图的 Status 卡片中，最下面一行，有个 Link to CLI Tools，我们需要点击 Open，打开一个新网页，在这个网页上，我们能够下载到 kubectl vsphere plugins，这个命令行 plugins 将帮助我们管理和使用 Tanzu Kubernetes Cluster。
+<a href="https://imgtu.com/i/j83fyD" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83fyD.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83fyD.png, https://s1.ax1x.com/2022/07/03/j83fyD.png 1.5x, https://s1.ax1x.com/2022/07/03/j83fyD.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83fyD.png"
+        title="j83fyD.png" /></a></p>
+</li>
+<li>
+<p>根据网页上的提示，下载安装完成后，我们来到 CLI 控制台上，使用 CLI 登入我们的 Supervisor Cluster。server 地址为中 Control Plane Node 中看到的 IP 地址。此时一切正确的情况下，命令行会提示输入用户名密码，该用户名密码为步骤 2 中设置的管理员用户。登入后，会看到 Logged in successfully 的信息。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;kubectl-vsphere.exe login --server<span class="o">=</span>10.10.3.65 --insecure-skip-tls-verify
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Username: administrator@tkg.local
+</span></span><span class="line"><span class="cl">KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the         password below
+</span></span><span class="line"><span class="cl">Password:
+</span></span><span class="line"><span class="cl">Logged in successfully.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You have access to the following contexts:
+</span></span><span class="line"><span class="cl">   10.10.3.65
+</span></span><span class="line"><span class="cl">   tkgs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If the context you wish to use is not in this list, you may need to try
+</span></span><span class="line"><span class="cl">logging in again later, or contact your cluster administrator.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To change context, use <span class="sb">`</span>kubectl config use-context &lt;workload name&gt;<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;</span></span></code></pre></div></div>
+</li>
+<li>
+<p>这时，我们已经成功登入了 Supervisor Cluster，接下去我们会使用以下的 yaml 配置文件来创建 Tanzu Kubernetes Cluster。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">run.tanzu.vmware.com/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">TanzuKubernetesCluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">sedemo-tkc-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">distribution</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v1.21</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">topology</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">best-effort-xsmall</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">workers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">best-effort-small</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">settings</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">classes</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tkgs-demo-storage-policy&#34;</span><span class="p">]</span><span class="w">              </span><span class="c">#Named PVC storage     classes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">defaultClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span></span></span></code></pre></div></div>
+<p>其中，metadata 下的 name 为创建出来的 cluster 的名字，Namespace 则是 vSphere 中我们刚刚创建的 Namespace 名称。
+spec 下的内容里，distribution 为需要创建的 Kubernetes 的版本。topology-controlplane-class/topology-workers-class 分别是对应步骤 14 中，我们所设定的 VM class 类型，此处分别选择为 best-effort-xsmall 和 best-effort-small。数量分别是 1 和 2。
+运行下面的命令，Tanzu Kubernetes Cluster 会自动在 vCenter 中创建出来：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;kubectl apply -f tkc.ymal
+</span></span><span class="line"><span class="cl">tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created</span></span></code></pre></div></div>
+<p>等待几分钟后，在 vCenter 中，能够看到被创建出来的 3 台 VM，如图。</p>
+<p><a href="https://imgtu.com/i/j8JgWq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8JgWq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8JgWq.png, https://s1.ax1x.com/2022/07/03/j8JgWq.png 1.5x, https://s1.ax1x.com/2022/07/03/j8JgWq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8JgWq.png"
+        title="j8JgWq.png" /></a></p>
+</li>
+<li>
+<p>再次回到 CLI 控制台，执行如下登录命令，我们可以登入到 Tanzu Kubernetes Guest Cluster 中。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;kubectl vsphere login --server<span class="o">=</span>10.10.3.65 --tanzu-kubernetes-cluster-name sedemo-tkc-01 --tanzu-kubernetes-cluster-namespace tkgs --vsphere-username administrator@tkg.local --insecure-skip-tls-verify
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the password below
+</span></span><span class="line"><span class="cl">Password:
+</span></span><span class="line"><span class="cl">Logged in successfully.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You have access to the following contexts:
+</span></span><span class="line"><span class="cl">   10.10.3.65
+</span></span><span class="line"><span class="cl">   sedemo-tkc-01
+</span></span><span class="line"><span class="cl">   tkgs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If the context you wish to use is not in this list, you may need to try
+</span></span><span class="line"><span class="cl">logging in again later, or contact your cluster administrator.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To change context, use <span class="sb">`</span>kubectl config use-context &lt;workload name&gt;<span class="sb">`</span></span></span></code></pre></div></div>
+</li>
+</ol>
+<p>至此，我们已经能够正常访问我们的 Kubernetes cluster 了，可以通过所有常规的 kubectl 命令执行所有的管理任务。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-07-03</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2022/07/nested-tkgs-lab-automation-script/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2022%2F07%2Fnested-tkgs-lab-automation-script%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2022%2F07%2Fnested-tkgs-lab-automation-script%2F&amp;text=%E8%99%9A%E6%8B%9F%E5%8C%96%E5%B5%8C%E5%A5%97&#43;TKGs&#43;%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2022%252F07%252Fnested-tkgs-lab-automation-script%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2022%252F07%252Fnested-tkgs-lab-automation-script%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Tanzu/">Tanzu</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/03/pvc-and-fcd/" class="prev" rel="prev" title="头等舱磁盘（First Class Disks）详解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>头等舱磁盘（First Class Disks）详解</a>
+            <a href="/2023/03/v12update-hidden-key/" class="next" rel="next" title="VBR v12 中的那些隐藏键">VBR v12 中的那些隐藏键<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

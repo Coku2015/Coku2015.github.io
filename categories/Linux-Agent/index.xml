@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux Agent on 虚化人生</title>
+    <link>http://192.168.16.79:1313/categories/Linux-Agent/</link>
+    <description>Recent content in Linux Agent on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Mon, 25 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/categories/Linux-Agent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux</title>
+      <link>http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/</link>
+      <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/</guid>
+      <description>&lt;p&gt;Linux 高度自由的开源系统让每个人都有自己使用它自己的使用方式，这让对于操作系统深度依赖的备份软件变的各种不适。细微的一些变化就会引起备份失败，因此备份软件通常都会有一个兼容列表，不在列表中的系统通常无法工作。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Agent for Linux 安装深度分析</title>
+      <link>http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/</guid>
+      <description>&lt;h2 id=&#34;一组成和作用&#34;&gt;一。组成和作用&lt;/h2&gt;&#xA;&lt;p&gt;Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

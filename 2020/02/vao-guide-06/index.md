@@ -1,0 +1,149 @@
+# VAO 基础入门（六） -  成功灾备计划的第一步
+
+
+## 系列目录：
+
+- [VAO 基础入门（一）-  简介](https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/)
+- [VAO 基础入门（二）-  安装与部署](https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/)
+- [VAO 基础入门（三）-  基本组件 · 上篇](https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/)
+- [VAO 基础入门（四）-  基本组件 · 下篇](https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/)
+- [VAO 基础入门（五）-  基础配置要点](https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/)
+- [VAO 基础入门（六）-  成功灾备计划的第一步](https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/)
+- [VAO 基础入门（七）-  Plan Step  · 上篇](https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/)
+- [VAO 基础入门（八）-  Plan Step  · 下篇](https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/)
+- [VAO 基础入门（九）-  文档模板解析](https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/)
+
+通过之前的配置，我们的 VAO 就可以开始正常使用了，我们可以用 Plan Authors 角色的用户登入到 VAO 控制台上，在控制台中，将看到被授权允许能访问的 Scopes，并且可以对这些 Scopes 中的对象进行操作，包括 Orchestration Plan、DataLabs 和 Report。
+
+要成功实现企业的灾备计划，达成企业的 RPO 和 RTO，除了需要超级强大的计算资源和工具软件之外，对于这个灾备工具的了解和熟悉程度也是非常重要的一部分。对于 VAO 来说，本身是一款非常强大的软件，但是需要灾备管理员非常清楚的了解灾备计划的每一部分以及它的操作的预期结果。所以成功的灾备计划第一步，我们先来看看 VAO 是如何工作的。
+
+在这里我先使用`user1@sedemolab.local`这个 Plan Authors 角色的账号登入 VAO 系统中。它将看到`房间 Scope A`和`房间 Scope B`
+
+## Orchestration Plan
+
+VAO 中可以设定两类 Orchestration Plan，分别是恢复计划和故障切换计划，分别对应 VBR 中的 Backup 和 Replication 功能。这两个计划是整个灾备和恢复的基础，所有自动化的操作过程都将会通过这个 Plan 加入到灾备中去。在这里，我建议首先第一步，尽可能的不要加入太复杂的自动化脚本，而是用系统自带的 Plan Steps，用最少的流程来测试两类 Plan，等到熟悉了系统的工作机制后，再来逐步逐步添加适合的自定义脚本。
+
+1. 创建 Orchestration Plan，进入左边的 Orchestration Plans，在右边内容显示区域，会看到顶部的一排 4 个按钮，其中在 Manage 按钮所在的下拉菜单中，可以找到 New 的按钮。通过这个按钮可以启动 Orchestration Plan 的创建向导。
+
+![33lwpn.png](https://s2.ax1x.com/2020/02/23/33lwpn.png)
+2. 打开向导后，首先需要选取使用哪个 Scope 来创建这个 Orchestration Plan，就像前几篇中提到，每个 Scope 中包含了灾备的一系列元素，而 Orchestration Plan 则是把这些元素组合起来，形成一个可执行的计划。所以每个 Orchestration Plan 是属于某个特定的 Scope 下的 Plan。
+   选择房间（Scope A）后，点击下一步。
+
+![331sgI.png](https://s2.ax1x.com/2020/02/23/331sgI.png)
+
+3. 设定 Plan Info，此处的内容一般来说按照实际的情况填写，这些都会在 Report 中被使用到。
+
+![3335dO.png](https://s2.ax1x.com/2020/02/23/3335dO.png)
+
+4. 选择 Plan Type，即决定这将是个 Restore 操作还是 Failover 操作，两者的唯一区别是，如果是 Restore Plan 那么将会增加一个 Recovery Location 的选项，选择我们这 Plan Components 之前设置好的 Location 即可。
+
+![33jxzt.png](https://s2.ax1x.com/2020/02/24/33jxzt.png)
+
+5. 选择 VM Groups，在当前 Scope 下能看到的所有可用 VM Groups 都会列在 Available Group 中，通过 Add 按钮将需要的 Group 添加至右边的 Plan Groups 窗格中。也可以通过 View VMs 来详细查看当前选定的 VM Groups 中所包含的 VM。
+
+![3Jh1at.png](https://s2.ax1x.com/2020/02/25/3Jh1at.png)
+
+6. 在 VM Recovery Options 中，需要设置 3 个内容：
+   If any VM recovery fails then：如果 Plan 中有多台 VM 需要恢复，假如其中有一台 VM 恢复失败，此选项决定了后续的 Plan 如何操作，可以继续执行计划恢复其他 VM 或者是直接停止计划。
+   Recover the VMs in each Group: 按顺序恢复还是同时恢复。如果选择 Simultaneously 是同时进行，如果是选择 In Sequence 则是按顺序执行。
+   Recover simultaneously max of VMs：选择合适的数量，默认是 10 个，一般来说，管理员需要根据自己的计算资源情况，合理选择，最好执行一些测试后最后决定这里的数量。
+   Restore VM Tags：这个复选框下有个⚠️，一般来说恢复至新位置成为一个新 VM 则大多是不会选择这个恢复 Tags，避免和生产的 VM 混起来。
+
+![3J57Ke.png](https://s2.ax1x.com/2020/02/25/3J57Ke.png)
+
+7. 在 VM Steps 中，可以选择很多恢复过程中的可以用到的 Steps，默认情况下，系统自动会选上 Restore VM 和 Check VM Heartbeat 这两个 Step。我建议刚开始熟悉 VAO 的管理员逐项逐项的添加各种 Step，以测试每一种操作的功能，确定了某个需要的 Step 之后，再将其设计到自己的最终 Plan 之中。
+
+![3Y9bUP.png](https://s2.ax1x.com/2020/02/25/3Y9bUP.png)
+
+8. 在 VM 被恢复之后，为了确保系统的可靠性，VAO 还提供了立刻继续将恢复出来的 VM 备份起来的功能，在 Protect VM Groups 中勾选 Protect VM Groups after restore 并且选择合适的 Template Job 就行了。这里面的 Template Job 都是在 Plan Component 中所选择的。
+
+![3YuNLV.png](https://s2.ax1x.com/2020/02/25/3YuNLV.png)
+
+9. 对于灾备来说，非常非常重要的一个指标就是 RTO 和 RPO 了，通常在备份或者容灾软件中很少有看到这两个数值的设定，而在 VAO 中，灾备管理员可以为每个 Plan 来制定相应的 RTO 和 RPO 目标，如果达成这个目标，系统会显示绿色的状态，而如果无法达成这个目标，则会发出相应警告⚠️。
+   此项的设置，具体数值可以精细到分钟级别。
+
+![3YMMCQ.png](https://s2.ax1x.com/2020/02/25/3YMMCQ.png)
+
+10. 管理员还能在 VAO 中定义 Orchestration Plan 的报表，在 Plan 中只需要选择相关的模版即可，可以选择 pdf 或者 word 格式的报表。关于报表模版的设计，我将会在本系列的最后一节详细介绍。
+
+![3YMqIS.png](https://s2.ax1x.com/2020/02/25/3YMqIS.png)
+
+11. 选择完报表模版后，可以设定报表计划任务，个人感觉都是报表的内容，实际上没必要分成 2 个页面来设置，但是不管怎么样，根据 VAO 产品的设计，我们可以在这里设置每天报表的计划任务，需要注意的是，报表更新的任务是每天为频率的，只能选择每天的时间，不能有其他更多选择。
+
+![3YQYQA.png](https://s2.ax1x.com/2020/02/25/3YQYQA.png)
+
+12. 又是一个复选框占用一个页面，勾选之后，VAO 会在 Plan 创建完成后立刻进行灾备资源的可用性检查，根据实际情况选择即可。
+
+![3YQ7l9.png](https://s2.ax1x.com/2020/02/25/3YQ7l9.png)
+
+13. 以上就是所有设定步骤，在 Summary 中查看详细设置后点击 Finish 就能完成创建。创建完成后，这个 Plan 将会出现在 Orchestration Plan 的页面中。
+
+![3YldXR.png](https://s2.ax1x.com/2020/02/25/3YldXR.png)
+
+对于创建好的 Plan，管理员可以对它做以下操作：
+
+Launch ：Run 和 Schedule
+
+Manage：Enable、Disable、New、Edit、Reset、Delete
+
+Verity：Datalab test 和 Readiness check
+
+Report 操作
+
+一般来说，新创建的 Orchestration Plan 是处于 Disable 状态，也就是前面的图标是灰色的，需要点击 Manage->Enable 选项来激活它才能正常工作。
+
+做了恢复或者故障切换操作之后，管理员需要通过 Manage->Reset 按钮来重制这个 Plan 使其能继续工作，或者管理员还可以删除之前已经完成的 Plan，重新定义新的 Plan。
+
+## Datalab 测试
+
+在 Orchestration Plan 的 Verity 按钮下，可以找到 Run Datalab test 的按钮，点击这个按钮后，会启动一个 DataLab test 的向导，通过这个向导中选择一些合适的选项，可以对于整个灾备计划做一次近乎真实的演练，整个演练过程甚至会 100%模拟实际的 Restore Plan 和 Failover Plan 执行，包括了其中所有设置的自定义脚本，只是在分配网络的时候会选择 Datalab 的隔离网络。因此管理员能从这样的演练过程中清楚的掌握实际灾备环境中恢复的状况以及需要的恢复时间。
+
+对于 Restore Plan 和 Failover Plan，Datalab test 会略微有些不同。
+
+#### Restore Plan
+
+选择 Restore Plan 后执行
+
+1. 打开向导后，首先需要选择在哪个 Datalab 中执行这个测试，在 Scope 下设定的所有可用 Datalab 都能够在这里找到。
+
+![3YJNLj.png](https://s2.ax1x.com/2020/02/25/3YJNLj.png)
+
+2. 选择快速测试还是完整测试，如果是快速测试，VAO 仅仅是通过即时虚拟机发布的方式执行这个测试，不执行后续的迁移操作，整个过程完成的相对比较快。
+
+![3YYyNt.png](https://s2.ax1x.com/2020/02/25/3YYyNt.png)
+
+3. 选择 Recovery Location，这和恢复步骤中的完全一致，只是在 Orchestration Plan 中已经选择过位置的，依然需要在此处再进行选择，此处的选择是为 Datalab test 专用的。
+
+![3Yvdk8.png](https://s2.ax1x.com/2020/02/25/3Yvdk8.png)
+
+4. 在自动测试完成后，选择是否要继续使用这些机器用于更多的测试，或者其他使用场景。在这里可以选择测试完成后立刻关机，也可以选择在测试后继续运行这个 Datalab 多少小时。
+
+![3YxiHP.png](https://s2.ax1x.com/2020/02/25/3YxiHP.png)
+
+5. 选择必要的 Lab Groups，和 VBR 中的 Application Group 一样，在这里可以按需选择，当然也可以不选择 Lab Group。
+
+![3YzMxH.png](https://s2.ax1x.com/2020/02/25/3YzMxH.png)
+
+6. 在 Summary 界面中查看当前的设置后，点击 Finish 就可以开始 Datalab 的测试了。
+
+#### Failover Plan
+
+选择 Failover Plan 后点击 Run Datalab test，选项就相对来说比较少了。这里不需要选择 test option 和 Recovery Location，直接进入 Power Options 和 Choose Lab Groups 的选择。
+
+#### Schedule Datalabs Test
+
+除了可以手工执行 Datalab test 之外，VAO 也可以全自动执行 Datalabs Test，以此来确保灾备的自动验证。在 VAO 的仪表盘中，找到 Datalab Calendar 部分，在这里可以看到 Create Schedule 按钮，就是用来设置全自动的 Datalab test 计划任务。同时，这个仪表盘也能过查看到已经设置的计划任务，来确认整个灾备的实施情况。
+
+![3tSN01.png](https://s2.ax1x.com/2020/02/25/3tSN01.png)
+
+这个 Schedule 的设置向导和单次的 Run Datalabs test 大同小异，其中两个不一样的内容是，需要定制一个计划任务的时间，如下图：
+
+![3tS59S.png](https://s2.ax1x.com/2020/02/25/3tS59S.png)
+
+选择哪几个 Plan 在这个 Lab 中测试。
+![3tSI1g.png](https://s2.ax1x.com/2020/02/25/3tSI1g.png)
+
+以上这些就是最基础的 Orchestration Plan 和 Datalabs 测试的设置方式，成功设置并执行以上内容后，将为灾备成功迈出第一步打好基础。
+
+更多内容欢迎关注本人公众号，
+

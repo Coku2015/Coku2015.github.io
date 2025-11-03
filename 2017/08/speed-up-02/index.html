@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>加速！加速！加速！（二） - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2017/08/speed-up-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="加速！加速！加速！（二）">
+  <meta property="og:description" content="上一期，我们讨论了 备份引擎的加速，这对尽可能快的完成备份提升 RPO 有着极其重要的意义。然而除了这个数据传输引擎之外，在备份时还有一个加速器，那就是 vSphere 通讯加速技术。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-08-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-08-07T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="加速！加速！加速！（二）">
+  <meta name="twitter:description" content="上一期，我们讨论了 备份引擎的加速，这对尽可能快的完成备份提升 RPO 有着极其重要的意义。然而除了这个数据传输引擎之外，在备份时还有一个加速器，那就是 vSphere 通讯加速技术。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2017/08/speed-up-02/" /><link rel="prev" href="http://192.168.16.79:1313/2017/08/speed-up-01/" /><link rel="next" href="http://192.168.16.79:1313/2017/08/esxi-in-m4800/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "加速！加速！加速！（二）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2017\/08\/speed-up-02\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  638 ,
+        "url": "http:\/\/192.168.16.79:1313\/2017\/08\/speed-up-02\/","datePublished": "2017-08-07T00:00:00+00:00","dateModified": "2017-08-07T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">加速！加速！加速！（二）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-08-07">2017-08-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 638 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>上一期，我们讨论了 <a href="https://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483745&amp;idx=1&amp;sn=c9b28d97eec1426dece66490a9655b43&amp;chksm=fdf0a7b4ca872ea207c5d96dfdac2646fdc1b8a507b5e85cd267fdd720d3dff7d0b5e546680b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">备份引擎的加速</a>，这对尽可能快的完成备份提升 RPO 有着极其重要的意义。然而除了这个数据传输引擎之外，在备份时还有一个加速器，那就是 vSphere 通讯加速技术。</p>
+<p><strong>Broker Service</strong></p>
+<p>这是 Veeam9.5 中新增加的一个特性，简单来说这项科技给备份带来的帮助是在 Veeam 和 VMware vCenter 之间加入了一个过渡服务，当 Veeam 每次发起任务时，需要查询 vSphere 信息时，可以替代性的去查询 BrokerService 而不用直接去找 vSphere。</p>
+<p>如下图，这是有无 BrokerService 的一个直观对比，没有 Broker 时，每次备份任务都会去直接和 vCenter 通讯，其获取返回结果的耗时完全取决于 vCenter 性能和网络状况。而在有了 Broker 之后，Veeam 则会去查询 Broker 中缓存的信息，而由 Broker 保持和 vCenter 处于 update 状态。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1745GR.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1745GR.jpg, https://s2.ax1x.com/2020/02/12/1745GR.jpg 1.5x, https://s2.ax1x.com/2020/02/12/1745GR.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1745GR.jpg"
+        title="1745GR.jpg" /></p>
+<p>那么这个 Broker 事实上在 Veeam 软件中是以一个服务的形式存在，因此我们在 Services.msc 中可以查看到这个 Service:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1744i9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1744i9.png, https://s2.ax1x.com/2020/02/12/1744i9.png 1.5x, https://s2.ax1x.com/2020/02/12/1744i9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1744i9.png"
+        title="1744i9.png" /></p>
+<p>这个 Broker 在工作的时候，VMwarevCenter 中清单基础架构的任何变化都会实时的被推送至 Broker 的缓存中，而如果 Veeam 未收到任何推送变化的情况下，默认 Veeam 会每 15 分钟（900 秒）进行一次强制更新缓存，确保缓存内容的准确性。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/174oxx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/174oxx.png, https://s2.ax1x.com/2020/02/12/174oxx.png 1.5x, https://s2.ax1x.com/2020/02/12/174oxx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/174oxx.png"
+        title="174oxx.png" /></p>
+<p>所以，这带来的好处显而易见，以下是一组软件中截图的对比，在无 Broker 的情况下，Veeam 备份任务通过查询 vCenter 来创建备份虚拟机列表，消耗了 40 秒时间：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/174IR1.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/12/174IR1.jpg, https://s2.ax1x.com/2020/02/12/174IR1.jpg 1.5x, https://s2.ax1x.com/2020/02/12/174IR1.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/174IR1.jpg"
+        title="174IR1.jpg" /></p>
+<p>而在有了 Broker 之后，Veeam 备份任务查询 Broker 来创建备份虚拟机列表，仅需要耗时 1 秒：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/174fIJ.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/12/174fIJ.jpg, https://s2.ax1x.com/2020/02/12/174fIJ.jpg 1.5x, https://s2.ax1x.com/2020/02/12/174fIJ.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/174fIJ.jpg"
+        title="174fIJ.jpg" /></p>
+<p>这可以说效率提升了 40 倍以上！！</p>
+<p>好吧，为了让你的备份速度飞起来，升级到 Veeam 9.5Update2 吧。</p>
+<p><strong>下期预告：</strong></p>
+<p>备份速度快不算啥，这都不是啥大事，划重点的来了，真正要快的还原技术，而 Veeam 除了有 Instant VM Recovery 之外，其他的那些还原技术会不会也很快？下期为你揭晓答案。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2017-08-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2017/08/speed-up-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F08%2Fspeed-up-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2017%2F08%2Fspeed-up-02%2F&amp;text=%E5%8A%A0%E9%80%9F%EF%BC%81%E5%8A%A0%E9%80%9F%EF%BC%81%E5%8A%A0%E9%80%9F%EF%BC%81%EF%BC%88%E4%BA%8C%EF%BC%89" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F08%252Fspeed-up-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2017%252F08%252Fspeed-up-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2017/08/speed-up-01/" class="prev" rel="prev" title="加速！加速！加速！（一）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>加速！加速！加速！（一）</a>
+            <a href="/2017/08/esxi-in-m4800/" class="next" rel="next" title="改造 HOME LAB 之把 ESXi 装进 M6400">改造 HOME LAB 之把 ESXi 装进 M6400<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

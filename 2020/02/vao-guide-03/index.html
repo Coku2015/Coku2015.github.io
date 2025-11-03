@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO 基础入门（三） -  基本组件 · 上篇 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2020/02/vao-guide-03/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VAO 基础入门（三） -  基本组件 · 上篇">
+  <meta property="og:description" content="系列目录： VAO 基础入门（一）- 简介 VAO 基础入门（二）- 安装与部署 VAO 基础入门（三）- 基本组件 · 上篇 VAO 基础入门（四）- 基本组件 · 下篇 VAO 基础入门（五）- 基础配置要点 VAO 基础入门（六）- 成功灾备计划的第一步 VAO 基础入门（七）- Plan Step · 上篇 VAO 基础入门（八）- Plan Step · 下篇 VAO 基础入门（九）- 文档模板解析 VAO 引入了一套非常特殊的概念，它为该产品中使用的组件定义了一系列名称，随着版本的更新和迭代，这里的组件和名称可能会发生一些变化。目前 VAO 的版本是 v2.0，因此本文所述内容仅适用于 v2.0 之后的版本，而后续版本中如果有新的变化，我会在后续的更新中说明。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-02-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-02-19T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VAO 基础入门（三） -  基本组件 · 上篇">
+  <meta name="twitter:description" content="系列目录： VAO 基础入门（一）- 简介 VAO 基础入门（二）- 安装与部署 VAO 基础入门（三）- 基本组件 · 上篇 VAO 基础入门（四）- 基本组件 · 下篇 VAO 基础入门（五）- 基础配置要点 VAO 基础入门（六）- 成功灾备计划的第一步 VAO 基础入门（七）- Plan Step · 上篇 VAO 基础入门（八）- Plan Step · 下篇 VAO 基础入门（九）- 文档模板解析 VAO 引入了一套非常特殊的概念，它为该产品中使用的组件定义了一系列名称，随着版本的更新和迭代，这里的组件和名称可能会发生一些变化。目前 VAO 的版本是 v2.0，因此本文所述内容仅适用于 v2.0 之后的版本，而后续版本中如果有新的变化，我会在后续的更新中说明。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2020/02/vao-guide-03/" /><link rel="prev" href="http://192.168.16.79:1313/2020/02/vao-guide-02/" /><link rel="next" href="http://192.168.16.79:1313/2020/02/vao-guide-04/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO 基础入门（三） -  基本组件 · 上篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2020\/02\/vao-guide-03\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  2287 ,
+        "url": "http:\/\/192.168.16.79:1313\/2020\/02\/vao-guide-03\/","datePublished": "2020-02-19T00:00:00+00:00","dateModified": "2020-02-19T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO 基础入门（三） -  基本组件 · 上篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-02-19">2020-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2287 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#系列目录">系列目录：</a></li>
+    <li><a href="#scope">Scope</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#定义和用途">定义和用途</a></li>
+            <li><a href="#分类和创建方式">分类和创建方式</a></li>
+            <li><a href="#配置-scope-中的-plan-components">配置 Scope 中的 Plan Components</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#datalabs">Datalabs</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#lab-groups">Lab Groups</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="系列目录">系列目录：</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO 基础入门（一）-  简介</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO 基础入门（二）-  安装与部署</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO 基础入门（三）-  基本组件 · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO 基础入门（四）-  基本组件 · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO 基础入门（五）-  基础配置要点</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO 基础入门（六）-  成功灾备计划的第一步</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO 基础入门（七）-  Plan Step  · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO 基础入门（八）-  Plan Step  · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO 基础入门（九）-  文档模板解析</a></li>
+</ul>
+<p>VAO 引入了一套非常特殊的概念，它为该产品中使用的组件定义了一系列名称，随着版本的更新和迭代，这里的组件和名称可能会发生一些变化。目前 VAO 的版本是 v2.0，因此本文所述内容仅适用于 v2.0 之后的版本，而后续版本中如果有新的变化，我会在后续的更新中说明。</p>
+<h2 id="scope">Scope</h2>
+<h4 id="定义和用途">定义和用途</h4>
+<p>Scope 是 VAO 的最核心的概念，在 v2.0 中首次引入了这个概念。每个 Scope 中包含了灾备中需要一系列元素，VAO 把这些元素称为 Plan Components：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code> - VM Groups
+ - Recovery Locations
+ - Plan Steps
+ - Credentials
+ - Template Jobs</code></pre></div>
+<p>打个比方，Scope 是一间房间，那么在这个房间中所放置的各种家具就是以上这些 Plan Components。对于灾备来说，以上这些 Plan Components 将会在 Orchestration Plan 中被具体使用到。可以说 Orchestration Plan 是将这些 Plan Components 有序的组合起来，最终可以让我们实现一键的灾备恢复。</p>
+<p>另外，Scope 中还有个非常特殊的 Component &ndash; Datalab，每一个 Datalab 对应某个 Scope 中，也就是说，每个 Scope 都有<strong>一个或多个</strong>独立的属于自己的 DataLab。</p>
+<p>关于 Plan Components 和 DataLab，将在 <a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO 基础入门（四）-  基本组件 · 下篇</a> 中详细介绍。</p>
+<h4 id="分类和创建方式">分类和创建方式</h4>
+<p>VAO 中的 Scope 可以大致分为两类，一类是系统内置的名称叫<code>Default</code>的 Scope，这个 Scope 无法删除，无法修改名称，并且 Administrator 的 Role 会被包含在这个 Scope 中，在 VAO 的其他 Scope 中是无法选择添加 Administrators Role。当您要授予任何用户执行<code>Administration</code>配置操作时，您就需要将该用户添加至<code>Default</code> Scope 下的 Administrators Role。还记不记得在前一篇推送中提到的初始化步骤，在初始化过程中所添加的用户，默认就会被添加到这个 Administrators Role 下面。当然我们可以来添加更多的用户到 Administrator Role 中。</p>
+<p>第二类是除了 Default 之外增加的 Scope，对于每一个 Scope，可以修改名称，可以删除。而这些 Scope 的 Roles 仅限于 Plan Authors。在每个 Scope 下的 Plan Authors Role 中，我们可以为这个 Scope 加入不同的用户。如下图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3F05i6.png, https://s2.ax1x.com/2020/02/18/3F05i6.png 1.5x, https://s2.ax1x.com/2020/02/18/3F05i6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        title="3F05i6.png" /></p>
+<p>在 VAO 中，这个 Scope 非常难理解，不过没关系，我还是来继续打这个比方：</p>
+<p>我们可以把 Scope 想象成一个一个的房间，每个房间都会有把锁，而这把锁配了多把钥匙，我们现在把这些钥匙分给不同的用户，那么这些用户都能通过 A 钥匙进入<code>房间（Scope A）</code>，通过 B 钥匙进入<code>房间（Scope B）</code>，通过 C 钥匙进入<code>房间（Scope C）</code>。这样，就形成了 VAO 中特殊的一种权限的管理：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>当前有房间（Scope）：A、B、C、D
+
+用户 1：拥有房间 A、B 的钥匙。
+
+用户 2：拥有房间 B、C、D 的钥匙。
+
+用户 3：拥有房间 D 的钥匙。</code></pre></div>
+<p>转换成 VAO 中的 Scope 管理：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>房间（Scope A）：用户 1
+
+房间（Scope B）：用户 1、用户 2
+
+房间（Scope C）：用户 2
+
+房间（Scope D）：用户 2、用户 3</code></pre></div>
+<p>而分钥匙的方法，就是在 VAO 中设置<code>User and Scopes</code>，在 VAO 中，通过拥有 Administrator Role 的 User 登录后，可以至<code>Administration</code>界面下面，找到<code>Permission-&gt;Users and Scope</code>来设定以上的管理权限，如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k3G4J.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k3G4J.png, https://s2.ax1x.com/2020/02/18/3k3G4J.png 1.5x, https://s2.ax1x.com/2020/02/18/3k3G4J.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k3G4J.png"
+        title="3k3G4J.png" /></p>
+<p>按照这样设定完成后，我们用 User 1 再次登入 VAO 的系统后，我们可以看到 Dashborad 上显示的当前用户的 Scope 如下图所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k38N4.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k38N4.png, https://s2.ax1x.com/2020/02/18/3k38N4.png 1.5x, https://s2.ax1x.com/2020/02/18/3k38N4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k38N4.png"
+        title="3k38N4.png" /></p>
+<p>类似的，User 2 登入系统后，将会看到房间 B、C、D，而 User 3 登入系统后，将只会看到房间 D。</p>
+<h4 id="配置-scope-中的-plan-components">配置 Scope 中的 Plan Components</h4>
+<p>进入<code>Administration</code>界面，在<code>Permissions</code>下，可以找到<code>Plan Components</code>，在这个界面上，可以为每个<code>Scope</code>设定每种 Components。如下图，可以在红框位置选择 Scope 来切换并且设定。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k3YC9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k3YC9.png, https://s2.ax1x.com/2020/02/18/3k3YC9.png 1.5x, https://s2.ax1x.com/2020/02/18/3k3YC9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k3YC9.png"
+        title="3k3YC9.png" /></p>
+<p>这里面大家可以注意到这是一个复选框，也就是说，可以同时选择多个 Scope 进行相关设定，但是为了更准确的设置相关内容，我还是建议大家逐个勾选设定会比较好。</p>
+<h2 id="datalabs">Datalabs</h2>
+<p>VAO 的 Datalab 其实就是 VBR 中的 Virtual Lab，只要在 VBR 中配置了 Virtual Lab 后，VAO 就能直接识别到。在识别到这些 Virtual Labs 之后，VAO 需要做一个分配的动作，将这些 Virtual Lab 按照实际使用的需求分配给不同的 Scope。特别注意，每一个 Virtual Lab 只能分配给一个指定的 Scope。</p>
+<p>要分配 Datalab，可以使用 Administrator 账号进入<code>Administration</code>界面，找到<code>Permission</code>下面的<code>Datalab Assignment</code>，在这个页面下，勾选中间 VAO 扫描到的 Virtual Lab 名称，然后点击 Assign 按钮。</p>
+<p>当点击了 Assign 按钮后会弹出 Assign Datalab to Scope 的对话框，在这里选择需要分配给哪个 Scope 即可。如下图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kt6XR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kt6XR.png, https://s2.ax1x.com/2020/02/18/3kt6XR.png 1.5x, https://s2.ax1x.com/2020/02/18/3kt6XR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kt6XR.png"
+        title="3kt6XR.png" /></p>
+<p>如果需要调整或者重新分配 Datalab，可以勾选 Virtual Lab 名称，然后点击 Unassign 按钮，稍等片刻之后就可以重新分配给其他的 Scope 了。</p>
+<h4 id="lab-groups">Lab Groups</h4>
+<p>我相信熟悉 DataLabs 的同学一定会好奇，我们 VBR 上的 Datalabs 的功能包含三个核心组件：Virtual Lab、Application Group 和 Surebackup Job。那么在 VAO 中我们将 DataLab 和 VBR 的 Virtual Lab 做了一一的对应，剩下的 Application Group 和 Surebackup Job 去哪里了？</p>
+<p>在 VAO 中，也有一个和 VBR 中的 Application Group 一一对应的组件，那就是 Lab Groups。在 Administration 控制台中并没有这个 Lab Groups 的设定，这个 Lab Groups 需要使用每个用户的账号登入自己的 VAO 控制台中，用各自的账号进入 DataLabs 主页面进行设置。和 Virtual Lab 不同的是，Lab Groups 并不是从 VBR 的 Application Group 中继承，在 VAO 中，这个 Lab Group 是全新创建的，需要用 VAO 中的对象来创建。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kwKJK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kwKJK.png, https://s2.ax1x.com/2020/02/18/3kwKJK.png 1.5x, https://s2.ax1x.com/2020/02/18/3kwKJK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kwKJK.png"
+        title="3kwKJK.png" /></p>
+<p>一般来说，Lab Group 可以保持空的状态，这和我们之前在 Application Group 的说明中提到的完全一致，除非是业务有依赖关系，必须依赖某个系统才能运行，那么此时，我们需要将这个被其他系统依赖的系统放入 Lab Group 之中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kwMRO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kwMRO.png, https://s2.ax1x.com/2020/02/18/3kwMRO.png 1.5x, https://s2.ax1x.com/2020/02/18/3kwMRO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kwMRO.png"
+        title="3kwMRO.png" /></p>
+<p>而 Surebackup Job，在 VAO 中就不需要用到了，这个 Job 会自动集成入 Orchestration Plan 之中，这里就不展开讨论，在后面的章节会详细介绍。</p>
+<p>以上就是本章节的主要内容，谢谢关注。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-02-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/02/vao-guide-03/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2020%2F02%2Fvao-guide-03%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2020%2F02%2Fvao-guide-03%2F&amp;text=VAO&#43;%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89&#43;-&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6&#43;%C2%B7&#43;%E4%B8%8A%E7%AF%87" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2020%252F02%252Fvao-guide-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2020%252F02%252Fvao-guide-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/02/vao-guide-02/" class="prev" rel="prev" title="VAO 基础入门（二） -  安装与部署"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO 基础入门（二） -  安装与部署</a>
+            <a href="/2020/02/vao-guide-04/" class="next" rel="next" title="VAO 基础入门（四） -  基本组件 · 下篇">VAO 基础入门（四） -  基本组件 · 下篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

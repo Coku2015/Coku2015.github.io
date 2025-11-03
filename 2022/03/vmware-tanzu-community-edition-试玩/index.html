@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Tanzu Community Edition（TCE）试玩 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Tanzu Community Edition（TCE）试玩">
+  <meta property="og:description" content="最近刷新了下 Homelab，开始在 Homelab 中玩玩 Tanzu。去年 VMware 开源了 Tanzu Community Edition，正好利用这个机会装上配上 k10 和 VBR 玩一把。
+硬件部分 我的环境由 2 台机器组成，一台是服役了 6 年多的 Dell Precision M4800，另外一台是新加入的 NUC11 猎豹峡谷。Dell 笔记本纯粹是在这个环境中打酱油的，而猎豹峡谷的配置如下：">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Tanzu Community Edition（TCE）试玩">
+  <meta name="twitter:description" content="最近刷新了下 Homelab，开始在 Homelab 中玩玩 Tanzu。去年 VMware 开源了 Tanzu Community Edition，正好利用这个机会装上配上 k10 和 VBR 玩一把。
+硬件部分 我的环境由 2 台机器组成，一台是服役了 6 年多的 Dell Precision M4800，另外一台是新加入的 NUC11 猎豹峡谷。Dell 笔记本纯粹是在这个环境中打酱油的，而猎豹峡谷的配置如下：">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" /><link rel="prev" href="http://192.168.16.79:1313/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" /><link rel="next" href="http://192.168.16.79:1313/2022/03/pvc-and-fcd/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Tanzu Community Edition（TCE）试玩",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2022\/03\/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  4458 ,
+        "url": "http:\/\/192.168.16.79:1313\/2022\/03\/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9\/","datePublished": "2022-03-19T00:00:00+00:00","dateModified": "2022-03-19T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Tanzu Community Edition（TCE）试玩</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-19">2022-03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4458 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#硬件部分">硬件部分</a></li>
+    <li><a href="#软件部分">软件部分</a></li>
+    <li><a href="#开动安装-tce">开动安装 TCE</a>
+      <ul>
+        <li><a href="#环境准备">环境准备</a></li>
+        <li><a href="#部署管理集群">部署管理集群</a></li>
+        <li><a href="#部署-workload-集群">部署 Workload 集群</a></li>
+        <li><a href="#存储资源配置">存储资源配置</a></li>
+        <li><a href="#开个测试-demo-应用试下环境">开个测试 demo 应用试下环境</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装配置-k10">安装配置 K10</a>
+      <ul>
+        <li><a href="#安装-k10">安装 K10</a></li>
+        <li><a href="#k10-配置-vcenter-和-vbr">k10 配置 vCenter 和 VBR</a></li>
+      </ul>
+    </li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>最近刷新了下 Homelab，开始在 Homelab 中玩玩 Tanzu。去年 VMware 开源了 Tanzu Community Edition，正好利用这个机会装上配上 k10 和 VBR 玩一把。</p>
+<h2 id="硬件部分">硬件部分</h2>
+<p>我的环境由 2 台机器组成，一台是服役了 6 年多的 Dell Precision M4800，另外一台是新加入的 NUC11 猎豹峡谷。Dell 笔记本纯粹是在这个环境中打酱油的，而猎豹峡谷的配置如下：</p>
+<ul>
+<li>CPU：Intel(R) Core(TM) i5-1135G7 @ 2.40GHz</li>
+<li>内存：ADATA 32GB×2 DDR4-3200</li>
+<li>硬盘：aigo NVMe SSD P2000 1TB</li>
+<li>网卡：Intel Corporation Ethernet Controller I225-V</li>
+</ul>
+<h2 id="软件部分">软件部分</h2>
+<p>M4800 上，使用 DellEMC 的自定义 ESXi 镜像，从 DellEMC 的官网能够下载到，里面包含了所有 Dell 硬件的驱动。</p>
+<p>NUC11 上安装 ESXi 最大的挑战来自于网卡驱动，这个网卡是 2.5GbE 的网卡，VMware 官方驱动中并不包含。不过大神们总有解决办法，社区版网卡驱动 <a href="https://williamlam.com/2021/02/new-community-networking-driver-for-esxi-fling.html" target="_blank" rel="noopener noreffer ">戳这里</a> 就能找到。</p>
+<p>两台主机都安装 vSphere 7.0.3，vCenter 版本也是 7.0.3.</p>
+<p><a href="https://imgtu.com/i/bqZqXR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/13/bqZqXR.png"
+        data-srcset="https://s1.ax1x.com/2022/03/13/bqZqXR.png, https://s1.ax1x.com/2022/03/13/bqZqXR.png 1.5x, https://s1.ax1x.com/2022/03/13/bqZqXR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/13/bqZqXR.png"
+        title="bqZqXR.png" /></a></p>
+<h2 id="开动安装-tce">开动安装 TCE</h2>
+<h3 id="环境准备">环境准备</h3>
+<p>首先我需要一个控制台来安装并操作 TCE，<a href="https://tanzucommunityedition.io/docs/latest/cli-installation/" target="_blank" rel="noopener noreffer ">TCE 的官方手册</a> 上提供了 macOS、Linux 和 Windows 的三种平台安装。我选择在我的环境中安装一台 Ubuntu 20.04 LTS 的虚拟机来安装 Tanzu CLI 软件。</p>
+<p>这台 Ubuntu，并不是一台最小化安装的普通 Ubuntu，需要另外准备以下环境：</p>
+<ul>
+<li>
+<p>安装 Docker，并配置 non-root 用户使用 Docker。配置方法很简单，只需要使用 non-root 用户，在安装完 docker 之后，按顺序执行下列命令即可。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>## 1. 先加 docker 组
+k10@tceconsole:~$ sudo groupadd docker
+## 2. 把当前用户加到 docker 组里
+k10@tceconsole:~$ sudo usermod -aG docker $USER
+## 3. 接下去最好注销后重新登录，或者直接用下面的命令激活
+$ newgrp docker 
+## 4. 试试 docker 命令，是否正常
+k10@tceconsole:~$ docker run hello-world</code></pre></div>
+</li>
+<li>
+<p>安装 kubectl，这个没啥特别，根据官网指引或者其他的说明直接安装即可。</p>
+</li>
+</ul>
+<p>有了这些条件后，就可以使用 TCE 官网手册中的安装方法来安装 Tanzu CLI 了</p>
+<p>在 Tanzu CLI 安装好之后，还需要从 VMware 官网 <a href="https://customerconnect.vmware.com/downloads/get-download?downloadGroup=TCE-0100" target="_blank" rel="noopener noreffer ">下载 OVA 镜像</a>，这个镜像是用来在 vSphere 中部署 k8s node 的，我选择了<code>ubuntu-2004-kube-v1.21.5+vmware.1-tkg.1-12483545147728596280-tce-010.ova</code>。</p>
+<p>下载完成后，在 vSphere 中导入这个 ova，并立刻将这个 ova 转换成模板，如下图在 vSphere 中可以看到这样的状态即可：</p>
+<p><a href="https://imgtu.com/i/qVeOOg" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVeOOg.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVeOOg.png, https://s1.ax1x.com/2022/03/19/qVeOOg.png 1.5x, https://s1.ax1x.com/2022/03/19/qVeOOg.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVeOOg.png"
+        title="qVeOOg.png" /></a></p>
+<p>另外，我还要在我的环境中配置一个 DHCP 服务器，在部署集群时，TCE 必须依赖 DHCP 服务才能完成所有工作。</p>
+<p>最后，是用下面的命令准备图形化安装第一步要用的 ssh public key</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>## 创建一个 SSH 密钥对
+k10@tceconsole:~$ ssh-keygen -t rsa -b 4096 -C &#34;administrator@backupnext.cloud&#34;
+## 获取下这个公钥备用
+k10@tceconsole:~$ cat .ssh/id_rsa.pub</code></pre></div>
+<h3 id="部署管理集群">部署管理集群</h3>
+<p>TCE 和其他 Tanzu 一样，都由管理集群（Management Cluster）和工作负载集群（Workload Cluster）组成，我在我的环境中首先需要配置一个管理集群，配置启动方法非常简单，只需要运行下面的命令即可：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ tanzu management-cluster create --ui --bind 0.0.0.0:8080 --browser none</code></pre></div>
+<p>命令运行后，我在我本地的浏览器中，打开<code>http://&lt;ubuntuip&gt;:8080/ </code>就可以进入 Tanzu 安装向导图形界面了。</p>
+<ol>
+<li>选择部署平台，VMware vSphere
+<a href="https://imgtu.com/i/qVQTYj" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQTYj.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQTYj.png, https://s1.ax1x.com/2022/03/19/qVQTYj.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQTYj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQTYj.png"
+        title="qVQTYj.png" /></a></li>
+<li>填入 vCenter 信息并连接，这里连接后，需要将前面准备好的 SSH 公钥填入到 SSH Public Key 框中。
+<a href="https://imgtu.com/i/qVQokQ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQokQ.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQokQ.png, https://s1.ax1x.com/2022/03/19/qVQokQ.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQokQ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQokQ.png"
+        title="qVQokQ.png" /></a></li>
+<li>设置管理集群信息，我选择了 Development 模式，这样在我的小 Lab 中只需要一台 Control Plane 节点，并且我将 Instance Type 选择了 small 的最小配置。我填写了 Management Cluster Name 为<code>leihome</code>，启用了 Machine Health Checks。Control Plane Endpoint Provider 选择 Kube-vip，指定 Control Plane Endpoint 地址为 10.10.1.182，设定了 Worker Node Instance Type 为 Small，Audit Logging 为不 Enable。
+<a href="https://imgtu.com/i/qVbam4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qVbam4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qVbam4.png, https://s1.ax1x.com/2022/03/20/qVbam4.png 1.5x, https://s1.ax1x.com/2022/03/20/qVbam4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qVbam4.png"
+        title="qVbam4.png" /></a></li>
+<li>VMware NSX Advanced Load Balancer 和 Metadata 部分，都禁用不选择。</li>
+<li>在第五步 Resource 中，指定部署到 VM Folder 为<code>/HomelabDC/vm/tkg</code>，Datastore 为<code>/HomelabDC/datastore/localnvme</code>，Cluster、Hosts、and Resource Pools 选择<code>TanzuCE</code>这个资源池。
+<a href="https://imgtu.com/i/qVQ40S" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQ40S.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQ40S.png, https://s1.ax1x.com/2022/03/19/qVQ40S.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQ40S.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQ40S.png"
+        title="qVQ40S.png" /></a></li>
+<li>Kubernetes Network 步骤中，配置没进行修改，保持默认。
+<a href="https://imgtu.com/i/qVQhm8" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQhm8.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQhm8.png, https://s1.ax1x.com/2022/03/19/qVQhm8.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQhm8.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQhm8.png"
+        title="qVQhm8.png" /></a></li>
+<li>Identity Management 步骤中，禁用 Identity Management Settings。
+<a href="https://imgtu.com/i/qVQWOf" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQWOf.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQWOf.png, https://s1.ax1x.com/2022/03/19/qVQWOf.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQWOf.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQWOf.png"
+        title="qVQWOf.png" /></a></li>
+<li>OS image 步骤中，选择准备工作中已经导入的虚拟机模板 node 节点。
+<a href="https://imgtu.com/i/qVQ7fs" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQ7fs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQ7fs.png, https://s1.ax1x.com/2022/03/19/qVQ7fs.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQ7fs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQ7fs.png"
+        title="qVQ7fs.png" /></a></li>
+<li>然后以上配置就完成了，Review 下 configuration 之后，就进入了全自动的配置，大约半小时左右管理集群将会被自动部署完并且可以使用。</li>
+</ol>
+<p>管理集群部署完成后，回到我的 Ubuntu 控制台上，执行命令：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>## 查询下前面安装的管理集群
+k10@tceconsole:~$ tanzu management-cluster get
+  NAME     NAMESPACE   STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES       
+  leihome  tkg-system  running  1/1           1/1      v1.21.5+vmware.1  management  
+
+Details:
+
+NAME                                                        READY  SEVERITY  REASON  SINCE  MESSAGE
+/leihome                                                    True                     8d            
+├─ClusterInfrastructure - VSphereCluster/leihome            True                     8d            
+├─ControlPlane - KubeadmControlPlane/leihome-control-plane  True                     8d            
+│ └─Machine/leihome-control-plane-2mz2v                     True                     8d            
+└─Workers                                                                                          
+  └─MachineDeployment/leihome-md-0                                                                 
+    └─Machine/leihome-md-0-6f69758844-zpfsj                 True                     8d            
+
+Providers:
+
+  NAMESPACE                          NAME                    TYPE                    PROVIDERNAME  VERSION  WATCHNAMESPACE  
+  capi-kubeadm-bootstrap-system      bootstrap-kubeadm       BootstrapProvider       kubeadm       v0.3.23                  
+  capi-kubeadm-control-plane-system  control-plane-kubeadm   ControlPlaneProvider    kubeadm       v0.3.23                  
+  capi-system                        cluster-api             CoreProvider            cluster-api   v0.3.23                  
+  capv-system                        infrastructure-vsphere  InfrastructureProvider  vsphere       v0.7.10  
+## 获取 kubectl 的管理权限
+k10@tceconsole:~$ tanzu management-cluster kubeconfig get leihome --admin
+Credentials of cluster &#39;leihome&#39; have been saved 
+You can now access the cluster by running &#39;kubectl config use-context leihome-admin@leihome&#39;
+## 试下 kubectl
+k10@tceconsole:~$ kubectl get node
+NAME                            STATUS   ROLES                  AGE   VERSION
+leihome-control-plane-2mz2v     Ready    control-plane,master   8d    v1.21.5+vmware.1
+leihome-md-0-6f69758844-zpfsj   Ready    &lt;none&gt;                 8d    v1.21.5+vmware.1</code></pre></div>
+<p>这样，管理集群就全部完成了，这时候，回到 vCenter 上，也能够看到 2 台对应的 node 虚拟机。</p>
+<p><a href="https://imgtu.com/i/qZPdxJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZPdxJ.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZPdxJ.png, https://s1.ax1x.com/2022/03/20/qZPdxJ.png 1.5x, https://s1.ax1x.com/2022/03/20/qZPdxJ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZPdxJ.png"
+        title="qZPdxJ.png" /></a></p>
+<h3 id="部署-workload-集群">部署 Workload 集群</h3>
+<p>在管理集群部署完成后，以上的集群配置会以 yaml 文件自动保存在<code>~/.config/tanzu/tkg/clusterconfigs/</code>目录下，部署 Workload 集群的方法非常简单，只需要利用自动生成的管理集群的 yaml 文件，稍加修改，即可使用。</p>
+<p>通过以下命令，先创建一份并修改用于部署 Workload 集群的 yaml 文件：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ cp  ~/.config/tanzu/tkg/clusterconfigs/pkwmre6kuu.yaml ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
+k10@tceconsole:~$ vi ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml</code></pre></div>
+<p>修改文件中以下字段：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">CLUSTER_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">leihome-workload-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">VSPHERE_CONTROL_PLANE_ENDPOINT</span><span class="p">:</span><span class="w"> </span><span class="m">10.10.1.191</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">VSPHERE_WORKER_MEM_MIB</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;8192&#34;</span></span></span></code></pre></div></div>
+<p>其中<code>CLUSTER_NAME</code>是 Workload 集群的名称，我这里使用<code>leihome-workload-01</code>，<code>VSPHERE_CONTROL_PLANE_ENDPOINT</code>是这个 Workload 集群的 APIServer 的访问地址，设置为固定 IP 比较合适，我使用<code>10.10.1.191</code>，<code>VSPHERE_WORKER_MEM_MIB</code>是 Workload 集群的内存，我的环境中默认 Small 配置的 4GB 不太够用，我设置成了<code>8192</code>。</p>
+<p>修改完成后，运行如下命令，就能自动部署 Workload 集群了。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ tanzu cluster create leihome-workload-01 --file ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml</code></pre></div>
+<p>大约 10 来分钟，Workload 集群就会部署完成，部署后和管理集群一样，默认配置为一个 Control Plane 和一个 Worker。我计划多运行几个应用程序，因此我用下面这条命令来增加 Worker Node：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ tanzu cluster scale leihome-workload-01 --worker-machine-count=2
+Successfully updated worker node machine deployment replica count for cluster leihome-workload-01
+Workload cluster &#39;leihome-workload-01&#39; is being scaled</code></pre></div>
+<p>Workload 集群部署完成后，和管理集群一样，需要获取下 Workload 集群的访问权限：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>## 获取当前的 Workload 集群列表
+k10@tceconsole:~$ tanzu cluster list
+  NAME                 NAMESPACE  STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES   PLAN  
+  leihome-workload-01  default    running  1/1           2/2      v1.21.5+vmware.1  &lt;none&gt;  dev 
+## 获取 leihome-workload-01 这个 Workload 集群的访问权限
+k10@tceconsole:~$ tanzu cluster kubeconfig get leihome-workload-01 --admin
+Credentials of cluster &#39;leihome-workload-01&#39; have been saved 
+You can now access the cluster by running &#39;kubectl config use-context leihome-workload-01-admin@leihome-workload-01&#39;
+## 用 kubectl 查下当前的 context 清单
+k10@tceconsole:~$ kubectl config get-contexts 
+CURRENT   NAME                                            CLUSTER               AUTHINFO                    NAMESPACE
+*         leihome-admin@leihome                           leihome               leihome-admin               
+          leihome-workload-01-admin@leihome-workload-01   leihome-workload-01   leihome-workload-01-admin   
+## 用 kubectl 命令切换下集群，开始使用部署出来的集群
+k10@tceconsole:~$ kubectl config use-context leihome-workload-01-admin@leihome-workload-01 
+Switched to context &#34;leihome-workload-01-admin@leihome-workload-01&#34;.
+## 获取下 node
+k10@tceconsole:~$ kubectl get node
+NAME                                        STATUS   ROLES                  AGE     VERSION
+leihome-workload-01-control-plane-c4k4q     Ready    control-plane,master   7d18h   v1.21.5+vmware.1
+leihome-workload-01-md-0-668d8747d6-4hd6z   Ready    &lt;none&gt;                 7d18h  v1.21.5+vmware.1
+leihome-workload-01-md-0-668d8747d6-hcs4k   Ready    &lt;none&gt;                 7d18h   v1.21.5+vmware.1</code></pre></div>
+<p>回到 vCenter 中，可以看到 3 台 Workload Node 虚拟机已经运行起来了。</p>
+<p><a href="https://imgtu.com/i/qZYjl4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZYjl4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZYjl4.png, https://s1.ax1x.com/2022/03/20/qZYjl4.png 1.5x, https://s1.ax1x.com/2022/03/20/qZYjl4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZYjl4.png"
+        title="qZYjl4.png" /></a></p>
+<p>以上过程，Kubernetes 集群的计算资源就已经算是配置完成了。</p>
+<h3 id="存储资源配置">存储资源配置</h3>
+<p>Tanzu 集群可以通过 vSphere CSI 使用 vSphere 7.0 上的 datastore 存放持久化数据，但是默认情况下并没有自动将 datastore 和 Tanzu 集群关联，这时候我通过下面这个 yaml 文件，将 datastore 的访问开放给 Workload。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StorageClass  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">storage.k8s.io/v1  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">standard  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storageclass.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">parameters</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datastoreurl</span><span class="p">:</span><span class="w"> </span><span class="l">ds:///vmfs/volumes/622a19d3-91aee82b-59df-1c697aafcbf9/</span></span></span></code></pre></div></div>
+<p>其中最下面一行 datastoreurl 可以通过 vCenter 中 datastore 的 summary 中的地址获取，如图：</p>
+<p><a href="https://imgtu.com/i/qZNnv4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZNnv4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZNnv4.png, https://s1.ax1x.com/2022/03/20/qZNnv4.png 1.5x, https://s1.ax1x.com/2022/03/20/qZNnv4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZNnv4.png"
+        title="qZNnv4.png" /></a></p>
+<p>配置这个新的 StorageClass，并取消原来 default 的 storage Class 作为默认 Storage Class：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>## 添加新的 Storage Class，连接 vSphere 上的 Datastore
+k10@tceconsole:~$ kubectl apply -f ~/storage/localnvme.yaml
+## 取消原来自动配上的 Hostpath 作为默认 Storage Class，当然也可以直接删除掉 default 的 storage class
+k10@tceconsole:~$ kubectl patch storageclass default -p &#39;{&#34;metadata&#34;: {&#34;annotations&#34;:{&#34;storageclass.kubernetes.io/is-default-class&#34;:&#34;false&#34;}}}&#39;
+## 用 kubectl 查询下目前的 sc 状况
+k10@tceconsole:~$ kubectl get sc
+NAME                 PROVISIONER              RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+default              csi.vsphere.vmware.com   Delete          Immediate           true                   7d19h
+standard (default)   csi.vsphere.vmware.com   Delete          Immediate           false                  7d18h</code></pre></div>
+<h3 id="开个测试-demo-应用试下环境">开个测试 demo 应用试下环境</h3>
+<p>这个小 demo 很简单，就是个 alpine Linux，挂一个数据目录/data，这个 data 目录实际上就会映射至 vSphere 的 Datastore 中，分配一个 vmdk 文件。关于这个 vmdk 文件，我先卖个关子，在下期推送中详细讨论。</p>
+<p>小 Demo 的 yaml：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolumeClaim</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pvc</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">alpine:3.7</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">256Mi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">100m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tail&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;/dev/null&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span></span></span></code></pre></div></div>
+<p>创建过程很简单，下面 2 条命令即可，创建完成后，拷贝个文件进持久数据卷试试：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ kubectl create ns leihomedemo
+k10@tceconsole:~$ kubectl apply -n leihomedemo -f ~/demo/demoapp.yaml
+k10@tceconsole:~$ kubectl cp mytest leihomedemo/demo-app-696f676d47-dsbcr:/data/
+k10@tceconsole:~$ kubectl exec --namespace=leihomedemo demo-app-696f676d47-dsbcr -- ls -l /data
+total 24
+drwx------    2 root     root         16384 Mar 12 14:01 lost+found
+-rw-rw-r--    1 1000     117             13 Mar 12 14:33 mytest</code></pre></div>
+<p>一切正常，环境完美运行。</p>
+<h2 id="安装配置-k10">安装配置 K10</h2>
+<h3 id="安装-k10">安装 K10</h3>
+<p>安装 K10 前，我准备了一台 VBR v11a 的 Windows 服务器和一台 Minio S3 的对象存储，用于存放 K10 的备份数据。</p>
+<p>K10 的安装和常规部署没任何区别，在安装前还是惯例运行下 Pre-flight 脚本检查环境：</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ curl https://docs.kasten.io/tools/k10_primer.sh | bash
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7045  100  7045    0     0    918      0  0:00:07  0:00:07 --:--:--  1757
+Namespace option not provided, using default namespace
+Checking for tools
+ --&gt; Found kubectl
+ --&gt; Found helm
+Checking if the Kasten Helm repo is present
+ --&gt; The Kasten Helm repo was found
+Checking for required Helm version (&gt;= v3.0.0)
+ --&gt; No Tiller needed with Helm v3.4.1
+K10Primer image
+ --&gt; Using Image (gcr.io/kasten-images/k10tools:4.5.11) to run test
+Checking access to the Kubernetes context leihome-workload-01-admin@leihome-workload-01
+ --&gt; Able to access the default Kubernetes namespace
+K10 Kanister tools image
+ --&gt; Using Kanister tools image (ghcr.io/kanisterio/kanister-tools:0.74.0) to run test
+
+Running K10Primer Job in cluster with command- 
+     ./k10tools primer 
+serviceaccount/k10-primer created
+clusterrolebinding.rbac.authorization.k8s.io/k10-primer created
+job.batch/k10primer created
+Waiting for pod k10primer-b5nf9 to be ready - ContainerCreating
+
+Pod Ready!
+
+I0319 05:28:41.931353       8 request.go:665] Waited for 1.043641473s due to client-side throttling, not priority and fairness, request: GET:https://100.64.0.1:443/apis/scheduling.k8s.io/v1beta1
+Kubernetes Version Check:
+  Valid kubernetes version (v1.21.5+vmware.1)  -  OK
+
+RBAC Check:
+  Kubernetes RBAC is enabled  -  OK
+
+Aggregated Layer Check:
+  The Kubernetes Aggregated Layer is enabled  -  OK
+
+W0319 05:28:42.188135       8 warnings.go:70] storage.k8s.io/v1beta1 CSIDriver is deprecated in v1.19+, unavailable in v1.22+; use storage.k8s.io/v1 CSIDriver
+CSI Capabilities Check:
+  VolumeSnapshot CRD-based APIs are not installed  -  Error
+
+Validating Provisioners: 
+csi.vsphere.vmware.com:
+  Storage Classes:
+    default
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+    isonfs
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+    standard
+      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+      Valid Storage Class  -  OK
+
+Validate Generic Volume Snapshot:
+  Pod Created successfully  -  OK
+  GVS Backup command executed successfully  -  OK
+  Pod deleted successfully  -  OK
+
+serviceaccount &#34;k10-primer&#34; deleted
+clusterrolebinding.rbac.authorization.k8s.io &#34;k10-primer&#34; deleted
+job.batch &#34;k10primer&#34; deleted</code></pre></div>
+<p>以上可以看到其中 CSI Capabilities Check 出现了个 Error，这个没关系，因为是使用 vSphere CSI，快照部分功能是利用 vSphere 源生的 vmdk 快照实现，因此在集群里我并没有安装 VolumeSnapshotClass。</p>
+<p>安装 K10 还是老方法，官网手册中的可以直接使用，而我这边还是依旧使用 ccr.ccs.tencentyun.com/kasten 这个镜像库：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~$ helm repo add kasten https://charts.kasten.io/
+k10@tceconsole:~$ helm repo update
+k10@tceconsole:~$ helm install k10 kasten/k10 \
+	--namespace=kasten-io \
+	--set global.persistence.storageClass=standard \
+	--set global.airgapped.repository=ccr.ccs.tencentyun.com/kasten \
+	--set metering.mode=airgap
+## 通过 Nodeport 暴露 k10 图形界面访问
+k10@tceconsole:~$ kubectl expose -n kasten-io deployment gateway --type=NodePort --name=gateway-nodeport-svc --port=8000</code></pre></div>
+<p>等待 10 来分钟之后，我的 K10 就能通过 http://10.10.1.14:32080/k10/#/进行访问了。</p>
+<h3 id="k10-配置-vcenter-和-vbr">k10 配置 vCenter 和 VBR</h3>
+<p>进入 K10 主页后，在 Settings 中找到 Location Profile，首先需要添加一个 S3 对象存储作为主备份存储，就算我有 VBR 的存储库，这个都不能少。如下图配置非常简单：</p>
+<p><a href="https://imgtu.com/i/qe4KG8" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe4KG8.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe4KG8.png, https://s1.ax1x.com/2022/03/20/qe4KG8.png 1.5x, https://s1.ax1x.com/2022/03/20/qe4KG8.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe4KG8.png"
+        title="qe4KG8.png" /></a></p>
+<p>再来添加一个 VBR 的 Repository，用于 vmdk 数据备份存储，也就是 pvc 的备份。</p>
+<p><a href="https://imgtu.com/i/qe48qs" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe48qs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe48qs.png, https://s1.ax1x.com/2022/03/20/qe48qs.png 1.5x, https://s1.ax1x.com/2022/03/20/qe48qs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe48qs.png"
+        title="qe48qs.png" /></a></p>
+<p>在 Location Profile 下面，找到 Infrastructure，使用 New Profile 按钮新增一个 vCenter 的连接，配置信息非常简单，和任何设备添加 vCenter 几乎没区别，IP 地址、用户名、密码，3 要素。</p>
+<p><a href="https://imgtu.com/i/qe4JZn" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe4JZn.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe4JZn.png, https://s1.ax1x.com/2022/03/20/qe4JZn.png 1.5x, https://s1.ax1x.com/2022/03/20/qe4JZn.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe4JZn.png"
+        title="qe4JZn.png" /></a></p>
+<p>接下来，就可以进行备份策略的配置了。备份策略和其他 Kubernetes 平台 K10 的备份策略稍有不同，在 Snapshot Retention 上，可以看到 K10 自动感知到这是 VMware 平台，给出了 VMware 平台中 Snapshot 保留的最佳实践，建议不能超过 3 个 Snapshot。因此如下图，我将 Snapshot 设置为 1。在 Export Location Profile 中，可以选择 Minio S3 对象存储作为第一级备份 Export 目标，此处 VBR 的 Location Profile 不可选。</p>
+<p>在这个<code>Enable Backups via Snapshot Exports</code>之后，会有个新增的选项<code>Export snapshot data to a Veeam Backup Server repository</code>，勾选这个选项后，可以选择 Veeam Backup Location Profile。</p>
+<p><a href="https://imgtu.com/i/qefZyd" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qefZyd.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qefZyd.png, https://s1.ax1x.com/2022/03/20/qefZyd.png 1.5x, https://s1.ax1x.com/2022/03/20/qefZyd.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qefZyd.png"
+        title="qefZyd.png" /></a></p>
+<p>其他配置没有什么特别，这样配置后的 Policy 如下：</p>
+<p><a href="https://imgtu.com/i/qehDEt" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qehDEt.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qehDEt.png, https://s1.ax1x.com/2022/03/20/qehDEt.png 1.5x, https://s1.ax1x.com/2022/03/20/qehDEt.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qehDEt.png"
+        title="qehDEt.png" /></a></p>
+<p>备份自动运行后，可以从 Dashboard 进入查看到详细的备份 Action 详情，其中 VBR 的导出部分由 Kanister 完成：</p>
+<p><a href="https://imgtu.com/i/qe5kWT" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe5kWT.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe5kWT.png, https://s1.ax1x.com/2022/03/20/qe5kWT.png 1.5x, https://s1.ax1x.com/2022/03/20/qe5kWT.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe5kWT.png"
+        title="qe5kWT.png" /></a></p>
+<p>而在 VBR 中，可以看到 K10 的 Policy 和 K10 的备份存档也已经出现：</p>
+<p><a href="https://imgtu.com/i/qeIlHs" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qeIlHs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qeIlHs.png, https://s1.ax1x.com/2022/03/20/qeIlHs.png 1.5x, https://s1.ax1x.com/2022/03/20/qeIlHs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qeIlHs.png"
+        title="qeIlHs.png" /></a>
+<a href="https://imgtu.com/i/qeIQBj" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qeIQBj.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qeIQBj.png, https://s1.ax1x.com/2022/03/20/qeIQBj.png 1.5x, https://s1.ax1x.com/2022/03/20/qeIQBj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qeIQBj.png"
+        title="qeIQBj.png" /></a></p>
+<p>关于 VBR 中 K10 的操作，可以参考 <a href="https://helpcenter.veeam.com/docs/backup/kasten_integration/overview.html?ver=110" target="_blank" rel="noopener noreffer ">Veeam 官方的手册</a>，已经在官网上线。</p>
+<h2 id="最后">最后</h2>
+<p>到目前为止，整个环境资源消耗：</p>
+<table>
+  <thead>
+      <tr>
+          <th>虚拟机</th>
+          <th>用途</th>
+          <th>CPU</th>
+          <th>内存</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>vCenter</td>
+          <td>vCenter</td>
+          <td>2vCPU</td>
+          <td>12GB</td>
+      </tr>
+      <tr>
+          <td>TCEconsole</td>
+          <td>Tanzu 控制台</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>leihome-control-plane-2mz2v</td>
+          <td>TCE 管理集群控制节点</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-md-0-6f69758844-zpfsj</td>
+          <td>TCE 管理集群工作节点</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-control-plane-c4k4q</td>
+          <td>TCE 工作集群控制节点</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-md-0-668d8747d6-4hd6z</td>
+          <td>TCE 工作集群工作节点</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-md-0-668d8747d6-hcs4k</td>
+          <td>TCE 工作集群工作节点</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>VBR</td>
+          <td>VBR</td>
+          <td>4vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>总计</td>
+          <td>18vCPU</td>
+          <td>56GB</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>还没超过我的 NUC11 总内存，一台 NUC11 跑这么个环境绰绰有余啦。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-03-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2022%2F03%2Fvmware-tanzu-community-edition-%25E8%25AF%2595%25E7%258E%25A9%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2022%2F03%2Fvmware-tanzu-community-edition-%25E8%25AF%2595%25E7%258E%25A9%2F&amp;text=Tanzu&#43;Community&#43;Edition%EF%BC%88TCE%EF%BC%89%E8%AF%95%E7%8E%A9" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2022%252F03%252Fvmware-tanzu-community-edition-%2525E8%2525AF%252595%2525E7%25258E%2525A9%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2022%252F03%252Fvmware-tanzu-community-edition-%2525E8%2525AF%252595%2525E7%25258E%2525A9%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" class="prev" rel="prev" title="vCenter Converter 下架后 p2v 怎么玩"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>vCenter Converter 下架后 p2v 怎么玩</a>
+            <a href="/2022/03/pvc-and-fcd/" class="next" rel="next" title="头等舱磁盘（First Class Disks）详解">头等舱磁盘（First Class Disks）详解<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

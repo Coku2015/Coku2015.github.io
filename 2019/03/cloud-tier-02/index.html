@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Cloud Tier – 云对象存储使用详解（二） - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2019/03/cloud-tier-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam Cloud Tier – 云对象存储使用详解（二）">
+  <meta property="og:description" content="上期介绍了 Veeam 云对象存储使用的基本方法，但是文中有些内容略微有些小错误，在此不再放入该推送的链接，如有需要，请大家后台回复：Cloud 或者云调取阅读更新后的版本。本期内容给那些想更深入了解该技术的朋友们。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-03-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-03-04T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Veeam Cloud Tier – 云对象存储使用详解（二）">
+  <meta name="twitter:description" content="上期介绍了 Veeam 云对象存储使用的基本方法，但是文中有些内容略微有些小错误，在此不再放入该推送的链接，如有需要，请大家后台回复：Cloud 或者云调取阅读更新后的版本。本期内容给那些想更深入了解该技术的朋友们。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2019/03/cloud-tier-02/" /><link rel="prev" href="http://192.168.16.79:1313/2019/02/cloud-tier-01/" /><link rel="next" href="http://192.168.16.79:1313/2019/03/veeam-faq/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Cloud Tier – 云对象存储使用详解（二）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2019\/03\/cloud-tier-02\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  2079 ,
+        "url": "http:\/\/192.168.16.79:1313\/2019\/03\/cloud-tier-02\/","datePublished": "2019-03-04T00:00:00+00:00","dateModified": "2019-03-04T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Cloud Tier – 云对象存储使用详解（二）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-03-04">2019-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2079 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#元数据metadata和数据块block">元数据（Metadata）和数据块（Block）</a></li>
+            <li><a href="#索引index">索引（Index）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>上期介绍了 Veeam 云对象存储使用的基本方法，但是文中有些内容略微有些小错误，在此不再放入该推送的链接，如有需要，请大家后台回复：<em><strong>Cloud 或者云</strong></em>调取阅读更新后的版本。本期内容给那些想更深入了解该技术的朋友们。</p>
+<p>或许已经有人注意到，在使用 Veeam 云对象存储以后，不管备份存档是位于本地数据中心还是位于云上对象存储中，Veeam 均提供各种丰富的还原手段，其中包括最重要的 Veeam 于 2010 年首创的经典技术 – Instant VM Recovery，关于这个技术的详细使用，可以参考之前的推送：</p>
+<ul>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483838&amp;idx=1&amp;sn=d5ba99c0f7c8d649a5efe247159d4ebf&amp;chksm=fdf0a76bca872e7d0161cbb7fcd9e1a5c4e6426d17fef21b24876d9222c8772aba3c710e6411&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">Veeam 黑科技之 vPower NFS</a>。</li>
+</ul>
+<p>云对象存储特殊属性，各家云厂商在定价上几乎无一例外的采用 4 个维度来制定收费策略，分别是：容量、读写请求次数、读取数据量、订阅服务时间，这和传统存储设备一次性买断投资的特性完全不同，因此对于长期不使用的数据，存放在云端时，读写请求和读取的费用会变得非常的低，这也是对象存储作为归档异地存放的最佳属性。</p>
+<p>但是，这并不意味着备份厂商可以无责任的随意使用对象存储，如果把对象存储当做和传统本地存储一致的属性来对待时，对于传统设备的随意读写的这些操作，特别是做数据校验、数据整理、恢复校验、定时重删任务等读写操作，会给用户带来额外巨大的 I/O 和读取费用。因此 Veeam 为存放到对象存储上的数据做了重新打散处理，并且定义了一系列的存取规则，以确保数据可用性的前提下，尽可能少的使用读写 I/O 和读取数据量，降低云端对象存储的使用成本。</p>
+<h4 id="元数据metadata和数据块block">元数据（Metadata）和数据块（Block）</h4>
+<p>每个 Veeam 的备份存档（.vbk、.vib、.vrb）都会由** Metadata <strong>和</strong> Block **组成，在每个本地存储的存档中，Metadata 和 Block 是密不可分的，通常就存在于同一个文件中。而数据被传送到云端对象存储时，Veeam 会将两者拆分开来，在各自的目录中，单独存放相关数据。而本地磁盘上，Veeam 会保留 Metadata，以便能够在恢复时快速找到对应的 Block。</p>
+<h4 id="索引index">索引（Index）</h4>
+<p>索引通常在 SOBR Offload Job 启动时生成，其内容包含了。vbk、.vib、.vrb 这些文件中，各切片数据块的哈希值（Hash），Veeam 从备份存档的 Metadata 中提取这些 Block 的哈希值。生成这些哈希值后，Veeam 会首先把这些内容存放在 Scale Out Backup Repository 下该 backup job 对应的 Extents 目录下的 ArchiveIndex 目录中。在以后的任何一次数据传输中，如果有数据块的哈希值和已有的哈希值相同，那么 Veeam 将会重复利用这些已经传输的数据块，而不会再进行传输，避免浪费带宽。</p>
+<p>需要注意的是，这个索引是基于完整备份链（Backup Chain）生成的，也就是说，对于两个不同的 Backup Job，即使对于同一台 VM 做了 Backup，实际上在上传到对象存储的时候，就算数据块拥有相同哈希，也会被重复上传。由于这是整个备份链中的数据块信息，因此，每次的备份链发生变化，那么在下一次执行 SOBR Offload Job 时都会重新生成这个索引。</p>
+<p>这个索引中的内容，同时包含了某一数据块在云端对象存储中和在本地磁盘存储中的位置信息，如果某一数据块同时存在于 3 份不同的全备份存档中，其中两份位于本地磁盘中，一份位于云端对象存储上，那么索引会将这些信息都记录下来。当需要执行 SOBR Offload Job 进行新数据上传时，VBR 如果发现新的上传数据中需要上传这份云端已有数据，那么 VBR 会跳过该数据块的上传，同时在本地和云端更新相应记录，以此来节省上传带宽和节省上传时间。</p>
+<p>当需要还原时，同样的，VBR 会判断被还原的数据块中的哈希值，如果发现索引中有提到本地磁盘中还存放着这些数据块，那么 VBR 会优先选用本地磁盘上的数据作为还原读取的源，从而大大节省从云端对象存储中读取的数据量。</p>
+<p>而正是这个原因，也使得选用云端对象存储上的数据执行 Instant VM Recovery 变得可行。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnwkt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnwkt.png, https://s2.ax1x.com/2020/02/13/1qnwkt.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnwkt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnwkt.png"
+        title="1qnwkt.png" /></p>
+<p>备份链的活跃部分和非活跃部分</p>
+<p>只有备份链的非活跃部分，才能被上传至云对象存储中。无论是手工操作还是自动任务，处于备份链活跃部分的还原点，无论如何都将不会被上传至云对象存储上。</p>
+<p>这也是本次更新后 Veeam 对于备份链新引入的两个概念，这是在了解云端对象存储数据上传任务中非常重要的两个概念。介绍这两个概念之前，我们来复习下备份链（Backup Chain）的定义：在 Veeam 的备份存档中，存放在存储介质中的数据以备份链的形式存放，以普通增量备份为例，一般存放结构如下图所示，那么对于一个 Backup Job 而言，这一组文件的集合，被称之为备份链（Backup Chain）。</p>
+<p>而备份链的活跃部分和非活跃部分则是以最后一次全备份为分界线，在最后一次全备份之前的部分，我们称之为备份链的非活跃部分，而在最后一次全备份之后的所有增量备份和该全备份，被称之为备份链的活跃部分。如下图所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnU0A.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnU0A.png, https://s2.ax1x.com/2020/02/13/1qnU0A.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnU0A.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnU0A.png"
+        title="1qnU0A.png" /></p>
+<p>当然这依然是以普通增量备份为例，对于反向增量备份、永久增量备份、Backup Copy，情况会略有不同，但是基本规则也和上面提到的一致。</p>
+<p>随着时间的推移，作业的进行，早期的还原点（Restore Point）将会因为新的全备份的产生而被转换为非活跃，从而实现 Offload 操作。</p>
+<p>总结一下，哪些数据将会被上传至云对象存储中：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>属于备份链的非活跃部分的数据；
+
+早于 Capacity Tier 中设定的日期的数据；
+
+这个 Block 是否之前没有在这个 Backup Job 中被上传过。</code></pre></div>
+<p>这个 3 个条件验证完后，数据将会被决定是否会上传。</p>
+<p>以上就是本期对 Veeam Cloud Tier 的深入分析。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2019-03-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2019/03/cloud-tier-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F03%2Fcloud-tier-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F03%2Fcloud-tier-02%2F&amp;text=Veeam&#43;Cloud&#43;Tier&#43;%E2%80%93&#43;%E4%BA%91%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%8C%EF%BC%89" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F03%252Fcloud-tier-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F03%252Fcloud-tier-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2019/02/cloud-tier-01/" class="prev" rel="prev" title="Veeam Cloud Tier – 云对象存储使用详解（一）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Cloud Tier – 云对象存储使用详解（一）</a>
+            <a href="/2019/03/veeam-faq/" class="next" rel="next" title="Veeam FAQ 系列转载">Veeam FAQ 系列转载<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

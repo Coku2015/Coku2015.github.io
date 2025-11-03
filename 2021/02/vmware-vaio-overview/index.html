@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VMware VAIO 技术概览 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2021/02/vmware-vaio-overview/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VMware VAIO 技术概览">
+  <meta property="og:description" content="下周，Veeam 即将发布旗舰产品 VAS 套件全新的 v11 版本，在这个版本中最重要的一个功能就是 Veeam CDP。我相信不少朋友期待这个功能已经很久了，而事实上 Veeam 通过接近 5 年的精雕细琢，终于在 v11 中正式发布了这个功能。由于这个 CDP 功能在使用 VMware 相关技术时和以往的备份复制有很大的不同，今天我想带大家提前来做一些准备，介绍一些 CDP 背后使用的 VMware 相关技术和 API 接口，以帮助大家更好的理解这个 CDP 技术。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-02-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-02-19T00:00:00+00:00">
+    <meta property="article:tag" content="Veeam CDP">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VMware VAIO 技术概览">
+  <meta name="twitter:description" content="下周，Veeam 即将发布旗舰产品 VAS 套件全新的 v11 版本，在这个版本中最重要的一个功能就是 Veeam CDP。我相信不少朋友期待这个功能已经很久了，而事实上 Veeam 通过接近 5 年的精雕细琢，终于在 v11 中正式发布了这个功能。由于这个 CDP 功能在使用 VMware 相关技术时和以往的备份复制有很大的不同，今天我想带大家提前来做一些准备，介绍一些 CDP 背后使用的 VMware 相关技术和 API 接口，以帮助大家更好的理解这个 CDP 技术。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2021/02/vmware-vaio-overview/" /><link rel="prev" href="http://192.168.16.79:1313/2020/12/setting-up-quick-demo-for-k10-01/" /><link rel="next" href="http://192.168.16.79:1313/2021/03/how-to-upgrade-vbr-v11-edition/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VMware VAIO 技术概览",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2021\/02\/vmware-vaio-overview\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Veeam CDP","wordcount":  1855 ,
+        "url": "http:\/\/192.168.16.79:1313\/2021\/02\/vmware-vaio-overview\/","datePublished": "2021-02-19T00:00:00+00:00","dateModified": "2021-02-19T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VMware VAIO 技术概览</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/VMware/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>VMware</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-02-19">2021-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1855 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#vsphere-apis-for-io-filtering-简介">vSphere APIs for I/O filtering 简介</a></li>
+    <li><a href="#vsphere-apis-for-io-filtering-技术原理">vSphere APIs for I/O filtering 技术原理</a></li>
+    <li><a href="#vsphere-apis-for-io-filtering-管理技巧">vSphere APIs for I/O filtering 管理技巧</a>
+      <ul>
+        <li><a href="#在-cluster-中查看">在 Cluster 中查看</a></li>
+        <li><a href="#在-esxi-中查看">在 ESXi 中查看</a></li>
+        <li><a href="#io-过滤器存储策略">I/O 过滤器存储策略</a></li>
+      </ul>
+    </li>
+    <li><a href="#vsphere-apis-for-io-filtering-安装排错技巧">vSphere APIs for I/O filtering 安装排错技巧</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>下周，Veeam 即将发布旗舰产品 VAS 套件全新的 v11 版本，在这个版本中最重要的一个功能就是 Veeam CDP。我相信不少朋友期待这个功能已经很久了，而事实上 Veeam 通过接近 5 年的精雕细琢，终于在 v11 中正式发布了这个功能。由于这个 CDP 功能在使用 VMware 相关技术时和以往的备份复制有很大的不同，今天我想带大家提前来做一些准备，介绍一些 CDP 背后使用的 VMware 相关技术和 API 接口，以帮助大家更好的理解这个 CDP 技术。</p>
+<h2 id="vsphere-apis-for-io-filtering-简介">vSphere APIs for I/O filtering 简介</h2>
+<p>Veeam CDP 使用的是 VMware vSphere APIs for I/O Filtering （VAIO）技术，这个技术早在 vSphere 6.0U1 的时候就发布了第一版，而到了 vSphere 6.5 开始这个技术逐渐成熟。简单来说，VAIO 是一个框架，它可以为使用这个框架的一系列应用程序提供在虚拟机 I/O 路径中插入 I/O 过滤器（I/O Filters）的能力。而这些 I/O 过滤器则可以在 I/O 路径中来捕获虚拟机的 I/O，从而实现在 I/O 写入物理磁盘前的各种处理。</p>
+<p>VMware 定义了 I/O 过滤器的 4 种使用场景，分别是：</p>
+<ul>
+<li>复制 (Replication)</li>
+<li>缓存 (Caching)</li>
+<li>存储 I/O 控制 (Storage I/O control)</li>
+<li>加密 (Encryption)</li>
+</ul>
+<p>其中存储 I/O 控制和加密这两种场景目前仅限于 VMware 自己使用，而复制和缓存这两种场景则开放给第三方厂商制作第三方的解决方案。和备份解决方案利用 VADP 接口一样，利用 VAIO 接口的第三方解决方案同样会通过严格的 VMware Ready 认证，认证之后可以在 VMware 官网上查询到第三方组件的兼容性列表。</p>
+<h2 id="vsphere-apis-for-io-filtering-技术原理">vSphere APIs for I/O filtering 技术原理</h2>
+<p>VAIO 由两部分组成，一部分是 VMware 端的 VAIO 过滤器框架 (VAIO Filter Framework)，这部分是 VMware 在每个 ESXi 中标准化提供的内容，从 vSphere 6.0U1 以后就已经内置在 ESXi 核心中了；另外一部分是 I/O 过滤器，这些过滤器都会在 VAIO 过滤器框架中逐个运行。如下图，一台虚拟机在运行时，它的 I/O 路径会从客户机操作系统 (GuestOS) 经过 VAIO 过滤器框架再进入 VMDK 之中，而在经过 VAIO 过滤器框架的时候，会逐个逐个被框架定义好的过滤器进行处理，当 VAIO 过滤器框架中所有的过滤器都完成处理后，这个 I/O 请求就会被移到最终的 VMDK 中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/images/GUID-E2E70213-2D67-4662-BFA7-82BD1893820B-high.png"
+        data-srcset="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/images/GUID-E2E70213-2D67-4662-BFA7-82BD1893820B-high.png, https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/images/GUID-E2E70213-2D67-4662-BFA7-82BD1893820B-high.png 1.5x, https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/images/GUID-E2E70213-2D67-4662-BFA7-82BD1893820B-high.png 2x"
+        data-sizes="auto"
+        alt="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.storage.doc/images/GUID-E2E70213-2D67-4662-BFA7-82BD1893820B-high.png"
+        title="filters" /></p>
+<p>很显然，通过上面这个过程，大家可以看到，VAIO 工作的时候是针对某一台虚拟机的，VAIO 框架为每台虚拟机定义了各自可以使用的过滤器，因此每台虚拟机在各自的 I/O 路径上如果发生任何的 I/O 错误，甚至是过滤器层面的错误，也被严格的隔离在这台虚拟机之内，并不会影响整台 ESXi 以及其他虚拟机。</p>
+<p>另外，VAIO 框架还做了一些限定，I/O 过滤器根据使用场景对应定义了 4 个大类，在每台 ESXi 上每一类的 I/O 过滤器只能同时存在一个。比如，对于复制类的 I/O 过滤器，如果 Veeam 提供的 CDP 过滤器已经存在，那么其他厂商的过滤器就无法在这台 ESXi 上进行安装了。</p>
+<h2 id="vsphere-apis-for-io-filtering-管理技巧">vSphere APIs for I/O filtering 管理技巧</h2>
+<p>通常来说，除了内置的 I/O 过滤器之外，第三方的 I/O 过滤器一般都会由第三方厂商提供集成安装服务，因此在 vSphere Client 中并无相关的安装按钮。然而，在 vSphere Client 中，管理员可以很方便的找到自己的 Cluster 和 ESXi 上的 VAIO 部署和使用情况，了解当前的状态。</p>
+<h3 id="在-cluster-中查看">在 Cluster 中查看</h3>
+<p>选中需要查看的 Cluster，找到右边的 Configure 标签，然后可以在 Configuration 节点下找到 I/O Filters 来查看当前群集中 Filters 的安装状况，如下图。</p>
+<p><a href="https://imgchr.com/i/yfhsb9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/02/19/yfhsb9.png"
+        data-srcset="https://s3.ax1x.com/2021/02/19/yfhsb9.png, https://s3.ax1x.com/2021/02/19/yfhsb9.png 1.5x, https://s3.ax1x.com/2021/02/19/yfhsb9.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/02/19/yfhsb9.png"
+        title="yfhsb9.png" /></a></p>
+<h3 id="在-esxi-中查看">在 ESXi 中查看</h3>
+<p>选中需要查看的 ESXi，找到右边的 Configure 标签，然后可以在 Storage 节点下找到 I/O Filters 来查看当前 ESXi 上 Filters 的安装情况，如下图。</p>
+<p><a href="https://imgchr.com/i/yfhrDJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/02/19/yfhrDJ.png"
+        data-srcset="https://s3.ax1x.com/2021/02/19/yfhrDJ.png, https://s3.ax1x.com/2021/02/19/yfhrDJ.png 1.5x, https://s3.ax1x.com/2021/02/19/yfhrDJ.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/02/19/yfhrDJ.png"
+        title="yfhrDJ.png" /></a></p>
+<p>在 ESXi 上和在 Cluster 上看到的 I/O 过滤器情况略有不同，在 ESXi 上可以看到 VMware 自己使用的两种过滤器类型，其中 spm 是数据存储 I/O 控制用的过滤器，vmwarevmcrypt 则是加密用的过滤器。</p>
+<p>特别要注意的是，在图中显示的 Type 列中会列出各个过滤器的类型，每种类型有且只能有一个过滤器。</p>
+<h3 id="io-过滤器存储策略">I/O 过滤器存储策略</h3>
+<p>I/O 过滤器的使用必须配合着 vSphere 中 VM Storage Policy 来进行，通常来说在 I/O 过滤器的使用过程中，第三方软件会全自动来配置相关的 VM Storage Policy，而配置完成后，在 vSphere Client 的 VM Storage Policy 中能找到配置好的 VM Storage Policy，比如 Veeam CDP 的过滤器，如下图：</p>
+<p><a href="https://imgchr.com/i/yfhcU1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/02/19/yfhcU1.png"
+        data-srcset="https://s3.ax1x.com/2021/02/19/yfhcU1.png, https://s3.ax1x.com/2021/02/19/yfhcU1.png 1.5x, https://s3.ax1x.com/2021/02/19/yfhcU1.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/02/19/yfhcU1.png"
+        title="yfhcU1.png" /></a></p>
+<p>当虚拟机使用了 I/O 过滤器进行处理后，可以选中某个虚拟机，找到 Configure 标签，在 Policies 节点下，能看到当前的 Policies 使用和分配情况，如下图：</p>
+<p><a href="https://imgchr.com/i/yfh6ER" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/02/19/yfh6ER.png"
+        data-srcset="https://s3.ax1x.com/2021/02/19/yfh6ER.png, https://s3.ax1x.com/2021/02/19/yfh6ER.png 1.5x, https://s3.ax1x.com/2021/02/19/yfh6ER.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/02/19/yfh6ER.png"
+        title="yfh6ER.png" /></a></p>
+<h2 id="vsphere-apis-for-io-filtering-安装排错技巧">vSphere APIs for I/O filtering 安装排错技巧</h2>
+<p>VAIO 由框架和过滤器组成，框架方面集成在 ESXi 内，天然具备；因此绝大多数可能碰到的问题都会集中在过滤器方面，特别是过滤器的安装过程，会有可能碰到一些挑战。然而这个过滤器的安装其实就是一个标准的 ESXi VIB 软件包的安装，这时候碰到的问题其实也相当简单，可以做如下检查和排错：</p>
+<ul>
+<li>VIB 软件包 URL 是否能够正常被访问？</li>
+<li>厂商提供的 VIB 软件包是否正确？</li>
+<li>升级和卸载过程中 VIB 软件包要求的 ESXi 主机维护模式状态是否正确？</li>
+<li>VIB 软件包安装后可能会要求 ESXi 主机重启</li>
+<li>自动切换维护模式过程中，切换失败？</li>
+<li>和其他同类过滤器的 VIB 软件包冲突？</li>
+</ul>
+<p>关于已经安装好的软件包的状况，可以通过选中 ESXi，在右边的 Configure 标签中，找到 System 节点下的 Packages 来查看 VIB 软件包的清单，如下图。</p>
+<p><a href="https://imgchr.com/i/yfhg4x" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/02/19/yfhg4x.png"
+        data-srcset="https://s3.ax1x.com/2021/02/19/yfhg4x.png, https://s3.ax1x.com/2021/02/19/yfhg4x.png 1.5x, https://s3.ax1x.com/2021/02/19/yfhg4x.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/02/19/yfhg4x.png"
+        title="yfhg4x.png" /></a></p>
+<p>以上就是今天的内容，希望这些内容能够对大家后面了解 Veeam CDP 有所帮助。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-02-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/02/vmware-vaio-overview/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F02%2Fvmware-vaio-overview%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F02%2Fvmware-vaio-overview%2F&amp;text=VMware&#43;VAIO&#43;%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A7%88" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F02%252Fvmware-vaio-overview%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F02%252Fvmware-vaio-overview%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Veeam-CDP/">Veeam CDP</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/12/setting-up-quick-demo-for-k10-01/" class="prev" rel="prev" title="Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</a>
+            <a href="/2021/03/how-to-upgrade-vbr-v11-edition/" class="next" rel="next" title="Veeam 备份服务器升级指南">Veeam 备份服务器升级指南<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

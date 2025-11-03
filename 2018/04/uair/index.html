@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>利用 Veeam U-Air 恢复 MySQL 数据库 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2018/04/uair/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="利用 Veeam U-Air 恢复 MySQL 数据库">
+  <meta property="og:description" content="常常被问及 Veeam 是否支持某某数据库/应用程序的对象恢复，其实这个问题的答案和问题中提到的 某某数据库/应用程序 完全没有关系，这类问题的答案永远是肯定的。因为 Veeam 有一个超强的恢复工具：U-AIR（Universal Application-Item Recovery）">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-04-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-04-10T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="利用 Veeam U-Air 恢复 MySQL 数据库">
+  <meta name="twitter:description" content="常常被问及 Veeam 是否支持某某数据库/应用程序的对象恢复，其实这个问题的答案和问题中提到的 某某数据库/应用程序 完全没有关系，这类问题的答案永远是肯定的。因为 Veeam 有一个超强的恢复工具：U-AIR（Universal Application-Item Recovery）">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2018/04/uair/" /><link rel="prev" href="http://192.168.16.79:1313/2018/03/vpower-nfs/" /><link rel="next" href="http://192.168.16.79:1313/2018/07/van-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "利用 Veeam U-Air 恢复 MySQL 数据库",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2018\/04\/uair\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1112 ,
+        "url": "http:\/\/192.168.16.79:1313\/2018\/04\/uair\/","datePublished": "2018-04-10T00:00:00+00:00","dateModified": "2018-04-10T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">利用 Veeam U-Air 恢复 MySQL 数据库</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-04-10">2018-04-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1112 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>常常被问及 Veeam 是否支持某某数据库/应用程序的对象恢复，其实这个问题的答案和问题中提到的 某某数据库/应用程序 完全没有关系，这类问题的答案永远是肯定的。因为 Veeam 有一个超强的恢复工具：U-AIR（Universal Application-Item Recovery）</p>
+<p>今天我就以 MySQL 为例，给大家详解一下这个恢复工具。</p>
+<p>先来看看今天的备份存档，这是一个安装在 CentOS 上的 MySQL 5.1.7，我使用 Veeam Backup &amp; Replication 对其进行备份，备份过程中执行了 Pre-freezing 和 Post-freezing 脚本确保其数据一致性，关于此脚本，大家可以参考 Veeam 官网的白皮书，因为 Veeam 白皮书实在太详尽，我就不在此处担当复读机啦。</p>
+<p>具体链接如下：</p>
+<p><a href="https://www.veeam.com/wp-consistent-protection-mysql-mariadb.html" target="_blank" rel="noopener noreffer ">https://www.veeam.com/wp-consistent-protection-mysql-mariadb.html</a></p>
+<p>对于源虚拟机上，我的 MySQL 中有以下这些测试数据：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blj8P.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blj8P.png, https://s2.ax1x.com/2020/02/12/1blj8P.png 1.5x, https://s2.ax1x.com/2020/02/12/1blj8P.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blj8P.png"
+        title="1blj8P.png" /></p>
+<p>然后这个状态的这台 MySQL 虚拟机我做了一次备份，这时候因为一些意外原因，我的 veeamlab 这个 database 被破坏了，我需要通过备份，将这个 veeamlab database 还原出来。此时，坏了的 veeamlab 将会被我弃用，而我会新建一个空的 veeamlab_recovered 作为新的目标还原库，而这时 MySQL 则是一切正常状态。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blvgf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blvgf.png, https://s2.ax1x.com/2020/02/12/1blvgf.png 1.5x, https://s2.ax1x.com/2020/02/12/1blvgf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blvgf.png"
+        title="1blvgf.png" /></p>
+<p>接下去，我的还原过程开始了，启动 Universal Lab Request Wizard 来申请一个之前的备份存档，用于还原，申请过程非常简单。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blxv8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blxv8.png, https://s2.ax1x.com/2020/02/12/1blxv8.png 1.5x, https://s2.ax1x.com/2020/02/12/1blxv8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blxv8.png"
+        title="1blxv8.png" /></p>
+<p>给出需要申请的 VM Name，这里完全支持模糊名称。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1PEj.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1PEj.png, https://s2.ax1x.com/2020/02/12/1b1PEj.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1PEj.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1PEj.png"
+        title="1b1PEj.png" /></p>
+<p>还原点我选择最新一份。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1iUs.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1iUs.png, https://s2.ax1x.com/2020/02/12/1b1iUs.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1iUs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1iUs.png"
+        title="1b1iUs.png" /></p>
+<p>完成之后提交申请。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1ACq.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1ACq.png, https://s2.ax1x.com/2020/02/12/1b1ACq.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1ACq.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1ACq.png"
+        title="1b1ACq.png" /></p>
+<p>至此，U-AIR 恢复申请提交完成，须等待备份管理员审核还原申请。</p>
+<p>我接下去通过 Veeam Enterprise Manager 来到备份管理员视图，进行此次还原申请的审核。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1mKU.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1mKU.png, https://s2.ax1x.com/2020/02/12/1b1mKU.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1mKU.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1mKU.png"
+        title="1b1mKU.png" /></p>
+<p>Approve 过程也非常简单，在这里完全用到 Veeam SureBackup/Virtual Lab 的功能，具体 SureBackup/Virtual Lab 的配置可参考之前的推文 。《<a href="http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483830&amp;idx=1&amp;sn=3fee7103411facb64c243c32b0e0ff65&amp;chksm=fdf0a763ca872e75b75ca65be5f81791549bac6322e5f161ec5becc5be23eef27833ea47b9f3&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">备份存档能不能被恢复，这件事情上只有真正做过才知道。</a>》</p>
+<p>这个审批过程，Veeam 会自动找到合适的虚拟机备份存档：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1V2V.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1V2V.png, https://s2.ax1x.com/2020/02/12/1b1V2V.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1V2V.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1V2V.png"
+        title="1b1V2V.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1b1ZvT.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1b1ZvT.png, https://s2.ax1x.com/2020/02/12/1b1ZvT.png 1.5x, https://s2.ax1x.com/2020/02/12/1b1ZvT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1b1ZvT.png"
+        title="1b1ZvT.png" /></p>
+<p>会选择合适 Virtual Lab 和 SureBackup Job 作为还原的临时环境：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qniF0.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qniF0.png, https://s2.ax1x.com/2020/02/13/1qniF0.png 1.5x, https://s2.ax1x.com/2020/02/13/1qniF0.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qniF0.png"
+        title="1qniF0.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qn9wn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qn9wn.png, https://s2.ax1x.com/2020/02/13/1qn9wn.png 1.5x, https://s2.ax1x.com/2020/02/13/1qn9wn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qn9wn.png"
+        title="1qn9wn.png" /></p>
+<p>如此，审批过程就结束了，接下去，在数据库管理员这端，等待一小段时间后，将会获得临时还原环境的访问信息。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnFYV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnFYV.png, https://s2.ax1x.com/2020/02/13/1qnFYV.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnFYV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnFYV.png"
+        title="1qnFYV.png" /></p>
+<p>通过 172.20.1.139，我 ssh 到这台还原环境中，而此时我原来的 10.10.1.139 还是处于正常运行状态。检查临时的还原环境中的数据库情况如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnVlF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnVlF.png, https://s2.ax1x.com/2020/02/13/1qnVlF.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnVlF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnVlF.png"
+        title="1qnVlF.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnZy4.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnZy4.png, https://s2.ax1x.com/2020/02/13/1qnZy4.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnZy4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnZy4.png"
+        title="1qnZy4.png" /></p>
+<p>数据一切正常，接下去，我需要做一件事情，就是将这里的数据提取出来，然后传输至原来的 10.10.1.139 中，进行还原。我使用 mysqldump 命令来提取数据。</p>
+<p>提取完后，数据存放至/tmp/mysql/veeamlab.sql 文件中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qneOJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qneOJ.png, https://s2.ax1x.com/2020/02/13/1qneOJ.png 1.5x, https://s2.ax1x.com/2020/02/13/1qneOJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qneOJ.png"
+        title="1qneOJ.png" /></p>
+<p>然后我们回到原机器 10.10.1.139 中，使用 Virtual Lab 中 Static IP Mapping 技术，我设定了能够让所有机器通过 10.10.1.138 这个地址访问到虚拟实验室中的临时还原环境，这时候，我可以从 10.10.1.138 中抽取这个 dump 进行还原。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnnm9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnnm9.png, https://s2.ax1x.com/2020/02/13/1qnnm9.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnnm9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnnm9.png"
+        title="1qnnm9.png" /></p>
+<p>还原命令依旧非常简单：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnuwR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnuwR.png, https://s2.ax1x.com/2020/02/13/1qnuwR.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnuwR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnuwR.png"
+        title="1qnuwR.png" /></p>
+<p>至此，所有数据还原工作完成，我们看到我们希望还原的数据已经全部找回。数据库管理员可以提前终止 UAIR 环境，也可以让它在使用时间到期后自动回收。</p>
+<p>好了，今天恢复 MySQL 的样例就是这些，这个恢复没有太多前提条件，唯一的条件就是使用 Veeam Backup &amp; Replication，有了 Veeam 您就能和我一样进行如此轻松的进行<strong>任何</strong>数据库/应用程序对象的恢复了。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2018-04-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2018/04/uair/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F04%2Fuair%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2018%2F04%2Fuair%2F&amp;text=%E5%88%A9%E7%94%A8&#43;Veeam&#43;U-Air&#43;%E6%81%A2%E5%A4%8D&#43;MySQL&#43;%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F04%252Fuair%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2018%252F04%252Fuair%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2018/03/vpower-nfs/" class="prev" rel="prev" title="Veeam 黑科技之 vPower NFS"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam 黑科技之 vPower NFS</a>
+            <a href="/2018/07/van-01/" class="next" rel="next" title="Veeam Availability for Nutanix AHV 配置和使用系列（一）">Veeam Availability for Nutanix AHV 配置和使用系列（一）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

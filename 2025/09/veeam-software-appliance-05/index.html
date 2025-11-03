@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>把复杂留给 Veeam：Infrastructure Appliance 上手指南 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="把复杂留给 Veeam：Infrastructure Appliance 上手指南">
+  <meta property="og:description" content="Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 Veeam Infrastructure Appliance。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-22T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="把复杂留给 Veeam：Infrastructure Appliance 上手指南">
+  <meta name="twitter:description" content="Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 Veeam Infrastructure Appliance。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-04/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "把复杂留给 Veeam：Infrastructure Appliance 上手指南",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-05\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  2671 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-05\/","datePublished": "2025-09-22T00:00:00+00:00","dateModified": "2025-09-22T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">把复杂留给 Veeam：Infrastructure Appliance 上手指南</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-22">2025-09-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2671 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一为什么选用-infrastructure-appliance">一、为什么选用 Infrastructure Appliance</a></li>
+    <li><a href="#二部署与配置一步到位的体验">二、部署与配置：一步到位的体验</a>
+      <ul>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#在-vbr-中添加普通受管理的-linux-角色服务器">在 VBR 中添加普通受管理的 Linux 角色服务器</a></li>
+        <li><a href="#在-vbr-中配置-hardened-repository">在 VBR 中配置 Hardened Repository</a></li>
+      </ul>
+    </li>
+    <li><a href="#三实践中的最佳做法与安全设计原则">三、实践中的最佳做法与安全设计原则</a>
+      <ul>
+        <li><a href="#最佳实践">最佳实践</a></li>
+        <li><a href="#安全特性">安全特性</a></li>
+      </ul>
+    </li>
+    <li><a href="#四结语把复杂留给-veeam把安全留给你">四、结语：把复杂留给 Veeam，把安全留给你</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p>
+<h2 id="一为什么选用-infrastructure-appliance">一、为什么选用 Infrastructure Appliance</h2>
+<p>选择 Infrastructure Appliance 的理由可以归结为三句话：<strong>快速、简单、安全</strong>。Veeam 基于 Rocky 9 构建的 JeOS（Just enough OS）镜像，把操作系统和运行时依赖做成了受控的、最小化的分发单元。你部署一个 Infrastructure Appliance，等于把一台仅用于备份角色的、按最佳实践调优过的 Linux 服务器直接“拿来即用”。</p>
+<p>从实务角度看，这带来的好处很直接：部署不再受传统操作系统安装和补丁管理的复杂性所拖累；角色支持覆盖 Proxy、Mount Server、Gateway Server、Hardened Repository 等常见组件；而在安全合规上，Appliance 出厂即内置 DISA STIG 与 FIPS 策略、默认启用 UEFI Secure Boot，并通过证书认证替代开放式 SSH 登录，显著缩减攻击面。对分布式或多站点部署而言，Infrastructure Appliance 能快速扩展执行节点的能力，并把维护复杂度降到最低。</p>
+<h2 id="二部署与配置一步到位的体验">二、部署与配置：一步到位的体验</h2>
+<p>在部署 Veeam Infrastructure Appliance 之前，需要先确认目标资源满足最基本的要求。建议的最小配置常见如下：</p>
+<ul>
+<li>四核 x86-64 CPU 或 vCPU</li>
+<li>8 GB RAM</li>
+<li>至少两个 120 GiB 的磁盘，系统盘推荐 SSD/NVMe（系统盘必须是容量最小的盘）</li>
+<li>1 Gbps 或更高的网络带宽。</li>
+</ul>
+<p>若在 vSphere 中部署，请把虚拟机 OS 类型设为 RHEL 9（或兼容的选项），以便与 Rocky Linux 9 的内核/驱动匹配。</p>
+<h3 id="安装">安装</h3>
+<p>实际部署流程并不复杂：下载官方提供的 ISO，将其挂载到目标主机或虚拟机并引导启动，安装菜单会列出 Infrastructure Appliance 的多个安装选项（含对 iSCSI &amp; NVMe/TCP 的支持以及 Hardened Repository 角色）。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/22/sxE4q1Bbhlj6VtQ.png"
+        data-srcset="https://s2.loli.net/2025/09/22/sxE4q1Bbhlj6VtQ.png, https://s2.loli.net/2025/09/22/sxE4q1Bbhlj6VtQ.png 1.5x, https://s2.loli.net/2025/09/22/sxE4q1Bbhlj6VtQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/22/sxE4q1Bbhlj6VtQ.png"
+        title="Xnip2025-09-13_19-05-11" /></p>
+<p>接着选择 Install（或在恢复场景选择 Reinstall），等待自动化步骤完成并重启，系统随后会进入初始化向导。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/22/lOjAPiJCwWIthDH.png"
+        data-srcset="https://s2.loli.net/2025/09/22/lOjAPiJCwWIthDH.png, https://s2.loli.net/2025/09/22/lOjAPiJCwWIthDH.png 1.5x, https://s2.loli.net/2025/09/22/lOjAPiJCwWIthDH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/22/lOjAPiJCwWIthDH.png"
+        title="Xnip2025-09-13_19-05-40" /></p>
+<p>整个过程和 Veeam Software Appliance 几乎完全一致，<a href="https://blog.backupnext.cloud/2025/09/Veeam-Software-Appliance-02/" target="_blank" rel="noopener noreffer ">具体可以参考之前的帖子</a>。初始化配置完成后，可直接通过 Host Management 的 WebUI 或 TUI 进行后续管理：包括网络与主机名设置、时间同步（NTP/NTS）、证书与访问控制配置等。对于没有 Linux 经验的用户，这种“向导式”的体验大幅降低了上手门槛，没有 Linux 经验都能轻松通过 Host Management WebUI 和 TUI 完成所有必要的操作。</p>
+<h3 id="在-vbr-中添加普通受管理的-linux-角色服务器">在 VBR 中添加普通受管理的 Linux 角色服务器</h3>
+<p>通过 Veeam Infrastructure Appliance ISO 安装完成后，需要到 VBR 中添加，Backup Infrastructure 下找到 Managed Servers 中找到 Linux Server 的添加向导，选择 Add New 就行了。在向导的 Access 步骤中，和以往不一样，直接选择 <code>Connect using certificate-based authentication(recommand)</code>即可，这个选项不需要打开 SSH 端口，也无需输入用户名密码，而是直接通过 Veeam 自有的协议和证书进行连接。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/22/P7ZvYKMlGgihCuN.png"
+        data-srcset="https://s2.loli.net/2025/09/22/P7ZvYKMlGgihCuN.png, https://s2.loli.net/2025/09/22/P7ZvYKMlGgihCuN.png 1.5x, https://s2.loli.net/2025/09/22/P7ZvYKMlGgihCuN.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/22/P7ZvYKMlGgihCuN.png"
+        title="Xnip2025-09-22_18-19-23" /></p>
+<p>其他步骤，没有任何改变，和以往老版本的配置完全一致。</p>
+<h3 id="在-vbr-中配置-hardened-repository">在 VBR 中配置 Hardened Repository</h3>
+<p>对于 Hardened Repository，添加 Linux 角色服务器的过程完全一致，但是在 Server 的目录呈现部分，Veeam 对于 Linux 系统的路径做了处理，仅将 Hardened Repository 中唯一可以存放数据的路径呈现给客户：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/22/efd2PLKaJHRMAZi.png"
+        data-srcset="https://s2.loli.net/2025/09/22/efd2PLKaJHRMAZi.png, https://s2.loli.net/2025/09/22/efd2PLKaJHRMAZi.png 1.5x, https://s2.loli.net/2025/09/22/efd2PLKaJHRMAZi.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/22/efd2PLKaJHRMAZi.png"
+        title="Xnip2025-09-22_18-58-29" /></p>
+<p>在文件夹设置中，一样只列出了仅限备份可选的文件夹，当然<code>New Folder</code>的选项还是保留了，用户可以在这个设定 Folder 的时候创建新的文件夹，选择新的文件夹。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/22/ZViAF7cN9Oldywp.png"
+        data-srcset="https://s2.loli.net/2025/09/22/ZViAF7cN9Oldywp.png, https://s2.loli.net/2025/09/22/ZViAF7cN9Oldywp.png 1.5x, https://s2.loli.net/2025/09/22/ZViAF7cN9Oldywp.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/22/ZViAF7cN9Oldywp.png"
+        title="Xnip2025-09-22_19-03-30" /></p>
+<p>其他的设置，和之前版本的 Hardened Repository 保持一致。</p>
+<h2 id="三实践中的最佳做法与安全设计原则">三、实践中的最佳做法与安全设计原则</h2>
+<h3 id="最佳实践">最佳实践</h3>
+<p>把 Appliance 当作“黑盒”并不等于把它丢进机房就完事了，要让它稳定跑起来，实际上只需要遵循以下这些：</p>
+<p>**角色与资源匹配：**在部署前先确认该节点要承担的角色（Proxy、Mount Server、Hardened Repository 等），并据此划分资源。举例来说，Proxy 的计算需求会随并发任务上升而增加；建议至少 2 核 CPU 起步，并按每两个并发任务额外增加 1 核；内存从 2 GB 起跳，且对 I/O 敏感的 Repository 应优先选用企业级 SSD/NVMe 和硬件 RAID，当然 SATA 盘作为备份存储性价比之王，也是非常推荐的。</p>
+<p><strong>硬件和固件兼容：</strong> Infrastructure Appliance 要求启用 UEFI Secure Boot；对于 Hardened Repository，推荐硬件 RAID 控制器并避免使用一些不受支持的虚拟化或软件 RAID 方案。提前确认固件/BIOS 与 NVMe 控制器兼容性，能够避免后续无法识别系统盘或性能异常的问题。</p>
+<p><strong>网络与时间：</strong> 建议为 Appliance 使用静态 IP，并配置至少三台以上可信的 NTP/NTS 源，确保时间同步稳定；时间漂移会导致 MFA、证书验证或计划任务出现异常。</p>
+<p>**集中化管理与配对：**初始配置完成后应立刻通过 Backup Console 把 Appliance 配对到 Veeam Backup &amp; Replication（VBR）管理下，纳入统一策略、日志与补丁管理体系；这样可以保证策略一致性与便于后续审计。同时，还可以在配置完成后，关闭 Host Management WebUI 的访问，进一步减少系统的受攻击面。</p>
+<p><strong>保持 JeOS 原设。</strong> JeOS 被设计为“只装必要组件”的最小系统，内置 DISA STIG、FIPS 与自动更新机制。擅自修改底层系统设置（例如随意开启额外服务、手动更改内核参数或使用包管理器随意升级）会带来风险：可能导致系统无法正常接受官方更新、失去合规性，甚至影响 VBR 对该节点的识别与支持。因此，除非官方指示或有充分验证，建议只通过 Host Management 或 VBR 提供的接口进行所有配置变更。目前，Veeam 官网已经更新了<a href="https://www.veeam.com/kb4772" target="_blank" rel="noopener noreffer ">KB4772</a> 来明确说明这个问题。</p>
+<h3 id="安全特性">安全特性</h3>
+<p>Infrastructure Appliance 的安全与更新设计是其核心特点之一。系统默认启用多项安全控制措施，例如 UEFI Secure Boot、DISA STIG 与 FIPS 策略，Host Management 提供对证书、访问请求、基础设施锁定与审批流程的集中化控制；其中 Security Officer 的审批机制可用于启用 SSH、授权临时 root 访问、重置用户密码、批准配对请求等敏感操作，从而实现内置的“四眼”审计流程。</p>
+<p>更新方面，Appliance 使用 Veeam Updater 组件进行集中化的补丁管理。管理员可以在每个 Appliance 的 Host Management 中设定更新策略，也可以通过 Veeam Backup &amp; Replication 的备份控制台集中管理所有 Appliance 的更新。系统会对更新包做数字签名与校验，确保来源可信、避免篡改。所有更新操作与日志均可在控制台中查看与导出，便于合规审计。</p>
+<p>此外，Appliance 还提供一套应急维护功能：可以通过 Recovery LiveCD 的 ISO 来进行应急系统修复和维护。</p>
+<h2 id="四结语把复杂留给-veeam把安全留给你">四、结语：把复杂留给 Veeam，把安全留给你</h2>
+<p>Veeam Infrastructure Appliance 的价值并非只在“省事”，而在于把基础设施中的重复性、风险性工作封装成受控、可审计的流程，让运维把注意力放在架构与策略上，而不是日常的系统修补与兼容调试。把 Software Appliance 作为中枢、Infrastructure Appliance 作为可复制的执行单元，你可以在多站点、分布式场景下快速扩容、统一管理并保持合规与安全。</p>
+<p>如果你刚开始规划和试用新版本，建议先在测试环境中演练几次完整的安装与配对流程：明确每台 Appliance 的角色、调整资源配比、验证时间与网络配置，然后把这些步骤固化成标准操作流程。这样既能享受 Appliance 带来的“即装即用”，也能把长期运维的复杂性和风险降到最低。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-05/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-05%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-05%2F&amp;text=%E6%8A%8A%E5%A4%8D%E6%9D%82%E7%95%99%E7%BB%99&#43;Veeam%EF%BC%9AInfrastructure&#43;Appliance&#43;%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-05%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-05%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam-software-appliance-04/" class="prev" rel="prev" title="让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</a>
+            <a href="/2025/09/veeam-software-appliance-06/" class="next" rel="next" title="深度解读：Veeam V13 的发布策略与部署选择">深度解读：Veeam V13 的发布策略与部署选择<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

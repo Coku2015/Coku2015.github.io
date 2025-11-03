@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>恢复 | 让那些病毒木马无所遁形 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2019/07/secure-restore/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="恢复 | 让那些病毒木马无所遁形">
+  <meta property="og:description" content="安全和备份是 IT 架构中两大重要的基础组件，通常情况下无论是个人家用和企业商用，都是必不可少的。然而很尴尬的是，作为安全类的杀毒软件，需要面对各种病毒和木马以及他们的变种，甚至是不断出现的新型病毒。有些病毒软件还具备了反杀毒功能，可以反向击杀杀毒软件，令人防不胜防。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-07-18T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-07-18T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="恢复 | 让那些病毒木马无所遁形">
+  <meta name="twitter:description" content="安全和备份是 IT 架构中两大重要的基础组件，通常情况下无论是个人家用和企业商用，都是必不可少的。然而很尴尬的是，作为安全类的杀毒软件，需要面对各种病毒和木马以及他们的变种，甚至是不断出现的新型病毒。有些病毒软件还具备了反杀毒功能，可以反向击杀杀毒软件，令人防不胜防。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2019/07/secure-restore/" /><link rel="prev" href="http://192.168.16.79:1313/2019/07/agent-backup-and-restore/" /><link rel="next" href="http://192.168.16.79:1313/2019/07/snapshot-hunter/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "恢复 | 让那些病毒木马无所遁形",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2019\/07\/secure-restore\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  857 ,
+        "url": "http:\/\/192.168.16.79:1313\/2019\/07\/secure-restore\/","datePublished": "2019-07-18T00:00:00+00:00","dateModified": "2019-07-18T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">恢复 | 让那些病毒木马无所遁形</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据恢复</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-07-18">2019-07-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 857 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#操作方法">操作方法</a>
+      <ul>
+        <li><a href="#配置-mount-server">配置 Mount Server</a></li>
+        <li><a href="#为-repository-选择-mount-server">为 Repository 选择 Mount Server</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>安全和备份是 IT 架构中两大重要的基础组件，通常情况下无论是个人家用和企业商用，都是必不可少的。然而很尴尬的是，作为安全类的杀毒软件，需要面对各种病毒和木马以及他们的变种，甚至是不断出现的新型病毒。有些病毒软件还具备了反杀毒功能，可以反向击杀杀毒软件，令人防不胜防。</p>
+<p>传统 IT 中，为每一台操作系统安装杀毒软件的方法显然不足以做到全面的防护，甚至是很容易被病毒软件破坏。而结合虚拟化技术之后，杀毒引擎被整合入虚拟化层，利用虚拟化的技术可以避免很多传统杀毒软件植入式安装带来的问题。</p>
+<p>然而这依旧无法解决一个重要问题，就是每款杀毒软件都有自己的强项，再优秀的杀毒软件都有需要更新病毒库的时候，总有那么一些病毒，是无法被某个软件杀死的。根据 AV-Test 的报告，市面上的杀毒软件种类几十种，查杀能力在不同版本时各不相同。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SXn00.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SXn00.jpg, https://s2.ax1x.com/2020/02/16/3SXn00.jpg 1.5x, https://s2.ax1x.com/2020/02/16/3SXn00.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SXn00.jpg"
+        title="3SXn00.jpg" /></p>
+<p>前些天，在设计一个分布式的备份架构设计时，突然想到 Veeam 的 Mount Server 的特殊作用：可以在不同的 Mount Server 上安装不同的杀毒软件，形成多套不同杀毒引擎。使用 Secure Restore 时，只需要合理选择 Mount Server 即可实现使用不同的引擎进行病毒查杀。</p>
+<h2 id="操作方法">操作方法</h2>
+<h3 id="配置-mount-server">配置 Mount Server</h3>
+<p>在 VBR 中，Mount Server 是个很基本的组件，没有太多要求，只需要是一台 Windows Server，并且是 Veeam Managed Server，即可成为 Mount Server。如果说一定得有个前提条件，我觉得应该是网络上，作为 Mount Server，这个 Windows 就必须要能够和 VBR 通讯，也必须要和 Repository 通讯。具体通讯端口要求，可参看官网手册。</p>
+<p><a href="https://helpcenter.veeam.com/docs/backup/vsphere/used_ports.html?ver=95u4#mount" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/used_ports.html?ver=95u4#mount</a></p>
+<p>进入 VBR console 后，只要找到 Backup Infrastructure 下面的 Managed Servers 节点，在其中将希望添加的 Windows Server 添加进去即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SXOEV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SXOEV.png, https://s2.ax1x.com/2020/02/16/3SXOEV.png 1.5x, https://s2.ax1x.com/2020/02/16/3SXOEV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SXOEV.png"
+        title="3SXOEV.png" /></p>
+<p>添加方式是经典的 Veeam 向导模式：</p>
+<ol>
+<li>首先填入 Mount Server 的 FQDN 或者 IP 地址，描述中可以填入杀毒软件名称用以识别。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SXj4U.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SXj4U.png, https://s2.ax1x.com/2020/02/16/3SXj4U.png 1.5x, https://s2.ax1x.com/2020/02/16/3SXj4U.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SXj4U.png"
+        title="3SXj4U.png" /></li>
+<li>下一步后填入管理员用户名密码，用于推送安装 Mount Server 的组件。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SjSgJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SjSgJ.png, https://s2.ax1x.com/2020/02/16/3SjSgJ.png 1.5x, https://s2.ax1x.com/2020/02/16/3SjSgJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SjSgJ.png"
+        title="3SjSgJ.png" /></li>
+<li>预览需要安装的组件，并完成添加。</li>
+</ol>
+<p>​    <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SXxCF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SXxCF.png, https://s2.ax1x.com/2020/02/16/3SXxCF.png 1.5x, https://s2.ax1x.com/2020/02/16/3SXxCF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SXxCF.png"
+        title="3SXxCF.png" /></p>
+<h3 id="为-repository-选择-mount-server">为 Repository 选择 Mount Server</h3>
+<p>由于每个 Repository 都有其一一对应的 Mount Server，因此当我们要用到某个特殊的杀毒软件时，我们只需要编辑 Repository 的设定，选择对应的 Mount Server 即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/3SXz34.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/3SXz34.png, https://s2.ax1x.com/2020/02/16/3SXz34.png 1.5x, https://s2.ax1x.com/2020/02/16/3SXz34.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/3SXz34.png"
+        title="3SXz34.png" /></p>
+<p>剩下步骤，就是进入各种支持 Secure Restore 的恢复操作中，执行正常的恢复步骤。</p>
+<p>以上就是今天的内容，不是很复杂，但是很有意思，希望能帮助到被病毒困扰的管理员们。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2019-07-18</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2019/07/secure-restore/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F07%2Fsecure-restore%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2019%2F07%2Fsecure-restore%2F&amp;text=%E6%81%A2%E5%A4%8D&#43;%7C&#43;%E8%AE%A9%E9%82%A3%E4%BA%9B%E7%97%85%E6%AF%92%E6%9C%A8%E9%A9%AC%E6%97%A0%E6%89%80%E9%81%81%E5%BD%A2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F07%252Fsecure-restore%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2019%252F07%252Fsecure-restore%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2019/07/agent-backup-and-restore/" class="prev" rel="prev" title="送 | 从送你的备份中恢复数据方法详解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>送 | 从送你的备份中恢复数据方法详解</a>
+            <a href="/2019/07/snapshot-hunter/" class="next" rel="next" title="黑科技 | 激活隐藏在 VBR 中的快照猎手">黑科技 | 激活隐藏在 VBR 中的快照猎手<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

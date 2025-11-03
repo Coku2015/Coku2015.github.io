@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on 虚化人生</title>
+    <link>http://192.168.16.79:1313/categories/Kubernetes/</link>
+    <description>Recent content in Kubernetes on 虚化人生</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <copyright>© Backup Next Cloud</copyright>
+    <lastBuildDate>Thu, 22 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.16.79:1313/categories/Kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kasten K10 入门系列 05 - K10 安装包下载（2）</title>
+      <link>http://192.168.16.79:1313/2021/07/k10offline-script-2/</link>
+      <pubDate>Thu, 22 Jul 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2021/07/k10offline-script-2/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-入门系列目录&#34;&gt;Kasten K10 入门系列目录&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 02 - K10 安装&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-configuration/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 03 - K10 备份和恢复&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/06/K10offline-script/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 04 - K10 安装包下载&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 入门系列 04 - K10 安装包下载</title>
+      <link>http://192.168.16.79:1313/2021/06/k10offline-script/</link>
+      <pubDate>Fri, 04 Jun 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2021/06/k10offline-script/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-入门系列目录&#34;&gt;Kasten K10 入门系列目录&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 02 - K10 安装&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-configuration/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 03 - K10 备份和恢复&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;正文&#34;&gt;正文&lt;/h2&gt;&#xA;&lt;p&gt;K10 的下载很纠结，我相信习惯了 Veeam 软件的下载使用方式的朋友，一定会从各种程度上对于 K10 的下载和使用感觉到很不舒服。没错，这就对了，哪怕是像我这样下载 k10 软件超过 100 次以上的，也依旧觉得这种开源世界中的软件下载方式绝对是属于反人类的下载方式。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 入门系列 03 - K10 备份和恢复</title>
+      <link>http://192.168.16.79:1313/2021/05/k10-configuration/</link>
+      <pubDate>Tue, 18 May 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2021/05/k10-configuration/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-入门系列目录&#34;&gt;Kasten K10 入门系列目录&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 02 - K10 安装&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;正文&#34;&gt;正文&lt;/h2&gt;&#xA;&lt;p&gt;之前我介绍了 K10 的安装，整个安装过程其实就是一行&lt;code&gt;helm install&lt;/code&gt;命令，在安装完成后，后续的使用可以通过浏览器打开 K10 的仪表盘，进行 K10 备份系统的配置、K10 备份策略管理和数据恢复。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 入门系列 02 - K10 安装</title>
+      <link>http://192.168.16.79:1313/2021/05/k10-setup/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2021/05/k10-setup/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-入门系列目录&#34;&gt;Kasten K10 入门系列目录&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;正文&#34;&gt;正文&lt;/h2&gt;&#xA;&lt;p&gt;Kasten K10 的安装使用 Kubernetes 安装包管理工具 Helm，如果不熟悉 Kubernetes 的朋友可能不知道什么是 Helm，简单来说，Kubernetes 上的 Helm 来说就像 CentOS 上的 yum，有啥软件需要安装在 CentOS 上直接 yum install，而在 Kubernetes 上就是 helm install。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</title>
+      <link>http://192.168.16.79:1313/2020/12/setting-up-quick-demo-for-k10-01/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>http://192.168.16.79:1313/2020/12/setting-up-quick-demo-for-k10-01/</guid>
+      <description>&lt;h4 id=&#34;release-notes-v12&#34;&gt;Release Notes: v1.2&lt;/h4&gt;&#xA;&lt;p&gt;&lt;em&gt;2021/06/04 - 加入本地 Registry，内置 K10 v4.0.3 镜像，可以在安装 k10 时使用&lt;/em&gt;&lt;code&gt;--set global.airgapped.repository=localhost:5000&lt;/code&gt; &lt;em&gt;来直接调用本地的 docker 镜像库&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;Virtual Appliance 版本更新为 v1.2，对应网盘中文件为：&#xA;UbuntuK10-v1.2.ova&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

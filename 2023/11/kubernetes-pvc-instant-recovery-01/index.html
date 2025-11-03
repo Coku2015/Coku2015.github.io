@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建">
+  <meta property="og:description" content="还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-11-02T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Instant Recovery">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建">
+  <meta name="twitter:description" content="还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-01/" /><link rel="prev" href="http://192.168.16.79:1313/2023/10/vro-v6-guide-09/" /><link rel="next" href="http://192.168.16.79:1313/2023/11/kubernetes-pvc-instant-recovery-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2023\/11\/kubernetes-pvc-instant-recovery-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  2103 ,
+        "url": "http:\/\/192.168.16.79:1313\/2023\/11\/kubernetes-pvc-instant-recovery-01\/","datePublished": "2023-11-02T00:00:00+00:00","dateModified": "2023-11-02T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-02">2023-11-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2103 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#vsphere-csi-的安装和配置">vSphere CSI 的安装和配置</a>
+      <ul>
+        <li><a href="#k3s-节点集群安装配置">k3s 节点/集群安装配置</a></li>
+        <li><a href="#vsphere-csi-安装">vSphere CSI 安装</a>
+          <ul>
+            <li><a href="#vsphere-cloud-controller-manageryaml-文件">vsphere-cloud-controller-manager.yaml 文件</a></li>
+            <li><a href="#csi-vsphereconf-文件">csi-vsphere.conf 文件</a></li>
+            <li><a href="#vsphere-csi-driveryaml-文件">vsphere-csi-driver.yaml 文件</a></li>
+            <li><a href="#storageclassyaml-文件">storageclass.yaml 文件</a></li>
+            <li><a href="#csi-安装">CSI 安装</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#配置-loadbalance">配置 Loadbalance</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。</p>
+<h2 id="vsphere-csi-的安装和配置">vSphere CSI 的安装和配置</h2>
+<p>使用 Instant Recovery 功能离不开 vSphere，第一个前提要求是 Kubernetes 的 Storage Class 必须使用 vSphere Cloud Native Storage(CNS)。</p>
+<p>关于 vSphere CSI 的详细配置，可以参考 <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-C44D8071-85E7-4933-83EA-6797518C1837.html" target="_blank" rel="noopener noreffer ">VMware 官网链接</a></p>
+<h3 id="k3s-节点集群安装配置">k3s 节点/集群安装配置</h3>
+<p>本次 Demo 实验环境是部署在我家 HomeLab 中一台 NUC11 猎豹峡谷上，这台 NUC 配置了 64G 内存和 1 块 NVME 的 SSD 硬盘，上面运行的是 vSphere 7u3。</p>
+<p>在这个环境中，我的 Kubernetes 使用了轻量级的 K3S 1.25s1 版本，安装在一台 Ubuntu 20.04 上，配置成单节点启动实验环境。默认部署的 K3S 会禁用大多数 Cloud Provider，因此我需要调整一下 K3S 的安装参数，然后额外安装 VMware Cloud Manager。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装命令</span>
+</span></span><span class="line"><span class="cl">curl -sfL https://get.k3s.io <span class="p">|</span> <span class="nv">INSTALL_K3S_VERSION</span><span class="o">=</span><span class="s2">&#34;v1.25.8+k3s1&#34;</span> <span class="nv">INSTALL_K3S_EXEC</span><span class="o">=</span><span class="s2">&#34;server --disable-cloud-controller --disable=servicelb --disable=traefik --disable-network-policy --disable=local-storage&#34;</span> sh -s - </span></span></code></pre></div></div>
+<p>安装完成后，先别急着启动，实际上我们还缺一些参数，需要配置到<code>/etc/systemd/system/k3s.service</code>文件中。用 VI 编辑器打开 k3s.service 文件，在 [Service] 这节中找到 ExecStart，额外加上 2 行启动参数<code>--kubelet-arg=cloud-provider=external</code>和<code>--kubelet-arg=provider-id=vsphere://$master_node_id</code>。加上后，k3s.service 文件的最后一部分如下：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>ExecStart=/usr/local/bin/k3s \
+    server \
+        &#39;--disable-cloud-controller&#39; \
+        &#39;--disable=servicelb&#39; \
+        &#39;--disable=traefik&#39; \
+        &#39;--disable-network-policy&#39; \
+        &#39;--disable=local-storage&#39; \
+        &#39;--kubelet-arg=cloud-provider=external&#39; \
+        &#39;--kubelet-arg=provider-id=vsphere://$master_node_id&#39; \</code></pre></div>
+<p>修改完后，可以用重新 reload 下 k3s service，然后重启下即可。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl daemon-reload
+</span></span><span class="line"><span class="cl">sudo service k3s restart</span></span></code></pre></div></div>
+<p>接下去就可以通过 <a href="https://docs.k3s.io/cluster-access" target="_blank" rel="noopener noreffer ">k3s 提供的 config</a> 文件正常访问 cluster 了。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+kubectl get pods --all-namespaces</code></pre></div>
+<h3 id="vsphere-csi-安装">vSphere CSI 安装</h3>
+<p>接下来我们需要把 vSphere datastore 挂载给 k3s 使用，这里需要准备一些配置文件，一共有 4 个，其中 1 个是 conf 文件，3 个是 yaml 文件。分别如下：</p>
+<p>vsphere-cloud-controller-manager.yaml</p>
+<p>csi-vsphere.conf</p>
+<p>vsphere-csi-driver.yaml</p>
+<p>storageclass.yaml</p>
+<h4 id="vsphere-cloud-controller-manageryaml-文件">vsphere-cloud-controller-manager.yaml 文件</h4>
+<p>这个文件可以从 Kubernetes 官方的 github 仓库中获取模板，不同 k8s 版本的模板不一样，我用 1.25 的版本，就下载了 1.25 的对应文件：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -O https://ghproxy/https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/releases/v1.25/vsphere-cloud-controller-manager.yaml</span></span></code></pre></div></div>
+<p>这个文件下载后不能直接使用，需要修改里面的 vCenter 地址和权限信息。</p>
+<p>其中第一部分需要修改的是 Secret 中的 stringData，这里需要根据模板的样例填入 vCenter 的 ip、用户名和密码。然后第二部分需要修改的是 ConfigMap 中 data 下面的 vsphere.conf 中的内容，这里可以看到还是 vCenter 内的一些信息。</p>
+<p>另外，如果无法访问 gcr.io 的话，还需要修改 DaemonSet 中的容器镜像地址，在我的腾讯个人镜像库里，已经放了 1.25.2 的镜像，地址如下：<code>ccr.ccs.tencentyun.com/vsphere-csi/manager:v1.25.2</code></p>
+<p>修改完后，这个文件可以放一边备用。</p>
+<h4 id="csi-vsphereconf-文件">csi-vsphere.conf 文件</h4>
+<p>这个文件用于 vmware-system-csi 这个 namespace 下面创建 secret 用户，模板也可以从 <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-BFF39F1D-F70A-4360-ABC9-85BDAFBE8864.html" target="_blank" rel="noopener noreffer ">VMware 官网</a> 找到，以下是我修改后，在我的 demo 中用的内容：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[Global]
+
+[VirtualCenter &#34;&lt;ipaddress or fqdn&gt;&#34;]
+insecure-flag = &#34;true&#34;
+user = &#34;&lt;account&gt;&#34;
+password = &#34;&lt;password&gt;&#34;
+port = &#34;443&#34;
+datacenters = &#34;&lt;datacenter name&gt;&#34;</code></pre></div>
+<h4 id="vsphere-csi-driveryaml-文件">vsphere-csi-driver.yaml 文件</h4>
+<p>这个文件也可以从 VMware 的 Github 仓库中直接获取，下载后里面的内容不需要修改，可以直接使用。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>curl -O https://ghproxy/https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/v3.0.0/manifests/vanilla/vsphere-csi-driver.yaml</code></pre></div>
+<p>但是如果和我一样无法访问 gcr.io 的话，还是要修改下这个文件中用到的镜像的地址，可以用我的腾讯个人镜像库里面的这些：</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-attacher:v4.2.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-resizer:v1.7.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/driver:v3.0.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/livenessprobe:v2.9.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/syncer:v3.0.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-provisioner:v3.4.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-snapshotter:v6.2.1</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-node-driver-registrar:v2.7.0</p>
+<h4 id="storageclassyaml-文件">storageclass.yaml 文件</h4>
+<p>最后，需要准备 storageclass 的 yaml 文件，这个模板也可以在 <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-606E179E-4856-484C-8619-773848175396.html" target="_blank" rel="noopener noreffer ">VMware 官网</a> 找到，在我的 demo 中，我对文件进行了一些修改。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StorageClass</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">storage.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">standard</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storageclass.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">parameters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datastoreurl</span><span class="p">:</span><span class="w"> </span><span class="l">ds:///vmfs/volumes/578a0d70-0be672b6-a3f7-34e6d7803208/</span></span></span></code></pre></div></div>
+<p>这个模板只有 2 个内容需要修改，其中 metadata 下的 name 字段，可以根据自己需要随意命名，另外一个是 datastoreurl，这个 url 需要去 vCenter 中，找到对应的 datastore，在摘要界面中寻找这个信息，如图。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/image-20231101121241408.png"
+        data-srcset="http://image.backupnext.cloud/uPic/image-20231101121241408.png, http://image.backupnext.cloud/uPic/image-20231101121241408.png 1.5x, http://image.backupnext.cloud/uPic/image-20231101121241408.png 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/image-20231101121241408.png"
+        title="image-20231101121241408" /></p>
+<h4 id="csi-安装">CSI 安装</h4>
+<p>好了，准备完上述文件后，就可以开始安装了，整个安装过程相对来说比较简单，命令如下：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#安装 ccm</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f vsphere-cloud-controller-manager.yaml
+</span></span><span class="line"><span class="cl"><span class="c1">#创建 csi 管理 namespace</span>
+</span></span><span class="line"><span class="cl">kubectl create namespace vmware-system-csi
+</span></span><span class="line"><span class="cl"><span class="c1">#禁止调度</span>
+</span></span><span class="line"><span class="cl">kubectl taint nodes <span class="nv">$nodeid</span> node-role.kubernetes.io/control-plane<span class="o">=</span>:NoSchedule
+</span></span><span class="line"><span class="cl"><span class="c1">#确认上一条命令执行情况</span>
+</span></span><span class="line"><span class="cl">kubectl describe nodes <span class="p">|</span> egrep <span class="s2">&#34;Taints:|Name:&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#创建连 vc 用的用户名密码的 secret</span>
+</span></span><span class="line"><span class="cl">kubectl create secret generic vsphere-config-secret --from-file<span class="o">=</span>/home/lei/csi-vsphere.conf --namespace<span class="o">=</span>vmware-system-csi
+</span></span><span class="line"><span class="cl"><span class="c1">#创建并启动 csi 驱动</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f vsphere-csi-driver-ccr-ccs.yaml
+</span></span><span class="line"><span class="cl"><span class="c1">#确定 pod 全部启动后，重新启用容器调度</span>
+</span></span><span class="line"><span class="cl">kubectl taint nodes <span class="nv">$nodeid</span> node-role.kubernetes.io/control-plane<span class="o">=</span>:NoSchedule-
+</span></span><span class="line"><span class="cl"><span class="c1">#创建存储类</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f storageclass.yaml</span></span></code></pre></div></div>
+<p>安装完成后，如果没有任何报错，可以看到 CSI 的相关容器都正常启动了。接下去部署个应用使用这个 Storage Class 试试，demo 用的 yaml 如下。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolumeClaim</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pvc</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">alpine:3.7</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">256Mi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">100m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tail&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;/dev/null&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span></span></span></code></pre></div></div>
+<p>部署一下看看。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 创建 namespace</span>
+</span></span><span class="line"><span class="cl">kubectl create ns demo
+</span></span><span class="line"><span class="cl"><span class="c1"># 部署应用</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f demo.yaml</span></span></code></pre></div></div>
+<p>部署完后，在 vCenter 中能看到对应的 vmdk，这样的状态，VMware CSI 就正确配置完成了。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/image-20231101123534330.png"
+        data-srcset="http://image.backupnext.cloud/uPic/image-20231101123534330.png, http://image.backupnext.cloud/uPic/image-20231101123534330.png 1.5x, http://image.backupnext.cloud/uPic/image-20231101123534330.png 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/image-20231101123534330.png"
+        title="image-20231101123534330" /></p>
+<h2 id="配置-loadbalance">配置 Loadbalance</h2>
+<p>在我的 Demo 中，我还多配置了一个本地的 Loadbalance，用来为我的应用分配 IP 地址，在这里我选用了 <a href="https://metallb.universe.tf/" target="_blank" rel="noopener noreffer ">MetalLB</a>。安装也非常简单，在我的环境中，我使用了 0.13.9 的版本，从官网下载 yaml 文件，然后修改下镜像库即可。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -O https://ghproxy/https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml</span></span></code></pre></div></div>
+<p>修改的镜像也有我的腾讯镜像库版本：</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/metallb-controller:v0.13.9</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/metallb-speaker:v0.13.9</p>
+<p>除了这个 LB 标准应用的 yaml 之外，我们还要一个 ip 地址配置的 metallb-config.yaml，<a href="https://metallb.universe.tf/usage/" target="_blank" rel="noopener noreffer ">模板官网</a> 也有，我这里稍作修改：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">metallb.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">IPAddressPool</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">first-pool</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">metallb-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">addresses</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">10.10.1.230-10.10.1.240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">metallb.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">L2Advertisement</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">l2-config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">metallb-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ipAddressPools</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">first-pool</span></span></span></code></pre></div></div>
+<p>使用 kubectl apply 命令进行部署：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 部署 metallb</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f metallb-native.yaml
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置 metallb</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f metallb-config.yaml</span></span></code></pre></div></div>
+<p>这样配置完成后，应用程序就可以直接使用了，对于 K10 来说，只需要简单的指定 externalGateway 参数为 true，metallb 就能够自动为 K10 分配访问地址了，非常方便。</p>
+<p>好了，基础环境搭建就这些，我们下期详细介绍 K10 的备份与即时恢复。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-11-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2023/11/kubernetes-pvc-instant-recovery-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-01%2F&amp;text=%E6%9E%81%E9%80%9F%E6%81%A2%E5%A4%8D%EF%BC%9AKubernetes&#43;%E5%AE%B9%E5%99%A8%E5%8D%B3%E6%97%B6%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%8A%EF%BC%89-&#43;%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/10/vro-v6-guide-09/" class="prev" rel="prev" title="VAO 基础入门（九） -  文档模板解析"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO 基础入门（九） -  文档模板解析</a>
+            <a href="/2023/11/kubernetes-pvc-instant-recovery-02/" class="next" rel="next" title="极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复">极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

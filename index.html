@@ -1,34 +1,270 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="虚化人生">
+  <meta property="og:description" content="欢迎访问虚化人生">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
 
-<div class="main-post-list hidden">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="虚化人生">
+  <meta name="twitter:description" content="欢迎访问虚化人生">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="虚化人生">
+    <link rel="feed" href="/index.xml" type="application/rss+xml" title="虚化人生"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "http:\/\/192.168.16.79:1313\/","inLanguage": "zh-CN","author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "欢迎访问虚化人生","image": "http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png","thumbnailUrl": "http:\/\/192.168.16.79:1313\/images\/screenshot.png","license": "© Backup Next Cloud","name": "虚化人生"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
 
-  <ol class="post-list">
-    {% for post in paginator.posts %}
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a></h2>
-      <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
-      <div class="post-list__meta">        
-        <time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta--date date">
-          <img src="/images/calendar.png" width="20px" /> 
-          {{ post.date | date: "%F"}}</time> 
-        <div class = "tag-img-icon">
-          <img src="/images/tag-icon.svg" width="20px" /> 
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
         </div>
-        <a href="/tags">
-          <div class = "post-list-icon-mate">
-            <span class="post-list__meta--tags-right">{{ post.tags }}</span>
-          </div>
-          <div class = "post-list-small-mate">
-          <a class="btn-border-small" href={{ post.url }}>阅读全文 » </a>
-          </div>
-      </div>
-      <hr class="post-list__divider" />
-    </li>
-    {% endfor %}
-  </ol>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="page home" data-home="posts"><div class="home-profile"><div class="home-avatar"><a href="/posts/" title="文章"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.png"
+        data-srcset="/images/avatar.png, /images/avatar.png 1.5x, /images/avatar.png 2x"
+        data-sizes="auto"
+        alt="/images/avatar.png"
+        title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/2025/09/veeam13-security-features-01/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/09/veeam13-security-features-01/featured-image.png"
+        data-srcset="/2025/09/veeam13-security-features-01/featured-image.png, /2025/09/veeam13-security-features-01/featured-image.png 1.5x, /2025/09/veeam13-security-features-01/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/09/veeam13-security-features-01/featured-image.png"
+        title="/2025/09/veeam13-security-features-01/featured-image.png" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam13-security-features-01/">让 VBR 登陆更安全：v13 版本 SAML + Azure EntraID 集成全攻略</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-25">2025-09-25</time></span></div><div class="content"><p>v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。</p>
+<p>今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam13-security-features-01/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-06/">深度解读：Veeam V13 的发布策略与部署选择</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-23">2025-09-23</time></span></div><div class="content"><p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-06/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-05/">把复杂留给 Veeam：Infrastructure Appliance 上手指南</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-22">2025-09-22</time></span></div><div class="content"><p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-05/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-04/">让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-09">2025-09-09</time></span></div><div class="content"><p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-04/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-03/">你必须知道的：Veeam Software Appliance 全新的管理使用方法</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-08">2025-09-08</time></span></div><div class="content"><p>在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-03/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-02/">有手就能装！Veeam Software Appliance 一步一步带你部署</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-05">2025-09-05</time></span></div><div class="content"><p>在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 <strong>Veeam Software Appliance</strong> 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 <strong>Veeam Software Appliance</strong> 的部署和使用。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-02/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article><ul class="pagination"><li class="page-item active">
+                    <span class="page-link">
+                        <a href="/">1</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/2/">2</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/3/">3</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/16/">16</a>
+                    </span>
+                </li></ul><section class="home-credly" id="credly-badges">
+        <div class="home-credly__inner">
+            <h2 class="home-credly__title">我的证书</h2><div class="home-credly__badges" role="list"><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/2148942f-6416-46de-b9e7-cde8939c4352" target="_blank" rel="noopener noreferrer" aria-label="CKA: Certified Kubernetes Administrator"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/8b8ed108-e77d-4396-ac59-2504583b9d54/cka_from_cncfsite__281_29.png" alt="CKA: Certified Kubernetes Administrator">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/ed6da950-efbe-47d3-a304-990720a207bc" target="_blank" rel="noopener noreferrer" aria-label="CKAD: Certified Kubernetes Application Developer"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/cc8adc83-1dc6-4d57-8e20-22171247e052/blob" alt="CKAD: Certified Kubernetes Application Developer">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/d82aad19-c6b3-49d5-aef9-af82d5c31bbc" target="_blank" rel="noopener noreferrer" aria-label="AWS Certified Solutions Architect – Professional"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/2d84e428-9078-49b6-a804-13c15383d0de/image.png" alt="AWS Certified Solutions Architect – Professional">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/f8231559-52af-4e54-9f9e-43dab7a47a2b" target="_blank" rel="noopener noreferrer" aria-label="SLII Learner"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/d1ffbaa9-2ecc-49ae-a7fd-9ab157395498/image.png" alt="SLII Learner">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/442fed66-37d4-4b11-a3c9-97bdeeb3c9d6" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Engineer (VMCE) 2024"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/7291af60-4830-4bcb-b126-e3c52036e1ae/image.png" alt="Veeam Certified Engineer (VMCE) 2024">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/9cd02c09-b264-49c7-96e1-ff70c7e442eb" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Architect (VMCA) 2024"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/862b73b3-2fef-4bc3-8c8a-f0ea0ae68484/image.png" alt="Veeam Certified Architect (VMCA) 2024">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/bd54ba08-af93-4a95-9a74-b96552450dd3" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Architect (VMCA) 2023"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/f1602d9b-7e15-45d3-a1fc-d55bdee78ed3/image.png" alt="Veeam Certified Architect (VMCA) 2023">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/6d0dcc7b-931e-4bbf-9657-3348eff4dd91" target="_blank" rel="noopener noreferrer" aria-label="Veeam Backup &amp; Replication v11: Architecture and Design (VMCA 2022)"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/4af1b63a-5df4-4a71-a57c-1adac45a477d/VMCA_certification_badge_2022__1_.png" alt="Veeam Backup &amp; Replication v11: Architecture and Design (VMCA 2022)">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/3b55bf8a-8018-4e12-bcd5-4e89d19c0f29" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Engineer 2021 (VMCE 2021) v11"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/e090fc81-a593-42c9-b4ad-4703d7c46763/VMCE_certification_badge_2021.png" alt="Veeam Certified Engineer 2021 (VMCE 2021) v11">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/187ec5f9-a153-42b8-96fc-775177d69dd3" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Engineer 2020 (VMCE 2020)"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/a1bfcf6c-5b71-411f-96c1-87ee17e0e1b8/VMCE_certification_badge_2.png" alt="Veeam Certified Engineer 2020 (VMCE 2020)">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/c24293ca-dd8d-47dd-8951-f2efb509bcbe" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Architect v1 (VMCA v1)"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/749b9085-9410-461d-b5d4-c6da19875fac/VMCA1_logo.png" alt="Veeam Certified Architect v1 (VMCA v1)">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article><article class="home-credly__badge" role="listitem">
+                            <a class="home-credly__badge-link" href="https://www.credly.com/badges/700928f9-8453-4a72-9ad8-7788fef51cd4" target="_blank" rel="noopener noreferrer" aria-label="Veeam Certified Engineer v9"><div class="home-credly__badge-cover">
+                                        <img src="https://images.credly.com/images/23f9ce75-6cf5-4c46-91dd-e7f3bc85bbfe/VMCE_acclaim_badge_without_year_V7-9_352x352.png" alt="Veeam Certified Engineer v9">
+                                    </div>
+                                <div class="home-credly__badge-body"></div>
+                            </a>
+                        </article>
+                </div>
+                <p class="home-credly__cta">
+                    <a href="https://www.credly.com/users/lei-wei.592fc4a5/badges" target="_blank" rel="noopener noreferrer">在 Credly 查看全部证书</a>
+                </p>
+        </div>
+    </section></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
 
-  {% include pagination.html %}
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
 
-</div>
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

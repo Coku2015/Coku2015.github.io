@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>深度解读：Veeam V13 的发布策略与部署选择 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="深度解读：Veeam V13 的发布策略与部署选择">
+  <meta property="og:description" content="最近，Veeam 在 R&amp;D 论坛上由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-23T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="深度解读：Veeam V13 的发布策略与部署选择">
+  <meta name="twitter:description" content="最近，Veeam 在 R&amp;D 论坛上由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-06/" /><link rel="prev" href="http://192.168.16.79:1313/2025/09/veeam-software-appliance-05/" /><link rel="next" href="http://192.168.16.79:1313/2025/09/veeam13-security-features-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "深度解读：Veeam V13 的发布策略与部署选择",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-06\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  1913 ,
+        "url": "http:\/\/192.168.16.79:1313\/2025\/09\/veeam-software-appliance-06\/","datePublished": "2025-09-23T00:00:00+00:00","dateModified": "2025-09-23T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深度解读：Veeam V13 的发布策略与部署选择</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-23">2025-09-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1913 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#要点回顾">要点回顾</a></li>
+        <li><a href="#这些事实对你意味着什么">这些事实对你意味着什么</a>
+          <ul>
+            <li><a href="#1-小型实验室--新项目可以大胆尝试早期-appliance">1) 小型实验室 / 新项目：可以大胆尝试早期 Appliance</a></li>
+            <li><a href="#2-大规模生产环境--关键业务系统建议观望或谨慎评估">2) 大规模生产环境 / 关键业务系统：建议观望或谨慎评估</a></li>
+            <li><a href="#3-许可与成本">3) 许可与成本</a></li>
+          </ul>
+        </li>
+        <li><a href="#七条可直接执行的建议">七条可直接执行的建议</a></li>
+        <li><a href="#对产品方向的补充看法">对产品方向的补充看法</a></li>
+        <li><a href="#在窗口期做最稳妥的决策">在窗口期做最稳妥的决策</a></li>
+        <li><a href="#写在最后">写在最后</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p>
+<h3 id="要点回顾">要点回顾</h3>
+<p>首先，V13 将提供两种部署形态：既保留可安装在 Windows 上的传统安装包，又新增基于 Linux 的 <strong>Veeam Software Appliance</strong>。两种方式运行的是同一套跨平台 VBR 代码，功能保持一致，只是在底层操作系统管理上体现出“Appliance 特性”。换句话说，无论你选择 Appliance 还是 Windows，都不会丢失功能。</p>
+<p>其次，Veeam 这次采用“early release”策略：<strong>先发布 Software Appliance（13.0.0）</strong>，把完整的 Windows installable（以及某些复杂特性）放到 13.0.1 完整版（计划 Q4 2025）。早期版本面向“全新部署”，官方声明其功能“可用于生产并受支持”，但部分对 QA 要求更高的功能（如从 V12 直接迁移、Veeam Cloud Connect 等）在初版暂不提供。</p>
+<p>第三，风险与回报并存：跨平台改造意味着大规模代码调整（帖子提到约 60% 的代码库变化），因此早期用户可能遇到 bug；但整体性能和可扩展性提升显著，早期使用者能享受更低的部署成本、“开箱即用”的安全合规特性以及自动补丁等带来的 TCO 优势。</p>
+<p>最后是许可与迁移：Windows installable 的授权模式不变；但 Software Appliance 初期仅支持 VUL、Rental、NFR 等许可类型（Essentials 暂有限制）。并且<strong>早期版本不支持从 V12 直接在线转换到 Appliance</strong>。官方计划在后续提供转换工具，并可能通过受控报名和 Professional Services 逐步推进迁移。</p>
+<h3 id="这些事实对你意味着什么">这些事实对你意味着什么</h3>
+<h4 id="1-小型实验室--新项目可以大胆尝试早期-appliance">1) 小型实验室 / 新项目：可以大胆尝试早期 Appliance</h4>
+<p>对于<strong>全新部署</strong>或实验环境，早期 Appliance 很有吸引力。它免去了操作系统安装、加固、补丁管理的环节，让你快速搭建一个“完整备份域”，好处包括更少的运维工作、自动补丁、现代化 WebUI 和管理体验。当然，早期用户需要随时准备在遇到问题时与 Veeam Support 沟通。</p>
+<h4 id="2-大规模生产环境--关键业务系统建议观望或谨慎评估">2) 大规模生产环境 / 关键业务系统：建议观望或谨慎评估</h4>
+<p>生产环境更看重稳定性和支持风险。由于早期版本暂不支持从 V12 直接迁移，如果你希望平滑升级，最佳做法是等 13.0.1（Windows installable + 完整迁移路径）或至少先在灰度/测试环境做充分评估后再切换。若依赖的功能（如 Veeam Cloud Connect、特定插件或第三方集成）在 early release 中延后提供，也要慎重决策。官方明确会以“受控方式”推动大规模迁移，以保护 Support SLA。</p>
+<h4 id="3-许可与成本">3) 许可与成本</h4>
+<p>Appliance 初期仅支持特定许可类型（VUL 等），对仍使用旧 Socket 许可或 Community 版本的用户有一定影响。好消息是 Socket 转 VUL 的流程据称更方便，但仍涉及维保续费。建议提前与财务/采购确认许可方式，评估整体 TCO（包括迁移测试、潜在 Professional Services 费用）。</p>
+<h3 id="七条可直接执行的建议">七条可直接执行的建议</h3>
+<ol>
+<li><strong>先测试再推广</strong>：在 1~2 台非业务 VM 上先装 V13 Appliance 做功能验证（WebUI、备份/恢复、Hardened Repo 等）。</li>
+<li><strong>不要在生产上直接迁移</strong>：若你在用 V12 且有大量历史配置或老旧插件，等待 13.0.1 的 Windows installable 和转换工具。</li>
+<li><strong>提前评估许可</strong>：确认当前许可是否被 Appliance 支持；如需从 Socket 转 VUL，提前与销售沟通成本和时间窗口。</li>
+<li><strong>制定备份导入计划</strong>：准备新装 Appliance 时，先验证“导入历史备份”的流程（导入元数据、存储库访问等），并测试并规划回退步骤。</li>
+<li><strong>规划合规与自动更新策略</strong>：用好 Appliance 的自动更新和 JeOS 安全基线，但把更新安排在维护窗口并做好变更记录，参考官方 Release Notes 验证兼容性。</li>
+<li><strong>考虑专业支持</strong>：若计划大规模迁移，提前申请官方升级服务，准备 Professional Services 预算分阶段有序迁移。</li>
+<li><strong>监测并保留回退方案</strong>：任何早期评估都要有回退计划（如保留 V12 快照、回滚脚本、恢复验证流程）。</li>
+</ol>
+<h3 id="对产品方向的补充看法">对产品方向的补充看法</h3>
+<p>Appliance 先行发布有几个原因：一是降低运维门槛并把安全合规做成“默认值”，对新客户极有吸引力；二是提前收集底层平台的真实反馈，为后续 Windows 迁移工具打下更稳固的基础。正因如此，Veeam 选择“受控放量”策略——既能展示 V13 的性能提升，也能避免一次性把所有客户推到尚在磨合的迁移工具上。</p>
+<h3 id="在窗口期做最稳妥的决策">在窗口期做最稳妥的决策</h3>
+<p>如果你希望“尽快升级并简化运维”，可以先在非关键环境尝试 Appliance，把流程、脚本和回滚办法固化；如果你追求零风险生产，建议等待 13.0.1 完整版和官方迁移工具，同时在测试环境做全面兼容性测试。不论选择哪条路径，关键都是“测试—记录—自动化—回滚”四步循环：先测、写 SOP、自动化、确保能回滚。</p>
+<p>最后，建议在任何迁移或大规模变更前，关注官方 Release Notes / KB（如 VBR 13 Release Information）以及 Gostev FAQ 帖子的更新。</p>
+<h3 id="写在最后">写在最后</h3>
+<p>本篇是我本次 Veeam Software Appliance 发布系列的收官文章，前面我们详细梳理了新发布的软件。本系列之后，我还会继续推出 V13 新功能集锦系列，欢迎持续关注。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-09-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/09/veeam-software-appliance-06/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-06%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2025%2F09%2Fveeam-software-appliance-06%2F&amp;text=%E6%B7%B1%E5%BA%A6%E8%A7%A3%E8%AF%BB%EF%BC%9AVeeam&#43;V13&#43;%E7%9A%84%E5%8F%91%E5%B8%83%E7%AD%96%E7%95%A5%E4%B8%8E%E9%83%A8%E7%BD%B2%E9%80%89%E6%8B%A9" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-06%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2025%252F09%252Fveeam-software-appliance-06%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam-software-appliance-05/" class="prev" rel="prev" title="把复杂留给 Veeam：Infrastructure Appliance 上手指南"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>把复杂留给 Veeam：Infrastructure Appliance 上手指南</a>
+            <a href="/2025/09/veeam13-security-features-01/" class="next" rel="next" title="让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略">让 VBR 登陆更安全：v13 版本 SAML + Azure EntraID 集成全攻略<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

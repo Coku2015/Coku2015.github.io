@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kasten K10 入门系列 05 - K10 安装包下载（2） - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2021/07/k10offline-script-2/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Kasten K10 入门系列 05 - K10 安装包下载（2）">
+  <meta property="og:description" content="Kasten K10 入门系列目录 Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境
+Kasten K10 入门系列 02 - K10 安装
+Kasten K10 入门系列 03 - K10 备份和恢复
+Kasten K10 入门系列 04 - K10 安装包下载">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-07-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-07-22T00:00:00+00:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Kasten K10 入门系列 05 - K10 安装包下载（2）">
+  <meta name="twitter:description" content="Kasten K10 入门系列目录 Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境
+Kasten K10 入门系列 02 - K10 安装
+Kasten K10 入门系列 03 - K10 备份和恢复
+Kasten K10 入门系列 04 - K10 安装包下载">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2021/07/k10offline-script-2/" /><link rel="prev" href="http://192.168.16.79:1313/2021/06/k10offline-script/" /><link rel="next" href="http://192.168.16.79:1313/2021/10/veeam-agent-for-linux-installation-deep-dive/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kasten K10 入门系列 05 - K10 安装包下载（2）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2021\/07\/k10offline-script-2\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Kubernetes","wordcount":  862 ,
+        "url": "http:\/\/192.168.16.79:1313\/2021\/07\/k10offline-script-2\/","datePublished": "2021-07-22T00:00:00+00:00","dateModified": "2021-07-22T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kasten K10 入门系列 05 - K10 安装包下载（2）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-07-22">2021-07-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 862 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kasten-k10-入门系列目录">Kasten K10 入门系列目录</a></li>
+    <li><a href="#正文">正文</a></li>
+    <li><a href="#内容说明">内容说明</a></li>
+    <li><a href="#前提条件">前提条件</a></li>
+    <li><a href="#使用方法">使用方法</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="kasten-k10-入门系列目录">Kasten K10 入门系列目录</h2>
+<p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 02 - K10 安装</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/05/K10-configuration/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 03 - K10 备份和恢复</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/06/K10offline-script/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 04 - K10 安装包下载</a></p>
+<h2 id="正文">正文</h2>
+<p>在上一篇中，我们介绍了通过脚本实现从网络上下载并推送 k10 安装镜像至私有镜像库，今天我想来分享一些离线的镜像包，在完全无法访问外网的环境中，这也许是一种最方便的方式。</p>
+<p>首先放上下载链接：</p>
+<p><a href="https://cloud.189.cn/web/share?code=zIVZ3uaIzUr2" target="_blank" rel="noopener noreffer ">https://cloud.189.cn/web/share?code=zIVZ3uaIzUr2</a>（访问码：8fbw）</p>
+<h2 id="内容说明">内容说明</h2>
+<p>在这个下载链接中，K10 安装包按版本都放置在每个版本号命名的文件夹中。在版本号文件夹里面，会包含两个文件：</p>
+<ul>
+<li>kasten_k10_offline_images_&lt;版本号&gt;.tar.gz : 镜像包</li>
+<li>k10_&lt;版本号&gt;.json : 推送至私有镜像库的配置文件</li>
+</ul>
+<p>在这个镜像包中，包含了所有 k10 的安装镜像 (4.0.8 版本，其他版本可能会略有不同）：</p>
+<table>
+  <thead>
+      <tr>
+          <th>原始 Repository</th>
+          <th>镜像名</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ghcr.io/kanisterio</td>
+          <td>kanister-tools</td>
+      </tr>
+      <tr>
+          <td>quay.io/datawire</td>
+          <td>ambassador</td>
+      </tr>
+      <tr>
+          <td>quay.io/prometheus</td>
+          <td>prometheus</td>
+      </tr>
+      <tr>
+          <td>jimmidyson</td>
+          <td>configmap-reload</td>
+      </tr>
+      <tr>
+          <td>quay.io/dexidp</td>
+          <td>dex</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>frontend</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>kanister</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>aggregatedapis</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>config</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>auth</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>bloblifecyclemanager</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>catalog</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>crypto</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>dashboardbff</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>executor</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>jobs</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>logging</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>metering</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>state</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>upgrade</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>cephtool</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>datamover</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>k10tools</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>restorectl</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>k10offline</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="前提条件">前提条件</h2>
+<p>和上一篇中的脚本使用差不多，需要准备一台 Linux 服务器，在这台服务器上：</p>
+<ul>
+<li>能够正常访问<code>目标镜像库&lt;target&gt;</code>;</li>
+<li>安装了 jq 软件，可以使用 jq 命令，可以通过以下链接了解 <a href="https://stedolan.github.io/jq/" target="_blank" rel="noopener noreffer ">jq</a>；</li>
+<li>安装了 docker，可以通过以下链接了解 <a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener noreffer ">docker</a>；</li>
+</ul>
+<h2 id="使用方法">使用方法</h2>
+<p>将上面对应版本下载到的文件，离线传送至 Linux 服务器上，使用以下命令加载镜像包至本地 docker 缓存：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker load &lt; kasten_k10_offline_images_4.0.8.tar.gz</span></span></code></pre></div></div>
+<p>加载后，可以通过以下命令，查看确认镜像状况：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker images</span></span></code></pre></div></div>
+<p>下载推送脚本：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -O https://blog.backupnext.cloud/kasten_private_repo.sh</span></span></code></pre></div></div>
+<p>需要提醒的是，脚本下载后，请务必查看内容，确保正确再使用。</p>
+<p>修改脚本执行权限：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x kasten_private_repo.sh</span></span></code></pre></div></div>
+<p>脚本命令和参数：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kasten_private_repo.sh &lt;k10-ver&gt; &lt;target repo&gt;</span></span></code></pre></div></div>
+<p>其中 k10-ver 是 k10 的版本，比如最新版本为<code>4.0.8</code>。</p>
+<p>target repo 是目标私有镜像库，比如<code>private.target.repo/kasten</code></p>
+<p>举个例子，按照上面的配置，这条命令变成了：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kasten_private_repo.sh 4.0.8 private.target.repo/kasten</span></span></code></pre></div></div>
+<p>运行这个命令，接下去 k10 的镜像就会自动上传至 private.target.repo/kasten 中，而在安装 k10 时，就可以使用这个私有镜像库了：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">helm install k10 k10-4.0.8.tgz --namespace kasten-io <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set global.airgapped.repository<span class="o">=</span>private.target.repo/kasten
+</span></span><span class="line"><span class="cl">    --set metering.mode<span class="o">=</span>airgap</span></span></code></pre></div></div>
+<p>以上就是今天的第二种离线安装方法。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-07-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/07/k10offline-script-2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F07%2Fk10offline-script-2%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2021%2F07%2Fk10offline-script-2%2F&amp;text=Kasten&#43;K10&#43;%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97&#43;05&#43;-&#43;K10&#43;%E5%AE%89%E8%A3%85%E5%8C%85%E4%B8%8B%E8%BD%BD%EF%BC%882%EF%BC%89" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F07%252Fk10offline-script-2%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2021%252F07%252Fk10offline-script-2%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2021/06/k10offline-script/" class="prev" rel="prev" title="Kasten K10 入门系列 04 - K10 安装包下载"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kasten K10 入门系列 04 - K10 安装包下载</a>
+            <a href="/2021/10/veeam-agent-for-linux-installation-deep-dive/" class="next" rel="next" title="Veeam Agent for Linux 安装深度分析">Veeam Agent for Linux 安装深度分析<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

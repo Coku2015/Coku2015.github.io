@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Ubuntu系统用于Veeam加固存储库的进一步安全加固 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Ubuntu系统用于Veeam加固存储库的进一步安全加固">
+  <meta property="og:description" content="Veeam v12版本发布后，官方手册给出了基于Ubuntu20.04系统构建Veeam加固存储库后进一步系统安全加固的方法，并且提供了全自动配置的脚本，因此在使用我的Configurator构建完Ubuntu存储库后，可以用这个自动化配置脚本进行更安全的加固。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-02-02T00:00:00+00:00">
+    <meta property="article:tag" content="备份">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="Ubuntu系统用于Veeam加固存储库的进一步安全加固">
+  <meta name="twitter:description" content="Veeam v12版本发布后，官方手册给出了基于Ubuntu20.04系统构建Veeam加固存储库后进一步系统安全加固的方法，并且提供了全自动配置的脚本，因此在使用我的Configurator构建完Ubuntu存储库后，可以用这个自动化配置脚本进行更安全的加固。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/02/veeam-hardened-ubuntu/" /><link rel="prev" href="http://192.168.16.79:1313/2023/12/mysql-backup-and-restore/" /><link rel="next" href="http://192.168.16.79:1313/2024/02/automate-deploy-k3s-with-vsphere-csi/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Ubuntu系统用于Veeam加固存储库的进一步安全加固",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/02\/veeam-hardened-ubuntu\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "备份","wordcount":  4611 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/02\/veeam-hardened-ubuntu\/","datePublished": "2024-02-02T00:00:00+00:00","dateModified": "2024-02-02T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Ubuntu系统用于Veeam加固存储库的进一步安全加固</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Repository/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Repository</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-02">2024-02-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4611 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#脚本加固内容说明">脚本加固内容说明</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Veeam v12版本发布后，官方手册给出了基于Ubuntu20.04系统构建Veeam加固存储库后<a href="https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120" target="_blank" rel="noopener noreffer ">进一步系统安全加固的方法</a>，并且提供了全自动配置的脚本，因此在使用我的<a href="https://github.com/Coku2015/Veeam_Repo_Configurator" target="_blank" rel="noopener noreffer ">Configurator</a>构建完Ubuntu存储库后，可以用这个自动化配置脚本进行更安全的加固。</p>
+<p><strong>由于官方脚本包含了一些美国军方的合规配置，并不适合中国用户使用，我将Veeam官方的脚本进行了一些修改，并进行了重新发布，以适合中国用户使用。</strong></p>
+<p>脚本下载地址：</p>
+<p><a href="https://github.com/Coku2015/veeam-hardened-repository" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/veeam-hardened-repository</a></p>
+<p><strong>系统要求:</strong></p>
+<ul>
+<li>必须以root用户身份运行</li>
+<li>必须在一台干净安装的Ubuntu 20.04系统上运行</li>
+<li>仅支持 Veeam Backup &amp; Replication v12 以上版本</li>
+</ul>
+<p><strong>使用说明:</strong></p>
+<ol>
+<li>通过 SSH 连接到 Ubuntu 20.04 服务器上</li>
+<li>复制脚本内容到该服务器上</li>
+<li>使用以下命令运行脚本:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo bash veeam.harden.sh &gt; output.txt 2&gt;<span class="p">&amp;</span><span class="m">1</span></span></span></code></pre></div></div>
+<p>注意: 如果你需要更详细的输出，只需运行以下的命令:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo bash veeam.harden.sh</span></span></code></pre></div></div>
+<h2 id="脚本加固内容说明">脚本加固内容说明</h2>
+<p>UBTU-20-010005 - Ubuntu 操作系统必须允许用户直接对所有连接类型发起会话锁定。</p>
+<p>UBTU-20-010007 - Ubuntu 操作系统必须强制执行 24 小时/1 天作为最短密码生命周期。新用户的密码必须有 24 小时/1 天的最短密码有效期限制。</p>
+<p>UBTU-20-010008 - Ubuntu 操作系统必须强制执行 60 天最长密码生存期限制。新用户的密码必须有 60 天的最长密码有效期限制。</p>
+<p>UBTU-20-010013 - 在不活动超时后，Ubuntu 操作系统必须自动终止用户会话。</p>
+<p>UBTU-20-010014 - Ubuntu 操作系统必须要求用户在权限升级或更改角色时重新进行身份验证。</p>
+<p>UBTU-20-010016 - Ubuntu 操作系统默认文件系统权限必须定义为所有经过身份验证的用户只能读取和修改自己的文件。</p>
+<p>UBTU-20-010035 - Ubuntu 操作系统必须使用强身份验证器来建立非本地维护和诊断会话。</p>
+<p>UBTU-20-010036 - Ubuntu 操作系统在一段时间不活动后必须立即终止与 SSH 流量关联的所有网络连接。</p>
+<p>UBTU-20-010037 - Ubuntu 操作系统必须在会话结束时或 10 分钟不活动后立即终止与 SSH 流量关联的所有网络连接。</p>
+<p>UBTU-20-010038 - 在授予任何本地或远程系统连接之前，Ubuntu 操作系统必须显示标准强制性 DoD 通知和同意横幅。</p>
+<p>UBTU-20-010043 - Ubuntu 操作系统必须将 SSH 守护程序配置为使用采用 FIPS 140-2 批准的加密哈希的消息身份验证代码 (MAC)，以防止未经授权的信息泄露和/或检测传输过程中信息的更改。</p>
+<p>UBTU-20-010047 - Ubuntu 操作系统不得允许通过 SSH 进行无人值守或自动登录。</p>
+<p>UBTU-20-010048 - 必须配置 Ubuntu 操作系统以禁用远程 X 连接，除非是为了满足记录和验证的任务要求。</p>
+<p>UBTU-20-010049 - Ubuntu 操作系统 SSH 守护程序必须阻止远程主机连接到代理显示。</p>
+<p>UBTU-20-010050 - Ubuntu 操作系统必须通过要求至少使用一个大写字符来强制密码复杂性。</p>
+<p>UBTU-20-010051 - Ubuntu 操作系统必须通过要求至少使用一个小写字符来强制密码复杂性。</p>
+<p>UBTU-20-010052 - Ubuntu 操作系统必须通过要求至少使用一个数字字符来强制密码复杂性。</p>
+<p>UBTU-20-010053 - Ubuntu 操作系统在更改密码时必须要求更改至少 8 个字符。</p>
+<p>UBTU-20-010054 - Ubuntu 操作系统必须强制要求密码长度至少为 15 个字符。</p>
+<p>UBTU-20-010055 - Ubuntu 操作系统必须通过要求至少使用一个特殊字符来强制密码复杂性。</p>
+<p>UBTU-20-010056 - Ubuntu 操作系统必须禁止使用字典单词作为密码。</p>
+<p>UBTU-20-010057 - 必须配置 Ubuntu 操作系统，以便在更改密码或建立新密码时必须使用 pwquality。</p>
+<p>UBTU-20-010070 - Ubuntu 操作系统必须禁止密码重复使用至少五代。</p>
+<p>UBTU-20-010072 - Ubuntu 操作系统必须自动锁定帐户，直到管理员在尝试登录 3 次失败后释放锁定的帐户。</p>
+<p>UBTU-20-010074 - 必须配置 Ubuntu 操作系统，以便每 30 天或更短时间运行一次以检查文件完整性的脚本是默认脚本。</p>
+<p>UBTU-20-010075 - Ubuntu 操作系统必须在登录尝试失败后的登录提示之间强制执行至少 4 秒的延迟。</p>
+<p>UBTU-20-010100 - Ubuntu 操作系统必须为影响 /etc/passwd 的所有帐户创建、修改、禁用和终止事件生成审核记录。</p>
+<p>UBTU-20-010101 - Ubuntu 操作系统必须为影响 /etc/group 的所有帐户创建、修改、禁用和终止事件生成审核记录。</p>
+<p>UBTU-20-010102 - Ubuntu 操作系统必须为影响 /etc/shadow 的所有帐户创建、修改、禁用和终止事件生成审核记录。</p>
+<p>UBTU-20-010103 - Ubuntu 操作系统必须为影响 /etc/gshadow 的所有帐户创建、修改、禁用和终止事件生成审核记录。</p>
+<p>UBTU-20-010104 - Ubuntu 操作系统必须为影响 /etc/opasswd 的所有帐户创建、修改、禁用和终止事件生成审核记录。</p>
+<p>UBTU-20-010118 - Ubuntu 操作系统必须在审核失败时默认关闭（除非可用性是首要问题）。</p>
+<p>UBTU-20-010122 - 必须配置 Ubuntu 操作系统，以便未经授权的用户无法读取或写入审核日志文件。</p>
+<p>UBTU-20-010123 - Ubuntu 操作系统必须配置为仅允许授权用户拥有审核日志文件。</p>
+<p>UBTU-20-010124 - Ubuntu 操作系统必须仅允许授权组拥有审核日志文件。</p>
+<p>UBTU-20-010128 - 必须配置 Ubuntu 操作系统，以便未经授权的用户无法对审核日志目录进行写访问。</p>
+<p>UBTU-20-010133 - 必须配置 Ubuntu 操作系统，以便未经授权的用户无法写入审计配置文件。</p>
+<p>UBTU-20-010134 - Ubuntu 操作系统必须仅允许授权帐户拥有审核配置文件。</p>
+<p>UBTU-20-010135 - Ubuntu 操作系统必须仅允许授权组拥有审核配置文件。</p>
+<p>UBTU-20-010136 - Ubuntu 操作系统必须为成功/不成功使用 su 命令生成审核记录。</p>
+<p>UBTU-20-010137 - Ubuntu 操作系统必须为成功/不成功使用 chfn 命令生成审核记录。</p>
+<p>UBTU-20-010138 - Ubuntu 操作系统必须为成功/不成功使用 mount 命令生成审核记录。</p>
+<p>UBTU-20-010139 - Ubuntu 操作系统必须为成功/不成功使用 umount 命令生成审核记录。</p>
+<p>UBTU-20-010140 - Ubuntu 操作系统必须为 ssh-agent 命令的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010141 - Ubuntu 操作系统必须为成功/不成功使用 ssh-keysign 命令生成审核记录。</p>
+<p>UBTU-20-010142 - Ubuntu 操作系统必须为 setxattr、fsetxattr、lsetxattr、removexattr、fremovexattr 和 lremovexattr 系统调用的任何使用生成审核记录。</p>
+<p>UBTU-20-010148 - Ubuntu 操作系统必须为 chown、fchown、fchownat 和 lchown 系统调用的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010152 - Ubuntu 操作系统必须为 chmod、fchmod 和 fchmodat 系统调用的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010155 - Ubuntu 操作系统必须为 creat、open、openat、open_by_handle_at、truncate 和 ftruncate 系统调用的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010161 - Ubuntu 操作系统必须为 sudo 命令的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010162 - Ubuntu 操作系统必须为成功/不成功使用 sudoedit 命令生成审核记录。</p>
+<p>UBTU-20-010163 - Ubuntu 操作系统必须为成功/不成功使用 chsh 命令生成审核记录。</p>
+<p>UBTU-20-010164 - Ubuntu 操作系统必须为成功/不成功使用 newgrp 命令生成审核记录。</p>
+<p>UBTU-20-010165 - Ubuntu 操作系统必须为 chcon 命令的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010166 - Ubuntu 操作系统必须为成功/不成功使用 apparmor_parser 命令生成审核记录。</p>
+<p>UBTU-20-010167 - Ubuntu 操作系统必须为成功/不成功使用 setfacl 命令生成审核记录。</p>
+<p>UBTU-20-010168 - Ubuntu 操作系统必须为 chacl 命令的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010169 - Ubuntu操作系统必须为tallylog文件的使用和修改生成审核记录。</p>
+<p>UBTU-20-010170 - Ubuntu操作系统必须为faillog文件的使用和修改生成审核记录。</p>
+<p>UBTU-20-010171 - Ubuntu操作系统必须生成lastlog文件的使用和修改的审计记录。</p>
+<p>UBTU-20-010172 - Ubuntu 操作系统必须为成功/不成功使用 passwd 命令生成审核记录。</p>
+<p>UBTU-20-010173 - Ubuntu 操作系统必须为成功/不成功使用 unix_update 命令生成审核记录。</p>
+<p>UBTU-20-010174 - Ubuntu 操作系统必须为成功/不成功使用 gpasswd 命令生成审核记录。</p>
+<p>UBTU-20-010175 - Ubuntu 操作系统必须为成功/不成功使用 chage 命令生成审核记录。</p>
+<p>UBTU-20-010176 - Ubuntu 操作系统必须为成功/不成功使用 usermod 命令生成审核记录。</p>
+<p>UBTU-20-010177 - Ubuntu 操作系统必须为成功/不成功使用 crontab 命令生成审核记录。</p>
+<p>UBTU-20-010178 - Ubuntu 操作系统必须为成功/不成功使用 pam_timestamp_check 命令生成审核记录。</p>
+<p>UBTU-20-010179 - Ubuntu 操作系统必须为 init_module 和 finit_module 系统调用的成功/不成功使用生成审核记录。</p>
+<p>UBTU-20-010181 - Ubuntu 操作系统必须为成功/不成功使用delete_module 系统调用生成审核记录。</p>
+<p>UBTU-20-010182 - Ubuntu 操作系统必须生成审计记录和报告，其中包含所有可审计事件和操作的时间、地点、类型、来源和结果的信息。</p>
+<p>UBTU-20-010198 - Ubuntu 操作系统必须在系统启动时启动会话审核。</p>
+<p>UBTU-20-010199 - Ubuntu 操作系统必须将审核工具配置为 0755 或更宽松的模式。</p>
+<p>UBTU-20-010200 - Ubuntu 操作系统必须将审核工具配置为root 所有者。</p>
+<p>UBTU-20-010201 - Ubuntu 操作系统必须将审核工具配置为 root 所属组。</p>
+<p>UBTU-20-010205 - Ubuntu操作系统必须使用加密机制来保护审计工具的完整性。</p>
+<p>UBTU-20-010211 - Ubuntu 操作系统必须防止所有软件以高于执行该软件的用户的权限级别执行，并且必须配置审核系统以审核特权功能的执行。</p>
+<p>UBTU-20-010230 - Ubuntu 操作系统必须记录审核记录的时间戳，这些时间戳可以映射到协调世界时 (UTC) 或格林威治标准时间 (GMT)。</p>
+<p>UBTU-20-010244 - Ubuntu 操作系统必须为特权活动、非本地维护、诊断会话和其他系统级访问生成审核记录。</p>
+<p>UBTU-20-010267 - Ubuntu 操作系统必须为任何成功/不成功使用 unlink、unlinkat、rename、renameat 和 rmdir 系统调用生成审核记录。</p>
+<p>UBTU-20-010277 - Ubuntu 操作系统必须为 /var/log/wtmp 文件生成审核记录。</p>
+<p>UBTU-20-010278 - Ubuntu 操作系统必须为 /var/run/utmp 文件生成审核记录。</p>
+<p>UBTU-20-010279 - Ubuntu 操作系统必须为 /var/log/btmp 文件生成审核记录。</p>
+<p>UBTU-20-010296 - 当尝试使用 modprobe 命令成功/失败时，Ubuntu 操作系统必须生成审核记录。</p>
+<p>UBTU-20-010297 - 当尝试使用 kmod 命令成功/失败时，Ubuntu 操作系统必须生成审核记录。</p>
+<p>UBTU-20-010298 - 当尝试使用 fdisk 命令成功/失败时，Ubuntu 操作系统必须生成审核记录。</p>
+<p>UBTU-20-010400 - Ubuntu 操作系统必须将所有帐户和/或帐户类型的并发会话数限制为 10 个。</p>
+<p>UBTU-20-010403 - Ubuntu 操作系统必须监视远程访问方法。</p>
+<p>UBTU-20-010404 - Ubuntu 操作系统必须使用 FIPS 140-2 批准的加密哈希算法对所有存储的密码进行加密。</p>
+<p>UBTU-20-010405 - Ubuntu 操作系统不得安装 telnet 软件包。</p>
+<p>UBTU-20-010406 - Ubuntu 操作系统不得安装 rsh-server 软件包。</p>
+<p>UBTU-20-010407 - Ubuntu 操作系统必须配置为禁止或限制使用 PPSM CAL 和漏洞评估中定义的功能、端口、协议和/或服务。</p>
+<p>UBTU-20-010408 - Ubuntu操作系统必须阻止直接登录root帐户。</p>
+<p>UBTU-20-010411 - Ubuntu 操作系统必须在所有公共目录上设置粘滞位，以防止通过共享系统资源传输未经授权和意外的信息。</p>
+<p>UBTU-20-010412 - Ubuntu 操作系统必须配置为使用 TCP syncookie。</p>
+<p>UBTU-20-010413 - Ubuntu 操作系统必须禁用内核核心转储，以便在系统初始化失败、关闭失败或中止失败时无法进入安全状态。</p>
+<p>UBTU-20-010416 - Ubuntu 操作系统必须生成错误消息，提供纠正措施所需的信息，而不泄露可能被对手利用的信息。</p>
+<p>UBTU-20-010417 - Ubuntu 操作系统必须将 /var/log 目录配置为 syslog 所属组。</p>
+<p>UBTU-20-010418 - Ubuntu 操作系统必须将 /var/log 目录配置为 root 所有。</p>
+<p>UBTU-20-010419 - Ubuntu 操作系统必须将 /var/log 目录配置为模式“0755”或较宽松。</p>
+<p>UBTU-20-010420 - Ubuntu 操作系统必须将 /var/log/syslog 文件配置为由 adm 组拥有。</p>
+<p>UBTU-20-010421 - Ubuntu 操作系统必须将 /var/log/syslog 文件配置为 syslog 所有。</p>
+<p>UBTU-20-010422 - Ubuntu 操作系统必须使用 0640 或更低的许可模式配置 /var/log/syslog 文件。</p>
+<p>UBTU-20-010423 - Ubuntu 操作系统必须具有包含设置为 0755 或更宽松模式的系统命令的目录。</p>
+<p>UBTU-20-010424 - Ubuntu 操作系统必须具有包含 root 拥有的系统命令的目录。</p>
+<p>UBTU-20-010425 - Ubuntu 操作系统必须具有包含 root 拥有的系统命令组的目录。</p>
+<p>UBTU-20-010426 - Ubuntu 操作系统库文件的许可模式必须为 0755 或更低。</p>
+<p>UBTU-20-010427 - Ubuntu 操作系统库目录必须具有 0755 或更低的许可模式。</p>
+<p>UBTU-20-010428 - Ubuntu 操作系统库文件必须由root 拥有。</p>
+<p>UBTU-20-010429 - Ubuntu 操作系统库目录必须由 root 拥有。</p>
+<p>UBTU-20-010430 - Ubuntu 操作系统库文件必须由 root 或系统帐户归组所有。</p>
+<p>UBTU-20-010431 - Ubuntu 操作系统库目录必须由 root 归组所有。</p>
+<p>UBTU-20-010432 - Ubuntu 操作系统必须配置为保留故障事件的日志记录。</p>
+<p>UBTU-20-010433 - Ubuntu 操作系统必须安装应用程序防火墙才能控制远程访问方法。</p>
+<p>UBTU-20-010434 - Ubuntu 操作系统必须启用并运行简单防火墙 (ufw)。</p>
+<p>UBTU-20-010438 - 必须配置 Ubuntu 操作系统的 Advance Package Tool (APT)，以防止在未验证补丁、服务包、设备驱动程序或 Ubuntu 操作系统组件是否已使用组织认可和批准的证书进行数字签名的情况下安装这些补丁、服务包、设备驱动程序或 Ubuntu 操作系统组件。</p>
+<p>UBTU-20-010439 - Ubuntu 操作系统必须配置为使用 AppArmor。</p>
+<p>UBTU-20-010448 - Ubuntu 操作系统必须实现地址空间布局随机化，以保护其内存免受未经授权的代码执行。</p>
+<p>UBTU-20-010449 - 必须配置 Ubuntu 操作系统，以便 Advance Package Tool (APT) 在安装更新版本后删除所有软件组件。</p>
+<p>UBTU-20-010450 - Ubuntu 操作系统必须使用文件完整性工具来验证所有安全功能的正确运行。</p>
+<p>UBTU-20-010451 - 如果基线配置被未经授权的方式更改，Ubuntu操作系统必须通知指定人员。当发现基线配置发生更改或任何安全功能运行异常时，文件完整性工具必须通知系统管理员。</p>
+<p>UBTU-20-010453 - Ubuntu 操作系统必须在登录时显示上次成功登录帐户的日期和时间。</p>
+<p>UBTU-20-010454 - Ubuntu 操作系统必须启用应用程序防火墙。</p>
+<p>UBTU-20-010456 - Ubuntu 操作系统必须将系统命令设置为 0755 或更宽松的模式。</p>
+<p>UBTU-20-010457 - Ubuntu 操作系统必须具有 root 或系统帐户拥有的系统命令。</p>
+<p>UBTU-20-010458 - Ubuntu 操作系统必须具有 root 或系统帐户拥有的系统命令组。</p>
+<p>UBTU-20-010460 - Ubuntu 操作系统必须禁用 x86 [Ctrl+Alt+Delete] 组合键。</p>
+<p>UBTU-20-010462 - Ubuntu 操作系统不得将帐户配置为空白或空密码。</p>
+<p>UBTU-20-010463 - Ubuntu 操作系统不得允许使用空白或空密码配置的帐户。</p>
+<p>UBTU-20-010461 - Ubuntu 操作系统必须禁用通用串行总线 (USB) 大容量存储驱动程序的自动挂载。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-02-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/02/veeam-hardened-ubuntu/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F02%2Fveeam-hardened-ubuntu%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F02%2Fveeam-hardened-ubuntu%2F&amp;text=Ubuntu%E7%B3%BB%E7%BB%9F%E7%94%A8%E4%BA%8EVeeam%E5%8A%A0%E5%9B%BA%E5%AD%98%E5%82%A8%E5%BA%93%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F02%252Fveeam-hardened-ubuntu%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F02%252Fveeam-hardened-ubuntu%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2023/12/mysql-backup-and-restore/" class="prev" rel="prev" title="VBR备份和恢复MySQL最佳实践"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VBR备份和恢复MySQL最佳实践</a>
+            <a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/" class="next" rel="next" title="一键部署脚本：K3S&#43;vSphere CSI">一键部署脚本：K3S+vSphere CSI<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理 - 虚化人生</title><meta name="Description" content="欢迎访问虚化人生"><meta property="og:url" content="http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-01/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理">
+  <meta property="og:description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-12-02T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="http://192.168.16.79:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://192.168.16.79:1313/logo.png">
+  <meta name="twitter:title" content="VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理">
+  <meta name="twitter:description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-01/" /><link rel="prev" href="http://192.168.16.79:1313/2024/11/veeam-agent-for-linux-nosnap/" /><link rel="next" href="http://192.168.16.79:1313/2024/12/vdp-v12-other-security-features-deep-dive-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/192.168.16.79:1313\/2024\/12\/vdp-v12-other-security-features-deep-dive-01\/"
+        },"image": ["http:\/\/192.168.16.79:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1293 ,
+        "url": "http:\/\/192.168.16.79:1313\/2024\/12\/vdp-v12-other-security-features-deep-dive-01\/","datePublished": "2024-12-02T00:00:00+00:00","dateModified": "2024-12-02T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "http:\/\/192.168.16.79:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-02">2024-12-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1293 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#系列目录">系列目录</a>
+      <ul>
+        <li><a href="#工作原理">工作原理</a></li>
+        <li><a href="#操作步骤">操作步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="系列目录">系列目录</h2>
+<p>数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。</p>
+<ul>
+<li>第一篇：免账户和 SSH 服务管理 Linux 备份代理</li>
+<li>第二篇：使用 gMSA 技术托管 Windows 账号</li>
+<li>第三篇：四眼认证模式：双人控制管理备份系统操作</li>
+<li>第四篇：启用多因子认证（MFA）：加强备份系统账户保护</li>
+<li>第五篇：减少备份中涉及的网络端口</li>
+<li>第六篇：使用 Syslog 将日志托管至 SIEM 系统</li>
+</ul>
+<p>在任何系统中，获取账号权限都是黑客攻击的起点，备份系统也不例外。账号存储和管理存在一定的安全风险，因此在设计和配置系统时，减少不必要的账号自动记忆和保存是保障安全的重要措施。在备份解决方案中，，Veeam Agent for Linux 引入了免账号管理功能，这能够大大增强了系统的安全性。通过这种方式，用户无需将账号信息存储在系统中，从而有效降低了潜在的安全漏洞和数据泄露的风险。这种免账号管理机制不仅提升了备份的安全防护等级，还简化了管理员的管理流程，对于特殊的系统还能避免使用 SSH 管理协议，使得整体系统更加安全可靠。</p>
+<p>另外，对于堡垒机托管 root 密码的环境，这种部署方式也能适应不断变化的账号密码，避免来备份系统中修改存放的密码。</p>
+<h3 id="工作原理">工作原理</h3>
+<p>在部署 Veeam Agent for Linux 前，管理员先到 Linux 机器上，预先安装 Veeam 的部署服务包和临时证书，有了这个服务包后，当 VBR 发起 Agent 推送/管理操作时，VBR 会检测到 Linux 系统上的这个组件，和这个组件建立连接后，检查必要的证书，如果是临时证书，那么 VBR 会下发正式证书替换当前的临时证书。在这之后，VBR 都会用这个有效证书和 Linux 机器通讯，管理和安装相关的 Agent 组件。这个过程完全不需要用到在备份服务器上输入 Linux 机器的管理员用户名和密码。</p>
+<h3 id="操作步骤">操作步骤</h3>
+<p>接下来，就跟着我一步一步来看下怎么使用这个功能。</p>
+<ol>
+<li>首先需要从 VBR 上导出一下这个预安装的软件包和临时证书，导出需要用到以下 powershell 命令：</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Generate-VBRBackupServerDeployerKit</span> <span class="n">-ExportPath</span> <span class="s2">&#34;C:\Users\Administrator\Documents&#34;</span></span></span></code></pre></div></div>
+<p>打开 VBR 服务器左上角三条横线的汉堡图标，找到 Console 菜单下的 Powershell，输入以上命令，就能获取到这份 Deployer Kit。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/01/E6DBGaJICS3oOXn.png"
+        data-srcset="https://s2.loli.net/2024/12/01/E6DBGaJICS3oOXn.png, https://s2.loli.net/2024/12/01/E6DBGaJICS3oOXn.png 1.5x, https://s2.loli.net/2024/12/01/E6DBGaJICS3oOXn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/01/E6DBGaJICS3oOXn.png"
+        title="Xnip2024-12-01_17-08-32" /></p>
+<p>到导出的目录下，可以看到以下文件：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/01/qV6faYzIAFTPKhn.png"
+        data-srcset="https://s2.loli.net/2024/12/01/qV6faYzIAFTPKhn.png, https://s2.loli.net/2024/12/01/qV6faYzIAFTPKhn.png 1.5x, https://s2.loli.net/2024/12/01/qV6faYzIAFTPKhn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/01/qV6faYzIAFTPKhn.png"
+        title="Xnip2024-12-01_17-10-38" /></p>
+<p>其中，rpm 包是用于 redhat 系的安装包，而 deb 则是 debian 系的安装包。根据不同系统，需要拷贝 client-cert.pem、server-cert.p12 和一个 rpm 或 deb 软件包到目标的 Linux 的机器上。</p>
+<ol start="2">
+<li>运行命令安装 rpm 包：</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install veeamdeployment-12.2.0.334-1.x86_64.rpm</span></span></code></pre></div></div>
+<ol start="3">
+<li>接着运行命令安装证书：</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/veeam/deployment/veeamdeploymentsvc --install-server-certificate server-cert.p12
+</span></span><span class="line"><span class="cl">/opt/veeam/deployment/veeamdeploymentsvc --install-certificate client-cert.pem
+</span></span><span class="line"><span class="cl">/opt/veeam/deployment/veeamdeploymentsvc --restart </span></span></code></pre></div></div>
+<ol start="4">
+<li>回到 VBR 控制台，创建保护组，在保护组的创建向导中，添加 Linux 主机时，选择<code>Connect using certificate-based authentication</code>，添加完可以使用<code>Test Now</code>按钮测试可连接性。此时，使用<code>certificate-base authentication</code>模式时，VBR 将不再需要任何的 ssh 服务来部署 Veeam Agent for Linux。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/01/35JDuQFcG4Naneh.png"
+        data-srcset="https://s2.loli.net/2024/12/01/35JDuQFcG4Naneh.png, https://s2.loli.net/2024/12/01/35JDuQFcG4Naneh.png 1.5x, https://s2.loli.net/2024/12/01/35JDuQFcG4Naneh.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/01/35JDuQFcG4Naneh.png"
+        title="Xnip2024-12-01_17-22-34" /></p>
+<ol start="5">
+<li>一切正常后，就可以安装正常方式完成 Protection Group 的创建，推送 Agent 了。推送过程中，VBR 将会更新目标服务器上的临时证书，将它更新成正式的通讯证书，并安装 Transport service。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/01/P2dLmMn6aBKoUTE.png"
+        data-srcset="https://s2.loli.net/2024/12/01/P2dLmMn6aBKoUTE.png, https://s2.loli.net/2024/12/01/P2dLmMn6aBKoUTE.png 1.5x, https://s2.loli.net/2024/12/01/P2dLmMn6aBKoUTE.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/01/P2dLmMn6aBKoUTE.png"
+        title="Xnip2024-12-01_19-19-23" /></p>
+<p>以上就是关于 Linux Agent 管理的安全小技巧，希望对您的 IT 系统的安全有帮助，下一期我将带大家来看看 Windows 系统该如何使用免密码的管理方式。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-12-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2024/12/vdp-v12-other-security-features-deep-dive-01/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F12%2Fvdp-v12-other-security-features-deep-dive-01%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F192.168.16.79%3A1313%2F2024%2F12%2Fvdp-v12-other-security-features-deep-dive-01%2F&amp;text=VDP&#43;%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89&#43;-&#43;%E5%85%8D%E8%B4%A6%E6%88%B7%E5%92%8C&#43;SSH&#43;%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86&#43;Linux&#43;%E5%A4%87%E4%BB%BD%E4%BB%A3%E7%90%86" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F12%252Fvdp-v12-other-security-features-deep-dive-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=http%253A%252F%252F192.168.16.79%253A1313%252F2024%252F12%252Fvdp-v12-other-security-features-deep-dive-01%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2024/11/veeam-agent-for-linux-nosnap/" class="prev" rel="prev" title="使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>使用无快照模块的 Veeam Agent for Linux 备份各种魔改 Linux</a>
+            <a href="/2024/12/vdp-v12-other-security-features-deep-dive-02/" class="next" rel="next" title="VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号">VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>
