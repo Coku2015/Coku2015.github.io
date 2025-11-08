@@ -9,8 +9,15 @@
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
-    <lastBuildDate>Thu, 25 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
+      <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</guid>
+      <description>&lt;p&gt;v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
       <link>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</link>

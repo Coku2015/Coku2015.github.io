@@ -12,10 +12,24 @@
     <lastBuildDate>Fri, 07 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Backup, Security, Veeam</title>
-      <link>https://blog.backupnext.cloud/tags/Backup-Security-Veeam/</link>
+      <title>Backup</title>
+      <link>https://blog.backupnext.cloud/tags/backup/</link>
       <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Backup-Security-Veeam/</guid>
+      <guid>https://blog.backupnext.cloud/tags/backup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Security</title>
+      <link>https://blog.backupnext.cloud/tags/Security/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/tags/Security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Veeam</title>
+      <link>https://blog.backupnext.cloud/tags/Veeam/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/tags/Veeam/</guid>
       <description></description>
     </item>
     <item>
@@ -58,20 +72,6 @@
       <link>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</link>
       <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
       <guid>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Backup</title>
-      <link>https://blog.backupnext.cloud/tags/backup/</link>
-      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/backup/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Security</title>
-      <link>https://blog.backupnext.cloud/tags/Security/</link>
-      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Security/</guid>
       <description></description>
     </item>
     <item>
