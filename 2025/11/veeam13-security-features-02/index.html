@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶 - 虚化人生</title><meta name="description" content="v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。"><meta property="og:url" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶">
+  <meta property="og:description" content="v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-07T00:00:00+00:00">
+    <meta property="article:tag" content="Backup, Security, Veeam">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/featured-image.jpeg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/featured-image.jpeg">
+  <meta name="twitter:title" content="V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶">
+  <meta name="twitter:description" content="v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/" /><link rel="prev" href="https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam13-security-features-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security, Veeam","wordcount":  1773 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam13-security-features-02\/","datePublished": "2025-11-07T00:00:00+00:00","dateModified": "2025-11-07T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <button type="button" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><button type="button" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </button></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <button type="button" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <button type="button" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </button>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><button type="button" class="menu-item theme-switch" title="切换主题">
+                        <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                    </button></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-07">2025-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1773 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#v12-检测能力回顾检测与响应的分离">v12 检测能力回顾：检测与响应的分离</a></li>
+    <li><a href="#v13-主动响应机制从检测到自动防护">V13 主动响应机制：从检测到自动防护</a>
+      <ul>
+        <li><a href="#proactive-investigation加强的威胁验证手段">Proactive investigation：加强的威胁验证手段</a></li>
+      </ul>
+    </li>
+    <li><a href="#跨平台统一防护linux-和云环境不再是被遗忘的角落">跨平台统一防护：Linux 和云环境不再是被遗忘的角落</a>
+      <ul>
+        <li><a href="#linux-环境的全面支持">Linux 环境的全面支持</a></li>
+        <li><a href="#云端备份的安全防护">云端备份的安全防护</a></li>
+        <li><a href="#linux-挂载服务器的杀毒集成">Linux 挂载服务器的杀毒集成</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结与建议">总结与建议</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。</p>
+<h2 id="v12-检测能力回顾检测与响应的分离">v12 检测能力回顾：检测与响应的分离</h2>
+<p>在 v12 时代，Veeam 的恶意软件检测主要依赖两种机制：</p>
+<ol>
+<li><strong>Inline Entropy Scan</strong> - 备份过程中实时分析数据块的熵值变化，检测加密行为</li>
+<li><strong>Index Scan</strong> - 通过文件系统索引分析异常行为模式</li>
+</ol>
+<p>这两个功能的特点是检测归检测，处理归处理 - 系统能够实时检测威胁，但响应过程需要人工干预。在 v12 版本的实际使用中，这种机制存在几个明显的局限性：</p>
+<ul>
+<li><strong>响应自动化程度低</strong>：检测到可疑活动后主要依赖管理员手动处理</li>
+<li><strong>平台支持有限</strong>：检测能力主要集中在 Windows 环境</li>
+<li><strong>深度分析不足</strong>：检测到威胁后缺乏进一步的威胁分析能力</li>
+</ul>
+<p>v13 在这一检测能力上，我认为有了长足的进步，开始从&quot;检测&quot;向&quot;智能响应&quot;的进化。</p>
+<h2 id="v13-主动响应机制从检测到自动防护">V13 主动响应机制：从检测到自动防护</h2>
+<h3 id="proactive-investigation加强的威胁验证手段">Proactive investigation：加强的威胁验证手段</h3>
+<p>v13 最重要的改进是引入了<strong>主动备份扫描</strong>机制。这个功能的核心思路是：一旦在备份过程中检测到可疑活动，系统会立即触发更深入的签名扫描，而不是等待用户人工做其他判断。</p>
+<p><strong>软件中的设置：</strong></p>
+<ol>
+<li>
+<p>打开 VBR 控制台，进入左上角 Hamburger 菜单 →  <code>Malware Detection Setting</code></p>
+</li>
+<li>
+<p>在原有的 <code>Signature Detection</code> 设置中，v13 新增了 <code>Proactive investigation</code> 选项：</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/09/HTm2KNUDfZpt341.png"
+        data-srcset="https://s2.loli.net/2025/11/09/HTm2KNUDfZpt341.png, https://s2.loli.net/2025/11/09/HTm2KNUDfZpt341.png 1.5x, https://s2.loli.net/2025/11/09/HTm2KNUDfZpt341.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/09/HTm2KNUDfZpt341.png"
+        title="Signature Detection" /></p>
+<p>第一个复选框为启用主动扫描机制，第二个选项则进一步处理，它允许系统根据扫描结果<strong>自动解决恶意软件事件</strong>。</p>
+<p><strong>实际使用效果：</strong></p>
+<p>在一个模拟的勒索攻击测试环境中，当备份作业检测到文件被大规模加密时：</p>
+<ul>
+<li><strong>v12 检测到恶意软件</strong>：标记备份为 Suspicious，发送告警，等待管理员处理</li>
+<li><strong>v13 检测到恶意软件</strong>：立即触发签名扫描，确认威胁后直接标记为 Infected 或者没有威胁重新标记为 Clean。</li>
+</ul>
+<p>我在 v12 时，经常听到有客户发现了 Veeam 报告备份存档是 Suspcious 状态后无从下手，不知道咋回事发生了什么，现在有了 v13 的这个选项后，我们可以无需等待，立刻由 Veeam 触发检测，真正找到是否存在问题。</p>
+<h2 id="跨平台统一防护linux-和云环境不再是被遗忘的角落">跨平台统一防护：Linux 和云环境不再是被遗忘的角落</h2>
+<h3 id="linux-环境的全面支持">Linux 环境的全面支持</h3>
+<p>v13 另外一个突破是<strong>恶意软件检测功能在 Linux 平台的全覆盖</strong>，我认为这也是全面支持 Linux 环境的一个重要部分。</p>
+<p><strong>Linux 支持的检测能力：</strong></p>
+<ol>
+<li><strong>可疑文件系统活动分析</strong>- 与 Windows 平台相同的检测逻辑辑</li>
+<li><strong>Veeam Threat Hunter 扫描</strong> - 基于签名的恶意软件检测</li>
+<li><strong>YARA 规则支持</strong> - 自定义威胁检测规则</li>
+</ol>
+<p><strong>实战配置要点：</strong></p>
+<p>对于 Linux 环境的恶意软件检测，需要注意几个特殊配置：</p>
+<ol>
+<li><strong>文件系统选择</strong>：某些文件系统（如 Btrfs、ZFS）的特殊特性可能影响检测准确性</li>
+<li><strong>权限管理</strong>：确保备份代理有足够权限读取所有需要检测的文件</li>
+<li><strong>性能影响</strong>：在资源受限的 Linux 环境中，可能需要调整检测频率</li>
+</ol>
+<p><strong>具体操作步骤：</strong></p>
+<p>对于基于 Agent 的 Linux 备份，恶意软件检测的配置与 Windows 环境基本一致，主要通过 VBR 控制台的 Malware Detection 设置进行全局配置，然后在具体的备份作业中启用相关功能。</p>
+<h3 id="云端备份的安全防护">云端备份的安全防护</h3>
+<p>随着越来越多的用户使用公有云，云环境的安全也变得至关重要。v13 <strong>将恶意软件检测能力扩展到云端备份</strong>：</p>
+<p><strong>支持的云平台：</strong></p>
+<ul>
+<li>Veeam Backup for Microsoft Azure</li>
+<li>Veeam Backup for AWS</li>
+<li>Veeam Backup for Google Cloud</li>
+</ul>
+<p>具体使用和配置，包括支持的能力，基本上和 Linux 都一致，不在赘述。</p>
+<h3 id="linux-挂载服务器的杀毒集成">Linux 挂载服务器的杀毒集成</h3>
+<p>v13 中支持 Linux Server 作为 Mount Server，这可是一个全功能的 Mount Server，在 Windows Mount Server 上的 Secure Restore 和 Security Scan 能力同样扩展到了 Linux Mount Server 上，并且同样支持 Veeam Threat Hunter 进行签名扫描：</p>
+<p><strong>已宣布支持的 Linux 版本的杀毒软件：</strong></p>
+<ul>
+<li><strong>ClamAV</strong> - 开源免费，适合预算有限的环境</li>
+<li><strong>ESET</strong> - 商业解决方案，检测能力强</li>
+<li><strong>Sophos</strong> - 企业级防护，管理界面友好</li>
+</ul>
+<p><strong>配置示例：</strong></p>
+<p>以 ClamAV 为例，需要在 Linux 挂载服务器上安装 ClamAV，然后在 VBR 控制台的 Backup Infrastructure → Mount Servers 中选择相应的 Linux 服务器。使用的时候，从 scan backup 或者 Secure restore 都可以调用到杀毒软件进行扫描。</p>
+<h2 id="总结与建议">总结与建议</h2>
+<p>v13 的恶意软件检测功能是一个质的飞跃，从原来的被动检测进化到了主动防护。在实际部署中，有几点建议：</p>
+<ol>
+<li><strong>循序渐进</strong>：先在测试环境验证所有新功能，再逐步推广到生产环境</li>
+<li><strong>性能监控</strong>：密切监控新功能对备份性能的影响，必要时进行调整</li>
+<li><strong>策略优化</strong>：根据业务特点定制检测策略，避免一刀切的配置</li>
+<li><strong>定期演练</strong>：定期进行恶意软件检测演练，确保响应流程的有效性</li>
+</ol>
+<p>v13 的这些改进让我们看到了备份系统在整体安全架构中的新定位 - 不再只是数据的被动保护者，而是主动的安全防线参与者。在实际使用中，合理配置这些功能，能够显著提升组织应对勒索攻击等现代威胁的能力。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-11-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/11/veeam13-security-features-02/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam13-security-features-02%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam13-security-features-02%2F&amp;text=V13&#43;%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%EF%BC%9A%E4%BB%8E%E8%A2%AB%E5%8A%A8%E9%98%B2%E6%8A%A4%E5%88%B0%E4%B8%BB%E5%8A%A8%E5%93%8D%E5%BA%94%E7%9A%84%E5%AE%9E%E6%88%98%E8%BF%9B%E9%98%B6" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam13-security-features-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam13-security-features-02%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a>,&nbsp;</section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/09/veeam13-security-features-01/" class="prev" rel="prev" title="让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>让 VBR 登陆更安全：v13 版本 SAML + Azure EntraID 集成全攻略</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

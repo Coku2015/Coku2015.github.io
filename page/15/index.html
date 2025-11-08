@@ -114,37 +114,52 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2018/03/surebackup/">备份存档能不能被恢复，这件事情上只有真正做过才知道。</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-03-05">2018-03-05</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><p>Veeam 有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        title="1blqUA.png" /></p>
+<p>该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。</p></div><div class="post-footer">
+        <a href="/2018/03/surebackup/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2018/01/centrilized-agent-management/">新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-01-01">2018-01-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><h1 id="vbr-中的-agent-集中管理">VBR 中的 Agent 集中管理</h1>
 <p>本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp; Cloud Infrastructure 下。</p></div><div class="post-footer">
         <a href="/2018/01/centrilized-agent-management/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Agent/">Agent</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2017/08/esxi-in-m4800/">改造 HOME LAB 之把 ESXi 装进 M6400</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-08-27">2017-08-27</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Categories</a></span></div><div class="content"><p>上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。</p></div><div class="post-footer">
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-08-27">2017-08-27</time></span></div><div class="content"><p>上周 VeeamON 上海站，我最大的收获可能就是看到同事的 LAB 环境了，很诧异的发现，他的笔记本竟然装上 ESXi 了，按照我以往的认知，笔记本上安装 ESXi 会是一件挺麻烦的事情，特别是找驱动。不得不感叹，同学们勇于尝试的精神，这里的 Key Point 是使用 Dell 定制的 ESXi ISO 来安装，这样什么驱动都不需要考虑，硬盘、网卡全部含在内，一键安装一键启动，实在太方便了。遂回家决定在周末也来一次改造。</p></div><div class="post-footer">
         <a href="/2017/08/esxi-in-m4800/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2017/08/speed-up-02/">加速！加速！加速！（二）</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-08-07">2017-08-07</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><p>上一期，我们讨论了 <a href="https://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483745&amp;idx=1&amp;sn=c9b28d97eec1426dece66490a9655b43&amp;chksm=fdf0a7b4ca872ea207c5d96dfdac2646fdc1b8a507b5e85cd267fdd720d3dff7d0b5e546680b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">备份引擎的加速</a>，这对尽可能快的完成备份提升 RPO 有着极其重要的意义。然而除了这个数据传输引擎之外，在备份时还有一个加速器，那就是 vSphere 通讯加速技术。</p></div><div class="post-footer">
         <a href="/2017/08/speed-up-02/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2017/08/speed-up-01/">加速！加速！加速！（一）</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-08-01">2017-08-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><p>一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论 Veeam 的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引擎在备份软件中不仅仅是帮助了实现备份功能，更是 Veeam 去帮助客户实现 IT 可用性的重要保障</p></div><div class="post-footer">
         <a href="/2017/08/speed-up-01/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2017/07/agentless-backup/">无代理备份和应用程序感知</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-07-23">2017-07-23</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><p>虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。</p></div><div class="post-footer">
         <a href="/2017/07/agentless-backup/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2017/07/direct-nfs-access/">Veeam 黑科技之 Direct NFS Access</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-07-04">2017-07-04</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div><div class="content"><p>最近这些天，碰到不少在 VMware 环境中使用 NFS 作为 datastore 的用户，发现 NFS 的场景是越来越多了。在以前，可能仅仅会是部分 NetApp 的用户去使用 NFS 作为 VMware 的 datastore，而现在，随着各种超融合技术的兴起，市场上几个主流的超融合平台，比如 Nutanix 和 Cisco HyperFlex 在为 VMware 提供存储服务的时候都采用了 NFS 的方式去提供 datastore。</p></div><div class="post-footer">
-        <a href="/2017/07/direct-nfs-access/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><ul class="pagination"><li class="page-item ">
+</article>
+<ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
                     </span>
@@ -165,6 +180,10 @@
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/16/">16</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/17/">17</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">

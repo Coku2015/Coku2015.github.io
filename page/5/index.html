@@ -114,11 +114,20 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2023/11/kubernetes-pvc-instant-recovery-02/">极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-05">2023-11-05</time></span></div><div class="content"><p>上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。</p>
+<h2 id="k10-安装和配置">K10 安装和配置</h2>
+<p>首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：</p></div><div class="post-footer">
+        <a href="/2023/11/kubernetes-pvc-instant-recovery-02/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/11/kubernetes-pvc-instant-recovery-01/">极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-02">2023-11-02</time></span></div><div class="content"><p>还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。</p></div><div class="post-footer">
         <a href="/2023/11/kubernetes-pvc-instant-recovery-01/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/10/vro-v6-guide-09/">VAO 基础入门（九） -  文档模板解析</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-10-31">2023-10-31</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
 <ul>
@@ -136,7 +145,8 @@
 <p>本系列的最后一篇，我来介绍一下 VAO 的文档系统。</p></div><div class="post-footer">
         <a href="/2023/10/vro-v6-guide-09/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/06/vro-v6-guide-08/">VRO 基础入门（八） -  Plan Step · 下篇</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-16">2023-06-16</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
 <ul>
@@ -154,7 +164,8 @@
 <p>上一篇，我介绍了 Plan Step 的基本配置和使用，今天我来详细分解下在 Plan Step 中的自定义脚本，我会通过一个脚本使用例子，来带大家使用一下自定义脚本。</p></div><div class="post-footer">
         <a href="/2023/06/vro-v6-guide-08/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/06/vro-v6-guide-07/">VRO 基础入门（七） -  Plan Step · 上篇</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-14">2023-06-14</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
 <ul>
@@ -172,7 +183,8 @@
 <p>在之前的帖子中，我们详细讨论了 Orchestration Plan 的创建过程。在每个 Orchestration Plan 中除了基础的这些创建步骤之外，这个系统重最重要的是它的自动化流程，这个自动化流程是通过 Powershell 脚本来实现。在 VRO 中，这些 Powershell 的自动化脚本被封装在 Plan Step 中，由 VRO 的 Orchestration Plan 来调度执行和传递参数。</p></div><div class="post-footer">
         <a href="/2023/06/vro-v6-guide-07/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/06/vro-v6-guide-06/">VRO 基础入门（六）-  数据实验室</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-07">2023-06-07</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
 <ul>
@@ -190,25 +202,8 @@
 <p>Veeam 的产品怎么可以少了数据实验室（Datalab)，在 VRO 中，加强版的 Datalab 会比 VBR 中的功能更强大。今天我们就来说说这个加强版的数据实验室。</p></div><div class="post-footer">
         <a href="/2023/06/vro-v6-guide-06/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/06/vro-v6-guide-05/">VRO 基础入门（六） -  成功灾备计划的第一步</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-01">2023-06-01</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
-</ul>
-<p>通过之前的配置，我们的 VRO 就可以开始正常使用了，我们可以用 Administrator 或者 Plan Authors 角色的用户登入到 VRO 控制台。在控制台中，可以访问 VRO 定制的仪表盘，包括灾备的执行计划（Plan）、灾备的状态检查（Readiness Check）、灾备测试情况（Datalab Testing）以及灾备的 SLA（RPO 和 RTO 情况）。</p></div><div class="post-footer">
-        <a href="/2023/06/vro-v6-guide-05/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
-</article><ul class="pagination"><li class="page-item ">
+</article>
+<ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
                     </span>
@@ -238,7 +233,7 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/16/">16</a>
+                        <a href="/page/17/">17</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">

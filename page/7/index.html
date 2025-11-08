@@ -114,6 +114,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2022/07/nested-tkgs-lab-automation-script/">虚拟化嵌套 TKGs 实验环境自动化脚本</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-07-03">2022-07-03</time></span></div><div class="content"><p>学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。</p></div><div class="post-footer">
+        <a href="/2022/07/nested-tkgs-lab-automation-script/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Tanzu/">Tanzu</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2022/03/pvc-and-fcd/">头等舱磁盘（First Class Disks）详解</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-03-23">2022-03-23</time></span></div><div class="content"><p>在 Veeam 推出 v11 版本后，细心的朋友也许注意到了在做即时磁盘恢复时，有下面这个选项：</p>
 <p><a href="https://imgtu.com/i/q3e6I0" target="_blank" rel="noopener noreffer "><img
@@ -127,41 +133,37 @@
 <p>这是在 6.5 以后的 vSphere 中，VMware 引入了一种全新的磁盘格式，叫”头等舱磁盘（First Class Disks）“。这个名字足够霸气，而实际上，这类虚拟磁盘也确实有着自己独特的”特权“。今天我就来和大家详解下这类 FCD。</p></div><div class="post-footer">
         <a href="/2022/03/pvc-and-fcd/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">Tanzu Community Edition（TCE）试玩</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-03-19">2022-03-19</time></span></div><div class="content"><p>最近刷新了下 Homelab，开始在 Homelab 中玩玩 Tanzu。去年 VMware 开源了 Tanzu Community Edition，正好利用这个机会装上配上 k10 和 VBR 玩一把。</p>
 <h2 id="硬件部分">硬件部分</h2>
 <p>我的环境由 2 台机器组成，一台是服役了 6 年多的 Dell Precision M4800，另外一台是新加入的 NUC11 猎豹峡谷。Dell 笔记本纯粹是在这个环境中打酱油的，而猎豹峡谷的配置如下：</p></div><div class="post-footer">
         <a href="/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">vCenter Converter 下架后 p2v 怎么玩</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-02-28">2022-02-28</time></span></div><div class="content"><p>月初，VMware 官网博客发了一则 <a href="https://blogs.vmware.com/vsphere/2022/02/vcenter-converter-unavailable-for-download.html" target="_blank" rel="noopener noreffer ">通告</a>，他们将 vCenter Converter 从 VMware 产品下载清单中移除了，也就是说，我们以后再也无法在 VMware 官网下载到这一产品了。从 VMware 官方的说法是，vCenter Converter 多年没更新，产品有一些安全隐患并且不太稳定。而在我看来，VMware 是将他们最强力的武器给拿下来了。</p></div><div class="post-footer">
         <a href="/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2022/02/veeam-hardened-linux-repository-configurator/">Veeam Hardened Linux Repository Configurator</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-02-25">2022-02-25</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Repository/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Repository</a></span></div><div class="content"><h2 id="脚本用途">脚本用途</h2>
 <p>根据Veeam最佳实践，一键脚本配置Linux系统，操作系统配置完成后，可以回到VBR控制台完成存储库的添加。
 关于手工配置和原理介绍，请参考以下帖子：</p></div><div class="post-footer">
         <a href="/2022/02/veeam-hardened-linux-repository-configurator/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2021/10/veeam-agent-for-linux-installation-deep-dive/">Veeam Agent for Linux 安装深度分析</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-10-12">2021-10-12</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div><div class="content"><h2 id="一组成和作用">一。组成和作用</h2>
 <p>Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：</p></div><div class="post-footer">
         <a href="/2021/10/veeam-agent-for-linux-installation-deep-dive/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2021/07/k10offline-script-2/">Kasten K10 入门系列 05 - K10 安装包下载（2）</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-07-22">2021-07-22</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h2 id="kasten-k10-入门系列目录">Kasten K10 入门系列目录</h2>
-<p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</a></p>
-<p><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 02 - K10 安装</a></p>
-<p><a href="https://blog.backupnext.cloud/2021/05/K10-configuration/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 03 - K10 备份和恢复</a></p>
-<p><a href="https://blog.backupnext.cloud/2021/06/K10offline-script/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 04 - K10 安装包下载</a></p></div><div class="post-footer">
-        <a href="/2021/07/k10offline-script-2/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></div></div>
-</article><ul class="pagination"><li class="page-item ">
+</article>
+<ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
                     </span>
@@ -191,7 +193,7 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/16/">16</a>
+                        <a href="/page/17/">17</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">
