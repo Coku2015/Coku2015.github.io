@@ -208,7 +208,7 @@
 <p>VBR: v12.1</p>
 <h4 id="数据备份---innodb">数据备份 - InnoDB</h4>
 <p>为了模拟在数据不断写入过程中的数据库热备份，我准备了一个Python脚本来每一秒插入一行时间数据。这个table非常简单，如下：</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -225,7 +225,7 @@
 </span></span><span class="line"><span class="cl">+----+------------+----------+
 </span></span><span class="line"><span class="cl"><span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
 <p>Python脚本如下：</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-python">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -265,7 +265,7 @@
         alt="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png"
         title="Xnip2023-12-15_11-27-59" /></p>
 <p>我们来看看恢复后的数据库，数据库成功通过InnoDB的自我恢复模式使用crash recovery恢复。</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
