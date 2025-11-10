@@ -114,6 +114,15 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2023/03/v12update-hidden-key/">VBR v12 中的那些隐藏键</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-03-28">2023-03-28</time></span></div><div class="content"><p>在 VBR v10 的时候，产品中加入了一些隐藏功能，最近 v12 发布后，隐藏按键和功能又多了一些。</p>
+<h3 id="ctrl鼠标右键">[Ctrl]+鼠标右键</h3>
+<h4 id="repair-修复-vacm-文件">Repair 修复 VACM 文件</h4>
+<p>我们知道，v12 更新后几乎所有的数据都能够安全地储存在 Veeam Hardened Repository(VHR) 中，但是对于 Oracle RMAN、SAP Hana 和新推出的 SQL Plugins，他们的 Backup job metadata (VACM) 是无法实现 WORM 功能的。这时候会出现一种情况就是黑客恶意删除了 VACM 文件，造成 VACM 文件丢失。</p></div><div class="post-footer">
+        <a href="/2023/03/v12update-hidden-key/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2022/07/nested-tkgs-lab-automation-script/">虚拟化嵌套 TKGs 实验环境自动化脚本</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-07-03">2022-07-03</time></span></div><div class="content"><p>学习了一段时间 vSphere with Tanzu，发现功能非常强大，但是搭建这个学习环境成本略高。经过一些资料搜索和亲自试验，摸索出一些门道，记录在此篇博客中，方便那些希望学习 vSphere with Tanzu 的朋友快速搭建实验环境。</p></div><div class="post-footer">
         <a href="/2022/07/nested-tkgs-lab-automation-script/">阅读全文</a><div class="post-tags">
@@ -154,13 +163,6 @@
 <p>根据Veeam最佳实践，一键脚本配置Linux系统，操作系统配置完成后，可以回到VBR控制台完成存储库的添加。
 关于手工配置和原理介绍，请参考以下帖子：</p></div><div class="post-footer">
         <a href="/2022/02/veeam-hardened-linux-repository-configurator/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2021/10/veeam-agent-for-linux-installation-deep-dive/">Veeam Agent for Linux 安装深度分析</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-10-12">2021-10-12</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div><div class="content"><h2 id="一组成和作用">一。组成和作用</h2>
-<p>Veeam Agent for Linux（以下简称 VAL）由两部分组成，一个是 Veeam 主程序，另外一个是 Veeamsnap 驱动程序。以 centos/redhat 举例，如果想让 Veeam Agent for Linux 正常工作，一般来说我们需要安装上两个程序，分别是：</p></div><div class="post-footer">
-        <a href="/2021/10/veeam-agent-for-linux-installation-deep-dive/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD/">备份</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

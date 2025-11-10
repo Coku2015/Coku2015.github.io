@@ -114,6 +114,13 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/">VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-04-29">2024-04-29</time></span></div><div class="content"><p>接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。</p>
+<p>VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。</p></div><div class="post-footer">
+        <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/">VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-04-28">2024-04-28</time></span></div><div class="content"><p>去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。</p></div><div class="post-footer">
         <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/">阅读全文</a><div class="post-tags">
@@ -142,25 +149,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-12-07">2023-12-07</time></span></div><div class="content"><p>就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。</p></div><div class="post-footer">
         <a href="/2023/12/vdp23h2-update/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VDP/">VDP</a>,&nbsp;<a href="/tags/VBR/">VBR</a>,&nbsp;<a href="/tags/backup/">Backup</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/11/vro-v6-guide-10/">VRO 基础入门（十） -  使用 VRO 搭配 K10 实现全自动容器灾备</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-10">2023-11-10</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
-</ul>
-<p>本系列的最后一篇，我想通过一个实例来带大家一步一步做一做，用VRO实现K10的全自动容器灾备。</p></div><div class="post-footer">
-        <a href="/2023/11/vro-v6-guide-10/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

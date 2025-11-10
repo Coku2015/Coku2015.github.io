@@ -9,8 +9,15 @@
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
-    <lastBuildDate>Fri, 07 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
+      <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>
+      <pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
+      <description>&lt;p&gt;我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
       <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>

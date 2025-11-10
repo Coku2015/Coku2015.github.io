@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南 - 虚化人生</title><meta name="description" content="我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 …"><meta property="og:url" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/">
+  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:title" content="Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南">
+  <meta property="og:description" content="我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-10T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="article:tag" content="Veeam">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/featured-image.png">
+  <meta name="twitter:title" content="Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南">
+  <meta name="twitter:description" content="我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。">
+<meta name="application-name" content="虚化人生">
+<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/" /><link rel="prev" href="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam13-security-features-03\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/veeam13-security-features-03\/featured-image.png"],"genre": "posts","keywords": "Backup, Security, Veeam","wordcount":  1723 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam13-security-features-03\/","datePublished": "2025-11-10T00:00:00+00:00","dateModified": "2025-11-10T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+            "@type": "Organization",
+            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="虚化人生">虚化人生</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="虚化人生">虚化人生</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-10">2025-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1723 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/11/veeam13-security-features-03/featured-image.png"
+        data-srcset="/2025/11/veeam13-security-features-03/featured-image.png, /2025/11/veeam13-security-features-03/featured-image.png 1.5x, /2025/11/veeam13-security-features-03/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/11/veeam13-security-features-03/featured-image.png"
+        title="/2025/11/veeam13-security-features-03/featured-image.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#认识-ransomwarelive专业的勒索软件威胁情报平台">认识 Ransomware.live：专业的勒索软件威胁情报平台</a></li>
+    <li><a href="#pro-api自动化-yara-规则获取">Pro API：自动化 YARA 规则获取</a>
+      <ul>
+        <li><a href="#完整自动化下载脚本">完整自动化下载脚本</a></li>
+        <li><a href="#脚本使用方法">脚本使用方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#veeam-集成部署方法">Veeam 集成部署方法</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。</p>
+<h2 id="认识-ransomwarelive专业的勒索软件威胁情报平台">认识 Ransomware.live：专业的勒索软件威胁情报平台</h2>
+<p>Ransomware.live 是由安全专家 Julien Mousqueton 维护的开源威胁情报平台，专注于勒索软件攻击的实时监控和分析。平台跟踪 297 个攻击团伙，记录超过 23,126 个受害者案例，最核心的价值是提供了 62 个主流勒索软件团伙的专业 YARA 规则库。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/JmvzxfRylTEIN1X.png"
+        data-srcset="https://s2.loli.net/2025/11/10/JmvzxfRylTEIN1X.png, https://s2.loli.net/2025/11/10/JmvzxfRylTEIN1X.png 1.5x, https://s2.loli.net/2025/11/10/JmvzxfRylTEIN1X.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/JmvzxfRylTEIN1X.png"
+        title="Xnip2025-11-10_21-36-18" /></p>
+<p><strong>平台核心功能：</strong></p>
+<ul>
+<li><strong>实时攻击监控</strong>- 跟踪全球勒索软件攻击活动，显示 297 个攻击团伙、23,126+ 个受害者案例例</li>
+<li><strong>攻击统计</strong> - 按时间、地域、行业维度分析勒索软件趋势</li>
+<li><strong>团伙档案</strong> - 详细记录各个勒索软件团伙的攻击特征和历史活动</li>
+<li><strong>受害者数据库</strong> - 可搜索的受害者信息，便于威胁关联分析</li>
+<li><strong>YARA规则库</strong> - 按勒索软件团伙分类的检测规则，支持直接下载</li>
+</ul>
+<p>这些规则由安全专家基于真实攻击样本编写，质量远超通用检测规则。Ransomware.live 的 YARA 页面能够查看并手工获取相关的 YARA 规则。有需要的用户可以按需查找相关规则。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/oHRtXxlOLDmZcbT.png"
+        data-srcset="https://s2.loli.net/2025/11/10/oHRtXxlOLDmZcbT.png, https://s2.loli.net/2025/11/10/oHRtXxlOLDmZcbT.png 1.5x, https://s2.loli.net/2025/11/10/oHRtXxlOLDmZcbT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/oHRtXxlOLDmZcbT.png"
+        title="Xnip2025-11-10_21-41-54" /></p>
+<p>除了手工获取之外，平台还提供 Pro API 服务，对于需要自动化批量下载的 Veeam 用户来说，Pro 版本的结构化 API 接口服务特别实用，我们只需要通过 Get your free API Key 服务获取相关下载 API key 即可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/QBj3stTaEOglyvN.png"
+        data-srcset="https://s2.loli.net/2025/11/10/QBj3stTaEOglyvN.png, https://s2.loli.net/2025/11/10/QBj3stTaEOglyvN.png 1.5x, https://s2.loli.net/2025/11/10/QBj3stTaEOglyvN.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/QBj3stTaEOglyvN.png"
+        title="Xnip2025-11-10_21-43-37" /></p>
+<h2 id="pro-api自动化-yara-规则获取">Pro API：自动化 YARA 规则获取</h2>
+<p>对于有规则需要离线使用的用户，我为大家提供了一个一键下载所有规则的脚本，专门为 Veeam 用户设计，能够自动下载所有 62 个团伙的 YARA 规则文件。脚本使用 jq 解析 JSON 响应，自动处理文件命名和验证，还包含详细的下载日志。</p>
+<h3 id="完整自动化下载脚本">完整自动化下载脚本</h3>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Ransomware.live YARA规则全自动下载脚本</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -e
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -o pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 用户配置</span>
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_DIR</span><span class="o">=</span><span class="s2">&#34;./yara_rules&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">API_KEY</span><span class="o">=</span><span class="s2">&#34;your-api-key-here&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">API_BASE</span><span class="o">=</span><span class="s2">&#34;https://api-pro.ransomware.live&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建目录</span>
+</span></span><span class="line"><span class="cl">mkdir -p <span class="s2">&#34;</span><span class="nv">$TARGET_DIR</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">TARGET_DIR</span><span class="si">}</span><span class="s2">/download_</span><span class="k">$(</span>date +%Y%m%d_%H%M%S<span class="k">)</span><span class="s2">.log&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">log<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="k">$(</span>date <span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span><span class="s2">] </span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="p">|</span> tee -a <span class="s2">&#34;</span><span class="nv">$LOG_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查工具</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nb">command</span> -v jq &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;需要安装jq: sudo apt-get install jq 或 brew install jq&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">log <span class="s2">&#34;开始下载Ransomware.live YARA规则...&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取所有团伙YARA规则</span>
+</span></span><span class="line"><span class="cl"><span class="nv">API_RESPONSE</span><span class="o">=</span><span class="k">$(</span>curl -s -H <span class="s2">&#34;X-API-KEY: </span><span class="nv">$API_KEY</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$API_BASE</span><span class="s2">/yara&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$API_RESPONSE</span><span class="s2">&#34;</span> <span class="p">|</span> jq -e <span class="s1">&#39;.groups&#39;</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    log <span class="s2">&#34;API响应异常，请检查API密钥&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 批量下载规则</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$API_RESPONSE</span><span class="s2">&#34;</span> <span class="p">|</span> jq -r <span class="s1">&#39;.groups[].group&#39;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> -r group<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$group</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        log <span class="s2">&#34;下载: </span><span class="nv">$group</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">YARA_RESPONSE</span><span class="o">=</span><span class="k">$(</span>curl -s -H <span class="s2">&#34;X-API-KEY: </span><span class="nv">$API_KEY</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$API_BASE</span><span class="s2">/yara/</span><span class="nv">$group</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$YARA_RESPONSE</span><span class="s2">&#34;</span> <span class="p">|</span> jq -e <span class="s1">&#39;.rules[0]&#39;</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">YARA_CONTENT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$YARA_RESPONSE</span><span class="s2">&#34;</span> <span class="p">|</span> jq -r <span class="s1">&#39;.rules[0].content&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">FILENAME</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$YARA_RESPONSE</span><span class="s2">&#34;</span> <span class="p">|</span> jq -r <span class="s1">&#39;.rules[0].filename&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$YARA_CONTENT</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$YARA_CONTENT</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;null&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">OUTPUT_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">TARGET_DIR</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">FILENAME</span><span class="k">:-</span><span class="si">${</span><span class="nv">group</span><span class="si">}</span><span class="p">.yar</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$YARA_CONTENT</span><span class="s2">&#34;</span> &gt; <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">[</span> -s <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> grep -q <span class="s2">&#34;^rule &#34;</span> <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">RULE_COUNT</span><span class="o">=</span><span class="k">$(</span>grep -c <span class="s2">&#34;^rule &#34;</span> <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">                    log <span class="s2">&#34;✓ </span><span class="k">$(</span>basename <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2"> (</span><span class="si">${</span><span class="nv">RULE_COUNT</span><span class="si">}</span><span class="s2">条规则)&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                    log <span class="s2">&#34;✗ 文件无效: </span><span class="nv">$group</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">                    rm -f <span class="s2">&#34;</span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">            <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        sleep 0.5
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">log <span class="s2">&#34;下载完成！规则文件保存在: </span><span class="nv">$TARGET_DIR</span><span class="s2">&#34;</span></span></span></code></pre></div></div>
+<h3 id="脚本使用方法">脚本使用方法</h3>
+<ol>
+<li>
+<p><strong>环境准备</strong></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装必要工具</span>
+</span></span><span class="line"><span class="cl">sudo apt-get install curl jq  <span class="c1"># Ubuntu/Debian</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 或</span>
+</span></span><span class="line"><span class="cl">brew install curl jq            <span class="c1"># macOS</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p><strong>配置脚本</strong></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 修改 TARGET_DIR 为你的目标目录</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改 API_KEY 为你的实际 API 密钥</span>
+</span></span><span class="line"><span class="cl">chmod +x download_yara_rules.sh</span></span></code></pre></div></div>
+</li>
+<li>
+<p><strong>运行脚本</strong></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./download_yara_rules.sh</span></span></code></pre></div></div>
+</li>
+</ol>
+<p><strong>脚本特性：</strong></p>
+<ul>
+<li>一键下载所有 62 个勒索软件团伙的 YARA 规则，如果后续有新的规则更新，本脚本也能同样一键获取相关更新规则。</li>
+<li>自动处理文件命名和格式验证</li>
+<li>详细的下载日志和错误处理</li>
+<li>支持自定义下载目录</li>
+</ul>
+<h2 id="veeam-集成部署方法">Veeam 集成部署方法</h2>
+<p>规则下载完成后，可以通过 VBR console 上传和导入。</p>
+<ol>
+<li>来到 VBR console 中，打开下方的三个点，激活 Files 窗口</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/V4SgK6FYNOTo3uq.png"
+        data-srcset="https://s2.loli.net/2025/11/10/V4SgK6FYNOTo3uq.png, https://s2.loli.net/2025/11/10/V4SgK6FYNOTo3uq.png 1.5x, https://s2.loli.net/2025/11/10/V4SgK6FYNOTo3uq.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/V4SgK6FYNOTo3uq.png"
+        title="Xnip2025-11-10_21-06-36" /></p>
+<ol start="2">
+<li>在 Files 窗口中，能看到当前 Console 所在的 Windows 的文件夹和 VBR Server 的文件夹。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/jYiExvhsGX65PMW.png"
+        data-srcset="https://s2.loli.net/2025/11/10/jYiExvhsGX65PMW.png, https://s2.loli.net/2025/11/10/jYiExvhsGX65PMW.png 1.5x, https://s2.loli.net/2025/11/10/jYiExvhsGX65PMW.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/jYiExvhsGX65PMW.png"
+        title="Xnip2025-11-10_21-08-47" /></p>
+<ol start="3">
+<li>从当前电脑的 YARA 规则存放路径中，选中所有需要拷贝的规则，右键点击 Copy 按钮。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/DOJ7jhWtuH12egS.png"
+        data-srcset="https://s2.loli.net/2025/11/10/DOJ7jhWtuH12egS.png, https://s2.loli.net/2025/11/10/DOJ7jhWtuH12egS.png 1.5x, https://s2.loli.net/2025/11/10/DOJ7jhWtuH12egS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/DOJ7jhWtuH12egS.png"
+        title="Xnip2025-11-10_21-09-13" /></p>
+<ol start="4">
+<li>来到 VBR Server 的 yara_rules 目录，右键菜单选择 Paste 按钮</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/TfDBsL62ptvMOHZ.png"
+        data-srcset="https://s2.loli.net/2025/11/10/TfDBsL62ptvMOHZ.png, https://s2.loli.net/2025/11/10/TfDBsL62ptvMOHZ.png 1.5x, https://s2.loli.net/2025/11/10/TfDBsL62ptvMOHZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/TfDBsL62ptvMOHZ.png"
+        title="Xnip2025-11-10_21-09-39" /></p>
+<ol start="5">
+<li>稍等片刻后，yara 规则文件就会被传输到 vbr 服务器上。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/L1lrcHyehWNQGdm.png"
+        data-srcset="https://s2.loli.net/2025/11/10/L1lrcHyehWNQGdm.png, https://s2.loli.net/2025/11/10/L1lrcHyehWNQGdm.png 1.5x, https://s2.loli.net/2025/11/10/L1lrcHyehWNQGdm.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/L1lrcHyehWNQGdm.png"
+        title="Xnip2025-11-10_21-09-52" /></p>
+<ol start="6">
+<li>找任意一个备份存档，选中 Scan backup 操作，能够在 YARA 下来菜单中实时看到规则名称，选取作为扫描规则即可。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/10/qTkXvl5RDZHfsQ9.png"
+        data-srcset="https://s2.loli.net/2025/11/10/qTkXvl5RDZHfsQ9.png, https://s2.loli.net/2025/11/10/qTkXvl5RDZHfsQ9.png 1.5x, https://s2.loli.net/2025/11/10/qTkXvl5RDZHfsQ9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/10/qTkXvl5RDZHfsQ9.png"
+        title="Xnip2025-11-10_21-11-03" /></p>
+<h2 id="总结">总结</h2>
+<p>Ransomware.live 作为免费开源的威胁情报平台，为 Veeam 用户提供了零成本的 YARA 规则增强方案。目前已包含 62 个专业级勒索软件检测规则、持续更新的威胁情报、再加上自动化下载工具，这套组合让 Veeam v13 的恶意软件检测能力有了质的提升。配合免费的 Pro 版本的 RestAPI 和我的自动下载脚本，能够实现全自动的规则更新。</p>
+<p><strong>实际应用建议：</strong></p>
+<ol>
+<li><strong>定期更新</strong>：建议每周执行一次，保持威胁情报最新</li>
+<li><strong>测试验证</strong>：先在测试环境验证新规则的检测效果</li>
+<li><strong>监控日志</strong>：关注下载成功率和文件有效性，如果有可能，可以进行人工核对</li>
+</ol>
+<p>面对日益复杂的勒索软件威胁，这种免费但专业的威胁情报源值得每个 Veeam 用户关注和使用。通过合理配置 Ransomware.live 的 YARA 规则，可以显著提升 Veeam 环境对勒索软件的检测和防护能力。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-11-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/11/veeam13-security-features-03/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam13-security-features-03%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam13-security-features-03%2F&amp;text=Veeam&#43;YARA&#43;%E6%89%AB%E6%8F%8F%E7%9A%84%E5%85%8D%E8%B4%B9%E8%A7%84%E5%88%99%E5%BA%93&#43;-&#43;Ransomware.live&#43;%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam13-security-features-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam13-security-features-03%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a>,&nbsp;<a href="/tags/Veeam/">Veeam</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/11/veeam13-security-features-02/" class="prev" rel="prev" title="V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

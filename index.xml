@@ -4,9 +4,17 @@
         <link>https://blog.backupnext.cloud/</link>
         <description>欢迎访问虚化人生</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Fri, 07 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
+    <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>
+    <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
+    <description><![CDATA[<p>我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。</p>]]></description>
+</item>
+<item>
     <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
     <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>
     <pubDate>Fri, 07 Nov 2025 00:00:00 &#43;0000</pubDate>
@@ -81,15 +89,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/05/kasten-and-azure-entraid-integration/</guid>
     <description><![CDATA[<p>Kasten 在安全方面提供全面的管理能力，其中很重要的一部分是用户的账号访问管理，使用 Kasten 的用户可以灵活的借助 OIDC 的协议完成身份认证。本文以 Azure EntraID 为例，通过为 Kasten 配置 Azure EntraID 的集成，实现 Kasten 控制台的多因子验证。</p>]]></description>
-</item>
-<item>
-    <title>VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</title>
-    <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
-    <pubDate>Mon, 16 Dec 2024 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
-    <description><![CDATA[<h2 id="系列目录">系列目录</h2>
-<p>数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。</p>]]></description>
 </item>
 </channel>
 </rss>
