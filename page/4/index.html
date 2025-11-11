@@ -114,6 +114,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2024/05/vdp-v12-1-security-feature-deep-dive-03/">VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-05-06">2024-05-06</time></span></div><div class="content"><p>在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。</p></div><div class="post-footer">
+        <a href="/2024/05/vdp-v12-1-security-feature-deep-dive-03/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-02/">VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-04-29">2024-04-29</time></span></div><div class="content"><p>接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。</p>
 <p>VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。</p></div><div class="post-footer">
@@ -143,12 +149,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-12-11">2023-12-11</time></span></div><div class="content"><p>在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。</p></div><div class="post-footer">
         <a href="/2023/12/mysql-backup-and-restore/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/MySQL/">MySQL</a>,&nbsp;<a href="/tags/VBR/">VBR</a>,&nbsp;<a href="/tags/backup/">Backup</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/12/vdp23h2-update/">Veeam全线产品2023年下半年度重磅更新</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-12-07">2023-12-07</time></span></div><div class="content"><p>就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。</p></div><div class="post-footer">
-        <a href="/2023/12/vdp23h2-update/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VDP/">VDP</a>,&nbsp;<a href="/tags/VBR/">VBR</a>,&nbsp;<a href="/tags/backup/">Backup</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

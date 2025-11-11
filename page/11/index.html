@@ -114,6 +114,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2020/06/powercli-vsphere-permission/">使用 vSphere PowerCLI 快速完成 Veeam 备份管理员角色创建</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-06-05">2020-06-05</time></span></div><div class="content"><p>为 Veeam 定制一个最小化的 vSphere 权限账号对于系统管理安全来说非常有必要，但是随着软件的升级功能的增强，对于 vSphere 上需要用到的权限也越来越多，Veeam 在官方的 UserGuide 中提到了详细的 <a href="https://helpcenter.veeam.com/docs/backup/permissions/cumulativepermissions.html?ver=100" target="_blank" rel="noopener noreffer ">细颗粒度权限要求</a>，此时如果手工去逐个比对、选择，其实还是挺费时挺麻烦的一件事情。</p></div><div class="post-footer">
+        <a href="/2020/06/powercli-vsphere-permission/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Automation/">Automation</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2020/06/new-backup-copy/">Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-06-02">2020-06-02</time></span></div><div class="content"><h2 id="backup-copy-理论基础">Backup Copy 理论基础</h2>
 <p>Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。</p></div><div class="post-footer">
@@ -169,24 +175,6 @@
 </ul>
 <p>上一篇，我介绍了 Plan Step 的基本概况，今天我来详细分解下在 Plan Step 中的自定义脚本，我会通过一个脚本使用例子，来带大家使用一下自定义脚本。</p></div><div class="post-footer">
         <a href="/2020/02/vao-guide-08/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2020/02/vao-guide-07/">VAO 基础入门（七） -  Plan Step · 上篇</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-02-27">2020-02-27</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO 基础入门（一）-  简介</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO 基础入门（二）-  安装与部署</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO 基础入门（三）-  基本组件 · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO 基础入门（四）-  基本组件 · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO 基础入门（五）-  基础配置要点</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO 基础入门（六）-  成功灾备计划的第一步</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO 基础入门（七）-  Plan Step  · 上篇</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO 基础入门（八）-  Plan Step  · 下篇</a></li>
-<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO 基础入门（九）-  文档模板解析</a></li>
-</ul>
-<p>前一篇，我详细介绍了 Orchestration Plan，在我们设计灾备计划时，可以从某个 Application 入手，从简到繁循序渐进的规划整个数据中心的灾备。</p></div><div class="post-footer">
-        <a href="/2020/02/vao-guide-07/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

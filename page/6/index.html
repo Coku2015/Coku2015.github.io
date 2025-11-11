@@ -114,6 +114,25 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2023/06/vro-v6-guide-07/">VRO 基础入门（七） -  Plan Step · 上篇</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-14">2023-06-14</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO 基础入门（一）-  简介</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO 基础入门（二）-  安装与部署</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO 基础入门（三）-  基本组件 · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO 基础入门（四）-  基本组件 · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO 基础入门（五）-  成功灾备计划的第一步</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO 基础入门（六）-  数据实验室</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO 基础入门（七）-  Plan Step  · 上篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO 基础入门（八）-  Plan Step  · 下篇</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO 基础入门（九）-  文档模板解析</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO 基础入门（十）-  使用 VRO 搭配 K10 实现全自动容器灾备</a></li>
+</ul>
+<p>在之前的帖子中，我们详细讨论了 Orchestration Plan 的创建过程。在每个 Orchestration Plan 中除了基础的这些创建步骤之外，这个系统重最重要的是它的自动化流程，这个自动化流程是通过 Powershell 脚本来实现。在 VRO 中，这些 Powershell 的自动化脚本被封装在 Plan Step 中，由 VRO 的 Orchestration Plan 来调度执行和传递参数。</p></div><div class="post-footer">
+        <a href="/2023/06/vro-v6-guide-07/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2023/06/vro-v6-guide-06/">VRO 基础入门（六）-  数据实验室</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-06-07">2023-06-07</time></span></div><div class="content"><h2 id="系列目录">系列目录：</h2>
 <ul>
@@ -208,12 +227,6 @@
 <h2 id="vro-安装包获取">VRO 安装包获取</h2>
 <p>Veeam 官网可以直接下载 VRO 试用版，**Veeam Data Platform — Premium **的安装包就是我今天文章中用到的安装包，<a href="https://www.veeam.com/downloads.html" target="_blank" rel="noopener noreffer ">直达电梯</a> 在此，可以直接前往下载。</p></div><div class="post-footer">
         <a href="/2023/05/vro-v6-guide-02/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/05/vro-v6-guide-01/">VRO 基础入门（一） -  简介</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-05-24">2023-05-24</time></span></div><div class="content"><p>Veeam Data Platform v12 发布后，产品版本做了重新的组合，其中在最高的白金版中包含了 Veeam Recovery Orchestrator （VRO）组件，这个组件是从以前的 Veeam Availability Orchestrator 升级而来，目前的版本是 v6 版本，配合 VBR v12 和 Veeam ONE v12 一起使用。v6 的版本相比之前 v2 的版本有了全面的更新，功能也更加强大，因此我对我的这个基础入门系列文章进行了一轮更新。</p></div><div class="post-footer">
-        <a href="/2023/05/vro-v6-guide-01/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

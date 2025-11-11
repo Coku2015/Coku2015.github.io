@@ -9,8 +9,15 @@
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
-    <lastBuildDate>Thu, 30 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/AI/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 重塑数据保护：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
+      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
+      <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+      <description>&lt;h1 id=&#34;ai-重塑数据保护claude-code--glm-46-实战从零搭建-ai-cli-工具&#34;&gt;AI 重塑数据保护：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>关于我</title>
       <link>https://blog.backupnext.cloud/about/</link>
