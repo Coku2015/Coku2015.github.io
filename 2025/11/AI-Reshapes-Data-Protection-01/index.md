@@ -1,4 +1,4 @@
-# AI 重塑数据保护：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
+# AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
 
 
 # AI 重塑数据保护：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
@@ -79,6 +79,7 @@ https://docs.bigmodel.cn/cn/coding-plan/tool/claude
 
 ![Xnip2025-11-11_12-14-33](https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png)
 
+这时候，从图上灰色的文字中可以看到，我们的 Claude Code 模型已经更换成了 glm-4.6 版本了。
 
 
 ## 下一步

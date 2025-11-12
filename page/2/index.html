@@ -114,6 +114,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">虚化人生</h1><div class="home-subtitle">Backup Next Cloud</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问虚化人生</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-05/">把复杂留给 Veeam：Infrastructure Appliance 上手指南</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-22">2025-09-22</time></span></div><div class="content"><p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-05/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2025/09/veeam-software-appliance-04/">让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-09">2025-09-09</time></span></div><div class="content"><p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p></div><div class="post-footer">
         <a href="/2025/09/veeam-software-appliance-04/">阅读全文</a><div class="post-tags">
@@ -143,13 +149,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-05-26">2025-05-26</time></span></div><div class="content"><p>Kasten 在安全方面提供全面的管理能力，其中很重要的一部分是用户的账号访问管理，使用 Kasten 的用户可以灵活的借助 OIDC 的协议完成身份认证。本文以 Azure EntraID 为例，通过为 Kasten 配置 Azure EntraID 的集成，实现 Kasten 控制台的多因子验证。</p></div><div class="post-footer">
         <a href="/2025/05/kasten-and-azure-entraid-integration/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2024/12/vdp-v12-other-security-features-deep-dive-03/">VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-12-16">2024-12-16</time></span></div><div class="content"><h2 id="系列目录">系列目录</h2>
-<p>数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。</p></div><div class="post-footer">
-        <a href="/2024/12/vdp-v12-other-security-features-deep-dive-03/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

@@ -9,10 +9,17 @@
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
     <copyright>© Backup Next Cloud</copyright>
-    <lastBuildDate>Tue, 11 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI 重塑数据保护：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
+      <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
+      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+      <description>&lt;h1 id=&#34;ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器&#34;&gt;AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器&lt;/h1&gt;&#xA;&lt;p&gt;在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：&lt;strong&gt;零代码&lt;/strong&gt;、通过 Veeam RestAPI 控制 Veeam Backup &amp;amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
       <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
       <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
       <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>

@@ -4,8 +4,17 @@
         <link>https://blog.backupnext.cloud/posts/</link>
         <description>所有文章 | 虚化人生</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Tue, 11 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>AI 重塑数据保护：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
+    <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+    <description><![CDATA[<h1 id="ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器">AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器</h1>
+<p>在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：<strong>零代码</strong>、通过 Veeam RestAPI 控制 Veeam Backup &amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。</p>]]></description>
+</item>
+<item>
+    <title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
     <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
     <pubDate>Tue, 11 Nov 2025 00:00:00 &#43;0000</pubDate>
     <author>Coku2015@gmail.com (Lei Wei)</author>
@@ -79,15 +88,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/</guid>
     <description><![CDATA[<p>在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 <strong>Veeam Software Appliance</strong> 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 <strong>Veeam Software Appliance</strong> 的部署和使用。</p>]]></description>
-</item>
-<item>
-    <title>Veeam 重磅发布 Software Appliance：官网下载与文档结构大升级</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-01/</link>
-    <pubDate>Thu, 04 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-01/</guid>
-    <description><![CDATA[<h2 id="前言veeam-software-appliance-发布背景">前言：Veeam Software Appliance 发布背景</h2>
-<p>昨天 Veeam 官网悄悄上线了一个新产品：<a href="https://www.veeam.com/blog/veeam-software-appliance.html" target="_blank" rel="noopener noreffer ">Veeam Software Appliance</a>。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 + 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。</p>]]></description>
 </item>
 </channel>
 </rss>
