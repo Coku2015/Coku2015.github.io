@@ -38,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-02\/"
-        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-02\/featured-image.png"],"genre": "posts","keywords": "Backup, AI, Veeam, Vibe Coding","wordcount":  3822 ,
+        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-02\/featured-image.png"],"genre": "posts","keywords": "Backup, AI, Veeam, Vibe Coding","wordcount":  3820 ,
         "url": "https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-02\/","datePublished": "2025-11-12T00:00:00+00:00","dateModified": "2025-11-12T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
             "@type": "Organization",
             "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
@@ -123,7 +123,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-12">2025-11-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3822 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-12">2025-11-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3820 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -155,7 +155,6 @@
             </div><div class="content" id="content"><h1 id="ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器">AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器</h1>
 <p>在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：<strong>零代码</strong>、通过 Veeam RestAPI 控制 Veeam Backup &amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。</p>
 <blockquote>
-<p>[!NOTE]</p>
 <p>上周在 Veeam100 Summit 上，Veeam 的 Product Management Director，Anthony Spiteri 先生分享了使用 Codex 通过 VBR Rest API 操作备份服务器，我今天通过本篇帖子详细分享一下通过 Claude Code 来实现这个 demo 的过程。</p>
 </blockquote>
 <h2 id="初始化配置">初始化配置</h2>
@@ -395,7 +394,6 @@
 </span></span><span class="line"><span class="cl"><span class="k">-</span> OAuth2 token management with refresh capability
 </span></span><span class="line"><span class="cl">- **NEVER expose tokens or credentials in any output**</span></span></code></pre></div></div>
 <blockquote>
-<p>[!NOTE]</p>
 <p>当然，CC + GLM 4.6 有时候也会比较弱智，自己的限制条件在情急之中也会忘记，但是大多数时候都会按照这个约束条件进行。</p>
 </blockquote>
 <h3 id="5-配置-vbr-连接信息">5. 配置 VBR 连接信息</h3>

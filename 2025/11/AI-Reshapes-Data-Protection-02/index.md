@@ -5,7 +5,6 @@
 
 在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：**零代码**、通过 Veeam RestAPI 控制 Veeam Backup & Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。
 
-> [!NOTE]
 >
 > 上周在 Veeam100 Summit 上，Veeam 的 Product Management Director，Anthony Spiteri 先生分享了使用 Codex 通过 VBR Rest API 操作备份服务器，我今天通过本篇帖子详细分享一下通过 Claude Code 来实现这个 demo 的过程。
 
@@ -248,9 +247,6 @@ This is NOT a traditional code development project. It's an API specification an
 - **NEVER expose tokens or credentials in any output**
 ```
 
-
-
-> [!NOTE]
 >
 > 当然，CC + GLM 4.6 有时候也会比较弱智，自己的限制条件在情急之中也会忘记，但是大多数时候都会按照这个约束条件进行。
 

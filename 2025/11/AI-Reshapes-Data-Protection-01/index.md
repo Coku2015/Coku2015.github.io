@@ -1,7 +1,7 @@
 # AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
 
 
-# AI 重塑数据保护：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
+# AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具
 
 
 Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。
