@@ -188,11 +188,11 @@
 <p>这个文件可以不用太在意格式，只需要把你想要的内容罗列在文件中即可，写完保存即可。我这个内容大家也可以直接抄作业。</p>
 <p>写完这个文件后，我们让 CC 自己来为自己设定个标准，在 CC 对话框中，我们用 @assistant.md 的方法，呼唤出 CC 来看下这个文件：</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-prompt">
+    <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code class="language-prompt" data-lang="prompt">&gt; 请查看 @assistant.md 文件中的内容，根据说明，撰写一份自我约束和规范的说明，在后面的对话中，记得时刻按照这个约束进行。</code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; 请查看 @assistant.md 文件中的内容，根据说明，撰写一份自我约束和规范的说明，在后面的对话中，记得时刻按照这个约束进行。</span></span></code></pre></div></div>
 <p>这样，CC 就会很快自动写出一份说明，这个说明 CC 每次写出来的可能稍微有些不一样，但是大致上内容会差不多，写完后，我的如下：</p>
 <div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-markdown">
@@ -256,11 +256,11 @@
 <h3 id="3-下载并处理-veeam-rest-api-接口文件">3. 下载并处理 Veeam Rest API 接口文件</h3>
 <p>从<a href="https://helpcenter.veeam.com/references/vbr/13/rest/1.3-rev0/tag/SectionAbout" target="_blank" rel="noopener noreffer ">Veeam 官网 API 手册中</a>点击 Download 按钮下载 swagger.json 文件并存放到当前项目目录中，由于下载下来的文件有 2.5M 大小，对于 CC 处理起来会比较大，特别是在上下文中使用，因此我推荐先让 CC 做个拆分处理，将其拆分成小单元。这个工作直接交给 CC 即可，在对话中输入以下内容：</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-prompt">
+    <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code class="language-prompt" data-lang="prompt">&gt; 请帮我拆分 @swagger.json 文件, 目前这个JSON文件太大了,使用起来效率有点低,请帮我根据里面的结构,拆解成有效的小文件,方便阅读和使用. 拆解完成后,将其存放到 docs/swagger/ 目录下, 请确保拆分后的文件一样符合openapi的标准, 确保里面内容和原始json文件的一致性，并且相关客户端能够有效的解析这个拆分后的数据. </code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; 请帮我拆分 @swagger.json 文件, 目前这个JSON文件太大了,使用起来效率有点低,请帮我根据里面的结构,拆解成有效的小文件,方便阅读和使用. 拆解完成后,将其存放到 docs/swagger/ 目录下, 请确保拆分后的文件一样符合openapi的标准, 确保里面内容和原始json文件的一致性，并且相关客户端能够有效的解析这个拆分后的数据. </span></span></code></pre></div></div>
 <p>接下来 CC 会开始它的第一轮表演，自动调用 Python，处理文件，高效的将文件拆分并存放到你要求的位置。如果有需要，你还可以让它进行一致性验证。处理完成后，swagger.json 文件就可以删除了。</p>
 <h3 id="4-初始化项目">4. 初始化项目</h3>
 <p>接下来，正式进入初始化环境，每个 CC 实例正式干活前，为了让它能够有效的理解当前状况，我们都需要执行这个命令。</p>
@@ -412,11 +412,11 @@
 <h2 id="实战使用">实战使用</h2>
 <p>经过以上配置，我们的基础工作已经完成，这时候就可以直接和 CC 进行对话了。比如我们先上来可以问问 CC 他任务和职责：</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-prompt">
+    <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code class="language-prompt" data-lang="prompt">&gt; Hi CC, 请简单描述下你的任务和职责。</code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Hi CC, 请简单描述下你的任务和职责。</span></span></code></pre></div></div>
 <p>它看上去很清楚自己的定位，立刻说出了自己的职责。</p>
 <p><img
         class="lazyload"
@@ -429,11 +429,11 @@
 <p>看，这还是挺不错吧，有模有样的。</p>
 <p>然后，我们看看它的工作是否是符合预期，让 CC 来执行个小任务吧：</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-prompt">
+    <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code class="language-prompt" data-lang="prompt">&gt; 请帮我看下昨天的备份任务情况吧。</code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; 请帮我看下昨天的备份任务情况吧。</span></span></code></pre></div></div>
 <p>这时候 CC 会执行操作并输出，我这里，它秒出结果如下：</p>
 <p><img
         class="lazyload"
@@ -446,11 +446,11 @@
 <p>是不是超级简单？不需要编写任何代码，CC 自动用 API 帮我们获取了我们想要的信息，并合理格式化内容后，有效的输出信息给我们。</p>
 <p>我们再让他执行下备份任务，看他是不是能按照要求去做</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-prompt">
+    <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code class="language-prompt" data-lang="prompt">&gt; 请帮我执行下虚拟机的复制任务。</code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; 请帮我执行下虚拟机的复制任务。</span></span></code></pre></div></div>
 <p>CC 还挺聪明，先找了下当前的 replication 作业，然后和我确定了下操作。</p>
 <p><img
         class="lazyload"
