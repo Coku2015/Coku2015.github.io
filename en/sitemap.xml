@@ -2,6 +2,24 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/posts/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/posts/"
+                    /></url><url>
             <loc>https://blog.backupnext.cloud/en/tags/AI/</loc><lastmod>2025-11-12T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
@@ -28,24 +46,6 @@
                     rel="alternate"
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/backup/"
-                    /></url><url>
-            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2025-11-12T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://blog.backupnext.cloud/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://blog.backupnext.cloud/en/"
-                    /></url><url>
-            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2025-11-12T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://blog.backupnext.cloud/posts/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://blog.backupnext.cloud/en/posts/"
                     /></url><url>
             <loc>https://blog.backupnext.cloud/en/tags/</loc><lastmod>2025-11-12T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
