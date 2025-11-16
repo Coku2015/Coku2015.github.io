@@ -251,7 +251,7 @@ Today, I want to walk you through integrating Kasten with Azure EntraID to enabl
         title="image-20250525140636856" /></p>
 <h3 id="step-3-collect-configuration-information-for-kasten">Step 3: Collect Configuration Information for Kasten</h3>
 <p>Alright, the Azure side is set up—now we need to gather the pieces of information that Kasten will need to talk to Azure. Let&rsquo;s walk through the Helm values configuration we&rsquo;ll be using:</p>
-<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-yaml">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -303,7 +303,7 @@ Today, I want to walk you through integrating Kasten with Azure EntraID to enabl
         <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">helm get values k10 -n kasten-io &gt; k10_values.yaml</span></span></code></pre></div></div>
 <p>Now edit the <code>k10_values.yaml</code> file and add the OIDC authentication section with the information we gathered from Azure:</p>
-<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-yaml">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>

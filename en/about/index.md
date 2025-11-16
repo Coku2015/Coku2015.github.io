@@ -10,13 +10,13 @@
 ## ⚡️ Lei Wei — Data Protection & Cloud-Native Specialist
 
 🚀 **15+ Years in Data Protection & Cloud Infrastructure**  
-🎯 **Senior Consultant Expert, Greater China @ Veeam Software**  
+🎯 **Advisory Systems Engineer, China @ Veeam Software**  
 📍 **Location: China | Global View · Engineering Mindset**  
 🧩 **Blogging for 8+ years**
 
 ---
 
-Hi, I’m **Lei Wei**, a **Senior Consultant Expert at Veeam Software**, with over **15 years of experience** in **data protection, cloud infrastructure, and virtualization**.
+Hi, I’m **Lei Wei**, a **Advisory Systems Engineer at Veeam Software**, with over **15 years of experience** in **data protection, cloud infrastructure, and virtualization**.
 
 From **VMware, Hyper-V, KVM** to **public cloud and cloud-native containers**, I’ve been at the forefront of **infrastructure design, data resilience, and security architecture**.
 
@@ -29,7 +29,7 @@ My expertise covers enterprise-grade data protection, multi-cloud automation, an
 In recent years, I’ve been diving deep into the **intersection of Data + AI and AI + Security**, exploring how intelligent systems redefine resilience and defense.
 
 📍 **Current Role:**  
-Senior Consultant Expert, Greater China @ **Veeam Software**  
+Advisory Systems Engineer, China @ **Veeam Software**  
 Focused on intelligent data protection, cloud-native backup, and security-driven automation.
 
 🧠 **This Blog** is an ongoing journal of my professional journey —  
