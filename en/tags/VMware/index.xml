@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VMware on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/VMware/</link>
+    <description>Recent content in VMware on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 04 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/VMware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Look Ahead at VMware Explore Barcelona 2024</title>
+      <link>https://blog.backupnext.cloud/en/2024/07/vmware-explore-barcelona/</link>
+      <pubDate>Thu, 04 Jul 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/07/vmware-explore-barcelona/</guid>
+      <description>&lt;p&gt;In our rapidly evolving digital world, staying ahead isn&amp;rsquo;t just an advantage—it&amp;rsquo;s essential. VMware Explore 2024 serves as a premier platform that brings together global IT professionals, showcases cutting-edge technology achievements, and explores future innovation trends. This year, the event takes place in the beautiful city of Barcelona from November 4th to 7th, promising an inspiring and enlightening technical feast for all attendees.&lt;/p&gt;&#xA;&lt;p&gt;Whether you&amp;rsquo;re a seasoned IT professional or just beginning your journey in technology, VMware Explore offers invaluable learning opportunities and industry insights for everyone. Attendees will have the chance to experience the latest technological innovations firsthand, gain insights from industry leaders, connect with peers from around the world, and draw inspiration to expand their thinking.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>One-Click Deployment Script: K3S&#43;vSphere CSI</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/</link>
+      <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes environments. Back then, I walked you through the manual deployment process in detail. Today, I&amp;rsquo;m excited to bring you a one-click deployment script that makes everything incredibly simple.&lt;/p&gt;&#xA;&lt;p&gt;If you have a basic VMware environment and can connect to GitHub/k8s.io networks, this script will be a game-changer. Just run the script, wait about 10 minutes, and you&amp;rsquo;ll have a ready-to-use single-node K3s environment.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore</title>
+      <link>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/</link>
+      <pubDate>Sun, 05 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/</guid>
+      <description>&lt;p&gt;In our previous article, we set up the basic Kubernetes environment. Now let&amp;rsquo;s dive deep into the backup and restore process.&lt;/p&gt;&#xA;&lt;h2 id=&#34;k10-installation-and-configuration&#34;&gt;K10 Installation and Configuration&lt;/h2&gt;&#xA;&lt;p&gt;First up is K10 installation - nothing particularly special here. Just follow the official installation guide from the website and use Helm for installation. The only thing to note is that for instant recovery support, K10 needs to be version 6.0.8 or higher, while VBR requires version 12 or above. Here are the K10 installation parameters I used for your reference:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment</title>
+      <link>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/</guid>
+      <description>&lt;p&gt;Do you remember last year when I introduced VMware&amp;rsquo;s FCD disks and experimented with instant data recovery on K8s using VBR&amp;rsquo;s Instant Disk Recovery? This year, this feature has finally been officially released in the latest K10 in collaboration with VBR. Today, let me walk you through a demo to see how it works. My demo will be split into two parts: the first part will guide you through building a K3S cluster that can use vSphere Cloud Native Storage, and then in the second part, we&amp;rsquo;ll explore K10&amp;rsquo;s backup and recovery capabilities.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Automated Nested TKGs Lab Environment Script</title>
+      <link>https://blog.backupnext.cloud/en/2022/07/nested-tkgs-lab-automation-script/</link>
+      <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/07/nested-tkgs-lab-automation-script/</guid>
+      <description>&lt;p&gt;After diving into vSphere with Tanzu for a while, I was blown away by how powerful the platform is. But let&amp;rsquo;s be honest—the cost of setting up a proper learning environment can be pretty steep.&lt;/p&gt;&#xA;&lt;p&gt;After spending some time researching and experimenting with different approaches, I discovered a way to create a complete nested environment without breaking the bank. I&amp;rsquo;m excited to share this automation approach in this blog post, hoping it helps others who want to learn vSphere with Tanzu quickly and affordably.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>First Class Disks (FCD) Explained</title>
+      <link>https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/</link>
+      <pubDate>Wed, 23 Mar 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/</guid>
+      <description>&lt;p&gt;After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://imgtu.com/i/q3e6I0&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2022/03/23/q3e6I0.png&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2022/03/23/q3e6I0.png, https://s1.ax1x.com/2022/03/23/q3e6I0.png 1.5x, https://s1.ax1x.com/2022/03/23/q3e6I0.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2022/03/23/q3e6I0.png&#34;&#xA;        title=&#34;q3e6I0.png&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Starting with vSphere 6.5, VMware introduced a completely new disk format called &amp;ldquo;First Class Disks&amp;rdquo; (FCD). The name is certainly bold, and in fact, these virtual disks do have their own unique &amp;ldquo;privileges.&amp;rdquo; Today, I&amp;rsquo;d like to explain these FCDs in detail.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Exploring Tanzu Community Edition in the Homelab</title>
+      <link>https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/</guid>
+      <description>&lt;p&gt;I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp;amp; Replication to really put it through its paces.&lt;/p&gt;&#xA;&lt;h2 id=&#34;hardware-setup&#34;&gt;Hardware Setup&lt;/h2&gt;&#xA;&lt;p&gt;My environment consists of two machines - a Dell Precision M4800 that&amp;rsquo;s been serving me faithfully for over six years, and a newly added NUC11 Panther Canyon. The Dell laptop is really just playing a supporting role in this setup, while the Panther Canyon is the star of the show with these specifications:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>vCenter Converter Retired – How to Handle P2V Now</title>
+      <link>https://blog.backupnext.cloud/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/</guid>
+      <description>&lt;p&gt;Earlier this month VMware &lt;a href=&#34;https://blogs.vmware.com/vsphere/2022/02/vcenter-converter-unavailable-for-download.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;announced&lt;/a&gt; that they&amp;rsquo;re removing vCenter Converter from their product download list. That means we&amp;rsquo;ll no longer be able to download this product from VMware&amp;rsquo;s official website. VMware&amp;rsquo;s official stance is that vCenter Converter hasn&amp;rsquo;t been updated for years, has some security vulnerabilities, and isn&amp;rsquo;t very stable. In my view, VMware has taken down their most powerful weapon.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-could-this-tool-do&#34;&gt;What Could This Tool Do?&lt;/h2&gt;&#xA;&lt;p&gt;Many readers may never have encountered this tool, but for VMware administrators, it was essentially their best partner. The installation rate of this tool was incredibly high - among VMware&amp;rsquo;s entire product lineup, it was second only to vCenter. In most environments, administrators would install vCenter Converter immediately after installing vCenter.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>黑科技 | 激活隐藏在 VBR 中的快照猎手</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/</link>
+      <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been ages since I last shared something from my &amp;ldquo;Black Technology&amp;rdquo; series, but today I&amp;rsquo;m excited to introduce a feature I&amp;rsquo;ve been dying to write about.&lt;/p&gt;&#xA;&lt;p&gt;This is quite possibly one of Veeam&amp;rsquo;s most powerful yet underappreciated capabilities. I&amp;rsquo;d rank it in the top three for sheer utility, yet I&amp;rsquo;m willing to bet most Veeam users have no idea it even exists.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Secure Restore | Making Malware Detection Truly Comprehensive</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/secure-restore/</link>
+      <pubDate>Thu, 18 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/secure-restore/</guid>
+      <description>&lt;p&gt;Here&amp;rsquo;s a fundamental truth about IT infrastructure: security and backup are your two essential pillars. Whether you&amp;rsquo;re running a home setup or enterprise systems, you need both. But here&amp;rsquo;s where things get interesting—antivirus software faces an impossible battle. It&amp;rsquo;s constantly chasing new malware variants, dealing with sophisticated evasion techniques, and sometimes even fighting back against viruses designed to disable the antivirus itself.&lt;/p&gt;&#xA;&lt;p&gt;The traditional approach of installing antivirus on every individual OS has serious limitations. It&amp;rsquo;s resource-intensive, easily compromised, and frankly, not enough in today&amp;rsquo;s threat landscape. Virtualization helped by moving antivirus engines into the hypervisor layer, avoiding many of the problems with agent-based installations.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>不知勒索病毒的攻击原理，怎知如何防御？</title>
+      <link>https://blog.backupnext.cloud/en/2019/06/ransomeware-attack/</link>
+      <pubDate>Mon, 10 Jun 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/06/ransomeware-attack/</guid>
+      <description>&lt;p&gt;Ransomware seems to be one of those topics that just keeps getting hotter. Remember those service outage images from a year ago when the attacks first exploded? Most of us who weren&amp;rsquo;t hit watched them with that curious &amp;ldquo;glad it&amp;rsquo;s not me&amp;rdquo; feeling. I couldn&amp;rsquo;t resist sharing a few in my posts back then—capitalizing on the buzz helped boost my follower count.&lt;/p&gt;&#xA;&lt;p&gt;At first, I thought this ransomware craze would die down quickly. With security patches rolling out and protection getting stronger, surely these attacks wouldn&amp;rsquo;t last long. But that&amp;rsquo;s not what happened. Instead, ransomware keeps evolving, and this back-and-forth battle between attackers and defenders keeps getting more interesting.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Cloud Tier – Understanding Cloud Object Storage Architecture (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2019/03/cloud-tier-02/</link>
+      <pubDate>Mon, 04 Mar 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/03/cloud-tier-02/</guid>
+      <description>&lt;p&gt;Last time, we covered the fundamentals of Veeam&amp;rsquo;s Cloud Tier functionality. I noticed a few technical details in that post that needed clarification, so if you&amp;rsquo;re looking for the updated version, just drop me a message with &amp;ldquo;Cloud&amp;rdquo; and I&amp;rsquo;ll share the corrected version.&lt;/p&gt;&#xA;&lt;p&gt;Today, we&amp;rsquo;re diving deeper for those of you who want to understand the sophisticated architecture behind Veeam&amp;rsquo;s cloud storage optimization.&lt;/p&gt;&#xA;&lt;p&gt;One of the first things you&amp;rsquo;ll notice when using Cloud Tier is that Veeam maintains full recovery capabilities regardless of where your backup archives live—whether in your local data center or in cloud object storage. This includes Veeam&amp;rsquo;s groundbreaking Instant VM Recovery technology, which we pioneered back in 2010. If you want to explore that technology in detail, I covered it thoroughly in &lt;a href=&#34;http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247483838&amp;amp;idx=1&amp;amp;sn=d5ba99c0f7c8d649a5efe247159d4ebf&amp;amp;chksm=fdf0a76bca872e7d0161cbb7fcd9e1a5c4e6426d17fef21b24876d9222c8772aba3c710e6411&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;this earlier post about vPower NFS&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recovering MySQL Database with Veeam U-Air</title>
+      <link>https://blog.backupnext.cloud/en/2018/04/uair/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/04/uair/</guid>
+      <description>&lt;p&gt;One question I get asked frequently is whether Veeam supports application-level recovery for specific databases. The interesting thing about this question is that the answer has nothing to do with which database you&amp;rsquo;re using — it&amp;rsquo;s always yes.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s because Veeam includes a powerful feature called U-AIR (Universal Application-Item Recovery) that makes application-level recovery possible for virtually any system.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to walk you through a practical MySQL recovery scenario to show you how this works in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It</title>
+      <link>https://blog.backupnext.cloud/en/2018/03/surebackup/</link>
+      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/03/surebackup/</guid>
+      <description>&lt;p&gt;There&amp;rsquo;s one fundamental truth in backup and recovery that every IT professional eventually learns: you don&amp;rsquo;t know if your backup archives can actually be restored until you&amp;rsquo;ve tried to restore them.&lt;/p&gt;&#xA;&lt;p&gt;Veeam has a remarkable feature that automatically verifies backup archive availability online, ensuring your backed-up content can be properly restored when disaster strikes.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png&#34;&#xA;        title=&#34;1blqUA.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;The magic happens because SureBackup starts backup archives as normal virtual machines in an isolated environment, then runs comprehensive automated tests. It checks everything from VM heartbeats and network connectivity to application and service status within the VMs. After testing completes, it generates a detailed verification report about the archive&amp;rsquo;s recoverability.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Transforming HOME LAB: Installing ESXi on M6400</title>
+      <link>https://blog.backupnext.cloud/en/2017/08/esxi-in-m4800/</link>
+      <pubDate>Sun, 27 Aug 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/08/esxi-in-m4800/</guid>
+      <description>&lt;p&gt;Sometimes the best discoveries happen completely by accident. Last week at VeeamON Shanghai, I stumbled upon something that completely changed my perspective on home lab setups. One of my colleagues casually mentioned he was running ESXi on his laptop, and I was blown away.&lt;/p&gt;&#xA;&lt;p&gt;Now, I&amp;rsquo;ve always assumed installing ESXi on a laptop would be a nightmare of driver hunting and compatibility issues. But here&amp;rsquo;s the game-changing insight: use Dell&amp;rsquo;s customized ESXi ISO. Everything just works out of the box—no driver hunting, no compatibility headaches. The installation process is literally one-click, and you&amp;rsquo;re up and running.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Speed Up! Speed Up! Speed Up! (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2017/08/speed-up-02/</link>
+      <pubDate>Mon, 07 Aug 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/08/speed-up-02/</guid>
+      <description>&lt;p&gt;In our last post, we explored how to &lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247483745&amp;amp;idx=1&amp;amp;sn=c9b28d97eec1426dece66490a9655b43&amp;amp;chksm=fdf0a7b4ca872ea207c5d96dfdac2646fdc1b8a507b5e85cd267fdd720d3dff7d0b5e546680b&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;accelerate the backup engine&lt;/a&gt; — a critical optimization for maximizing backup performance and improving your RPO.&lt;/p&gt;&#xA;&lt;p&gt;But that&amp;rsquo;s just one piece of the performance puzzle.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to share another game-changing accelerator that Veeam introduced: the vSphere communication acceleration technology. And trust me, the results are absolutely stunning.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-broker-service-revolution&#34;&gt;The Broker Service Revolution&lt;/h2&gt;&#xA;&lt;p&gt;Introduced in Veeam 9.5, the Broker Service is one of those features that seems simple on the surface but delivers incredible performance gains in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Speed Up! Speed Up! Speed Up! (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2017/08/speed-up-01/</link>
+      <pubDate>Tue, 01 Aug 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/08/speed-up-01/</guid>
+      <description>&lt;p&gt;I don&amp;rsquo;t often talk about speed and performance, because I&amp;rsquo;ve always considered it a fundamental requirement—like a good car&amp;rsquo;s engine. You expect it to work well, and you don&amp;rsquo;t really think about it until something goes wrong.&lt;/p&gt;&#xA;&lt;p&gt;But here&amp;rsquo;s the thing: in the world of backup and recovery, that engine is everything. It&amp;rsquo;s where backup software truly proves its worth. Today, I want to dive deep into Veeam&amp;rsquo;s acceleration technologies.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Agentless Backup and Application Awareness</title>
+      <link>https://blog.backupnext.cloud/en/2017/07/agentless-backup/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/07/agentless-backup/</guid>
+      <description>&lt;p&gt;Virtualization didn&amp;rsquo;t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in the backup world. The rise of virtualization brought us agentless backup, and suddenly the old way of doing things didn&amp;rsquo;t make so much sense anymore.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s the thing about backup architecture: it&amp;rsquo;s always been a debate between agents and no agents. Both approaches have their obvious trade-offs, but what if you could have the best of both worlds? That&amp;rsquo;s exactly where Veeam&amp;rsquo;s approach to agentless backup with application awareness changes the game.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Black Technology: Direct NFS Access</title>
+      <link>https://blog.backupnext.cloud/en/2017/07/direct-nfs-access/</link>
+      <pubDate>Tue, 04 Jul 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/07/direct-nfs-access/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been working with more VMware environments lately, and I&amp;rsquo;m noticing a clear trend: NFS datastores are becoming mainstream. It used to be that only NetApp enthusiasts would seriously consider NFS for VMware, but times have changed. With the rise of hyper-converged infrastructure, major platforms like Nutanix and Cisco HyperFlex are now delivering storage to VMware exclusively through NFS.&lt;/p&gt;&#xA;&lt;p&gt;This shift has always been a bit problematic for backup performance. When you&amp;rsquo;re using NFS datastores, your only option for virtual machine backups has been the network transport method (NBD), which caps you at just 40% of VMKernel&amp;rsquo;s total network throughput. Even with plenty of bandwidth available, you&amp;rsquo;d hit that performance ceiling every time.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Good news, Veeam passes another VMware Ready certification!</title>
+      <link>https://blog.backupnext.cloud/en/2017/06/another-vmware-ready/</link>
+      <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/06/another-vmware-ready/</guid>
+      <description>&lt;p&gt;Great news from the Veeam team! Last week, we achieved another significant milestone by passing the newly available VMware Web Client Plug-in Ready certification for vSphere 6.5. This is genuinely exciting news for anyone managing VMware infrastructure with Veeam.&lt;/p&gt;&#xA;&lt;p&gt;You can verify our certification status on VMware&amp;rsquo;s official compatibility list: &lt;a href=&#34;https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png, https://s2.ax1x.com/2020/02/11/1T0COx.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0COx.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png&#34;&#xA;        title=&#34;1T0COx.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-vmware-ready-certification-matters&#34;&gt;Why VMware Ready Certification Matters&lt;/h2&gt;&#xA;&lt;p&gt;If you&amp;rsquo;re not familiar with VMware Ready certification, here&amp;rsquo;s why it&amp;rsquo;s such a big deal. This certification ensures that plug-ins meet VMware&amp;rsquo;s highest standards, providing several key advantages:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

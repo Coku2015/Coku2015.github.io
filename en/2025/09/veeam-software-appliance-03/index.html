@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods - Cloud.Virt.AI.Sec</title><meta name="description" content="In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods">
+  <meta property="og:description" content="In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to automated installation, followed by initial TUI setup and basic management. Many of you have successfully gotten this “backup powerhouse” up and running.
+But once the system is actually running, new questions arise:
+What new features does Veeam Software Appliance actually offer? How does this Linux-based Appliance differ from the previous Windows version? Should I use the WebUI or TUI console? How do I handle user management? What about upgrades and updates? In this installment, we’ll tackle these most pressing questions, guiding you through Veeam Software Appliance’s new features and Appliance-specific management methods, while walking you through the use cases for both host console UIs. This will ensure you can use and manage your Appliance confidently after installation.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-08T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods">
+  <meta name="twitter:description" content="In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to automated installation, followed by initial TUI setup and basic management. Many of you have successfully gotten this “backup powerhouse” up and running.
+But once the system is actually running, new questions arise:
+What new features does Veeam Software Appliance actually offer? How does this Linux-based Appliance differ from the previous Windows version? Should I use the WebUI or TUI console? How do I handle user management? What about upgrades and updates? In this installment, we’ll tackle these most pressing questions, guiding you through Veeam Software Appliance’s new features and Appliance-specific management methods, while walking you through the use cases for both host console UIs. This will ensure you can use and manage your Appliance confidently after installation.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Everything You Need to Know: Veeam Software Appliance's New Management Methods",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2025\/09\/veeam-software-appliance-03\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  1811 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2025\/09\/veeam-software-appliance-03\/","datePublished": "2025-09-08T00:00:00+00:00","dateModified": "2025-09-08T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/09/veeam-software-appliance-03/">简体中文</option><option value="/en/2025/09/veeam-software-appliance-03/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/09/veeam-software-appliance-03/">简体中文</option><option value="/en/2025/09/veeam-software-appliance-03/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Everything You Need to Know: Veeam Software Appliance's New Management Methods</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-08">2025-09-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1811 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#out-of-the-box-security-by-default">Out-of-the-Box Security by Default</a></li>
+    <li><a href="#appliance-specific-management-approach">Appliance-Specific Management Approach</a>
+      <ul>
+        <li><a href="#host-management-webui-vs-tui-feature-comparison">Host Management: WebUI vs TUI Feature Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#redesigned-user-management-system">Redesigned User Management System</a>
+      <ul>
+        <li><a href="#1-host-management-user-role-system-overview">1. Host Management User Role System Overview</a></li>
+        <li><a href="#2-user-creation-and-role-assignment-process">2. User Creation and Role Assignment Process</a></li>
+        <li><a href="#3-role-usage-recommendations-and-scenario-matching">3. Role Usage Recommendations and Scenario Matching</a></li>
+        <li><a href="#4-user-management-operation-capabilities">4. User Management Operation Capabilities</a></li>
+        <li><a href="#5-mfa-and-security-officer-mechanism">5. MFA and Security Officer Mechanism</a></li>
+        <li><a href="#6-differences-from-vbr-rbac">6. Differences from VBR RBAC</a></li>
+      </ul>
+    </li>
+    <li><a href="#upgrades-and-updates">Upgrades and Updates</a></li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to automated installation, followed by initial TUI setup and basic management. Many of you have successfully gotten this &ldquo;backup powerhouse&rdquo; up and running.</p>
+<p>But once the system is actually running, new questions arise:</p>
+<ul>
+<li>What new features does Veeam Software Appliance actually offer?</li>
+<li>How does this Linux-based Appliance differ from the previous Windows version?</li>
+<li>Should I use the WebUI or TUI console?</li>
+<li>How do I handle user management?</li>
+<li>What about upgrades and updates?</li>
+</ul>
+<p>In this installment, we&rsquo;ll tackle these most pressing questions, guiding you through <strong>Veeam Software Appliance&rsquo;s new features</strong> and <strong>Appliance-specific management methods</strong>, while walking you through <strong>the use cases for both host console UIs</strong>. This will ensure you can use and manage your Appliance confidently after installation.</p>
+<h2 id="out-of-the-box-security-by-default">Out-of-the-Box Security by Default</h2>
+<p>When it comes to Veeam Software Appliance, the most immediate benefit is: <strong>no more worrying about security hardening and patch maintenance</strong>. We&rsquo;re accustomed to installing Veeam on Windows, then handling patches, permissions, and firewall configurations ourselves. With Appliance, you get a <strong>pre-hardened Linux platform that&rsquo;s secure right out of the box</strong>. The system kernel, permission model, and service states are all configured according to best practices, making it &ldquo;Secure-by-Default&rdquo; from the moment of installation.</p>
+<p>More importantly, this built-in security and simplified management extends beyond system administration to user access control and automated upgrades and updates. In other words, you don&rsquo;t need to be a Linux security expert to leverage these &ldquo;hard-core&rdquo; security features on Veeam Software Appliance.</p>
+<h2 id="appliance-specific-management-approach">Appliance-Specific Management Approach</h2>
+<p>Many people who install Veeam Software Appliance instinctively think about managing it like a traditional Linux server—wondering if they can SSH in to modify configurations or run yum update manually. Actually, there&rsquo;s no need to do this—and it&rsquo;s not recommended.</p>
+<p>Appliance has deeply encapsulated and hardened the underlying Linux system. The system kernel, software packages, and service dependencies are all packaged according to Veeam&rsquo;s best practices. You don&rsquo;t need to—and shouldn&rsquo;t—manually modify these underlying components. Instead, you should use its built-in management tools and interfaces:</p>
+<ul>
+<li>For basic settings like network configuration, hostname, timezone, and service start/stop, use the Host Management Web UI or TUI directly, avoiding manual editing of system files;</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/07/Gt4EvqTSY9n7Ouk.png"
+        data-srcset="https://s2.loli.net/2025/09/07/Gt4EvqTSY9n7Ouk.png, https://s2.loli.net/2025/09/07/Gt4EvqTSY9n7Ouk.png 1.5x, https://s2.loli.net/2025/09/07/Gt4EvqTSY9n7Ouk.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/07/Gt4EvqTSY9n7Ouk.png"
+        title="Xnip2025-09-07_20-03-25" /></p>
+<ul>
+<li>If you need to adjust Veeam-related configuration files, such as modifying the <code>/etc/hosts</code> file, you can use the Import/Export Configuration feature: export the configuration from Logs and Services → Host Configuration, modify it, and then import it back so the system can properly recognize and apply the changes;</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/07/NBUFalOxVfsmY7d.png"
+        data-srcset="https://s2.loli.net/2025/09/07/NBUFalOxVfsmY7d.png, https://s2.loli.net/2025/09/07/NBUFalOxVfsmY7d.png 1.5x, https://s2.loli.net/2025/09/07/NBUFalOxVfsmY7d.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/07/NBUFalOxVfsmY7d.png"
+        title="Xnip2025-09-07_20-05-06" /></p>
+<ul>
+<li>For upgrades or patches, use Appliance&rsquo;s built-in update mechanism—don&rsquo;t manually update with package managers like yum.</li>
+</ul>
+<p>This approach ensures system stability and security while maintaining &ldquo;official support&rdquo; posture when adjustments are needed—a win-win situation.</p>
+<h3 id="host-management-webui-vs-tui-feature-comparison">Host Management: WebUI vs TUI Feature Comparison</h3>
+<p>Appliance has a unique management approach where both UIs need to be used alternately. Here&rsquo;s a comprehensive feature comparison:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Feature Category</th>
+          <th>Operation</th>
+          <th>WebUI Support</th>
+          <th>TUI Support</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Network Configuration</strong></td>
+          <td>Modify hostname</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Management domain settings</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Configure network interfaces</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Configure HTTP/HTTPS proxy</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td><strong>Time Settings</strong></td>
+          <td>Modify timezone, configure NTP time servers</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td><strong>Remote Access</strong></td>
+          <td>Disable WebUI</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Enable WebUI</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Enable/Disable SSH</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Open root shell</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td><strong>Users &amp; Permissions</strong></td>
+          <td>Add users, edit users, reset user passwords</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Modify Host Admin password</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Unlock users, enable/disable MFA, reset MFA</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Reset Security Officer password recovery token</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td><strong>Backup Infrastructure</strong></td>
+          <td>Enable remote data collection, enable/disable infrastructure locking, enable managed server pairing</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td><strong>Update Management</strong></td>
+          <td>Configure update policies, check updates, install updates, view update history</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td><strong>System Maintenance</strong></td>
+          <td>Start/stop/restart Veeam services</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Restart Veeam Appliance</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>View/export event logs, import/export configuration files, download log packages</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>View certificate fingerprints</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Generate new WebUI certificate</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td><strong>Security Control</strong></td>
+          <td>Approve authorization requests, manage configuration backup passwords</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="redesigned-user-management-system">Redesigned User Management System</h2>
+<p>In traditional Veeam Backup &amp; Replication (hereafter VBR), user permission management primarily relied on Windows local or domain accounts, with role assignments handled through the VBR console. In Veeam Software Appliance, the user system has been completely redesigned, <strong>introducing an independent user role model at the Host Management layer</strong> to achieve more granular security isolation and operational control.</p>
+<h3 id="1-host-management-user-role-system-overview">1. Host Management User Role System Overview</h3>
+<p>The Host Management console (WebUI) in Veeam Software Appliance includes four built-in user roles, each corresponding to different management responsibilities:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Role Name</th>
+          <th>Description</th>
+          <th>Use Cases</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Host Administrator (veeamadmin)</strong></td>
+          <td>Has complete host management permissions, can access both WebUI and TUI, perform network configuration, user management, update maintenance, etc.</td>
+          <td>Suitable for system administrators responsible for Appliance operations</td>
+      </tr>
+      <tr>
+          <td><strong>Security Officer (veeamso)</strong></td>
+          <td>Focuses on security controls, can only access WebUI, responsible for approving sensitive operations, managing password recovery tokens, configuration backup passwords, etc.</td>
+          <td>Suitable for security audit and compliance management personnel</td>
+      </tr>
+      <tr>
+          <td><strong>User</strong></td>
+          <td>Limited permissions, cannot access Host Management console, only used to identify regular user identities</td>
+          <td>Suitable for users who need to log in but have no host management permissions</td>
+      </tr>
+      <tr>
+          <td><strong>Service Account</strong></td>
+          <td>Used for system services or automated tasks, limited permissions, MFA not supported</td>
+          <td>Suitable for scripts, API calls, or integrated service accounts</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>⚠️ Default accounts <code>veeamadmin</code> and <code>veeamso</code> cannot be deleted. It&rsquo;s recommended to immediately change passwords and enable MFA after deployment.</p>
+</blockquote>
+<h3 id="2-user-creation-and-role-assignment-process">2. User Creation and Role Assignment Process</h3>
+<p>User creation must be completed through the WebUI with the following process:</p>
+<ol>
+<li>Log in to Veeam Host Management WebUI.</li>
+<li>Navigate to main menu <code>Users and Roles</code>.</li>
+<li>Click <code>Add</code>, fill in username, password, and description.</li>
+<li>Select role (each user can only be assigned one role).</li>
+<li>Enable or skip MFA configuration based on role type.</li>
+<li>Review information and click <code>Finish</code> to complete creation.</li>
+</ol>
+<blockquote>
+<p>Passwords must meet complexity requirements: at least 15 characters, including uppercase and lowercase letters, numbers, special characters, with no more than 3 consecutive characters of the same type.</p>
+</blockquote>
+<h3 id="3-role-usage-recommendations-and-scenario-matching">3. Role Usage Recommendations and Scenario Matching</h3>
+<p>To ensure system security and clear responsibilities, it&rsquo;s recommended to assign user roles according to the following scenarios:</p>
+<ul>
+<li><strong>Host Administrator</strong>: For daily operations personnel, responsible for host configuration, updates, user management, etc.</li>
+<li><strong>Security Officer</strong>: For security audit personnel, responsible for approving sensitive operations, managing configuration backup passwords, etc.</li>
+<li><strong>User</strong>: For regular users who need to log in but have no management permissions, such as viewing logs or receiving notifications.</li>
+<li><strong>Service Account</strong>: For automated scripts, API calls, etc., it&rsquo;s recommended to disable MFA and limit permissions.</li>
+</ul>
+<blockquote>
+<p>📌 Note: The separation of duties between Host Administrator and Security Officer is core to Veeam Software Appliance&rsquo;s security architecture. It&rsquo;s recommended to enable a &ldquo;four-eyes approval&rdquo; mechanism to ensure sensitive operations require dual confirmation.</p>
+</blockquote>
+<h3 id="4-user-management-operation-capabilities">4. User Management Operation Capabilities</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Operation</th>
+          <th>Host Administrator</th>
+          <th>Security Officer</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Add/edit/delete users</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td>Reset passwords</td>
+          <td>✅</td>
+          <td>✅ (requires approval)</td>
+      </tr>
+      <tr>
+          <td>Unlock users</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td>Enable/disable MFA</td>
+          <td>✅</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td>Approve sensitive operations (e.g., SSH, root shell)</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td>Manage configuration backup passwords</td>
+          <td>❌</td>
+          <td>✅</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="5-mfa-and-security-officer-mechanism">5. MFA and Security Officer Mechanism</h3>
+<ul>
+<li><strong>MFA Support</strong>: Based on TOTP, compatible with mainstream authenticators (e.g., Microsoft Authenticator).</li>
+<li><strong>Security Officer Login Process</strong>:
+<ul>
+<li>First login requires setting a strong password and enabling MFA.</li>
+<li>System generates recovery tokens for future sensitive operation approvals.</li>
+<li>These tokens must be properly stored; loss will make recovery impossible.</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-differences-from-vbr-rbac">6. Differences from VBR RBAC</h3>
+<p>The Host Management user system in Veeam Software Appliance is only used for host-level management and is <strong>completely independent</strong> from the RBAC system in the VBR console (such as Backup Operator, Restore Operator, etc.).</p>
+<ul>
+<li>Host Management users only manage the Appliance itself and don&rsquo;t involve backup task permissions.</li>
+<li>RBAC in the VBR console will be detailed in future articles and is suitable for permissions control over backup tasks, recovery operations, etc.</li>
+</ul>
+<p>By properly configuring the Host Management user system, Veeam Software Appliance achieves separation of operations and security responsibilities, building a more secure and auditable management architecture. It&rsquo;s recommended to clarify role assignments early in deployment to avoid permission abuse or security risks.</p>
+<h2 id="upgrades-and-updates">Upgrades and Updates</h2>
+<p>In traditional Veeam Backup &amp; Replication deployments, upgrades often meant administrators needed to manually download patches, verify compatibility, schedule maintenance windows, and even handle operating system-level updates. This approach is both cumbersome and prone to security risks due to human error or missed patches. In Veeam Software Appliance, the upgrade mechanism has been completely restructured, becoming an important part of its &ldquo;inherently secure&rdquo; architecture.</p>
+<p>The built-in <strong>Veeam Updater service</strong> in Veeam Software Appliance automatically fetches the latest update information from Veeam&rsquo;s official repository (<code>repository.veeam.com</code>) daily and writes it to the configuration database. Update content includes not only operating system and security patches (mandatory installation, cannot be skipped or cancelled, ensuring system compliance), but also Veeam B&amp;R components (supporting major versions, minor versions, and private fix patches, which can be installed automatically or manually according to policy). The entire process communicates through REST API with Veeam Identity Service for authorization, ensuring the integrity and security of update operations.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/07/dekRMqLCWUp1xtn.png"
+        data-srcset="https://s2.loli.net/2025/09/07/dekRMqLCWUp1xtn.png, https://s2.loli.net/2025/09/07/dekRMqLCWUp1xtn.png 1.5x, https://s2.loli.net/2025/09/07/dekRMqLCWUp1xtn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/07/dekRMqLCWUp1xtn.png"
+        title="Configuring Updates" /></p>
+<p>Administrators can flexibly configure update policies through the WebUI or Veeam console, such as:</p>
+<ul>
+<li>Only automatically install security updates or extend to minor version updates</li>
+<li>Set maintenance windows by week or month</li>
+<li>Set maximum delay for mandatory updates (default 30 days, extendable to 90 days)</li>
+<li>Configure HTTP/HTTPS proxies to access external repositories.</li>
+</ul>
+<p>Even when choosing manual installation, updates will be forcibly installed after the compliance deadline, even if backup jobs are currently running.</p>
+<p>For environments without internet access, Veeam Software Appliance also supports configuring local offline mirror repositories as update sources. Simply provide the local repository address and its server certificate to get the same automatic update experience as online repositories.</p>
+<p>Compared to traditional Veeam software manual updates, Veeam Software Appliance shows significant differences in operating system and component updates, security assurance, update source configuration, and logging and auditing: system patches are automatically pushed and forcibly installed, Veeam components can be automatically detected and installed according to policy, offline mirror repositories are supported, and all update logs are centrally managed and exportable for auditing.</p>
+<p>Before performing updates, it&rsquo;s still recommended that administrators first export configuration files to backup current settings; update history and detailed logs can be viewed through the WebUI (path <code>https://&lt;hostname&gt;/updater/updates</code>); if you receive a Private Hotfix from Veeam Support, it can also be uploaded and installed through the WebUI.</p>
+<p>This entirely new update mechanism not only transforms patch management from cumbersome manual operations into controllable, auditable, and automated processes but also sets new benchmarks in security and compliance, providing higher reliability and operational efficiency for modern backup infrastructure.</p>
+<h2 id="summary">Summary</h2>
+<p>Veeam Software Appliance hides much of the complexity &ldquo;behind the interface&rdquo;—this is both an advantage and a responsibility. Only by properly planning management, permissions, and update rhythms can you enjoy the convenience of &ldquo;out-of-the-box&rdquo; while ensuring long-term security and compliance. In the next article, I&rsquo;ll share the offline mirror repository setup that many of you are interested in, walking you through building a local repository and keeping it synchronized. Don&rsquo;t miss it if you&rsquo;re interested.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-09-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2025/09/veeam-software-appliance-03/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F09%2Fveeam-software-appliance-03%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F09%2Fveeam-software-appliance-03%2F&amp;text=Everything&#43;You&#43;Need&#43;to&#43;Know%3A&#43;Veeam&#43;Software&#43;Appliance%27s&#43;New&#43;Management&#43;Methods" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F09%252Fveeam-software-appliance-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F09%252Fveeam-software-appliance-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2025/09/veeam-software-appliance-02/" class="prev" rel="prev" title="Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment</a>
+            <a href="/en/2025/09/veeam-software-appliance-04/" class="next" rel="next" title="Making Veeam Updates Both Secure and Fast: A Complete Guide to Building Local Update Repository Servers">Making Veeam Updates Both Secure and Fast: A Complete Guide to Building Local Update Repository Servers<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

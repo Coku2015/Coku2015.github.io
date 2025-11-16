@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>黑科技 on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/%E9%BB%91%E7%A7%91%E6%8A%80/</link>
+    <description>Recent content in 黑科技 on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Wed, 24 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/%E9%BB%91%E7%A7%91%E6%8A%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>黑科技 | 激活隐藏在 VBR 中的快照猎手</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/</link>
+      <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been ages since I last shared something from my &amp;ldquo;Black Technology&amp;rdquo; series, but today I&amp;rsquo;m excited to introduce a feature I&amp;rsquo;ve been dying to write about.&lt;/p&gt;&#xA;&lt;p&gt;This is quite possibly one of Veeam&amp;rsquo;s most powerful yet underappreciated capabilities. I&amp;rsquo;d rank it in the top three for sheer utility, yet I&amp;rsquo;m willing to bet most Veeam users have no idea it even exists.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to Calculate Backup Size and Bandwidth in Data Centers - Cloud.Virt.AI.Sec</title><meta name="description" content="One of the most common questions I get asked is: “How effective is your backup software’s deduplication, and how much storage space will my backups actually …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="How to Calculate Backup Size and Bandwidth in Data Centers">
+  <meta property="og:description" content="One of the most common questions I get asked is: “How effective is your backup software’s deduplication, and how much storage space will my backups actually use?”
+The truth is, effectiveness varies dramatically depending on your data types and storage methods. Different environments and hardware configurations can produce vastly different results, making it impossible to give a one-size-fits-all answer. But regardless of these variables, backup data needs storage space, and capacity planning becomes a critical component of any backup infrastructure design.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-05-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-05-05T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="How to Calculate Backup Size and Bandwidth in Data Centers">
+  <meta name="twitter:description" content="One of the most common questions I get asked is: “How effective is your backup software’s deduplication, and how much storage space will my backups actually use?”
+The truth is, effectiveness varies dramatically depending on your data types and storage methods. Different environments and hardware configurations can produce vastly different results, making it impossible to give a one-size-fits-all answer. But regardless of these variables, backup data needs storage space, and capacity planning becomes a critical component of any backup infrastructure design.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2017/04/veeam-quick-migration/" /><link rel="next" href="https://blog.backupnext.cloud/en/2017/05/wannacry/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Calculate Backup Size and Bandwidth in Data Centers",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2017\/05\/how-to-calculate-backup-size\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "backup","wordcount":  661 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2017\/05\/how-to-calculate-backup-size\/","datePublished": "2017-05-05T00:00:00+00:00","dateModified": "2017-05-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/05/how-to-calculate-backup-size/">简体中文</option><option value="/en/2017/05/how-to-calculate-backup-size/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/05/how-to-calculate-backup-size/">简体中文</option><option value="/en/2017/05/how-to-calculate-backup-size/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to Calculate Backup Size and Bandwidth in Data Centers</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Veeam-Tools/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Veeam Tools</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-05-05">2017-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;661 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#our-example-environment">Our Example Environment</a></li>
+    <li><a href="#calculating-bandwidth-requirements">Calculating Bandwidth Requirements</a>
+      <ul>
+        <li><a href="#the-bandwidth-math">The Bandwidth Math</a></li>
+      </ul>
+    </li>
+    <li><a href="#planning-storage-capacity">Planning Storage Capacity</a></li>
+    <li><a href="#a-better-way-to-plan">A Better Way to Plan</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>One of the most common questions I get asked is: &ldquo;How effective is your backup software&rsquo;s deduplication, and how much storage space will my backups actually use?&rdquo;</p>
+<p>The truth is, effectiveness varies dramatically depending on your data types and storage methods. Different environments and hardware configurations can produce vastly different results, making it impossible to give a one-size-fits-all answer. But regardless of these variables, backup data needs storage space, and capacity planning becomes a critical component of any backup infrastructure design.</p>
+<p>Getting your storage capacity and bandwidth calculations right directly impacts project success, affecting storage costs, efficiency, and overall backup reliability. Let me walk you through the calculation process using a typical virtualized environment as our example.</p>
+<h2 id="our-example-environment">Our Example Environment</h2>
+<ul>
+<li><strong>ESXi Hosts</strong>: 25 servers</li>
+<li><strong>Virtual Machines</strong>: 500 VMs</li>
+<li><strong>Average VM disk capacity</strong>: 200GB</li>
+<li><strong>Total datastore usage</strong>: 100TB</li>
+</ul>
+<h2 id="calculating-bandwidth-requirements">Calculating Bandwidth Requirements</h2>
+<p>Backup operations typically follow a pattern: an initial full backup followed by regular incremental backups. The first backup transfers all your virtual environment data to the backup storage, essentially moving your entire datastore usage. Subsequent backups only transfer what has changed since the last backup—typically daily changes in most environments.</p>
+<p>The daily change rate in your environment can be accurately obtained from Veeam ONE&rsquo;s change assessment report. For our example, let&rsquo;s assume a conservative 7% daily change rate.</p>
+<p>Here&rsquo;s what we&rsquo;re working with:</p>
+<ul>
+<li><strong>Initial full backup</strong>: 100TB</li>
+<li><strong>Daily incremental backup</strong>: 7TB</li>
+</ul>
+<p>Now, let&rsquo;s factor in Veeam&rsquo;s built-in compression and deduplication. Assuming typical deduplication efficiency reduces our data by 50%, we get:</p>
+<ul>
+<li><strong>Actual initial transfer</strong>: 50TB</li>
+<li><strong>Actual daily transfer</strong>: 3.5TB</li>
+</ul>
+<h3 id="the-bandwidth-math">The Bandwidth Math</h3>
+<p>For our bandwidth calculations, let&rsquo;s make some practical assumptions about backup windows:</p>
+<ul>
+<li>Initial full backup: Can run continuously for 24 hours (we&rsquo;ll schedule this for Saturday)</li>
+<li>Daily incremental backups: Run during off-peak hours (8 PM to 6 AM)</li>
+<li>Only 80% of the backup window is actual data transfer (the rest is job setup and overhead)</li>
+</ul>
+<p>This gives us:</p>
+<ul>
+<li><strong>Full backup window</strong>: 24 hours × 80% = 19.2 hours of actual transfer time</li>
+<li><strong>Incremental backup window</strong>: 10 hours × 80% = 8 hours of actual transfer time</li>
+</ul>
+<p>Now for the calculations:</p>
+<p><strong>Full backup bandwidth requirement:</strong></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>50TB × 1024GB/TB × 8bits/byte ÷ (24hrs × 3600sec/hr × 0.8) = 5.93 Gbps</code></pre></div>
+<p><strong>Incremental backup bandwidth requirement:</strong></p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>3.5TB × 1024GB/TB × 8bits/byte ÷ (10hrs × 3600sec/hr × 0.8) = 1.0 Gbps</code></pre></div>
+<p>With these numbers, you can now plan your network and storage throughput accordingly, configuring the right number of network cards or HBAs to achieve these transfer rates.</p>
+<h2 id="planning-storage-capacity">Planning Storage Capacity</h2>
+<p>Storage capacity planning becomes straightforward when you understand your backup retention strategy. Let&rsquo;s work with a common scenario: keeping at least 14 backup points, with weekly full backups and daily incrementals.</p>
+<p>Here&rsquo;s what our two-week retention cycle looks like:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Day</th>
+          <th>Backup Type</th>
+          <th>Size</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Full Backup</td>
+          <td>50 TB</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>7</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>8</td>
+          <td>Full Backup</td>
+          <td>50 TB</td>
+      </tr>
+      <tr>
+          <td>9</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>10</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>11</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>12</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>13</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+      <tr>
+          <td>14</td>
+          <td>Incremental</td>
+          <td>3.5 TB</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Capacity calculations:</strong></p>
+<ul>
+<li><strong>Raw backup data</strong>: 209.5 TB</li>
+<li><strong>15% buffer space</strong>: 31.4 TB</li>
+<li><strong>Total recommended capacity</strong>: 240.9 TB</li>
+</ul>
+<h2 id="a-better-way-to-plan">A Better Way to Plan</h2>
+<p>While these manual calculations give you a solid foundation, I highly recommend checking out the Veeam Backup Repository Capacity Planning Tool created by my international colleagues. This web-based tool offers more comprehensive calculations with additional variables you can customize for your specific environment.</p>
+<p>You can access it at: <a href="http://vee.am/rps" target="_blank" rel="noopener noreffer ">http://vee.am/rps</a></p>
+<p>The tool provides a more detailed analysis and can help you fine-tune your capacity planning based on your unique requirements and constraints.</p>
+<hr>
+<p><em>Capacity planning might seem complex, but getting it right from the start saves countless headaches down the road. Whether you&rsquo;re planning a new deployment or optimizing an existing one, taking the time to do the math properly ensures your backup infrastructure will be ready when you need it most.</em></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2017-05-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2017/05/how-to-calculate-backup-size/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F05%2Fhow-to-calculate-backup-size%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F05%2Fhow-to-calculate-backup-size%2F&amp;text=How&#43;to&#43;Calculate&#43;Backup&#43;Size&#43;and&#43;Bandwidth&#43;in&#43;Data&#43;Centers" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F05%252Fhow-to-calculate-backup-size%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F05%252Fhow-to-calculate-backup-size%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2017/04/veeam-quick-migration/" class="prev" rel="prev" title="Veeam&#39;s Quick Migration Technology"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam's Quick Migration Technology</a>
+            <a href="/en/2017/05/wannacry/" class="next" rel="next" title="A Few Words About the &#39;WannaCry&#39; Virus">A Few Words About the 'WannaCry' Virus<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

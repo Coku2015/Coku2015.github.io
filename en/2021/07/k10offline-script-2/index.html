@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kasten K10 Starter Series 05 - K10 Installation Package Download (2) - Cloud.Virt.AI.Sec</title><meta name="description" content="Kasten K10 Starter Series Table of Contents Kasten K10 Starter Series 01 - Quick Setup of K8S Single-Node Test Environment
+Kasten K10 Starter Series 02 - K10 …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2021/07/k10offline-script-2/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Kasten K10 Starter Series 05 - K10 Installation Package Download (2)">
+  <meta property="og:description" content="Kasten K10 Starter Series Table of Contents Kasten K10 Starter Series 01 - Quick Setup of K8S Single-Node Test Environment
+Kasten K10 Starter Series 02 - K10 Installation
+Kasten K10 Starter Series 03 - K10 Backup and Recovery
+Kasten K10 Starter Series 04 - K10 Installation Package Download
+Main Content In the previous article, we introduced downloading and pushing K10 installation images to a private image repository through scripts. Today, I want to share some offline image packages, which may be the most convenient method in completely offline environments without external network access.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-07-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-07-22T00:00:00+00:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Kasten K10 Starter Series 05 - K10 Installation Package Download (2)">
+  <meta name="twitter:description" content="Kasten K10 Starter Series Table of Contents Kasten K10 Starter Series 01 - Quick Setup of K8S Single-Node Test Environment
+Kasten K10 Starter Series 02 - K10 Installation
+Kasten K10 Starter Series 03 - K10 Backup and Recovery
+Kasten K10 Starter Series 04 - K10 Installation Package Download
+Main Content In the previous article, we introduced downloading and pushing K10 installation images to a private image repository through scripts. Today, I want to share some offline image packages, which may be the most convenient method in completely offline environments without external network access.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2021/07/k10offline-script-2/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2021/06/k10offline-script/" /><link rel="next" href="https://blog.backupnext.cloud/en/2021/10/veeam-agent-for-linux-installation-deep-dive/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kasten K10 Starter Series 05 - K10 Installation Package Download (2)",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2021\/07\/k10offline-script-2\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Kubernetes","wordcount":  428 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2021\/07\/k10offline-script-2\/","datePublished": "2021-07-22T00:00:00+00:00","dateModified": "2021-07-22T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2021/07/k10offline-script-2/">简体中文</option><option value="/en/2021/07/k10offline-script-2/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2021/07/k10offline-script-2/">简体中文</option><option value="/en/2021/07/k10offline-script-2/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kasten K10 Starter Series 05 - K10 Installation Package Download (2)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-07-22">2021-07-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;428 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kasten-k10-starter-series-table-of-contents">Kasten K10 Starter Series Table of Contents</a></li>
+    <li><a href="#main-content">Main Content</a></li>
+    <li><a href="#content-description">Content Description</a></li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#usage-method">Usage Method</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="kasten-k10-starter-series-table-of-contents">Kasten K10 Starter Series Table of Contents</h2>
+<p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 Starter Series 01 - Quick Setup of K8S Single-Node Test Environment</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Kasten K10 Starter Series 02 - K10 Installation</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/05/K10-configuration/" target="_blank" rel="noopener noreffer ">Kasten K10 Starter Series 03 - K10 Backup and Recovery</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/06/K10offline-script/" target="_blank" rel="noopener noreffer ">Kasten K10 Starter Series 04 - K10 Installation Package Download</a></p>
+<h2 id="main-content">Main Content</h2>
+<p>In the previous article, we introduced downloading and pushing K10 installation images to a private image repository through scripts. Today, I want to share some offline image packages, which may be the most convenient method in completely offline environments without external network access.</p>
+<p>First, here&rsquo;s the download link:</p>
+<p><a href="https://cloud.189.cn/web/share?code=zIVZ3uaIzUr2" target="_blank" rel="noopener noreffer ">https://cloud.189.cn/web/share?code=zIVZ3uaIzUr2</a> (Access code: 8fbw)</p>
+<h2 id="content-description">Content Description</h2>
+<p>In this download link, K10 installation packages are placed in folders named by version number. Inside each version folder, two files are included:</p>
+<ul>
+<li>kasten_k10_offline_images_<version>.tar.gz : Image package</li>
+<li>k10_<version>.json : Configuration file for pushing to private image repository</li>
+</ul>
+<p>This image package contains all K10 installation images (version 4.0.8, other versions may vary slightly):</p>
+<table>
+  <thead>
+      <tr>
+          <th>Original Repository</th>
+          <th>Image Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ghcr.io/kanisterio</td>
+          <td>kanister-tools</td>
+      </tr>
+      <tr>
+          <td>quay.io/datawire</td>
+          <td>ambassador</td>
+      </tr>
+      <tr>
+          <td>quay.io/prometheus</td>
+          <td>prometheus</td>
+      </tr>
+      <tr>
+          <td>jimmidyson</td>
+          <td>configmap-reload</td>
+      </tr>
+      <tr>
+          <td>quay.io/dexidp</td>
+          <td>dex</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>frontend</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>kanister</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>aggregatedapis</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>config</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>auth</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>bloblifecyclemanager</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>catalog</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>crypto</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>dashboardbff</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>executor</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>jobs</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>logging</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>metering</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>state</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>upgrade</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>cephtool</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>datamover</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>k10tools</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>restorectl</td>
+      </tr>
+      <tr>
+          <td>gcr.io/kasten-images</td>
+          <td>k10offline</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Similar to using the script in the previous article, you need to prepare a Linux server with the following requirements:</p>
+<ul>
+<li>Ability to access the <code>&lt;target&gt;</code> image repository normally</li>
+<li>jq software installed, can use jq command, learn more through this link: <a href="https://stedolan.github.io/jq/" target="_blank" rel="noopener noreffer ">jq</a></li>
+<li>docker installed, learn more through this link: <a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener noreffer ">docker</a></li>
+</ul>
+<h2 id="usage-method">Usage Method</h2>
+<p>Transfer the downloaded corresponding version files to the Linux server offline, then use the following command to load the image package into the local docker cache:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker load &lt; kasten_k10_offline_images_4.0.8.tar.gz</span></span></code></pre></div></div>
+<p>After loading, you can check and confirm the image status with the following command:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker images</span></span></code></pre></div></div>
+<p>Download the push script:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -O https://blog.backupnext.cloud/kasten_private_repo.sh</span></span></code></pre></div></div>
+<p>Please note that after downloading the script, be sure to review the content to ensure it&rsquo;s correct before use.</p>
+<p>Modify script execution permissions:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x kasten_private_repo.sh</span></span></code></pre></div></div>
+<p>Script commands and parameters:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kasten_private_repo.sh &lt;k10-ver&gt; &lt;target repo&gt;</span></span></code></pre></div></div>
+<p>Where k10-ver is the K10 version, for example, the latest version is <code>4.0.8</code>.</p>
+<p>target repo is the target private image repository, for example <code>private.target.repo/kasten</code></p>
+<p>For example, with the above configuration, this command becomes:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./kasten_private_repo.sh 4.0.8 private.target.repo/kasten</span></span></code></pre></div></div>
+<p>Running this command will automatically upload the K10 images to private.target.repo/kasten, and when installing K10, you can use this private image repository:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">helm install k10 k10-4.0.8.tgz --namespace kasten-io <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set global.airgapped.repository<span class="o">=</span>private.target.repo/kasten
+</span></span><span class="line"><span class="cl">    --set metering.mode<span class="o">=</span>airgap</span></span></code></pre></div></div>
+<p>The above is the second offline installation method for today.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-07-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2021/07/k10offline-script-2/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F07%2Fk10offline-script-2%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F07%2Fk10offline-script-2%2F&amp;text=Kasten&#43;K10&#43;Starter&#43;Series&#43;05&#43;-&#43;K10&#43;Installation&#43;Package&#43;Download&#43;%282%29" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F07%252Fk10offline-script-2%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F07%252Fk10offline-script-2%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2021/06/k10offline-script/" class="prev" rel="prev" title="Kasten K10 Starter Series 04 – Offline Image Download Script"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kasten K10 Starter Series 04 – Offline Image Download Script</a>
+            <a href="/en/2021/10/veeam-agent-for-linux-installation-deep-dive/" class="next" rel="next" title="Veeam Agent for Linux Installation Deep Dive">Veeam Agent for Linux Installation Deep Dive<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

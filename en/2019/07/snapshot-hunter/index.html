@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>黑科技 | 激活隐藏在 VBR 中的快照猎手 - Cloud.Virt.AI.Sec</title><meta name="description" content="It’s been ages since I last shared something from my “Black Technology” series, but today I’m excited to introduce a feature I’ve been dying to write about. …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="黑科技 | 激活隐藏在 VBR 中的快照猎手">
+  <meta property="og:description" content="It’s been ages since I last shared something from my “Black Technology” series, but today I’m excited to introduce a feature I’ve been dying to write about.
+This is quite possibly one of Veeam’s most powerful yet underappreciated capabilities. I’d rank it in the top three for sheer utility, yet I’m willing to bet most Veeam users have no idea it even exists.
+It’s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-07-24T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-07-24T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="黑科技 | 激活隐藏在 VBR 中的快照猎手">
+  <meta name="twitter:description" content="It’s been ages since I last shared something from my “Black Technology” series, but today I’m excited to introduce a feature I’ve been dying to write about.
+This is quite possibly one of Veeam’s most powerful yet underappreciated capabilities. I’d rank it in the top three for sheer utility, yet I’m willing to bet most Veeam users have no idea it even exists.
+It’s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2019/07/snapshot-hunter/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2019/07/secure-restore/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/02/how-to-upgrade-vbr/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "黑科技 | 激活隐藏在 VBR 中的快照猎手",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2019\/07\/snapshot-hunter\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  750 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2019\/07\/snapshot-hunter\/","datePublished": "2019-07-24T00:00:00+00:00","dateModified": "2019-07-24T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2019/07/snapshot-hunter/">简体中文</option><option value="/en/2019/07/snapshot-hunter/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2019/07/snapshot-hunter/">简体中文</option><option value="/en/2019/07/snapshot-hunter/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">黑科技 | 激活隐藏在 VBR 中的快照猎手</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-07-24">2019-07-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;750 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#understanding-vmware-snapshots">Understanding VMware Snapshots</a></li>
+        <li><a href="#enter-the-snapshot-hunter">Enter the Snapshot Hunter</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>It&rsquo;s been ages since I last shared something from my &ldquo;Black Technology&rdquo; series, but today I&rsquo;m excited to introduce a feature I&rsquo;ve been dying to write about.</p>
+<p>This is quite possibly one of Veeam&rsquo;s most powerful yet underappreciated capabilities. I&rsquo;d rank it in the top three for sheer utility, yet I&rsquo;m willing to bet most Veeam users have no idea it even exists.</p>
+<p>It&rsquo;s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.</p>
+<h3 id="understanding-vmware-snapshots">Understanding VMware Snapshots</h3>
+<p>VMware snapshots are probably the most controversial technology in virtualization history. They&rsquo;re the feature that draws many people into virtualization in the first place, yet they&rsquo;re also responsible for driving others away from certain solutions altogether.</p>
+<p>For any backup software worth its salt, mastering snapshots isn&rsquo;t optional—it&rsquo;s absolutely essential. You simply can&rsquo;t do proper virtualization backups without becoming a snapshot expert first.</p>
+<p>Veeam relies heavily on VMware snapshot technology. When a backup job kicks off, Veeam sends snapshot commands through vSphere&rsquo;s API, and you&rsquo;ll see a temporary snapshot called &ldquo;<em><strong>VEEAM BACKUP TEMPORARY SNAPSHOT</strong></em>&rdquo; appear in the VM&rsquo;s snapshot manager. Once the job completes, Veeam sends another command to remove it.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnrp8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnrp8.png, https://s2.ax1x.com/2020/02/13/1qnrp8.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnrp8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnrp8.png"
+        title="1qnrp8.png" /></p>
+<p>Here&rsquo;s where things get tricky. With multiple infrastructure components communicating, things don&rsquo;t always go smoothly. Sometimes that temporary snapshot never gets deleted properly. Even worse, you might experience what I call &ldquo;false deletion&rdquo;—the snapshot disappears from the manager but the underlying files remain on your datastore.</p>
+<p>These leftover snapshot files (those 00001.vmdk delta files) become what VMware calls <strong>orphaned snapshots</strong>. They&rsquo;re trouble waiting to happen, potentially disrupting future snapshot operations and consuming valuable storage space. VMware does offer a &ldquo;Consolidate&rdquo; option to fix this, but getting there isn&rsquo;t always straightforward.</p>
+<p>These situations are what we in the VMware community refer to as <strong>snapshot issues</strong>. They&rsquo;re notoriously difficult to spot early, and manual consolidation can fail spectacularly if you don&rsquo;t catch them in time.</p>
+<p>For those dealing with these headaches, I&rsquo;ve compiled some helpful VMware KB articles that might save you hours of troubleshooting:</p>
+<blockquote>
+<p><a href="https://kb.vmware.com/s/article/1005049" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1005049</a></p>
+<p><a href="https://kb.vmware.com/s/article/1006847" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1006847</a></p>
+<p><a href="https://kb.vmware.com/s/article/1038963" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/1038963</a></p>
+<p><a href="https://kb.vmware.com/s/article/2003638" target="_blank" rel="noopener noreffer ">https://kb.vmware.com/s/article/2003638</a></p>
+</blockquote>
+<h3 id="enter-the-snapshot-hunter">Enter the Snapshot Hunter</h3>
+<p>Now, what if you could avoid all that manual consolidation drama entirely?</p>
+<p>That&rsquo;s where Veeam Backup &amp; Replication (VBR) comes in with its secret weapon: the <strong>Snapshot Hunter</strong>. This feature is an absolute game-changer for anyone who&rsquo;s ever wrestled with snapshot problems.</p>
+<p>The best part? It works completely automatically in the background, running silently in every backup and replication job. Most Veeam users have no idea it&rsquo;s even there, tirelessly protecting their virtual machines from snapshot chaos.</p>
+<p>The Snapshot Hunter operates with a simple but brilliant two-step approach:</p>
+<p><strong>Step 1: Cleanup leftover Veeam snapshots</strong>
+Before each backup job, it scans for any remaining &ldquo;<em><strong>VEEAM BACKUP TEMPORARY SNAPSHOT</strong></em>&rdquo; entries from previous jobs and removes them. This ensures your VMs start each backup with a clean slate.</p>
+<p><strong>Step 2: Hunt down orphaned snapshots</strong>
+If it finds any orphaned snapshots, it attempts to consolidate them automatically. This catches everything else that might have slipped through the cracks.</p>
+<p>But here&rsquo;s where it gets really clever. For that second step—handling orphaned snapshots—Veeam has developed a sophisticated consolidation algorithm that essentially combines the best practices from all four of those VMware KB articles I mentioned earlier.</p>
+<p><strong>The Four-Stage Consolidation Strategy</strong></p>
+<p><strong>1. The Standard Approach</strong>
+First, Veeam tries the same method you&rsquo;d use manually in vCenter—it attempts standard snapshot consolidation. If this works (and often it does), the problem is solved instantly.</p>
+<p><strong>2. Force Consolidation</strong>
+If the standard approach fails, Veeam escalates to a more aggressive strategy. It creates a new snapshot and then triggers VMware&rsquo;s &ldquo;<em><strong>Delete all snapshot</strong></em>&rdquo; command, essentially forcing the removal of all orphaned snapshots in one operation.</p>
+<p><strong>3. Force Consolidation with Quiescence</strong>
+Still having issues? Veeam tries again, but this time it creates a quiesced snapshot (one that ensures application-consistent data) before attempting the deletion again.</p>
+<p><strong>4. The Safety Net</strong>
+If all three methods fail, Veeam doesn&rsquo;t keep trying indefinitely. Instead, it sends you an alert recommending manual intervention. This prevents potential storage exhaustion while giving you the information you need to take action.</p>
+<p>I&rsquo;ll be sharing a video demo soon that shows the Snapshot Hunter in action—you&rsquo;ll get to see firsthand just how powerful this hidden feature really is.</p>
+<p>Until then, keep exploring those lesser-known features. Sometimes the best tools are the ones working quietly in the background, keeping everything running smoothly while we focus on the bigger picture.</p>
+<p>Thanks for reading, and I&rsquo;ll catch you in the next one!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-07-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2019/07/snapshot-hunter/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2019%2F07%2Fsnapshot-hunter%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2019%2F07%2Fsnapshot-hunter%2F&amp;text=%E9%BB%91%E7%A7%91%E6%8A%80&#43;%7C&#43;%E6%BF%80%E6%B4%BB%E9%9A%90%E8%97%8F%E5%9C%A8&#43;VBR&#43;%E4%B8%AD%E7%9A%84%E5%BF%AB%E7%85%A7%E7%8C%8E%E6%89%8B" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2019%252F07%252Fsnapshot-hunter%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2019%252F07%252Fsnapshot-hunter%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2019/07/secure-restore/" class="prev" rel="prev" title="Secure Restore | Making Malware Detection Truly Comprehensive"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Secure Restore | Making Malware Detection Truly Comprehensive</a>
+            <a href="/en/2020/02/how-to-upgrade-vbr/" class="next" rel="next" title="Veeam Backup Server Upgrade Guide">Veeam Backup Server Upgrade Guide<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

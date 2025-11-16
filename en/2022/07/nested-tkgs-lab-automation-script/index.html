@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Automated Nested TKGs Lab Environment Script - Cloud.Virt.AI.Sec</title><meta name="description" content="After diving into vSphere with Tanzu for a while, I was blown away by how powerful the platform is. But let’s be honest—the cost of setting up a proper learning …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2022/07/nested-tkgs-lab-automation-script/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Automated Nested TKGs Lab Environment Script">
+  <meta property="og:description" content="After diving into vSphere with Tanzu for a while, I was blown away by how powerful the platform is. But let’s be honest—the cost of setting up a proper learning environment can be pretty steep.
+After spending some time researching and experimenting with different approaches, I discovered a way to create a complete nested environment without breaking the bank. I’m excited to share this automation approach in this blog post, hoping it helps others who want to learn vSphere with Tanzu quickly and affordably.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-07-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-07-03T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Tanzu">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Automated Nested TKGs Lab Environment Script">
+  <meta name="twitter:description" content="After diving into vSphere with Tanzu for a while, I was blown away by how powerful the platform is. But let’s be honest—the cost of setting up a proper learning environment can be pretty steep.
+After spending some time researching and experimenting with different approaches, I discovered a way to create a complete nested environment without breaking the bank. I’m excited to share this automation approach in this blog post, hoping it helps others who want to learn vSphere with Tanzu quickly and affordably.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2022/07/nested-tkgs-lab-automation-script/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/03/v12update-hidden-key/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Automated Nested TKGs Lab Environment Script",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2022\/07\/nested-tkgs-lab-automation-script\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Tanzu","wordcount":  2417 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2022\/07\/nested-tkgs-lab-automation-script\/","datePublished": "2022-07-03T00:00:00+00:00","dateModified": "2022-07-03T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/07/nested-tkgs-lab-automation-script/">简体中文</option><option value="/en/2022/07/nested-tkgs-lab-automation-script/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/07/nested-tkgs-lab-automation-script/">简体中文</option><option value="/en/2022/07/nested-tkgs-lab-automation-script/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Automated Nested TKGs Lab Environment Script</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-03">2022-07-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2417 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-prerequisites">0. Prerequisites</a></li>
+    <li><a href="#part-1-building-vsphere-with-tanzu-infrastructure">Part 1: Building vSphere with Tanzu Infrastructure</a></li>
+    <li><a href="#part-2-enabling-tanzu-kubernetes-cluster">Part 2: Enabling Tanzu Kubernetes Cluster</a>
+      <ul>
+        <li><a href="#21-enabling-supervisor-cluster">2.1 Enabling Supervisor Cluster</a></li>
+        <li><a href="#22-deploying-tanzu-kubernetes-cluster">2.2 Deploying Tanzu Kubernetes Cluster</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>After diving into vSphere with Tanzu for a while, I was blown away by how powerful the platform is. But let&rsquo;s be honest—the cost of setting up a proper learning environment can be pretty steep.</p>
+<p>After spending some time researching and experimenting with different approaches, I discovered a way to create a complete nested environment without breaking the bank. I&rsquo;m excited to share this automation approach in this blog post, hoping it helps others who want to learn vSphere with Tanzu quickly and affordably.</p>
+<p>First, here&rsquo;s the GitHub repository for all the scripts mentioned in this post:</p>
+<p><a href="https://github.com/Coku2015/Nested-TKGs-automate-deployment" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/Nested-TKGs-automate-deployment</a></p>
+<p>This script is adapted from <a href="https://williamlam.com/2020/11/complete-vsphere-with-tanzu-homelab-with-just-32gb-of-memory.html" target="_blank" rel="noopener noreffer ">William Lam&rsquo;s excellent work</a>. His original script automates the deployment of VMware&rsquo;s complete Tanzu Kubernetes product suite and supports a wide range of scenarios. If you&rsquo;re comfortable with advanced scripting, I highly recommend checking out his scripts for more customization options.</p>
+<p>I&rsquo;ve divided this guide into two parts: the first covers building the virtual infrastructure foundation, and the second focuses on creating Tanzu Kubernetes clusters. I&rsquo;ll cover all the prerequisite requirements upfront to make sure you&rsquo;re ready to go.</p>
+<h2 id="0-prerequisites">0. Prerequisites</h2>
+<p>This guide creates a nested vSphere environment where all VMs will be deployed on physical ESXi servers managed by vCenter. Here&rsquo;s what you&rsquo;ll need to reserve on your host system:</p>
+<ul>
+<li>vCPU: 9 cores</li>
+<li>Memory: 40.5GB</li>
+<li>Storage: 1421GB (allocated capacity)</li>
+</ul>
+<p>Once deployed, this environment will generate four virtual machines:</p>
+<ul>
+<li>Nested ESXi (basic config): 4 vCPU / 24GB RAM / 1TB disk / 3 network interfaces</li>
+<li>vCenter (basic config): 2 vCPU / 12GB RAM / 400GB disk</li>
+<li>HAProxy: 2 vCPU / 4GB RAM / 5GB disk</li>
+<li>OpenWrt router: 1 vCPU / 0.5GB RAM / 1GB disk</li>
+</ul>
+<p>Within the nested ESXi environment, we&rsquo;ll deploy the Tanzu Kubernetes components:</p>
+<ul>
+<li>1 Supervisor VM: 2 vCPU / 8GB RAM</li>
+<li>1 Kubernetes Control Plane: 2 vCPU / 4GB RAM</li>
+<li>2 Kubernetes Worker Nodes: 2 vCPU / 4GB RAM each</li>
+</ul>
+<p>Here&rsquo;s what the completed environment topology looks like:</p>
+<p><a href="https://imgtu.com/i/j1npXq" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1npXq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1npXq.png, https://s1.ax1x.com/2022/07/02/j1npXq.png 1.5x, https://s1.ax1x.com/2022/07/02/j1npXq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1npXq.png"
+        title="Environment Topology" /></a></p>
+<p>For the setup, you&rsquo;ll need to download these images in advance:</p>
+<ul>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://download3.vmware.com/software/vmw-tools/nested-esxi/Nested_ESXi7.0u3c_Appliance_Template_v1.ova" target="_blank" rel="noopener noreffer ">Nested ESXi 7.0u3c</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://my.vmware.com/web/vmware/downloads" target="_blank" rel="noopener noreffer ">vCenter 7.0u3e</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://cdn.haproxy.com/download/haproxy/vsphere/ova/haproxy-v0.2.0.ova" target="_blank" rel="noopener noreffer ">haproxy.ova</a></li>
+<li><i class="far fa-check-square fa-fw" aria-hidden="true"></i> <a href="https://github.com/Coku2015/Nested-TKGs-automate-deployment/raw/main/tkgrouter.ova" target="_blank" rel="noopener noreffer ">OpenWrt router</a></li>
+</ul>
+<p>In the second part of this guide, the system will automatically deploy additional VMs in the nested ESXi environment managed by vSphere with Tanzu. This requires access to VMware&rsquo;s official Content Library subscription, though you can also manually download the Content Library content and create your own local Content Library.</p>
+<p>You&rsquo;ll need to prepare one uplink IP address on your host system—this will serve as the external connection for our nested environment. In my setup, I use the SHLAB_NET1 port group for this uplink. All other network addresses in the environment will use internal addresses without uplink connections.</p>
+<p>Therefore, you need to create a virtual switch with three port groups on your host ESXi, similar to what&rsquo;s shown in the image below. The virtual switch hosting these three port groups also needs promiscuous mode enabled for the nested ESXi communication.</p>
+<p><a href="https://imgtu.com/i/j1upPe" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1upPe.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1upPe.png, https://s1.ax1x.com/2022/07/02/j1upPe.png 1.5x, https://s1.ax1x.com/2022/07/02/j1upPe.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1upPe.png"
+        title="Network Configuration" /></a></p>
+<p>Finally, you&rsquo;ll need a VM console that can access both the host vCenter and the Tanzu Lab internal network. We&rsquo;ll run the automation scripts from this VM.</p>
+<p>The full automation deployment uses VMware vSphere PowerCLI scripts, which requires <a href="https://github.com/PowerShell/PowerShell" target="_blank" rel="noopener noreffer ">PowerShell 7</a>.</p>
+<p>In PowerShell 7, you can quickly install the latest VMware PowerCLI with this command:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">PS </span><span class="n">C:</span><span class="p">\&gt;</span> <span class="nb">Install-Module</span> <span class="n">VMware</span><span class="p">.</span><span class="py">PowerCLI</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span></span></span></code></pre></div></div>
+<p>For more PowerCLI configuration and installation guidance, check out this resource:</p>
+<p><a href="https://www.altaro.com/vmware/vmware-powercli-guide/" target="_blank" rel="noopener noreffer ">Getting Started with VMware PowerCLI – A Beginner&rsquo;s Guide</a></p>
+<p>After completing the lab setup, the network connections look like this:</p>
+<p><a href="https://imgtu.com/i/j1GANq.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/02/j1GANq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/02/j1GANq.png, https://s1.ax1x.com/2022/07/02/j1GANq.png 1.5x, https://s1.ax1x.com/2022/07/02/j1GANq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/02/j1GANq.png"
+        title="Final Network Topology" /></a></p>
+<h2 id="part-1-building-vsphere-with-tanzu-infrastructure">Part 1: Building vSphere with Tanzu Infrastructure</h2>
+<p>Once you&rsquo;ve prepared all the prerequisites, you&rsquo;ll need to configure some parameters in the script based on your environment:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># vCenter Server used to deploy vSphere with Tanzu Basic Lab</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIServer</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.20&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIUsername</span> <span class="p">=</span> <span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VIPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span></span></span></code></pre></div></div>
+<p>This configuration points to the vCenter managing the physical ESXi host where we&rsquo;ll deploy this environment.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Full Path to both the Nested ESXi 7.0 VA, Extracted VCSA 7.0 ISO &amp; HA Proxy OVAs</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiApplianceOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\Nested_ESXi7.0u3c_Appliance_Template_v1.ova&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAInstallerPath</span> <span class="p">=</span> <span class="s2">&#34;E:\&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\haproxy-v0.2.0.ova&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tkgrouterOVA</span> <span class="p">=</span> <span class="s2">&#34;C:\Temp\tkgrouter.ova&#34;</span></span></span></code></pre></div></div>
+<p>Here you need to configure the paths to all OVA images. For VCSA, mount the ISO and specify the mounted ISO path.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># TKG Content Library URL</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGContentLibraryName</span> <span class="p">=</span> <span class="s2">&#34;TKG-Content-Library&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGContentLibraryURL</span> <span class="p">=</span> <span class="s2">&#34;https://wp-content.vmware.com/v2/latest/lib.json&#34;</span></span></span></code></pre></div></div>
+<p>This creates a new Content Library for the TKG vCenter configuration, enabling fully automated K8S VM deployment.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">#tkgrouter configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tkgrouterdisplayname</span> <span class="p">=</span> <span class="s2">&#34;tkgopenwrt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANNETWORK</span> <span class="p">=</span> <span class="s2">&#34;SHASELAB_NET01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANIP</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.149&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANGW</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANDNS1</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANDNS2</span> <span class="p">=</span> <span class="s2">&#34;172.19.192.10&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$WANNETMASK</span> <span class="p">=</span> <span class="s2">&#34;255.255.255.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGMGMTNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-MGMT&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGMGMTIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGWORKLOADNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-Workload&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGWORKLOADIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGFRONTENDNETWORK</span> <span class="p">=</span> <span class="s2">&#34;TKG-Frontend&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$TKGFRONTENDIP</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.1&#34;</span></span></span></code></pre></div></div>
+<p>This section configures the OpenWrt router networking.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Nested ESXi VMs to deploy</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiHostnameToIPs</span> <span class="p">=</span> <span class="vm">@</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;tkgesxi1&#34;</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.100&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>This sets the hostname and IP address for the Nested ESXi host. To deploy multiple ESXi hosts, simply add additional entries.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Nested ESXi VM Resources</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXivCPU</span> <span class="p">=</span> <span class="s2">&#34;4&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXivMEM</span> <span class="p">=</span> <span class="s2">&#34;24&#34;</span> <span class="c">#GB</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NestedESXiCapacityvDisk</span> <span class="p">=</span> <span class="s2">&#34;1000&#34;</span> <span class="c">#GB</span></span></span></code></pre></div></div>
+<p>These are the minimum resource configurations for ESXi, which you can adjust based on your actual needs.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># VCSA Deployment Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSADeploymentSize</span> <span class="p">=</span> <span class="s2">&#34;tiny&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSADisplayName</span> <span class="p">=</span> <span class="s2">&#34;tkgsvc&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.101&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAHostname</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.101&#34;</span> <span class="c">#Change to IP if you don&#39;t have valid DNS</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSAPrefix</span> <span class="p">=</span> <span class="s2">&#34;24&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSODomainName</span> <span class="p">=</span> <span class="s2">&#34;tkg.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSOPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSARootPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VCSASSHEnable</span> <span class="p">=</span> <span class="s2">&#34;true&#34;</span></span></span></code></pre></div></div>
+<p>VCSA configuration settings.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># HA Proxy Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyDisplayName</span> <span class="p">=</span> <span class="s2">&#34;tkghaproxy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyHostname</span> <span class="p">=</span> <span class="s2">&#34;haproxy.tkg.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyDNS</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.102/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyManagementGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Frontend&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.2/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyFrontendGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Workload&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadIPAddress</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.2/24&#34;</span> <span class="c"># Format is IP Address/CIDR Prefix</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyWorkloadGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.2.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyLoadBalanceIPRange</span> <span class="p">=</span> <span class="s2">&#34;10.10.3.64/26&#34;</span> <span class="c"># Format is Network CIDR Notation</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyOSPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyPort</span> <span class="p">=</span> <span class="s2">&#34;5556&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyUsername</span> <span class="p">=</span> <span class="s2">&#34;wcp&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$HAProxyPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span></span></span></code></pre></div></div>
+<p>This configures HAProxy with three network interfaces corresponding to three network segments, where 10.10.3.x is used for Load Balancing. This section is crucial as much of this information will be used in the manual configuration steps in Part 2.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># General Deployment Configuration for Nested ESXi, VCSA &amp; HA Proxy VM</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDatacenter</span> <span class="p">=</span> <span class="s2">&#34;SHALABDC&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMCluster</span> <span class="p">=</span> <span class="s2">&#34;SHALAB&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNetwork</span> <span class="p">=</span> <span class="s2">&#34;TKG-Mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDatastore</span> <span class="p">=</span> <span class="s2">&#34;SHASEESX_DS_01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNetmask</span> <span class="p">=</span> <span class="s2">&#34;255.255.255.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMGateway</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDNS</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMNTP</span> <span class="p">=</span> <span class="s2">&#34;172.19.226.21&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMPassword</span> <span class="p">=</span> <span class="s2">&#34;P@ssw0rd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMDomain</span> <span class="p">=</span> <span class="s2">&#34;shlab.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMSyslog</span> <span class="p">=</span> <span class="s2">&#34;10.10.1.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMFolder</span> <span class="p">=</span> <span class="s2">&#34;Lab Infra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c"># Applicable to Nested ESXi only</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMSSH</span> <span class="p">=</span> <span class="s2">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$VMVMFS</span> <span class="p">=</span> <span class="s2">&#34;false&#34;</span></span></span></code></pre></div></div>
+<p>General environment parameter settings. Pay special attention to ensuring your environment can access an NTP Server—whether internal or external—as vCenter service deployment will fail without it.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Name of new vSphere Datacenter/Cluster when VCSA is deployed</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCDatacenterName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-dc&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCVSANClusterName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-Cluster&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCVDSName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-VDS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCMgmtPortgroupName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-mgmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$NewVCWorkloadPortgroupName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-workload&#34;</span></span></span></code></pre></div></div>
+<p>Network port group settings for the new vCenter.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Tanzu Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-storage-policy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyTagCategory</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-tag-category&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$StoragePolicyTagName</span> <span class="p">=</span> <span class="s2">&#34;tkgs-demo-storage&#34;</span></span></span></code></pre></div></div>
+<p>Tanzu storage policy configuration.</p>
+<p>Once you&rsquo;ve configured all these script parameters, you can run the script directly in PowerShell 7. When the script starts, it will display a summary of the environment about to be deployed and ask if you want to continue. Answer &lsquo;Y&rsquo; to begin the fully automated deployment.</p>
+<p><a href="https://imgtu.com/i/j3gfFx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3gfFx.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3gfFx.png, https://s1.ax1x.com/2022/07/03/j3gfFx.png 1.5x, https://s1.ax1x.com/2022/07/03/j3gfFx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3gfFx.png"
+        title="Deployment Confirmation" /></a></p>
+<p>The deployment process typically takes 30-45 minutes depending on your hardware performance and resources. In my environment, the entire process took 40 minutes. You may see some yellow Warning messages during deployment—these can be safely ignored, as shown below:</p>
+<p><a href="https://imgtu.com/i/j3zkff.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3zkff.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3zkff.png, https://s1.ax1x.com/2022/07/03/j3zkff.png 1.5x, https://s1.ax1x.com/2022/07/03/j3zkff.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3zkff.png"
+        title="Deployment Progress 1" /></a></p>
+<p><a href="https://imgtu.com/i/j3zwA1.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j3zwA1.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j3zwA1.png, https://s1.ax1x.com/2022/07/03/j3zwA1.png 1.5x, https://s1.ax1x.com/2022/07/03/j3zwA1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j3zwA1.png"
+        title="Deployment Progress 2" /></a></p>
+<p>After installation completes, you can access the vCenter Web Client through your browser to check the status of all deployed components.</p>
+<p>Once the script installation is complete, you&rsquo;ll need to SSH into the HAProxy virtual machine to make some adjustments. This can be done using the following script:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">touch /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl">chmod +x /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="k">$(</span>sysctl -a <span class="p">|</span> grep rp_filter <span class="p">|</span> grep 1<span class="k">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">SYSCTL_SETTING</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Update live system</span>
+</span></span><span class="line"><span class="cl">    sysctl -w <span class="si">${</span><span class="nv">SYSCTL_SETTING</span><span class="si">}</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Persist settings upon reboot</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SYSCTL_SETTING</span><span class="si">}</span><span class="s2">=0&#34;</span> &gt;&gt; /etc/sysctl.d/999-tanzu.conf
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div></div>
+<p>Additionally, by default, Tanzu deploys 3 Supervisor VMs when enabling Supervisor Cluster, which can waste resources in a test environment. Starting from vSphere 7.0U3, you can make adjustments to reduce these resource requirements. We need to SSH into the vCenter Appliance before enabling Supervisor Cluster and make these changes:</p>
+<ul>
+<li>SSH into the vCenter Appliance and edit the file <code>/etc/vmware/wcp/wcpsvc.yaml</code></li>
+<li>Find the <code>minmasters</code> and <code>maxmasters</code> values in the file (both default to 3) and change both to 1</li>
+<li>Find <code>controlplane_vm_disk_provisioning</code> (default is &ldquo;thick&rdquo;) and change it to &ldquo;thin&rdquo; to save disk space</li>
+<li>Save the changes and restart the wcp service with <code>service-control --restart wcp</code></li>
+</ul>
+<p>At this point, all preparations for enabling Supervisor Cluster are complete.</p>
+<h2 id="part-2-enabling-tanzu-kubernetes-cluster">Part 2: Enabling Tanzu Kubernetes Cluster</h2>
+<h3 id="21-enabling-supervisor-cluster">2.1 Enabling Supervisor Cluster</h3>
+<p>Log into vCenter and find Workload Management in the main navigation bar. This is where you&rsquo;ll start managing Tanzu Kubernetes. Click &ldquo;Get Started&rdquo; on the right to begin creating a Supervisor Cluster. This process can also be completed entirely through PowerShell scripts, but that&rsquo;s beyond the scope of this article. We&rsquo;ll use the GUI interface to create the Supervisor Cluster.</p>
+<p><a href="https://imgtu.com/i/j8V3yq.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8V3yq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8V3yq.png, https://s1.ax1x.com/2022/07/03/j8V3yq.png 1.5x, https://s1.ax1x.com/2022/07/03/j8V3yq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8V3yq.png"
+        title="Workload Management" /></a></p>
+<p>Creating the Supervisor Cluster launches an 8-step wizard:</p>
+<ol>
+<li>
+<p><strong>vCenter Server and Network</strong> step: Since our Lab doesn&rsquo;t have NSX, we can only select VDS. Click Next to continue.
+<a href="https://imgtu.com/i/j8VTnP.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8VTnP.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8VTnP.png, https://s1.ax1x.com/2022/07/03/j8VTnP.png 1.5x, https://s1.ax1x.com/2022/07/03/j8VTnP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8VTnP.png"
+        title="Step 1 - Network Selection" /></a></p>
+</li>
+<li>
+<p><strong>Cluster</strong> step: Select tkgs-Cluster, click Next to continue.
+<a href="https://imgtu.com/i/j8ZfET.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8ZfET.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8ZfET.png, https://s1.ax1x.com/2022/07/03/j8ZfET.png 1.5x, https://s1.ax1x.com/2022/07/03/j8ZfET.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8ZfET.png"
+        title="Step 2 - Cluster Selection" /></a></p>
+</li>
+<li>
+<p><strong>Storage</strong> step: Select Control Plane Storage Policy as <code>tkgs-demo-storage-policy</code>. Click Next to continue.
+<a href="https://imgtu.com/i/j8Zv5D.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8Zv5D.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8Zv5D.png, https://s1.ax1x.com/2022/07/03/j8Zv5D.png 1.5x, https://s1.ax1x.com/2022/07/03/j8Zv5D.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8Zv5D.png"
+        title="Step 3 - Storage Policy" /></a></p>
+</li>
+<li>
+<p><strong>Load Balancer</strong> step: Here you need to enter HAProxy information. Name should be &ldquo;tkghaproxy&rdquo;, Load Balancer Type should be &ldquo;HAProxy&rdquo;, Management IP Address should be the address from Part 1 configuration (<code>$HAProxyManagementIPAddress = &quot;10.10.1.102/24&quot;</code>), and you need to add the default HAProxy service port <code>5556</code>. Username is <code>wcp</code>, Password is <code>P@ssw0rd</code>, and Virtual IP Ranges should be <code>10.10.3.64-10.10.3.127</code>.</p>
+<p>For the HAProxy Management TLS Certificate content, you&rsquo;ll need to SSH into HAProxy and get it from <code>/etc/haproxy/ca.crt</code>.
+Click Next to continue.
+<a href="https://imgtu.com/i/j8udMj.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8udMj.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8udMj.png, https://s1.ax1x.com/2022/07/03/j8udMj.png 1.5x, https://s1.ax1x.com/2022/07/03/j8udMj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8udMj.png"
+        title="Step 4 - Load Balancer Config" /></a></p>
+</li>
+<li>
+<p><strong>Management Network</strong> step: Select Network Mode as &ldquo;Static&rdquo;, Network as &ldquo;TKGs-MGMT&rdquo;, and configure a static IP for Supervisor. Click Next to continue.
+<a href="https://imgtu.com/i/j8u5e1.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8u5e1.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8u5e1.png, https://s1.ax1x.com/2022/07/03/j8u5e1.png 1.5x, https://s1.ax1x.com/2022/07/03/j8u5e1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8u5e1.png"
+        title="Step 5 - Management Network" /></a></p>
+</li>
+<li>
+<p><strong>Workload Network</strong> step: Select Network Mode as &ldquo;DHCP&rdquo;, Portgroup as &ldquo;tkgs-workload&rdquo;. Click Next to continue.
+<a href="https://imgtu.com/i/j8uLSe.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8uLSe.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8uLSe.png, https://s1.ax1x.com/2022/07/03/j8uLSe.png 1.5x, https://s1.ax1x.com/2022/07/03/j8uLSe.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8uLSe.png"
+        title="Step 6 - Workload Network" /></a></p>
+</li>
+<li>
+<p><strong>Tanzu Kubernetes Grid Service</strong> step: Select Content Library as &ldquo;TKG-Content-Library&rdquo;. Click Next to the final step.
+<a href="https://imgtu.com/i/j8uxeI.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8uxeI.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8uxeI.png, https://s1.ax1x.com/2022/07/03/j8uxeI.png 1.5x, https://s1.ax1x.com/2022/07/03/j8uxeI.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8uxeI.png"
+        title="Step 7 - Content Library" /></a></p>
+</li>
+<li>
+<p><strong>Review and Confirm</strong> step: Change Control Plane Size from &ldquo;Small&rdquo; to &ldquo;Tiny&rdquo;. Here you need to go back to step 6 and click Next again to automatically update the Internal Network for Kubernetes Services from 10.96.0.0/23 to 10.96.0.0/24.
+<a href="https://imgtu.com/i/j8KD6H.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8KD6H.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8KD6H.png, https://s1.ax1x.com/2022/07/03/j8KD6H.png 1.5x, https://s1.ax1x.com/2022/07/03/j8KD6H.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8KD6H.png"
+        title="Step 8 - Control Plane Size" /></a></p>
+</li>
+<li>
+<p>After clicking Finish, the Supervisor Cluster begins the automatic deployment process, and the Workload Management interface switches to look like this:
+<a href="https://imgtu.com/i/j8KIXj.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8KIXj.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8KIXj.png, https://s1.ax1x.com/2022/07/03/j8KIXj.png 1.5x, https://s1.ax1x.com/2022/07/03/j8KIXj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8KIXj.png"
+        title="Deployment in Progress" /></a></p>
+</li>
+</ol>
+<h3 id="22-deploying-tanzu-kubernetes-cluster">2.2 Deploying Tanzu Kubernetes Cluster</h3>
+<p>After about 30 minutes, you should see the Tanzu Supervisor Cluster enter the &ldquo;Running&rdquo; state, with the Control Plane Node getting the correct IP address.
+<a href="https://imgtu.com/i/j8lO4P.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8lO4P.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8lO4P.png, https://s1.ax1x.com/2022/07/03/j8lO4P.png 1.5x, https://s1.ax1x.com/2022/07/03/j8lO4P.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8lO4P.png"
+        title="Supervisor Cluster Running" /></a></p>
+<ol>
+<li>
+<p>Now you can switch to the Namespace tab to create a Namespace. Note that this Namespace is not a Kubernetes Namespace—it&rsquo;s a vSphere Tanzu Namespace. Our Tanzu Kubernetes Cluster will be created under this Namespace.
+<a href="https://imgtu.com/i/j8114x.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8114x.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8114x.png, https://s1.ax1x.com/2022/07/03/j8114x.png 1.5x, https://s1.ax1x.com/2022/07/03/j8114x.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8114x.png"
+        title="Create Namespace" /></a></p>
+</li>
+<li>
+<p>After creating the Namespace, you&rsquo;ll see the current Namespace&rsquo;s config status. To proceed with configuration, we need to make 3 settings in Namespace management: Permissions, Storage, and VM Service. First, for Permissions, we add an administrator user through the &ldquo;Add Permissions&rdquo; button.
+<a href="https://imgtu.com/i/j81fVs.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j81fVs.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j81fVs.png, https://s1.ax1x.com/2022/07/03/j81fVs.png 1.5x, https://s1.ax1x.com/2022/07/03/j81fVs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j81fVs.png"
+        title="Add Permissions" /></a></p>
+</li>
+<li>
+<p>Use the &ldquo;Add Storage&rdquo; button to add storage space for the Namespace.
+<a href="https://imgtu.com/i/j81LqJ.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j81LqJ.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j81LqJ.png, https://s1.ax1x.com/2022/07/03/j81LqJ.png 1.5x, https://s1.ax1x.com/2022/07/03/j81LqJ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j81LqJ.png"
+        title="Add Storage" /></a></p>
+</li>
+<li>
+<p>Use the &ldquo;Add VM Class&rdquo; button to add various VM specifications for the Namespace. Subsequent Kubernetes Nodes will automatically configure corresponding CPU and memory based on the selected specifications. I recommend selecting all 16 default specifications.
+<a href="https://imgtu.com/i/j83ise.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83ise.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83ise.png, https://s1.ax1x.com/2022/07/03/j83ise.png 1.5x, https://s1.ax1x.com/2022/07/03/j83ise.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83ise.png"
+        title="Add VM Classes" /></a></p>
+</li>
+<li>
+<p>Use the &ldquo;Add Content Library&rdquo; button to associate the Tanzu Content Library again.
+<a href="https://imgtu.com/i/j83mJP.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83mJP.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83mJP.png, https://s1.ax1x.com/2022/07/03/j83mJP.png 1.5x, https://s1.ax1x.com/2022/07/03/j83mJP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83mJP.png"
+        title="Add Content Library" /></a></p>
+</li>
+<li>
+<p>After completing all Namespace configurations, it should look like this. At this point, we&rsquo;ve completed all preparation work for creating our Tanzu Kubernetes Cluster.
+<a href="https://imgtu.com/i/j83NWV.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83NWV.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83NWV.png, https://s1.ax1x.com/2022/07/03/j83NWV.png 1.5x, https://s1.ax1x.com/2022/07/03/j83NWV.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83NWV.png"
+        title="Namespace Configuration Complete" /></a></p>
+</li>
+<li>
+<p>In the Status card at the bottom of the screen above, there&rsquo;s a &ldquo;Link to CLI Tools&rdquo;. Click &ldquo;Open&rdquo; to open a new webpage where you can download the kubectl vsphere plugins. This command-line plugin will help us manage and use Tanzu Kubernetes Clusters.
+<a href="https://imgtu.com/i/j83fyD.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j83fyD.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j83fyD.png, https://s1.ax1x.com/2022/07/03/j83fyD.png 1.5x, https://s1.ax1x.com/2022/07/03/j83fyD.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j83fyD.png"
+        title="CLI Tools Download" /></a></p>
+</li>
+<li>
+<p>Following the webpage instructions, after downloading and installing, go to the CLI console and use the CLI to log into our Supervisor Cluster. The server address should be the IP address seen in the Control Plane Node. If everything is correct, the command line will prompt for username and password—these should be the administrator user credentials from step 2. After login, you&rsquo;ll see &ldquo;Logged in successfully&rdquo;.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;kubectl-vsphere.exe login --server<span class="o">=</span>10.10.3.65 --insecure-skip-tls-verify
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Username: administrator@tkg.local
+</span></span><span class="line"><span class="cl">KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the password below
+</span></span><span class="line"><span class="cl">Password:
+</span></span><span class="line"><span class="cl">Logged in successfully.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You have access to the following contexts:
+</span></span><span class="line"><span class="cl">   10.10.3.65
+</span></span><span class="line"><span class="cl">   tkgs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If the context you wish to use is not in this list, you may need to try
+</span></span><span class="line"><span class="cl">logging in again later, or contact your cluster administrator.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To change context, use <span class="sb">`</span>kubectl config use-context &lt;workload name&gt;<span class="sb">`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;</span></span></code></pre></div></div>
+</li>
+<li>
+<p>At this point, we&rsquo;ve successfully logged into the Supervisor Cluster. Next, we&rsquo;ll use the following YAML configuration file to create a Tanzu Kubernetes Cluster.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">run.tanzu.vmware.com/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">TanzuKubernetesCluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">sedemo-tkc-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">distribution</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v1.21</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">topology</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">best-effort-xsmall</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">workers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">best-effort-small</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">settings</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">classes</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tkgs-demo-storage-policy&#34;</span><span class="p">]</span><span class="w">              </span><span class="c">#Named PVC storage classes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">defaultClass</span><span class="p">:</span><span class="w"> </span><span class="l">tkgs-demo-storage-policy</span></span></span></code></pre></div></div>
+</li>
+</ol>
+<p>The name under metadata is the name of the created cluster, and Namespace is the Namespace name we just created in vSphere.
+Under spec, distribution is the Kubernetes version to create. topology-controlplane-class and topology-workers-class correspond to the VM class types we set in step 14—here we choose &ldquo;best-effort-xsmall&rdquo; and &ldquo;best-effort-small&rdquo; respectively, with counts of 1 and 2.</p>
+<p>Run the following command, and the Tanzu Kubernetes Cluster will be automatically created in vCenter:</p>
+<pre><code>```shell
+c:\bin&gt;kubectl apply -f tkc.yaml
+tanzukubernetescluster.run.tanzu.vmware.com/sedemo-tkc-01 created
+```
+</code></pre>
+<p>After a few minutes, you should see 3 VMs created in vCenter, as shown below.</p>
+<p><a href="https://imgtu.com/i/j8JgWq.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/07/03/j8JgWq.png"
+        data-srcset="https://s1.ax1x.com/2022/07/03/j8JgWq.png, https://s1.ax1x.com/2022/07/03/j8JgWq.png 1.5x, https://s1.ax1x.com/2022/07/03/j8JgWq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/07/03/j8JgWq.png"
+        title="TKC VMs Created" /></a></p>
+<ol start="10">
+<li>
+<p>Go back to the CLI console and run the following login command to access the Tanzu Kubernetes Guest Cluster.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-shell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">c:<span class="se">\b</span>in&gt;kubectl vsphere login --server<span class="o">=</span>10.10.3.65 --tanzu-kubernetes-cluster-name sedemo-tkc-01 --tanzu-kubernetes-cluster-namespace tkgs --vsphere-username administrator@tkg.local --insecure-skip-tls-verify
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">KUBECTL_VSPHERE_PASSWORD environment variable is not set. Please enter the password below
+</span></span><span class="line"><span class="cl">Password:
+</span></span><span class="line"><span class="cl">Logged in successfully.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You have access to the following contexts:
+</span></span><span class="line"><span class="cl">   10.10.3.65
+</span></span><span class="line"><span class="cl">   sedemo-tkc-01
+</span></span><span class="line"><span class="cl">   tkgs
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If the context you wish to use is not in this list, you may need to try
+</span></span><span class="line"><span class="cl">logging in again later, or contact your cluster administrator.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To change context, use <span class="sb">`</span>kubectl config use-context &lt;workload name&gt;<span class="sb">`</span></span></span></code></pre></div></div>
+</li>
+</ol>
+<p>At this point, we can access our Kubernetes cluster normally and perform all management tasks using standard kubectl commands.</p>
+<p>This automated approach makes it incredibly easy to get started with vSphere with Tanzu, giving you a complete environment to explore and learn without the usual complexity and cost barriers. Whether you&rsquo;re just getting started with Kubernetes or exploring enterprise-grade container orchestration, this setup provides everything you need to dive deep into Tanzu&rsquo;s capabilities.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-03</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2022/07/nested-tkgs-lab-automation-script/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F07%2Fnested-tkgs-lab-automation-script%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F07%2Fnested-tkgs-lab-automation-script%2F&amp;text=Automated&#43;Nested&#43;TKGs&#43;Lab&#43;Environment&#43;Script" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F07%252Fnested-tkgs-lab-automation-script%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F07%252Fnested-tkgs-lab-automation-script%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a>,&nbsp;<a href="/en/tags/Tanzu/">Tanzu</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2022/03/pvc-and-fcd/" class="prev" rel="prev" title="First Class Disks (FCD) Explained"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>First Class Disks (FCD) Explained</a>
+            <a href="/en/2023/03/v12update-hidden-key/" class="next" rel="next" title="Hidden Shortcuts in Veeam Backup &amp; Replication v12">Hidden Shortcuts in Veeam Backup & Replication v12<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

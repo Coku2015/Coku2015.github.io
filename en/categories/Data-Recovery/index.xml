@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Recovery on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Data-Recovery/</link>
+    <description>Recent content in Data Recovery on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Wed, 03 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Data-Recovery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Restoring Data from Your Veeam Backups: A Complete Guide</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/agent-backup-and-restore/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/agent-backup-and-restore/</guid>
+      <description>&lt;p&gt;Yesterday, I walked you through setting up Veeam Agent for Microsoft Windows and creating your first backups. But a backup strategy isn&amp;rsquo;t complete without knowing how to restore when disaster strikes.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s why today I&amp;rsquo;m covering the essential recovery methods that make Veeam Agent such a powerful tool for Windows users. Whether you need to recover a single file or rebuild an entire system, understanding these recovery options will give you the confidence to handle any data loss scenario.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Secret of File-Level Recovery</title>
+      <link>https://blog.backupnext.cloud/en/2017/04/secret-in-file-level-recovery/</link>
+      <pubDate>Thu, 20 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/04/secret-in-file-level-recovery/</guid>
+      <description>&lt;p&gt;When it comes to restoring virtual machines, you typically have several recovery methods at your disposal, each suited for different scenarios. Among these, file-level recovery stands out as one of the most widely used approaches. This isn&amp;rsquo;t exactly cutting-edge technology—the need for it emerged alongside virtualization backup itself, and major backup software vendors quickly implemented support for it. On the surface, file-level recovery seems straightforward, but when you actually need to use it, Veeam offers some powerful capabilities that can make a real difference.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Cutting-edge Technology: vPower NFS - Cloud.Virt.AI.Sec</title><meta name="description" content="Imagine recovering terabytes of data in minutes instead of hours. What if you could run virtual machines directly from backup files without any restoration …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2018/03/vpower-nfs/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Veeam Cutting-edge Technology: vPower NFS">
+  <meta property="og:description" content="Imagine recovering terabytes of data in minutes instead of hours. What if you could run virtual machines directly from backup files without any restoration process?
+This isn’t science fiction—it’s Veeam’s vPower technology, a breakthrough that fundamentally changed how we think about data recovery in virtualized environments. When Veeam introduced vPower, they didn’t just improve an existing process; they created an entirely new paradigm for virtualization data protection that still influences the industry today.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:tag" content="VMware Cutting-Edge Technology">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Veeam Cutting-edge Technology: vPower NFS">
+  <meta name="twitter:description" content="Imagine recovering terabytes of data in minutes instead of hours. What if you could run virtual machines directly from backup files without any restoration process?
+This isn’t science fiction—it’s Veeam’s vPower technology, a breakthrough that fundamentally changed how we think about data recovery in virtualized environments. When Veeam introduced vPower, they didn’t just improve an existing process; they created an entirely new paradigm for virtualization data protection that still influences the industry today.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2018/03/vpower-nfs/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2018/03/surebackup/" /><link rel="next" href="https://blog.backupnext.cloud/en/2018/04/uair/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Cutting-edge Technology: vPower NFS",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2018\/03\/vpower-nfs\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware Cutting-edge Technology","wordcount":  1347 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2018\/03\/vpower-nfs\/","datePublished": "2018-03-05T00:00:00+00:00","dateModified": "2018-03-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2018/03/vpower-nfs/">简体中文</option><option value="/en/2018/03/vpower-nfs/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2018/03/vpower-nfs/">简体中文</option><option value="/en/2018/03/vpower-nfs/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Cutting-edge Technology: vPower NFS</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Cutting-edge-Technology/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Cutting-Edge Technology</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-03-05">2018-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1347 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#where-vpower-makes-a-difference">Where vPower Makes a Difference</a></li>
+    <li><a href="#understanding-the-limitations">Understanding the Limitations</a></li>
+    <li><a href="#how-vpower-handles-write-operations">How vPower Handles Write Operations</a>
+      <ul>
+        <li><a href="#surebackups-approach">SureBackup&rsquo;s Approach</a></li>
+        <li><a href="#instant-vm-recoverys-strategy">Instant VM Recovery&rsquo;s Strategy</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuration-essentials">Configuration Essentials</a>
+      <ul>
+        <li><a href="#port-requirements">Port Requirements</a></li>
+        <li><a href="#cache-management-the-critical-detail">Cache Management: The Critical Detail</a></li>
+      </ul>
+    </li>
+    <li><a href="#advanced-instant-vm-recovery-techniques">Advanced Instant VM Recovery Techniques</a>
+      <ul>
+        <li><a href="#hotadd-disk-recovery-without-network">HotAdd Disk Recovery Without Network</a></li>
+        <li><a href="#creating-new-disks-for-non-standard-file-systems">Creating New Disks for Non-Standard File Systems</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Imagine recovering terabytes of data in minutes instead of hours. What if you could run virtual machines directly from backup files without any restoration process?</p>
+<p>This isn&rsquo;t science fiction—it&rsquo;s Veeam&rsquo;s vPower technology, a breakthrough that fundamentally changed how we think about data recovery in virtualized environments. When Veeam introduced vPower, they didn&rsquo;t just improve an existing process; they created an entirely new paradigm for virtualization data protection that still influences the industry today.</p>
+<p>The beauty of vPower lies in its elegant simplicity. While traditional data recovery could take hours or even days for large datasets, vPower transforms this process into a matter of minutes. Suddenly, massive data recovery operations became manageable, and downtime nightmares turned into minor inconveniences.</p>
+<p>Veeam&rsquo;s vPower technology works seamlessly across both VMware vSphere and Microsoft Hyper-V platforms, delivering consistent results regardless of your virtualization choice. For this deep dive, we&rsquo;ll focus on the VMware vSphere implementation to understand the magic behind vPower.</p>
+<p>At its heart, vPower is brilliantly simple. The Veeam engineering team developed an incredibly clever approach: they use virtualization techniques to make compressed, deduplicated backup files appear as standard VMDK disks that any hypervisor can immediately recognize and use. It&rsquo;s a architectural masterpiece where ESXi hosts connect directly to a vPower NFS Server, enabling instant virtual machine recovery.</p>
+<p>The result? A technology that tricks your infrastructure into seeing backup files as live virtual machines, ready to run in seconds.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OdGia7pibrI1bcnPia68eJCbrjb7H82qBYSjnlxWRfjVtwTe8GWckMToA/640?wx_fmt=png"
+        data-srcset="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OdGia7pibrI1bcnPia68eJCbrjb7H82qBYSjnlxWRfjVtwTe8GWckMToA/640?wx_fmt=png, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OdGia7pibrI1bcnPia68eJCbrjb7H82qBYSjnlxWRfjVtwTe8GWckMToA/640?wx_fmt=png 1.5x, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OdGia7pibrI1bcnPia68eJCbrjb7H82qBYSjnlxWRfjVtwTe8GWckMToA/640?wx_fmt=png 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OdGia7pibrI1bcnPia68eJCbrjb7H82qBYSjnlxWRfjVtwTe8GWckMToA/640?wx_fmt=png"
+        title="img" /></p>
+<p>Here&rsquo;s where the magic happens: at the center of this architecture sits a Windows Server running Veeam&rsquo;s vPower NFS service, essentially masquerading as a standard NFS server. If you&rsquo;re familiar with VMware, you know that beyond traditional block-level storage like VMFS, vSphere can also use NFS datastores. Veeam leverages this capability brilliantly.</p>
+<p>When ESXi connects to Veeam&rsquo;s vPower NFS server, something remarkable occurs. Through Veeam&rsquo;s patented vPower protocol, ESXi discovers what appear to be perfectly normal VMDK files in the datastore. To ESXi, these look identical to the virtual disks used by any running VM. Veeam&rsquo;s simulation technology completely fools the hypervisor.</p>
+<p>But here&rsquo;s the clever part: those VMDK files aren&rsquo;t actually stored as traditional disk files. Instead, Veeam uses sophisticated data block redirection technology that maps ESXi&rsquo;s read requests directly to the corresponding data blocks within compressed, deduplicated backup files. It&rsquo;s like having a translator that instantly converts backup data into live disk format on demand.</p>
+<p>This redirection works as a one-way street for reads. The backup archives remain pristine and read-only. When the running VM needs to write data—a natural occurrence during normal operation—vPower intelligently intercepts these write requests and redirects them to separate cache locations. This elegant separation ensures your backup archives maintain their integrity while the VM runs normally from what appears to be standard storage.</p>
+<h2 id="where-vpower-makes-a-difference">Where vPower Makes a Difference</h2>
+<p>The vPower NFS service isn&rsquo;t just a one-trick pony—it&rsquo;s the engine behind five of Veeam&rsquo;s most powerful features:</p>
+<p><strong>Instant VM Recovery</strong> – The flagship use case that brings VMs online directly from backup files in minutes.</p>
+<p><strong>SureBackup</strong> – Fully automated backup verification that runs your VMs in isolated virtual labs to ensure backups actually work. (Check my previous post for a deep dive into this game-changing feature.)</p>
+<p><strong>U-AIR (Universal Application Item Recovery)</strong> – Recover individual application items without full VM restoration.</p>
+<p><strong>On-demand Sandbox</strong> – Create isolated environments for testing, development, or security analysis directly from production backups.</p>
+<p><strong>Instant File-level Recovery</strong> – Restore individual files from any operating system without full VM recovery.</p>
+<p>These five capabilities all depend on the vPower NFS service running behind the scenes. If the vPower NFS service were to fail, all these features would be affected. Fortunately, the technology is so robust that failures are virtually unheard of in production environments.</p>
+<h2 id="understanding-the-limitations">Understanding the Limitations</h2>
+<p>vPower works with any VM backup stored on disk-based repositories. However, the technology has some natural boundaries:</p>
+<ul>
+<li><strong>Tape backups</strong> won&rsquo;t work due to their offline nature and sequential access patterns</li>
+<li><strong>Cloud repositories</strong> face performance challenges from network latency and bandwidth limitations</li>
+</ul>
+<p>Both scenarios simply can&rsquo;t provide the rapid, random access required for instant VM operations.</p>
+<h2 id="how-vpower-handles-write-operations">How vPower Handles Write Operations</h2>
+<p>The clever part of vPower is how it manages different use cases. When it comes to handling write operations from running VMs, Veeam employs different strategies depending on whether you&rsquo;re using SureBackup or Instant VM Recovery.</p>
+<h3 id="surebackups-approach">SureBackup&rsquo;s Approach</h3>
+<p>For SureBackup environments, vPower takes advantage of the virtual lab infrastructure. Write operations from the running VM get captured in VMDK redo logs stored on whatever datastore you&rsquo;ve designated for your Virtual Lab. The original VM disks are automatically configured as non-persistent, meaning all changes disappear when the verification completes—perfect for temporary testing scenarios.</p>
+<h3 id="instant-vm-recoverys-strategy">Instant VM Recovery&rsquo;s Strategy</h3>
+<p>Instant VM Recovery has different requirements. When you recover a VM this way, you typically plan to migrate it back to production storage eventually. This means the VM needs to maintain its changes and remain fully functional for extended periods.</p>
+<p>Instead of using non-persistent disks, vPower employs its own caching technology. Write operations get captured in a special vPower NFS cache, which makes the recovered VM appear as a complete, persistent virtual machine from VMware&rsquo;s perspective. This approach preserves full VMware functionality, including critical capabilities like vMotion for live migration to production infrastructure.</p>
+<h2 id="configuration-essentials">Configuration Essentials</h2>
+<p>Setting up vPower is straightforward. Each backup repository you configure gets its own dedicated vPower NFS server automatically.</p>
+<h3 id="port-requirements">Port Requirements</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OLUV4YRXrTBy39LWn0U1icmTISO0auAy4O0Khd5FuVnsfDpcZzOJz4w/640?wx_fmt=png"
+        data-srcset="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OLUV4YRXrTBy39LWn0U1icmTISO0auAy4O0Khd5FuVnsfDpcZzOJz4w/640?wx_fmt=png, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OLUV4YRXrTBy39LWn0U1icmTISO0auAy4O0Khd5FuVnsfDpcZzOJz4w/640?wx_fmt=png 1.5x, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OLUV4YRXrTBy39LWn0U1icmTISO0auAy4O0Khd5FuVnsfDpcZzOJz4w/640?wx_fmt=png 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7OLUV4YRXrTBy39LWn0U1icmTISO0auAy4O0Khd5FuVnsfDpcZzOJz4w/640?wx_fmt=png"
+        title="img" /></p>
+<p>Veeam handles most port configuration automatically:</p>
+<ul>
+<li><strong>Ports 2049+ and 1058+</strong>: Auto-detected, with the system finding available alternatives if needed</li>
+<li><strong>Ports 6161 and 111</strong>: Fixed ports that require manual changes if conflicts occur</li>
+</ul>
+<h3 id="cache-management-the-critical-detail">Cache Management: The Critical Detail</h3>
+<p>Here&rsquo;s something you need to pay attention to: the vPower NFS cache. Since vPower needs somewhere to store write operations, cache management becomes crucial for production deployments.</p>
+<p><strong>Default location</strong>: <code>C:\Programdata\Veeam\Backup\NFSdatastore</code></p>
+<p><strong>Best practice</strong>: Reserve at least 100GB of free space for this cache directory. You can redirect this location to another drive if needed—just make sure it has adequate space and performance.</p>
+<p><strong>Runtime flexibility</strong>: During Instant VM Recovery operations, Veeam lets you redirect the cache to a different location with more available space, which is handy for unexpected large-scale recoveries.</p>
+<p><strong>SureBackup advantage</strong>: With SureBackup, write operations go to VMDK redo logs on your designated Virtual Lab datastore, so you don&rsquo;t need to worry about the NFS cache directory capacity at all.</p>
+<h2 id="advanced-instant-vm-recovery-techniques">Advanced Instant VM Recovery Techniques</h2>
+<p>Instant VM Recovery offers more creative possibilities than just quickly bringing a VM online. Let me share a couple of advanced techniques that showcase the versatility of this technology.</p>
+<h3 id="hotadd-disk-recovery-without-network">HotAdd Disk Recovery Without Network</h3>
+<p>Sometimes you need to recover data without network connectivity. Here&rsquo;s a clever workaround:</p>
+<ol>
+<li>Start Instant VM Recovery but <strong>don&rsquo;t connect to network</strong> and keep the VM powered off</li>
+<li>Once the VM is registered, <strong>attach its virtual disk</strong> to a running VM in your production environment</li>
+<li>Bring the attached disk <strong>online</strong> in the operating system</li>
+<li><strong>Copy and restore</strong> whatever data you need</li>
+<li><strong>Unmount</strong> the disk when you&rsquo;re finished</li>
+<li><strong>Cancel</strong> the Instant VM Recovery operation</li>
+</ol>
+<p>This technique gives you direct disk access without ever booting the recovered VM or touching your network.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7XHvSkNicalDK2nLAp91jgGHNZ4XffZyP43LTIefmY0sjN5S2cbqOYZw/640?wx_fmt=png"
+        data-srcset="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7XHvSkNicalDK2nLAp91jgGHNZ4XffZyP43LTIefmY0sjN5S2cbqOYZw/640?wx_fmt=png, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7XHvSkNicalDK2nLAp91jgGHNZ4XffZyP43LTIefmY0sjN5S2cbqOYZw/640?wx_fmt=png 1.5x, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7XHvSkNicalDK2nLAp91jgGHNZ4XffZyP43LTIefmY0sjN5S2cbqOYZw/640?wx_fmt=png 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7XHvSkNicalDK2nLAp91jgGHNZ4XffZyP43LTIefmY0sjN5S2cbqOYZw/640?wx_fmt=png"
+        title="img" /></p>
+<h3 id="creating-new-disks-for-non-standard-file-systems">Creating New Disks for Non-Standard File Systems</h3>
+<p>Need to recover data from unusual file systems or create custom disk configurations? Try this approach:</p>
+<ol>
+<li>Start Instant VM Recovery <strong>without network connectivity</strong></li>
+<li>Power on the recovered VM and <strong>create a new, empty VMDK</strong></li>
+<li><strong>Attach</strong> this new VMDK to the recovered VM</li>
+<li>Log into the system, <strong>format the new disk</strong> according to your specific requirements and copy data to it</li>
+<li><strong>Remove</strong> the newly created VMDK from the recovered VM and put it into production use</li>
+<li><strong>Stop</strong> the Instant VM Recovery operation</li>
+</ol>
+<p>This method is perfect for handling non-standard file systems or creating customized disk images from backup data.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7hSZZp2py64oRdJrMsoAO6kFIZsBCCHLRlKLR9Zia5nItGuYPI4qeAuA/640?wx_fmt=png"
+        data-srcset="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7hSZZp2py64oRdJrMsoAO6kFIZsBCCHLRlKLR9Zia5nItGuYPI4qeAuA/640?wx_fmt=png, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7hSZZp2py64oRdJrMsoAO6kFIZsBCCHLRlKLR9Zia5nItGuYPI4qeAuA/640?wx_fmt=png 1.5x, https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7hSZZp2py64oRdJrMsoAO6kFIZsBCCHLRlKLR9Zia5nItGuYPI4qeAuA/640?wx_fmt=png 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qlogo.cn/mmbiz_png/FEtXyGtyIU2FvCd8FPVLZpCpniaFGDBr7hSZZp2py64oRdJrMsoAO6kFIZsBCCHLRlKLR9Zia5nItGuYPI4qeAuA/640?wx_fmt=png"
+        title="img" /></p>
+<hr>
+<p>vPower represents one of those rare technologies that&rsquo;s both incredibly clever and practically useful. By elegantly solving the challenge of instant access to backup data, Veeam created a solution that continues to save organizations countless hours of downtime. The beauty is in the simplicity—tricking ESXi into seeing backup files as live VMs—and the result is nothing short of magical for anyone who&rsquo;s ever faced a recovery emergency.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2018-03-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2018/03/vpower-nfs/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F03%2Fvpower-nfs%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F03%2Fvpower-nfs%2F&amp;text=Veeam&#43;Cutting-edge&#43;Technology%3A&#43;vPower&#43;NFS" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F03%252Fvpower-nfs%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F03%252Fvpower-nfs%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware-Cutting-edge-Technology/">VMware Cutting-Edge Technology</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2018/03/surebackup/" class="prev" rel="prev" title="You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>You Only Know if Backup Archives Can Be Restored When You've Actually Done It</a>
+            <a href="/en/2018/04/uair/" class="next" rel="next" title="Recovering MySQL Database with Veeam U-Air">Recovering MySQL Database with Veeam U-Air<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

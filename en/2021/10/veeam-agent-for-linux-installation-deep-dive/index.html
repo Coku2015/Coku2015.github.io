@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Agent for Linux Installation Deep Dive - Cloud.Virt.AI.Sec</title><meta name="description" content="1. Components &amp; Roles Veeam Agent for Linux (VAL) has two parts: the Veeam binaries and the VeeamSnap kernel module. On CentOS/Red Hat, you typically install: …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2021/10/veeam-agent-for-linux-installation-deep-dive/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Veeam Agent for Linux Installation Deep Dive">
+  <meta property="og:description" content="1. Components &amp; Roles Veeam Agent for Linux (VAL) has two parts: the Veeam binaries and the VeeamSnap kernel module. On CentOS/Red Hat, you typically install:
+veeam-&lt;version&gt;.rpm veeamsnap-&lt;version&gt;.rpm VeeamSnap handles snapshots and CBT; the Veeam package installs everything else. When you install veeam, it automatically pulls in veeamsnap as a dependency.
+2. Installation Path VAL relies on the distro’s package manager to fetch dependencies (see “Veeam Agent for Linux Basics”). Push installs from VBR hide the complexity, but special cases exist.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-10-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-10-12T00:00:00+00:00">
+    <meta property="article:tag" content="备份">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Veeam Agent for Linux Installation Deep Dive">
+  <meta name="twitter:description" content="1. Components &amp; Roles Veeam Agent for Linux (VAL) has two parts: the Veeam binaries and the VeeamSnap kernel module. On CentOS/Red Hat, you typically install:
+veeam-&lt;version&gt;.rpm veeamsnap-&lt;version&gt;.rpm VeeamSnap handles snapshots and CBT; the Veeam package installs everything else. When you install veeam, it automatically pulls in veeamsnap as a dependency.
+2. Installation Path VAL relies on the distro’s package manager to fetch dependencies (see “Veeam Agent for Linux Basics”). Push installs from VBR hide the complexity, but special cases exist.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2021/10/veeam-agent-for-linux-installation-deep-dive/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2021/07/k10offline-script-2/" /><link rel="next" href="https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Agent for Linux Installation Deep Dive",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2021\/10\/veeam-agent-for-linux-installation-deep-dive\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "备份","wordcount":  306 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2021\/10\/veeam-agent-for-linux-installation-deep-dive\/","datePublished": "2021-10-12T00:00:00+00:00","dateModified": "2021-10-12T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2021/10/veeam-agent-for-linux-installation-deep-dive/">简体中文</option><option value="/en/2021/10/veeam-agent-for-linux-installation-deep-dive/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2021/10/veeam-agent-for-linux-installation-deep-dive/">简体中文</option><option value="/en/2021/10/veeam-agent-for-linux-installation-deep-dive/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Agent for Linux Installation Deep Dive</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-10-12">2021-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;306 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-components--roles">1. Components &amp; Roles</a></li>
+    <li><a href="#2-installation-path">2. Installation Path</a>
+      <ul>
+        <li><a href="#21-dkms-based-builds">2.1 DKMS-Based Builds</a></li>
+        <li><a href="#22-precompiled-packages-kmod-veeamsnap">2.2 Precompiled Packages (<code>kmod-veeamsnap</code>)</a></li>
+        <li><a href="#23-secure-boot-uefi">2.3 Secure Boot (UEFI)</a></li>
+        <li><a href="#24-going-snapless">2.4 Going Snapless</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-components--roles">1. Components &amp; Roles</h2>
+<p>Veeam Agent for Linux (VAL) has two parts: the <strong>Veeam binaries</strong> and the <strong>VeeamSnap kernel module</strong>. On CentOS/Red Hat, you typically install:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>veeam-&lt;version&gt;.rpm
+veeamsnap-&lt;version&gt;.rpm</code></pre></div>
+<p>VeeamSnap handles snapshots and CBT; the Veeam package installs everything else. When you install <code>veeam</code>, it automatically pulls in <code>veeamsnap</code> as a dependency.</p>
+<h2 id="2-installation-path">2. Installation Path</h2>
+<p>VAL relies on the distro’s package manager to fetch dependencies (see <a href="https://blog.backupnext.cloud/2020/09/Veeam-Linux-Agent-101/" target="_blank" rel="noopener noreffer ">“Veeam Agent for Linux Basics”</a>). Push installs from VBR hide the complexity, but special cases exist.</p>
+<h3 id="21-dkms-based-builds">2.1 DKMS-Based Builds</h3>
+<p>VeeamSnap is an out-of-tree kernel module, so Veeam uses DKMS. During <code>rpm -ivh veeamsnap...</code>, the module is registered with DKMS, compiled, and installed.</p>
+<p>DKMS (Dynamic Kernel Module Support) is Dell’s open-source project; more info: <a href="https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html" target="_blank" rel="noopener noreffer ">https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html</a>. For compilation to succeed, DKMS needs GCC, make, kernel headers, etc. VeeamSnap pulls those dependencies automatically.</p>
+<h3 id="22-precompiled-packages-kmod-veeamsnap">2.2 Precompiled Packages (<code>kmod-veeamsnap</code>)</h3>
+<p>For certain distros Veeam ships prebuilt modules: <code>kmod-veeamsnap-&lt;version&gt;.rpm</code>. They provide the same functionality but skip DKMS. Supported OS versions include:</p>
+<ul>
+<li>RHEL 6 (kernel ≥ 2.6.32-131.0.15)</li>
+<li>CentOS/RHEL 7.0–7.9 (kernel ≥ 3.10.0-123)</li>
+<li>RHEL/CentOS 8</li>
+<li>SLES / openSUSE</li>
+</ul>
+<p>Packages live at <a href="http://repository.veeam.com/.private/rpm" target="_blank" rel="noopener noreffer ">http://repository.veeam.com/.private/rpm</a>. Because the installer chooses the correct module via a Python 3 script, your system must have Python 3 available.</p>
+<h3 id="23-secure-boot-uefi">2.3 Secure Boot (UEFI)</h3>
+<p>If Secure Boot is enabled, import the VeeamSnap certificate before installing <code>kmod-veeamsnap</code>. Steps (example for RHEL 8):</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -O http://repository.veeam.com/.private/rpm/el/8/x86_64/veeamsnap-ueficert-5.0.1.4493-1.noarch.rpm
+</span></span><span class="line"><span class="cl">rpm -ivh veeamsnap-ueficert*
+</span></span><span class="line"><span class="cl">mokutil --import veeamsnap-ueficert.crt</span></span></code></pre></div></div>
+<p>Then reboot, enter UEFI, and enroll the certificate. After that, install <code>kmod-veeamsnap</code> as usual.</p>
+<h3 id="24-going-snapless">2.4 Going Snapless</h3>
+<p>From VAL 5.0.1 onward, Veeam offers a snapless mode (<code>veeam-nosnap-&lt;version&gt;.rpm</code>). Example for RHEL 8:</p>
+<p><a href="http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.el8.x86_64.rpm" target="_blank" rel="noopener noreffer ">http://repository.veeam.com/.private/rpm/el/8/x86_64/veeam-nosnap-5.0.1.4493-1.el8.x86_64.rpm</a></p>
+<p>This mode doesn’t use VeeamSnap and supports only file-level backups:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png"
+        data-srcset="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png, https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png 1.5x, https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png"
+        title="https://helpcenter.veeam.com/docs/agentforlinux/userguide/images/backup_job_mode.png" /></p>
+<p>VBR exposes the same option:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png"
+        data-srcset="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png, https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png 1.5x, https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png 2x"
+        data-sizes="auto"
+        alt="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png"
+        title="https://helpcenter.veeam.com/docs/backup/agents/images/agent_job_mode_linux.png" /></p>
+<p>You can install the nosnap package standalone; it doesn’t depend on VeeamSnap, though other dependencies are still resolved via the package manager.</p>
+<p>Hope this breakdown helps when deploying VAL in different environments.***</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2021/10/veeam-agent-for-linux-installation-deep-dive/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F10%2Fveeam-agent-for-linux-installation-deep-dive%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F10%2Fveeam-agent-for-linux-installation-deep-dive%2F&amp;text=Veeam&#43;Agent&#43;for&#43;Linux&#43;Installation&#43;Deep&#43;Dive" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F10%252Fveeam-agent-for-linux-installation-deep-dive%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F10%252Fveeam-agent-for-linux-installation-deep-dive%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/%E5%A4%87%E4%BB%BD/">备份</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2021/07/k10offline-script-2/" class="prev" rel="prev" title="Kasten K10 Starter Series 05 - K10 Installation Package Download (2)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kasten K10 Starter Series 05 - K10 Installation Package Download (2)</a>
+            <a href="/en/2022/02/veeam-hardened-linux-repository-configurator/" class="next" rel="next" title="Veeam Hardened Linux Repository Configurator">Veeam Hardened Linux Repository Configurator<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

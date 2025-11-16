@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>所有文章 - 虚化人生</title>
+        <title>所有文章 - 云虚智安</title>
         <link>https://blog.backupnext.cloud/posts/</link>
-        <description>所有文章 | 虚化人生</description>
+        <description>所有文章 | 云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><copyright>© Backup Next Cloud</copyright><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
     <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
     <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
     <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>

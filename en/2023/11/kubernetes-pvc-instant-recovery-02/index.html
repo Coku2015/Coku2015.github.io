@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore - Cloud.Virt.AI.Sec</title><meta name="description" content="In our previous article, we set up the basic Kubernetes environment. Now let’s dive deep into the backup and restore process.
+K10 Installation and Configuration …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore">
+  <meta property="og:description" content="In our previous article, we set up the basic Kubernetes environment. Now let’s dive deep into the backup and restore process.
+K10 Installation and Configuration First up is K10 installation - nothing particularly special here. Just follow the official installation guide from the website and use Helm for installation. The only thing to note is that for instant recovery support, K10 needs to be version 6.0.8 or higher, while VBR requires version 12 or above. Here are the K10 installation parameters I used for your reference:">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-11-05T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Instant Recovery">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore">
+  <meta name="twitter:description" content="In our previous article, we set up the basic Kubernetes environment. Now let’s dive deep into the backup and restore process.
+K10 Installation and Configuration First up is K10 installation - nothing particularly special here. Just follow the official installation guide from the website and use Helm for installation. The only thing to note is that for instant recovery support, K10 needs to be version 6.0.8 or higher, while VBR requires version 12 or above. Here are the K10 installation parameters I used for your reference:">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/11/vro-v6-guide-10/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/kubernetes-pvc-instant-recovery-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  861 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/kubernetes-pvc-instant-recovery-02\/","datePublished": "2023-11-05T00:00:00+00:00","dateModified": "2023-11-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-02/">简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-02/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-02/">简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-02/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-05">2023-11-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;861 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#k10-installation-and-configuration">K10 Installation and Configuration</a></li>
+    <li><a href="#backup-configuration">Backup Configuration</a></li>
+    <li><a href="#instant-recovery">Instant Recovery</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In our previous article, we set up the basic Kubernetes environment. Now let&rsquo;s dive deep into the backup and restore process.</p>
+<h2 id="k10-installation-and-configuration">K10 Installation and Configuration</h2>
+<p>First up is K10 installation - nothing particularly special here. Just follow the official installation guide from the website and use Helm for installation. The only thing to note is that for instant recovery support, K10 needs to be version 6.0.8 or higher, while VBR requires version 12 or above. Here are the K10 installation parameters I used for your reference:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Update Helm repository</span>
+</span></span><span class="line"><span class="cl">helm repo update <span class="o">&amp;&amp;</span> helm fetch kasten/k10
+</span></span><span class="line"><span class="cl"><span class="c1"># Create Namespace</span>
+</span></span><span class="line"><span class="cl">kubectl create ns kasten-io
+</span></span><span class="line"><span class="cl"><span class="c1"># Install K10</span>
+</span></span><span class="line"><span class="cl">helm install k10 kasten/k10 --namespace<span class="o">=</span>kasten-io <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set global.airgapped.repository<span class="o">=</span>ccr.ccs.tencentyun.com/kasten <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set metering.mode<span class="o">=</span>airgap <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set auth.tokenAuth.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set externalGateway.create<span class="o">=</span>true</span></span></code></pre></div></div>
+<p>After installation, you can access the K10 dashboard through the LoadBalancer for further configuration. For K10 web access, I configured token authentication. Since we&rsquo;re using version 1.25, you need to follow these steps to get the token:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create temporary token</span>
+</span></span><span class="line"><span class="cl">kubectl --namespace kasten-io create token k10-k10-token --duration<span class="o">=</span>24h
+</span></span><span class="line"><span class="cl"><span class="c1"># Use this token to create secret for k10-k10 account</span>
+</span></span><span class="line"><span class="cl"><span class="nv">desired_token_secret_name</span><span class="o">=</span>k10-k10-token
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl apply --namespace<span class="o">=</span>kasten-io --filename<span class="o">=</span>- <span class="s">&lt;&lt;EOF
+</span></span></span><span class="line"><span class="cl"><span class="s">apiVersion: v1
+</span></span></span><span class="line"><span class="cl"><span class="s">kind: Secret
+</span></span></span><span class="line"><span class="cl"><span class="s">type: kubernetes.io/service-account-token
+</span></span></span><span class="line"><span class="cl"><span class="s">metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">  name: ${desired_token_secret_name}
+</span></span></span><span class="line"><span class="cl"><span class="s">  annotations:
+</span></span></span><span class="line"><span class="cl"><span class="s">    kubernetes.io/service-account.name: &#34;k10-k10&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl get secret <span class="si">${</span><span class="nv">desired_token_secret_name</span><span class="si">}</span> --namespace kasten-io -ojsonpath<span class="o">=</span><span class="s2">&#34;{.data.token}&#34;</span> <span class="p">|</span> base64 --decode</span></span></code></pre></div></div>
+<p>In this demo, K10 will use vSphere virtual disk snapshots for data backup operations, while utilizing VBR&rsquo;s Repository as the storage backend.</p>
+<p>Once you&rsquo;re on the K10 dashboard, find Location in the Profile section on the right side. We need to configure K10 with both an S3 object storage and a VBR Repository. The S3 object storage is used for storing metadata and YAML configurations, while the VBR repository stores vmdk data backup, which is essentially the PVC backup.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-08-02.jpg"
+        data-srcset="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-08-02.jpg, http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-08-02.jpg 1.5x, http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-08-02.jpg 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-08-02.jpg"
+        title="Xnip2023-11-06_13-08-02" /></p>
+<p>Under Profile, you&rsquo;ll also find Infrastructure. Use the New Profile button to add a new vCenter connection. The configuration is very straightforward - almost identical to adding vCenter to any device. Just need the three essentials: IP address, username, and password.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-21-01.jpg"
+        data-srcset="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-21-01.jpg, http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-21-01.jpg 1.5x, http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-21-01.jpg 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/Xnip2023-11-06_13-21-01.jpg"
+        title="Xnip2023-11-06_13-21-01" /></p>
+<h2 id="backup-configuration">Backup Configuration</h2>
+<p>Next, let&rsquo;s configure the backup policy. When using vSphere CSI, the backup policy is slightly different. In the Snapshot Retention section, you&rsquo;ll notice that K10 automatically detects this is VMware CSI and provides VMware platform&rsquo;s best practices for snapshot retention. It also indicates that K10 doesn&rsquo;t need to retain local snapshots, so I set the Snapshot retention to 0.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-42-02.jpg"
+        data-srcset="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-42-02.jpg, http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-42-02.jpg 1.5x, http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-42-02.jpg 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-42-02.jpg"
+        title="Xnip2023-11-07_18-42-02" /></p>
+<p>In the Export Location Profile, you can select Wasabi S3 object storage as the primary backup Export target. Actually, the S3 doesn&rsquo;t store vmdk data here - it only stores application metadata and YAML configurations. The VBR Location Profile is unavailable at this stage.</p>
+<p>After enabling <code>Enable Backups via Snapshot Exports</code>, a new option appears: <code>Export snapshot data in block mode</code>. Check this option, and you can select the Veeam Backup Location Profile.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-43-14.jpg"
+        data-srcset="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-43-14.jpg, http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-43-14.jpg 1.5x, http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-43-14.jpg 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/Xnip2023-11-07_18-43-14.jpg"
+        title="Xnip2023-11-07_18-43-14" /></p>
+<p>Other configurations are pretty standard. Here&rsquo;s what the configured policy looks like:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-44-47.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-44-47.jpg, /images/posts/assets/Xnip2023-11-07_18-44-47.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-44-47.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-44-47.jpg"
+        title="Xnip2023-11-07_18-44-47" /></p>
+<p>After the backup runs automatically, you can check the detailed backup Action information from the Dashboard. The VBR export part is handled by Kanister:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-49-54.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-49-54.jpg, /images/posts/assets/Xnip2023-11-07_18-49-54.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-49-54.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-49-54.jpg"
+        title="Xnip2023-11-07_18-49-54" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-49-33.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-49-33.jpg, /images/posts/assets/Xnip2023-11-07_18-49-33.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-49-33.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-49-33.jpg"
+        title="Xnip2023-11-07_18-49-33" /></p>
+<p>In VBR, you can see that K10&rsquo;s Policy and K10&rsquo;s backup archives have also appeared:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-53-18.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-53-18.jpg, /images/posts/assets/Xnip2023-11-07_18-53-18.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-53-18.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-53-18.jpg"
+        title="Xnip2023-11-07_18-53-18" /></p>
+<p>For more information about K10 operations in VBR, you can refer to the <a href="https://helpcenter.veeam.com/docs/backup/kasten_integration/overview.html?ver=110" target="_blank" rel="noopener noreffer ">official Veeam documentation</a>.</p>
+<h2 id="instant-recovery">Instant Recovery</h2>
+<p>Alright, now we&rsquo;re getting to the main event - using K10 for container instant recovery.</p>
+<p>The instant recovery is performed in the K10 console. In K10&rsquo;s graphical interface, find the backed-up archive and click the restore button. You&rsquo;ll see the previously backed-up restore points. Just like other container restores, after selecting a restore point, a restore settings window will pop up. K10 can automatically detect vSphere CSI support, and you&rsquo;ll see the Enable Instant Recovery option in the restore options. Simply select this option, and K10 will automatically use this capability during the restore process.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-55-22.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-55-22.jpg, /images/posts/assets/Xnip2023-11-07_18-55-22.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-55-22.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-55-22.jpg"
+        title="Xnip2023-11-07_18-55-22" /></p>
+<p>Let&rsquo;s make some basic configurations, like changing the namespace name to create a new application, then click restore. The instant recovery task will begin.</p>
+<p>After a short wait, you can see that the container has been restored. At this point, if you check VBR, you&rsquo;ll see that a new FCD instant recovery task has started and completed. The data is still mounted to vSphere through Veeam&rsquo;s classic vPower technology.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_18-59-11.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_18-59-11.jpg, /images/posts/assets/Xnip2023-11-07_18-59-11.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_18-59-11.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_18-59-11.jpg"
+        title="Xnip2023-11-07_18-59-11" /></p>
+<p>Let&rsquo;s use <code>kubectl get pv,pvc</code> to check the current data volume status. From Kubernetes&rsquo; perspective, it&rsquo;s completely unaware - a seamless restore.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_19-01-48.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_19-01-48.jpg, /images/posts/assets/Xnip2023-11-07_19-01-48.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_19-01-48.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_19-01-48.jpg"
+        title="Xnip2023-11-07_19-01-48" /></p>
+<p>Now, if you check the container volume situation in vSphere, you&rsquo;ll find that the classic vPower technology-mounted NFS volume is already being used by the container&rsquo;s PV and PVC.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_19-03-37.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_19-03-37.jpg, /images/posts/assets/Xnip2023-11-07_19-03-37.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_19-03-37.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_19-03-37.jpg"
+        title="Xnip2023-11-07_19-03-37" /></p>
+<p>Next, we still need to use the Migrate to Production feature, leveraging either Storage vMotion or Veeam Quick Migration functionality, to migrate the virtual disk files to the virtualization platform.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_19-06-37.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_19-06-37.jpg, /images/posts/assets/Xnip2023-11-07_19-06-37.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_19-06-37.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_19-06-37.jpg"
+        title="Xnip2023-11-07_19-06-37" /></p>
+<p>The system will automatically use storage vMotion or quick migration to complete the data migration. The entire migration process happens while the k8s application is online and running normally - completely transparent.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_19-36-26.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_19-36-26.jpg, /images/posts/assets/Xnip2023-11-07_19-36-26.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_19-36-26.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_19-36-26.jpg"
+        title="Xnip2023-11-07_19-36-26" /></p>
+<p>After migration is complete, you can see in the vSphere Client that the container volume is now running on vSAN.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/assets/Xnip2023-11-07_19-37-31.jpg"
+        data-srcset="/images/posts/assets/Xnip2023-11-07_19-37-31.jpg, /images/posts/assets/Xnip2023-11-07_19-37-31.jpg 1.5x, /images/posts/assets/Xnip2023-11-07_19-37-31.jpg 2x"
+        data-sizes="auto"
+        alt="/images/posts/assets/Xnip2023-11-07_19-37-31.jpg"
+        title="Xnip2023-11-07_19-37-31" /></p>
+<p>And that&rsquo;s it for container instant recovery! For those who enjoyed this, go ahead and try it out yourself. And don&rsquo;t forget to hit that like, follow, and share button!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-11-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/11/kubernetes-pvc-instant-recovery-02/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-02%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-02%2F&amp;text=Instant&#43;Recovery%3A&#43;Deep&#43;Dive&#43;into&#43;Kubernetes&#43;Container&#43;Instant&#43;Recovery&#43;Technology&#43;%28Part&#43;2%29&#43;-&#43;Backup&#43;and&#43;Restore" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a>,&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/en/tags/Instant-Recovery/">Instant Recovery</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/11/kubernetes-pvc-instant-recovery-01/" class="prev" rel="prev" title="Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment</a>
+            <a href="/en/2023/11/vro-v6-guide-10/" class="next" rel="next" title="VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring - Cloud.Virt.AI.Sec</title><meta name="description" content="In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring">
+  <meta property="og:description" content="In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to monitoring and compliance management. To better help administrators improve backup system security, VBR has introduced a fully automated security compliance checking capability called Security &amp; Compliance Analyzer. Additionally, in the Enterprise Edition, a completely new Threat Center dashboard has been launched.
+Security &amp; Compliance Analyzer This component actually existed in v12, where it was called Best Practices Analyzer, but the first version’s functionality wasn’t quite comprehensive and its detection capabilities were somewhat limited. In the new version, Best Practices Analyzer has been renamed to Security &amp; Compliance Analyzer, and its capabilities have been significantly enhanced.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-06T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-05-06T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring">
+  <meta name="twitter:description" content="In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to monitoring and compliance management. To better help administrators improve backup system security, VBR has introduced a fully automated security compliance checking capability called Security &amp; Compliance Analyzer. Additionally, in the Enterprise Edition, a completely new Threat Center dashboard has been launched.
+Security &amp; Compliance Analyzer This component actually existed in v12, where it was called Best Practices Analyzer, but the first version’s functionality wasn’t quite comprehensive and its detection capabilities were somewhat limited. In the new version, Best Practices Analyzer has been renamed to Security &amp; Compliance Analyzer, and its capabilities have been significantly enhanced.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2024/07/vmware-explore-barcelona/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2024\/05\/vdp-v12-1-security-feature-deep-dive-03\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1015 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2024\/05\/vdp-v12-1-security-feature-deep-dive-03\/","datePublished": "2024-05-06T00:00:00+00:00","dateModified": "2024-05-06T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/05/vdp-v12-1-security-feature-deep-dive-03/">简体中文</option><option value="/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2024/05/vdp-v12-1-security-feature-deep-dive-03/">简体中文</option><option value="/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-06">2024-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1015 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#security--compliance-analyzer">Security &amp; Compliance Analyzer</a>
+          <ul>
+            <li><a href="#how-to-use">How to Use</a></li>
+            <li><a href="#post-scan-remediation">Post-Scan Remediation</a></li>
+          </ul>
+        </li>
+        <li><a href="#threat-center-threat-detection-platform">Threat Center Threat Detection Platform</a>
+          <ul>
+            <li><a href="#threat-center-display-content">Threat Center Display Content</a></li>
+            <li><a href="#threat-center-configuration">Threat Center Configuration</a>
+              <ul>
+                <li><a href="#data-platform-scorecard-configuration">Data Platform Scorecard Configuration</a></li>
+                <li><a href="#malicious-attack-detection-map-configuration">Malicious Attack Detection Map Configuration</a></li>
+                <li><a href="#rpo-anomaly-analysis-configuration">RPO Anomaly Analysis Configuration</a></li>
+                <li><a href="#sla-compliance-status-configuration">SLA Compliance Status Configuration</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to monitoring and compliance management. To better help administrators improve backup system security, VBR has introduced a fully automated security compliance checking capability called Security &amp; Compliance Analyzer. Additionally, in the Enterprise Edition, a completely new Threat Center dashboard has been launched.</p>
+<h3 id="security--compliance-analyzer">Security &amp; Compliance Analyzer</h3>
+<p>This component actually existed in v12, where it was called Best Practices Analyzer, but the first version&rsquo;s functionality wasn&rsquo;t quite comprehensive and its detection capabilities were somewhat limited. In the new version, Best Practices Analyzer has been renamed to Security &amp; Compliance Analyzer, and its capabilities have been significantly enhanced.</p>
+<p>In v12.1, Security &amp; Compliance Analyzer includes 31 security checks that examine security best practices for both the operating system where VBR is installed and the backup infrastructure.</p>
+<h4 id="how-to-use">How to Use</h4>
+<p>Security &amp; Compliance Analyzer is very straightforward to use. In the VBR console&rsquo;s Home interface, simply click the toolbar button at the top to access it.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png"
+        data-srcset="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png, https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png 1.5x, https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/LDtX9ciQR1JoSV2.png"
+        title="Xnip2024-05-06_13-23-06" /></p>
+<p>Once you enter, Security &amp; Compliance Analyzer automatically starts scanning the current environment. The scan completes within a few minutes, and the results for each check are displayed in the status bar on the right. Green ✅ indicates the check passed and complies with security best practices; red ❌ means the best practice check failed and the current environment needs optimization; additionally, there&rsquo;s a yellow ⚠️ status indicating that the current environment cannot be detected.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/xnipshot/20240506-001.png"
+        data-srcset="/images/posts/xnipshot/20240506-001.png, /images/posts/xnipshot/20240506-001.png 1.5x, /images/posts/xnipshot/20240506-001.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/xnipshot/20240506-001.png"
+        title="/images/posts/xnipshot/20240506-001.png" /></p>
+<p>For details on these 31 detection items, you can refer to the <a href="https://helpcenter.veeam.com/docs/backup/vsphere/best_practices_analyzer.html?ver=120" target="_blank" rel="noopener noreffer ">official documentation</a>.</p>
+<p>In addition to manual checks through the interface, Security &amp; Compliance Analyzer also supports scheduled scans to automatically check the current environment. The system can automatically run all checks at a specific time each day and send notifications to specified administrator emails upon completion.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/xnipshot/20240506-002.png"
+        data-srcset="/images/posts/xnipshot/20240506-002.png, /images/posts/xnipshot/20240506-002.png 1.5x, /images/posts/xnipshot/20240506-002.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/xnipshot/20240506-002.png"
+        title="/images/posts/xnipshot/20240506-002.png" /></p>
+<p>This approach ensures that all security measures in the environment are continuously managed and monitored, preventing arbitrary modifications and system configuration disruptions.</p>
+<h4 id="post-scan-remediation">Post-Scan Remediation</h4>
+<p>Some security issues identified in these scans can be addressed through operating system security hardening techniques. To make it more convenient for administrators, Veeam has collected these hardening procedures and created one-click hardening scripts. Administrators can reference and modify these scripts according to their actual needs for system hardening. These scripts can be found at this knowledge base link: <a href="https://www.veeam.com/kb4525" target="_blank" rel="noopener noreffer ">KB4525</a>.</p>
+<p>Of course, security and convenience are always relative. If administrators believe certain options must be retained, Veeam also provides a Suppress button to exclude specific checks from detection.</p>
+<h3 id="threat-center-threat-detection-platform">Threat Center Threat Detection Platform</h3>
+<p>In the VDP Enterprise Edition (this feature requires Enterprise Edition license activation and proper installation and configuration of Veeam ONE components), a completely new dashboard panel integrated with Veeam ONE has been added. Backup and security administrators can immediately view important security-related information about the current backup system without switching consoles to the Veeam ONE Dashboard.</p>
+<p>In the VBR console, an <code>Analytics</code> section has been added to the navigation bar. Under this view, there are 4 built-in dashboards: Threat Center, Overview, Backup Heatmap, and Jobs Calendar. These dashboards all come from Veeam ONE Dashboard, and administrators can also access these dashboards directly through Veeam ONE Dashboard.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png"
+        data-srcset="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png, https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png 1.5x, https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/NxtD3ZYgMIm2Ujb.png"
+        title="Xnip2024-05-06_15-54-09" /></p>
+<p>In the current first release, the Threat Center embedded in VBR has some minor issues - the content temporarily doesn&rsquo;t support custom configuration. If you have specific requirements for display content, you can access the Threat Center page in Veeam ONE Dashboard, where you can freely customize the relevant content.</p>
+<h4 id="threat-center-display-content">Threat Center Display Content</h4>
+<p>Threat Center consists of 4 parts. In the upper-left corner is a Data Platform scorecard. Veeam ONE calculates platform scores as percentages based on collected data across dimensions including platform security compliance, data recoverability health, data protection status, and backup immutability status. If scores are too low, yellow and red status indicators will be shown.</p>
+<p>In the upper-right corner is a malicious attack detection map. Based on Repository locations, Threat Center displays the geographical locations of potential malicious attack activities on a world map.</p>
+<p>In the lower-left corner is an RPO anomaly analysis table. This table identifies business systems that haven&rsquo;t met their expected RPO targets among all workloads that need protection.</p>
+<p>In the lower-right corner is SLA compliance status. If any backup jobs have failed, abnormal red blocks will appear in this red-green heatmap. Issues that occurred during the past period will be prominently displayed in this area.</p>
+<h4 id="threat-center-configuration">Threat Center Configuration</h4>
+<p>In Veeam ONE Dashboard, you can configure the content displayed by Threat Center and the scope of data collection. The four parts mentioned above are 4 small components of the dashboard. In the upper-right corner of each of these 4 components, there&rsquo;s a configuration button that opens the relevant configuration wizard.</p>
+<h5 id="data-platform-scorecard-configuration">Data Platform Scorecard Configuration</h5>
+<p>The scorecard consists of 4 parts, so in this component&rsquo;s wizard, there are corresponding configurations for each of the 4 different scores, including the objects and types of data collected. Administrators can adjust the scoring scope of the scorecard based on their areas of concern.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png"
+        data-srcset="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png, https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png 1.5x, https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/gVmFHqTrQalwcN7.png"
+        title="Xnip2024-05-06_16-33-47" /></p>
+<h5 id="malicious-attack-detection-map-configuration">Malicious Attack Detection Map Configuration</h5>
+<p>This component&rsquo;s configuration includes two parts: one for detection time range and display method, and another for geographical location configuration. Here, geographical locations use an offline place name database built into Veeam ONE. Administrators can use the built-in English place names or set custom place names and geographical latitude/longitude coordinates through the Custom button. After setting the location for each Repository, this component can prominently display infected data centers on the map.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png"
+        data-srcset="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png, https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png 1.5x, https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/AYch39LOpBwgQzt.png"
+        title="Xnip2024-05-06_16-37-49" /></p>
+<h5 id="rpo-anomaly-analysis-configuration">RPO Anomaly Analysis Configuration</h5>
+<p>This setting supports selection of infrastructure objects, RPO time range, and sorting by top N workloads. Administrators can customize the displayed content based on the data they&rsquo;re actually concerned about.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png"
+        data-srcset="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png, https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png 1.5x, https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/2JXNscw5W1OUPG6.png"
+        title="Xnip2024-05-06_16-40-48" /></p>
+<h5 id="sla-compliance-status-configuration">SLA Compliance Status Configuration</h5>
+<p>This setting supports selection of integrated architecture objects, job type selection, statistical time range, and target SLA values. Administrators can set the most relevant data based on their actual situation.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png"
+        data-srcset="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png, https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png 1.5x, https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/05/06/aSxXqOvBuITE26F.png"
+        title="Xnip2024-05-06_16-41-03" /></p>
+<p>Since Veeam ONE is a multi-user system, all the above configurations only take effect for the currently logged-in user. Therefore, different users need to make corresponding settings based on their actual requirements.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-05-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F05%2Fvdp-v12-1-security-feature-deep-dive-03%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F05%2Fvdp-v12-1-security-feature-deep-dive-03%2F&amp;text=VDP&#43;v12.1&#43;Security&#43;Features&#43;Deep&#43;Dive&#43;Series&#43;%28Part&#43;3%29&#43;-&#43;Comprehensive&#43;Threat&#43;Monitoring" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F05%252Fvdp-v12-1-security-feature-deep-dive-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F05%252Fvdp-v12-1-security-feature-deep-dive-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/" class="prev" rel="prev" title="VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning</a>
+            <a href="/en/2024/07/vmware-explore-barcelona/" class="next" rel="next" title="A Look Ahead at VMware Explore Barcelona 2024">A Look Ahead at VMware Explore Barcelona 2024<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

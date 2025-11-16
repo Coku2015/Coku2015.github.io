@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1) - Cloud.Virt.AI.Sec</title><meta name="description" content="On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product’s history. This update included a series of cloud-related …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)">
+  <meta property="og:description" content="On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product’s history. This update included a series of cloud-related feature modules, and this article will discuss in detail the most important one among them: cloud object storage.
+In VBR 9.5U4, you can use Amazon S3, Microsoft Azure Blob, IBM Cloud Object Storage, and various other S3-compatible object storages, which means that for our domestic users, AliCloud OSS and Tencent Cloud COS are also perfectly supported.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-02-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-02-21T00:00:00+00:00">
+    <meta property="article:tag" content="Object Storage">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)">
+  <meta name="twitter:description" content="On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product’s history. This update included a series of cloud-related feature modules, and this article will discuss in detail the most important one among them: cloud object storage.
+In VBR 9.5U4, you can use Amazon S3, Microsoft Azure Blob, IBM Cloud Object Storage, and various other S3-compatible object storages, which means that for our domestic users, AliCloud OSS and Tencent Cloud COS are also perfectly supported.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2018/07/van-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2019/03/cloud-tier-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2019\/02\/cloud-tier-01\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Object Storage","wordcount":  899 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2019\/02\/cloud-tier-01\/","datePublished": "2019-02-21T00:00:00+00:00","dateModified": "2019-02-21T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2019/02/cloud-tier-01/">简体中文</option><option value="/en/2019/02/cloud-tier-01/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2019/02/cloud-tier-01/">简体中文</option><option value="/en/2019/02/cloud-tier-01/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-02-21">2019-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;899 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-role-of-cloud-object-storage">The Role of Cloud Object Storage</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#management-and-operations">Management and Operations</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product&rsquo;s history. This update included a series of cloud-related feature modules, and this article will discuss in detail the most important one among them: cloud object storage.</p>
+<p>In VBR 9.5U4, you can use Amazon S3, Microsoft Azure Blob, IBM Cloud Object Storage, and various other S3-compatible object storages, which means that for our domestic users, AliCloud OSS and Tencent Cloud COS are also perfectly supported.</p>
+<h2 id="the-role-of-cloud-object-storage">The Role of Cloud Object Storage</h2>
+<p>In VBR, there are three main types of repositories: Backup Repository, External Repository, and Scale-Out Backup Repository (SOBR). I believe for the vast majority of Veeam users, Backup Repository is the most familiar one. That&rsquo;s where Veeam stores backup data on disk and has been the most commonly used data storage method. External Repository was newly added in VBR 9.5U4, but this is not part of the cloud object storage discussed in this article, so we won&rsquo;t discuss it here for now. As for SOBR, it might have been rarely mentioned in previous VBR versions, but in the future, it could become Veeam&rsquo;s primary data storage method.</p>
+<p>Before understanding cloud object storage, I think it&rsquo;s necessary to review the composition of SOBR. Each SOBR consists of one or more Extents, and each Extent is actually a regular Backup Repository. In other words, SOBR is a collection of Backup Repositories, which was the basic composition of SOBR in the past.</p>
+<p>In this brand new SOBR, Veeam divides it into two tiers: Performance Tier and Capacity Tier. All local disk-based Extents are classified as Performance Tier, while cloud object storage-based Extents are classified as Capacity Tier.</p>
+<h2 id="how-it-works">How It Works</h2>
+<p>Simply put, a SOBR containing cloud object storage must consist of one or more Extents, and must include one cloud object storage.</p>
+<ul>
+<li>Every 4 hours, Veeam automatically runs the SOBR Offload task according to the retention policy settings in the SOBR, uploading data that needs to be uploaded to the cloud from local storage.</li>
+<li>Conversely, the SOBR Download task can retrieve data from cloud object storage back to local Extents.</li>
+</ul>
+<p>During the restore process, cloud object storage exists in an almost transparent state. It&rsquo;s different from any previous storage solution. In Veeam, restore points on cloud object storage can retain all their original restore capabilities, performing data restoration in a completely source-native smooth manner.</p>
+<p>Let&rsquo;s look at a practical example: when performing data restoration, if the selected restore point is located on cloud object storage, Veeam will first read the local data index. This index tells Veeam which data exists both in the cloud and locally. When reading and writing data, Veeam will prioritize using local data as the data source and only fetch data that doesn&rsquo;t exist locally from the cloud. This will greatly reduce cloud object storage usage costs because the billing for most cloud object storage services is calculated based on requests and data transfer.</p>
+<h2 id="management-and-operations">Management and Operations</h2>
+<ol>
+<li>Adding Cloud Object Storage</li>
+</ol>
+<p>As mentioned above, cloud object storage is also an Extent of SOBR, and Extents are Backup repositories. Therefore, the entry point for adding cloud object storage is Add Repository.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnKT1.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnKT1.png, https://s2.ax1x.com/2020/02/13/1qnKT1.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnKT1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnKT1.png"
+        title="1qnKT1.png" /></p>
+<p>In Add Backup Repository, a new Object Storage wizard will be added, which is for adding cloud object storage, including the 4 different protocols mentioned above.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnQFx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnQFx.png, https://s2.ax1x.com/2020/02/13/1qnQFx.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnQFx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnQFx.png"
+        title="1qnQFx.png" /></p>
+<p>The addition process is very simple. Like any Veeam function, you can complete the configuration by interactively filling in appropriate information. This article won&rsquo;t repeat the official User Guide. You can select the appropriate storage type according to the cloud object storage you actually use.</p>
+<p><a href="https://helpcenter.veeam.com/docs/backup/vsphere/new_object_storage.html?ver=95u4" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/new_object_storage.html?ver=95u4</a></p>
+<ol start="2">
+<li>Configuring SOBR and Capacity Tier</li>
+</ol>
+<p>Find Scale-Out Backup Repository in Backup Infrastructure, then click Add to create a new one. At this point, you need to configure the Performance Tier first. Regarding the detailed options of Performance Tier configuration, this article won&rsquo;t expand into detailed discussion. Those in need can check the relevant chapters in the official User Guide.</p>
+<p><a href="https://helpcenter.veeam.com/docs/backup/vsphere/sorb_add_extents.html?ver=95u4" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/backup/vsphere/sorb_add_extents.html?ver=95u4</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnlY6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnlY6.png, https://s2.ax1x.com/2020/02/13/1qnlY6.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnlY6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnlY6.png"
+        title="1qnlY6.png" /></p>
+<p>After selecting the default Placement Policy, you can enter the Capacity Tier configuration. At this time, the cloud object storage repository configured in the previous step will appear in the List below. On this page, we can also configure how to perform SOBR Offload tasks, which is the SOBR retention policy we mentioned earlier.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qn1fK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qn1fK.png, https://s2.ax1x.com/2020/02/13/1qn1fK.png 1.5x, https://s2.ax1x.com/2020/02/13/1qn1fK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qn1fK.png"
+        title="1qn1fK.png" /></p>
+<p>After setting up the content on this page, the cloud object storage configuration is complete.</p>
+<ol start="3">
+<li>Usage Operations</li>
+</ol>
+<p>In daily backups, we don&rsquo;t need too much operation. The system will automatically check every 4 hours to see if there is data that needs to be offloaded. If there is no data that needs to be offloaded, or if no data meets the offloading conditions, the SOBR Offload task will complete quickly.</p>
+<p>Of course, we have ways to manually transfer data. We can perform data Offload and Download on demand.</p>
+<p>For example, as shown in the figure, we already have a set of backup archives, some located in cloud object storage and some on local disks.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnYOH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnYOH.png, https://s2.ax1x.com/2020/02/13/1qnYOH.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnYOH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnYOH.png"
+        title="1qnYOH.png" /></p>
+<p>At this time, for the data in the cloud, we can perform the Copy to Performance Tier operation, which is the SOBR Download task. During the Download process, Veeam still optimizes data retrieval through the Index. Data that can be reassembled from local disks will not be retrieved from the cloud.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1qnGlD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1qnGlD.png, https://s2.ax1x.com/2020/02/13/1qnGlD.png 1.5x, https://s2.ax1x.com/2020/02/13/1qnGlD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1qnGlD.png"
+        title="1qnGlD.png" /></p>
+<p>The above is today&rsquo;s content. In the next issue, we will discuss Veeam cloud object storage usage in more depth.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2019-02-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2019/02/cloud-tier-01/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2019%2F02%2Fcloud-tier-01%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2019%2F02%2Fcloud-tier-01%2F&amp;text=Veeam&#43;Cloud&#43;Tier&#43;%E2%80%93&#43;Detailed&#43;Usage&#43;of&#43;Cloud&#43;Object&#43;Storage&#43;%28Part&#43;1%29" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2019%252F02%252Fcloud-tier-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2019%252F02%252Fcloud-tier-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Object-Storage/">Object Storage</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2018/07/van-02/" class="prev" rel="prev" title="Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 2)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 2)</a>
+            <a href="/en/2019/03/cloud-tier-02/" class="next" rel="next" title="Veeam Cloud Tier – Understanding Cloud Object Storage Architecture (Part 2)">Veeam Cloud Tier – Understanding Cloud Object Storage Architecture (Part 2)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

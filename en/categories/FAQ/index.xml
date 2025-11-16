@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FAQ on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/FAQ/</link>
+    <description>Recent content in FAQ on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 21 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/FAQ/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam FAQ (Translation Pending)</title>
+      <link>https://blog.backupnext.cloud/en/2019/03/veeam-faq/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/03/veeam-faq/</guid>
+      <description>&lt;p&gt;The English translation of this FAQ is still being prepared.&lt;br&gt;&#xA;For now, please refer to the original Chinese article.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

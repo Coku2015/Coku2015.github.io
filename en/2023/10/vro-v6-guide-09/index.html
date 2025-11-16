@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Basic Guide (Part 9) - Document Template Analysis - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Table of Contents: VRO Basic Guide (Part 1) - Introduction VRO Basic Guide (Part 2) - Installation and Deployment VRO Basic Guide (Part 3) - Basic …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/10/vro-v6-guide-09/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Basic Guide (Part 9) - Document Template Analysis">
+  <meta property="og:description" content="Series Table of Contents: VRO Basic Guide (Part 1) - Introduction VRO Basic Guide (Part 2) - Installation and Deployment VRO Basic Guide (Part 3) - Basic Components (Part 1) VRO Basic Guide (Part 4) - Basic Components (Part 2) VRO Basic Guide (Part 5) - First Steps to a Successful Disaster Recovery Plan VRO Basic Guide (Part 6) - Data Lab VRO Basic Guide (Part 7) - Plan Step (Part 1) VRO Basic Guide (Part 8) - Plan Step (Part 2) VRO Basic Guide (Part 9) - Document Template Analysis VRO Basic Guide (Part 10) - Using VRO with K10 for Complete Automated Container Disaster Recovery In this final part of the series, I’ll introduce VRO’s documentation system.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-10-31T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-10-31T00:00:00+00:00">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Basic Guide (Part 9) - Document Template Analysis">
+  <meta name="twitter:description" content="Series Table of Contents: VRO Basic Guide (Part 1) - Introduction VRO Basic Guide (Part 2) - Installation and Deployment VRO Basic Guide (Part 3) - Basic Components (Part 1) VRO Basic Guide (Part 4) - Basic Components (Part 2) VRO Basic Guide (Part 5) - First Steps to a Successful Disaster Recovery Plan VRO Basic Guide (Part 6) - Data Lab VRO Basic Guide (Part 7) - Plan Step (Part 1) VRO Basic Guide (Part 8) - Plan Step (Part 2) VRO Basic Guide (Part 9) - Document Template Analysis VRO Basic Guide (Part 10) - Using VRO with K10 for Complete Automated Container Disaster Recovery In this final part of the series, I’ll introduce VRO’s documentation system.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/10/vro-v6-guide-09/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-08/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Basic Guide (Part 9) - Document Template Analysis",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/10\/vro-v6-guide-09\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VRO","wordcount":  1545 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/10\/vro-v6-guide-09\/","datePublished": "2023-10-31T00:00:00+00:00","dateModified": "2023-10-31T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/10/vro-v6-guide-09/">简体中文</option><option value="/en/2023/10/vro-v6-guide-09/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/10/vro-v6-guide-09/">简体中文</option><option value="/en/2023/10/vro-v6-guide-09/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Basic Guide (Part 9) - Document Template Analysis</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-10-31">2023-10-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1545 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-table-of-contents">Series Table of Contents:</a></li>
+    <li><a href="#report-type">Report Type</a></li>
+    <li><a href="#report-template">Report Template</a></li>
+    <li><a href="#how-to-edit-dynamic-documents-with-word">How to Edit Dynamic Documents with Word</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 2) - Installation and Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 3) - Basic Components (Part 1)</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 4) - Basic Components (Part 2)</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 5) - First Steps to a Successful Disaster Recovery Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 6) - Data Lab</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 7) - Plan Step (Part 1)</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 8) - Plan Step (Part 2)</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 9) - Document Template Analysis</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Basic Guide (Part 10) - Using VRO with K10 for Complete Automated Container Disaster Recovery</a></li>
+</ul>
+<p>In this final part of the series, I&rsquo;ll introduce VRO&rsquo;s documentation system.</p>
+<p>VRO can automatically generate all the system documentation needed for disaster recovery for administrators. The document content is automatically generated by the VRO system based on Orchestration Plan settings and execution. The power of the VRO documentation system lies in the fact that all content is automatically generated by the system based on configuration and runtime, so administrators only need to focus on their disaster recovery work, leaving all subsequent basic support and tedious document creation to VRO.</p>
+<p>Each document generated by VRO contains two parts. The first part is the Report Template defined by the disaster recovery administrator; the second part is the dynamic content generated by the system based on the Report Type. Regardless of the document type, the beginning part of each document will use the content defined in the Report Template, while the second part will automatically fill in relevant content based on different Report Types.</p>
+<p>Let&rsquo;s first look at a practical example to understand what content comes from the Report Template and what is automatically generated based on the Report Type, as shown in the figure below:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg, https://s2.ax1x.com/2020/03/03/3fvwlT.jpg 1.5x, https://s2.ax1x.com/2020/03/03/3fvwlT.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg"
+        title="3fvwlT.jpg" /></p>
+<p>The left side shows a Readiness Check Report finally generated by VRO, while the right side shows the Report Template opened in an editor. As you can see, the content highlighted in the red box comes from the Report Template, while the latter part of the document on the left is content automatically generated based on this Report Type.</p>
+<h2 id="report-type">Report Type</h2>
+<p>First, let&rsquo;s talk about Report Type. If you&rsquo;re clever, you may have already noticed in the previous introductions to Orchestration Plans that there are some Reports that can be generated in the right-click menu or toolbar of each Plan. They are:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Report Type</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Plan Definition Report</td>
+          <td>Records disaster recovery plan setting details</td>
+      </tr>
+      <tr>
+          <td>Readiness Check Report</td>
+          <td>Disaster recovery plan availability check report, including availability checks for recovery target locations and disaster recovery centers</td>
+      </tr>
+      <tr>
+          <td>Datalab Test Report</td>
+          <td>Data Lab test report</td>
+      </tr>
+      <tr>
+          <td>Execution Report</td>
+          <td>Disaster recovery execution status report</td>
+      </tr>
+  </tbody>
+</table>
+<p>These Reports are all the Report documents that VRO can generate. Each of these documents has pre-designed content built into VRO, which can be combined with the Report Template defined by the disaster recovery administrator to ultimately form a complete, readable Report.</p>
+<p>This part of the content already built into VRO cannot be changed by us. The system will automatically generate this content based on the actual report type, current disaster recovery plan settings, and the plan&rsquo;s operation and execution, so we don&rsquo;t need to make any changes to the settings here.</p>
+<p>Therefore, this part of the content currently only includes an English version, and we have no way to modify the relevant information. Of course, if our Plan contains Chinese information, VRO can still correctly pass it to the Report and generate relevant content.</p>
+<h2 id="report-template">Report Template</h2>
+<p>The Report Template content is something that administrators can customize according to their own needs for the first part of each document. In the VRO factory software, default templates in 8 languages are already built-in. It should be noted that these default templates cannot be edited, but they can be directly called by the Report system and used in Orchestration Plans. If you need to edit these templates or create your own templates, you must first Clone a copy of your own from these templates, and then make modifications based on this copy.</p>
+<p>Editing these documents requires Word, requiring Word 2010 SP2 or higher versions. This means that you need to have Word 2010 SP2 or higher installed on the computer currently opening the VRO webpage to perform normal editing. After clicking the Edit button in the VRO interface, the system will automatically switch from the web browser to Microsoft Word for editing.</p>
+<p>Unlike normal Word editing, this template editing is editing a dynamic document, where you can add many variables from VRO, allowing the VRO system to automatically fill them in when generating Reports.</p>
+<h2 id="how-to-edit-dynamic-documents-with-word">How to Edit Dynamic Documents with Word</h2>
+<ol>
+<li>
+<p>First, you need to select a built-in Template as the object you want to edit, and click the Clone button to start creating your own Template. For example, I&rsquo;ll select <code>Veeam Default Template (ZH)</code> here.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hiViQ.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hiViQ.png, https://s2.ax1x.com/2020/03/03/3hiViQ.png 1.5x, https://s2.ax1x.com/2020/03/03/3hiViQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hiViQ.png"
+        title="3hiViQ.png" /></p>
+</li>
+<li>
+<p>In the Clone Template dialog box, select which Scope to assign to your name, then give this Template a distinctive name and fill in a description to complete the template creation.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hi5TS.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hi5TS.png, https://s2.ax1x.com/2020/03/03/3hi5TS.png 1.5x, https://s2.ax1x.com/2020/03/03/3hi5TS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hi5TS.png"
+        title="3hi5TS.png" /></p>
+</li>
+<li>
+<p>After creation, you can see this template in the Template list, and the toolbar buttons above can also operate on this template. You can click Edit to edit the content. Here, VAO does not provide a built-in document editor. This Edit button will directly call Word on the computer where the current browser is located for editing, requiring that the administrator must have correctly installed Microsoft Word.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hFmkD.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hFmkD.png, https://s2.ax1x.com/2020/03/03/3hFmkD.png 1.5x, https://s2.ax1x.com/2020/03/03/3hFmkD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hFmkD.png"
+        title="3hFmkD.png" /></p>
+</li>
+<li>
+<p>After clicking Edit, it will switch to the Word program. It should be noted that Word will not open the document immediately, but requires access permission. The permission required here must be the user currently logged into VAO in the browser, otherwise this Word will not be able to open the document template.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hkOaT.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hkOaT.png, https://s2.ax1x.com/2020/03/03/3hkOaT.png 1.5x, https://s2.ax1x.com/2020/03/03/3hkOaT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hkOaT.png"
+        title="3hkOaT.png" /></p>
+</li>
+<li>
+<p>After opening the document, you can proceed with normal Word editing. This document is not fully editable - you will find that many areas are highlighted in yellow. This highlighted content is the editable area where you can freely add needed text and image content. Therefore, you can see that the document&rsquo;s title, header, and footer cannot be modified, while other parts are modifiable.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hEw1H.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hEw1H.png, https://s2.ax1x.com/2020/03/03/3hEw1H.png 1.5x, https://s2.ax1x.com/2020/03/03/3hEw1H.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hEw1H.png"
+        title="3hEw1H.png" /></p>
+</li>
+<li>
+<p>Because this is a dynamic document, we can call many VRO variable contents here to get data. The VRO system has already provided us with some examples. In this cloned document, if you observe these texts carefully, you will find that some text content is surrounded by []. This part is the dynamic variable content in this document. This editing is slightly different from our normal Word editing. Let&rsquo;s see how to perform the operations.
+To edit this variable data, first we can input a text content in the normal way. To distinguish it from ordinary text, it is recommended to add [] just like the VAO default document, such as: <code>[Hi, I am a variable]</code>. In the toolbar above, find <code>Developer</code> and open <code>Design Mode</code>.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3heF6H.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3heF6H.png, https://s2.ax1x.com/2020/03/03/3heF6H.png 1.5x, https://s2.ax1x.com/2020/03/03/3heF6H.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3heF6H.png"
+        title="3heF6H.png" /></p>
+</li>
+<li>
+<p>After opening Design Mode, you will find that this document becomes very strange, with much previously hidden content now visible. Don&rsquo;t be scared by this additional content - it doesn&rsquo;t actually exist and will automatically hide when you close Design Mode. This is just the result of our variable settings.
+Next, we set up <code>[Hi, I am a variable]</code>. Select this text, then click the first <code>Aa</code> button to the left of Design Mode to turn this text into a variable like those in the template. Then click Properties below Design Mode to open the variable setting dialog box. It is implemented using Word&rsquo;s content controls. Setting the properties of this content control completes the process.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hmKV1.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hmKV1.png, https://s2.ax1x.com/2020/03/03/3hmKV1.png 1.5x, https://s2.ax1x.com/2020/03/03/3hmKV1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hmKV1.png"
+        title="3hmKV1.png" /></p>
+</li>
+<li>
+<p>This variable setting is very simple - you only need to enter a title and a tag. Generally, these two should be set the same, with the title filled in according to the tag content. VRO has built-in the following available tags. All tags start with <code>&quot;~&quot;</code>. Select the needed tag and fill it into the property box above, then click OK.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Variable Name</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>~Created</td>
+          <td style="text-align: left">Report generation time</td>
+      </tr>
+      <tr>
+          <td>~TimeZone</td>
+          <td style="text-align: left">Report generation time zone</td>
+      </tr>
+      <tr>
+          <td>~PlanType</td>
+          <td style="text-align: left">VAO plan type</td>
+      </tr>
+      <tr>
+          <td>~PlanName</td>
+          <td style="text-align: left">VAO plan name</td>
+      </tr>
+      <tr>
+          <td>~PlanDescription</td>
+          <td style="text-align: left">VAO plan description</td>
+      </tr>
+      <tr>
+          <td>~PlanContactName</td>
+          <td style="text-align: left">Disaster recovery plan contact name</td>
+      </tr>
+      <tr>
+          <td>~PlanContactEmail</td>
+          <td style="text-align: left">Disaster recovery plan contact email</td>
+      </tr>
+      <tr>
+          <td>~PlanContactTel</td>
+          <td style="text-align: left">Disaster recovery plan contact phone</td>
+      </tr>
+      <tr>
+          <td>~Site</td>
+          <td style="text-align: left">Site name</td>
+      </tr>
+      <tr>
+          <td>~SiteScopeName</td>
+          <td style="text-align: left">Site scope name</td>
+      </tr>
+      <tr>
+          <td>~SiteDescription</td>
+          <td style="text-align: left">Site description</td>
+      </tr>
+      <tr>
+          <td>~SiteContactName</td>
+          <td style="text-align: left">Site contact name</td>
+      </tr>
+      <tr>
+          <td>~SiteContactEmail</td>
+          <td style="text-align: left">Site contact email</td>
+      </tr>
+      <tr>
+          <td>~SiteContactTel</td>
+          <td style="text-align: left">Site contact phone</td>
+      </tr>
+      <tr>
+          <td>~ServerName</td>
+          <td style="text-align: left">Server name</td>
+      </tr>
+      <tr>
+          <td>~VmsInPlan</td>
+          <td style="text-align: left">Virtual machines in this plan</td>
+      </tr>
+      <tr>
+          <td>~GroupsInPlan</td>
+          <td style="text-align: left">Virtual machine groups in this plan</td>
+      </tr>
+      <tr>
+          <td>~ReportType</td>
+          <td style="text-align: left">Report type</td>
+      </tr>
+      <tr>
+          <td>~TargetRTO</td>
+          <td style="text-align: left">Target expected RTO for this plan</td>
+      </tr>
+      <tr>
+          <td>~TargetRPO</td>
+          <td style="text-align: left">Target expected RPO for this plan</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+<li>
+<p>After finishing writing this document according to your needs, you only need to save or close this file normally to submit the document to the VRO server. Be sure not to use &ldquo;Save As&rdquo; - after using &ldquo;Save As&rdquo;, it will not update to the VRO server, and this editing will be wasted.</p>
+</li>
+</ol>
+<p>After the Report Template editing is completed, you can return to the VRO web UI to view the modification results. Administrators can also select and use this newly created Report Template for different Orchestration Plans based on different Scope settings.</p>
+<p>The above covers all the content of VRO. I hope this helps everyone understand VRO better. Thank you for your attention and reading!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-10-31</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/10/vro-v6-guide-09/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F10%2Fvro-v6-guide-09%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F10%2Fvro-v6-guide-09%2F&amp;text=VRO&#43;Basic&#43;Guide&#43;%28Part&#43;9%29&#43;-&#43;Document&#43;Template&#43;Analysis" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F10%252Fvro-v6-guide-09%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F10%252Fvro-v6-guide-09%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/06/vro-v6-guide-08/" class="prev" rel="prev" title="VRO Getting Started Guide (8) - Plan Step · Part 2"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO Getting Started Guide (8) - Plan Step · Part 2</a>
+            <a href="/en/2023/11/kubernetes-pvc-instant-recovery-01/" class="next" rel="next" title="Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment">Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

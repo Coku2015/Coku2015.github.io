@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>vCenter Converter Retired – How to Handle P2V Now - Cloud.Virt.AI.Sec</title><meta name="description" content="Earlier this month VMware announced that they’re removing vCenter Converter from their product download list. That means we’ll no longer be able to download …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="vCenter Converter Retired – How to Handle P2V Now">
+  <meta property="og:description" content="Earlier this month VMware announced that they’re removing vCenter Converter from their product download list. That means we’ll no longer be able to download this product from VMware’s official website. VMware’s official stance is that vCenter Converter hasn’t been updated for years, has some security vulnerabilities, and isn’t very stable. In my view, VMware has taken down their most powerful weapon.
+What Could This Tool Do? Many readers may never have encountered this tool, but for VMware administrators, it was essentially their best partner. The installation rate of this tool was incredibly high - among VMware’s entire product lineup, it was second only to vCenter. In most environments, administrators would install vCenter Converter immediately after installing vCenter.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-02-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-02-28T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="vCenter Converter Retired – How to Handle P2V Now">
+  <meta name="twitter:description" content="Earlier this month VMware announced that they’re removing vCenter Converter from their product download list. That means we’ll no longer be able to download this product from VMware’s official website. VMware’s official stance is that vCenter Converter hasn’t been updated for years, has some security vulnerabilities, and isn’t very stable. In my view, VMware has taken down their most powerful weapon.
+What Could This Tool Do? Many readers may never have encountered this tool, but for VMware administrators, it was essentially their best partner. The installation rate of this tool was incredibly high - among VMware’s entire product lineup, it was second only to vCenter. In most environments, administrators would install vCenter Converter immediately after installing vCenter.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/" /><link rel="next" href="https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "vCenter Converter Retired – How to Handle P2V Now",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2022\/02\/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  742 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2022\/02\/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88\/","datePublished": "2022-02-28T00:00:00+00:00","dateModified": "2022-02-28T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">简体中文</option><option value="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">简体中文</option><option value="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">vCenter Converter Retired – How to Handle P2V Now</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-02-28">2022-02-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;742 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-could-this-tool-do">What Could This Tool Do?</a></li>
+    <li><a href="#how-it-worked">How It Worked</a></li>
+    <li><a href="#alternative-solution">Alternative Solution</a></li>
+    <li><a href="#technical-tips-and-operational-recommendations">Technical Tips and Operational Recommendations</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Earlier this month VMware <a href="https://blogs.vmware.com/vsphere/2022/02/vcenter-converter-unavailable-for-download.html" target="_blank" rel="noopener noreffer ">announced</a> that they&rsquo;re removing vCenter Converter from their product download list. That means we&rsquo;ll no longer be able to download this product from VMware&rsquo;s official website. VMware&rsquo;s official stance is that vCenter Converter hasn&rsquo;t been updated for years, has some security vulnerabilities, and isn&rsquo;t very stable. In my view, VMware has taken down their most powerful weapon.</p>
+<h2 id="what-could-this-tool-do">What Could This Tool Do?</h2>
+<p>Many readers may never have encountered this tool, but for VMware administrators, it was essentially their best partner. The installation rate of this tool was incredibly high - among VMware&rsquo;s entire product lineup, it was second only to vCenter. In most environments, administrators would install vCenter Converter immediately after installing vCenter.</p>
+<p>This tool was an important contributor to VMware&rsquo;s early success. As far back as the VI3.0 era, it was widely used by administrators. At that time, its basic functionality was simple, and its goal was very clear: help administrators convert physical machines into VMware virtual machines. This was a huge help for administrators - automatically completing physical-to-virtual conversion, turning workloads into VMs running on the VMware platform.</p>
+<p>Early Converter tools were limited to Windows conversions, but later versions became increasingly powerful, supporting both Windows and Linux systems, and even supporting conversions from other virtualization platforms to VMware vSphere VMs.</p>
+<p><a href="https://imgtu.com/i/bK5D8H" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s4.ax1x.com/2022/02/28/bK5D8H.png"
+        data-srcset="https://s4.ax1x.com/2022/02/28/bK5D8H.png, https://s4.ax1x.com/2022/02/28/bK5D8H.png 1.5x, https://s4.ax1x.com/2022/02/28/bK5D8H.png 2x"
+        data-sizes="auto"
+        alt="https://s4.ax1x.com/2022/02/28/bK5D8H.png"
+        title="bK5D8H.png" /></a></p>
+<h2 id="how-it-worked">How It Worked</h2>
+<p>vCenter Converter typically had two implementation methods: hot migration and cold migration. Hot migration has relatively higher system requirements. If everything goes smoothly, the entire process involves minimal business interruption, but data consistency isn&rsquo;t very high because business operations continue running. Cold migration has lower system requirements and broad applicability, and because the system is shut down during the process, data is completely consistent before and after migration.</p>
+<p>Both of these migration and conversion methods involve relatively long conversion times, which basically depend on the source system&rsquo;s disk capacity.</p>
+<h2 id="alternative-solution">Alternative Solution</h2>
+<p>Let me introduce Veeam&rsquo;s amazing capability: <strong>Instant Recovery</strong>!</p>
+<p>This technology has continuously evolved since v10 and has been completely transformed in the current v11 version. Originally this was just an instant mount and quick recovery feature, but Veeam users with unlimited imagination and creativity proposed the concept of instantly recovering physical machine backup archives on virtualization platforms. Veeam&rsquo;s R&amp;D team turned this concept into a concrete feature and further extended and expanded it:</p>
+<ul>
+<li>Instantly recover backup archives of Hyper-V VMs to VMware vSphere</li>
+<li>Instantly recover backup archives of Veeam Agent for Microsoft Windows or Linux to VMware vSphere</li>
+<li>Instantly recover backup archives of Nutanix AHV VMs to VMware vSphere</li>
+<li>Instantly recover backup archives of Amazon EC2 VMs to VMware vSphere</li>
+<li>Instantly recover backup archives of Microsoft Azure VMs to VMware vSphere</li>
+<li>Instantly recover backup archives of Google Compute Engine VMs to VMware vSphere</li>
+<li>Instantly recover backup archives of RHV VMs to VMware vSphere</li>
+</ul>
+<p>Therefore, any migration only needs to be backed up through Veeam, then Instant Recovery, and finally Migration of the recovered VM to the target virtualization system.</p>
+<h2 id="technical-tips-and-operational-recommendations">Technical Tips and Operational Recommendations</h2>
+<p>Finally, let me highlight the key points. The functionality is very powerful, but you must pay attention to the following issues when using it:</p>
+<ol>
+<li>
+<p><strong>Hot migration data deviation issues</strong>: It&rsquo;s highly recommended to perform a final incremental backup before doing Instant Recovery, and ensure this incremental backup completes within minutes. If the incremental backup takes a long time, you can immediately perform another incremental backup after this one completes. After the final incremental backup completes, immediately shut down the source machine, then use this latest incremental restore point for the next step of instant recovery. This approach can achieve migration completion with less than 10 minutes of downtime.</p>
+</li>
+<li>
+<p>When doing Instant Recovery, the success rate for Windows systems is almost 100%, but for Linux systems, there might be various issues. It&rsquo;s recommended to check the Linux system before backing up to ensure <code>dracut</code> and <code>mkinitrd</code> are correctly installed - this can greatly improve recovery success rates.</p>
+</li>
+<li>
+<p><strong>Pay attention to IRcache directory space</strong>: In recent years, many physical machines have particularly large memory capacities, such as servers configured with 256GB/512GB RAM, which is quite common. For Instant Recovery of these machines, the IRcache capacity must be reserved to be larger than the memory.</p>
+</li>
+</ol>
+<p><a href="https://imgtu.com/i/bK5BPe" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s4.ax1x.com/2022/02/28/bK5BPe.png"
+        data-srcset="https://s4.ax1x.com/2022/02/28/bK5BPe.png, https://s4.ax1x.com/2022/02/28/bK5BPe.png 1.5x, https://s4.ax1x.com/2022/02/28/bK5BPe.png 2x"
+        data-sizes="auto"
+        alt="https://s4.ax1x.com/2022/02/28/bK5BPe.png"
+        title="bK5BPe.png" /></a></p>
+<ol start="4">
+<li>Migration methods can use Storage vMotion or Veeam Quick Migration. Each has its pros and cons - you can refer to my previous posts for specifics.</li>
+</ol>
+<p>That&rsquo;s all for today&rsquo;s content. I hope VMware&rsquo;s vCenter Converter retirement won&rsquo;t cause too much trouble for everyone&rsquo;s daily work.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-02-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F02%2Fvmware-vcenter-converter%25E6%259B%25BF%25E4%25BB%25A3%25E6%2596%25B9%25E6%25A1%2588%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F02%2Fvmware-vcenter-converter%25E6%259B%25BF%25E4%25BB%25A3%25E6%2596%25B9%25E6%25A1%2588%2F&amp;text=vCenter&#43;Converter&#43;Retired&#43;%E2%80%93&#43;How&#43;to&#43;Handle&#43;P2V&#43;Now" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F02%252Fvmware-vcenter-converter%2525E6%25259B%2525BF%2525E4%2525BB%2525A3%2525E6%252596%2525B9%2525E6%2525A1%252588%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F02%252Fvmware-vcenter-converter%2525E6%25259B%2525BF%2525E4%2525BB%2525A3%2525E6%252596%2525B9%2525E6%2525A1%252588%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2022/02/veeam-hardened-linux-repository-configurator/" class="prev" rel="prev" title="Veeam Hardened Linux Repository Configurator"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Hardened Linux Repository Configurator</a>
+            <a href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" class="next" rel="next" title="Exploring Tanzu Community Edition in the Homelab">Exploring Tanzu Community Edition in the Homelab<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

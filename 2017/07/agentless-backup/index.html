@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>无代理备份和应用程序感知 - 虚化人生</title><meta name="description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。"><meta property="og:url" content="https://blog.backupnext.cloud/2017/07/agentless-backup/">
-  <meta property="og:site_name" content="虚化人生">
+        <title>无代理备份和应用程序感知 - 云虚智安</title><meta name="description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。"><meta property="og:url" content="https://blog.backupnext.cloud/2017/07/agentless-backup/">
+  <meta property="og:site_name" content="云虚智安">
   <meta property="og:title" content="无代理备份和应用程序感知">
   <meta property="og:description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。">
   <meta property="og:locale" content="zh_CN">
@@ -20,8 +20,8 @@
   <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
   <meta name="twitter:title" content="无代理备份和应用程序感知">
   <meta name="twitter:description" content="虚拟化技术是一个彻底改变 IT 世界的技术，同样在备份领域随着虚拟化技术的使用引入的无代理备份概念也不断对传统技术带来冲击。但是作为一对互相矛盾的技术 - 代理备份和无代理备份，其各自的优缺点也是相当明显。然而 Veeam 的无代理备份技术则是发挥了两者绝大多数的优势，实现了无代理备份的同时能感知应用程序。">
-<meta name="application-name" content="虚化人生">
-<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2017/07/agentless-backup/" /><link rel="prev" href="https://blog.backupnext.cloud/2017/07/direct-nfs-access/" /><link rel="next" href="https://blog.backupnext.cloud/2017/08/speed-up-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -36,9 +36,9 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.backupnext.cloud\/2017\/07\/agentless-backup\/"
         },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1463 ,
-        "url": "https:\/\/blog.backupnext.cloud\/2017\/07\/agentless-backup\/","datePublished": "2017-07-23T00:00:00+00:00","dateModified": "2017-07-23T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+        "url": "https:\/\/blog.backupnext.cloud\/2017\/07\/agentless-backup\/","datePublished": "2017-07-23T00:00:00+00:00","dateModified": "2017-07-23T00:00:00+00:00","publisher": {
             "@type": "Organization",
-            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Lei Wei"
             },"description": ""
@@ -60,7 +60,7 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="虚化人生">虚化人生</a>
+            <a href="/" title="云虚智安">云虚智安</a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
@@ -76,6 +76,9 @@
                         </span>
                     </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/07/agentless-backup/" selected>简体中文</option><option value="/en/2017/07/agentless-backup/">English</option></select>
                 </a></div>
         </div>
     </div>
@@ -83,7 +86,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="虚化人生">虚化人生</a>
+                <a href="/" title="云虚智安">云虚智安</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -107,7 +110,10 @@
                     </a>
                 </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/07/agentless-backup/" selected>简体中文</option><option value="/en/2017/07/agentless-backup/">English</option></select>
+                </div></div>
     </div>
 </header><div class="search-dropdown desktop">
         <div id="search-dropdown-desktop"></div>

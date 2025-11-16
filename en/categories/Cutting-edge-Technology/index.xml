@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cutting-Edge Technology on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Cutting-edge-Technology/</link>
+    <description>Recent content in Cutting-Edge Technology on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 05 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Cutting-edge-Technology/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam Cutting-edge Technology: vPower NFS</title>
+      <link>https://blog.backupnext.cloud/en/2018/03/vpower-nfs/</link>
+      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/03/vpower-nfs/</guid>
+      <description>&lt;p&gt;Imagine recovering terabytes of data in minutes instead of hours. What if you could run virtual machines directly from backup files without any restoration process?&lt;/p&gt;&#xA;&lt;p&gt;This isn&amp;rsquo;t science fiction—it&amp;rsquo;s Veeam&amp;rsquo;s vPower technology, a breakthrough that fundamentally changed how we think about data recovery in virtualized environments. When Veeam introduced vPower, they didn&amp;rsquo;t just improve an existing process; they created an entirely new paradigm for virtualization data protection that still influences the industry today.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

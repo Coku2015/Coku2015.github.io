@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Kubernetes/</link>
+    <description>Recent content in Kubernetes on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 22 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kasten K10 Starter Series 05 - K10 Installation Package Download (2)</title>
+      <link>https://blog.backupnext.cloud/en/2021/07/k10offline-script-2/</link>
+      <pubDate>Thu, 22 Jul 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/07/k10offline-script-2/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-starter-series-table-of-contents&#34;&gt;Kasten K10 Starter Series Table of Contents&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Starter Series 01 - Quick Setup of K8S Single-Node Test Environment&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Starter Series 02 - K10 Installation&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-configuration/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Starter Series 03 - K10 Backup and Recovery&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/06/K10offline-script/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Starter Series 04 - K10 Installation Package Download&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;main-content&#34;&gt;Main Content&lt;/h2&gt;&#xA;&lt;p&gt;In the previous article, we introduced downloading and pushing K10 installation images to a private image repository through scripts. Today, I want to share some offline image packages, which may be the most convenient method in completely offline environments without external network access.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 Starter Series 04 – Offline Image Download Script</title>
+      <link>https://blog.backupnext.cloud/en/2021/06/k10offline-script/</link>
+      <pubDate>Fri, 04 Jun 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/06/k10offline-script/</guid>
+      <description>&lt;h2 id=&#34;series-index&#34;&gt;Series Index&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Part 1 – Single-Node Lab&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Part 2 – Install K10&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-configuration/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Part 3 – Backup &amp;amp; Restore&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;why-this-script-exists&#34;&gt;Why This Script Exists&lt;/h2&gt;&#xA;&lt;p&gt;Downloading K10 can be painful—especially if you’re used to Veeam’s tidy installers. Kasten’s docs describe deployment, but there’s no simple download link. Everything lives under &lt;code&gt;gcr.io&lt;/code&gt;, which is unreachable from many regions. Kasten suggests the JFrog Artifactory mirror for online installs, but it doesn’t integrate with the official offline script.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 Getting Started Series 03 - K10 Backup and Restore</title>
+      <link>https://blog.backupnext.cloud/en/2021/05/k10-configuration/</link>
+      <pubDate>Tue, 18 May 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/05/k10-configuration/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-getting-started-series-table-of-contents&#34;&gt;Kasten K10 Getting Started Series Table of Contents&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Getting Started Series 01 - Quickly Build K8S Single-Node Test Environment&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/05/K10-setup/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Getting Started Series 02 - K10 Installation&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;main-content&#34;&gt;Main Content&lt;/h2&gt;&#xA;&lt;p&gt;Previously I introduced the installation of K10. The entire installation process is actually just one &lt;code&gt;helm install&lt;/code&gt; command. After installation is complete, subsequent operations can be performed by opening K10&amp;rsquo;s dashboard in a browser to configure the K10 backup system, manage K10 backup policies, and perform data recovery.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 Starter Series 02 – Installing K10</title>
+      <link>https://blog.backupnext.cloud/en/2021/05/k10-setup/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/05/k10-setup/</guid>
+      <description>&lt;h2 id=&#34;kasten-k10-starter-series-index&#34;&gt;Kasten K10 Starter Series Index&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Kasten K10 Starter Series 01 - Quick Setup for K8s Single-Node Test Environment&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;main-content&#34;&gt;Main Content&lt;/h2&gt;&#xA;&lt;p&gt;Kasten K10 installation uses the Kubernetes package management tool Helm. If you&amp;rsquo;re not familiar with Kubernetes, you might not know what Helm is. Simply put, Helm on Kubernetes is like yum on CentOS - when you need to install software on CentOS, you just run &lt;code&gt;yum install&lt;/code&gt;, and on Kubernetes, it&amp;rsquo;s &lt;code&gt;helm install&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kasten K10 Starter Series 01 – Build a Single-Node K8s Lab Quickly</title>
+      <link>https://blog.backupnext.cloud/en/2020/12/setting-up-quick-demo-for-k10-01/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/12/setting-up-quick-demo-for-k10-01/</guid>
+      <description>&lt;h4 id=&#34;release-notes-v12&#34;&gt;Release Notes: v1.2&lt;/h4&gt;&#xA;&lt;p&gt;&lt;em&gt;2021/06/04 - Added a local registry with built-in K10 v4.0.3 images. You can use &lt;code&gt;--set global.airgapped.repository=localhost:5000&lt;/code&gt; during K10 installation to directly call the local docker image repository.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;Virtual appliance updated to v1.2, corresponding file in cloud drive:&#xA;UbuntuK10-v1.2.ova&lt;/em&gt;&lt;/p&gt;&#xA;&lt;h4 id=&#34;release-notes-v11&#34;&gt;Release Notes: v1.1&lt;/h4&gt;&#xA;&lt;p&gt;&lt;em&gt;2021/05/03 - Tested Stateful MySQL deployment, changed the built-in Demo application in the appliance to Helm-installed MySQL. This allows quick demo and testing of backup and restore for stateful applications through this vApp.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

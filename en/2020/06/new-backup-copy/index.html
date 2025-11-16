@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>New Backup Copy Modes Bring 3-2-1 to More Workloads - Cloud.Virt.AI.Sec</title><meta name="description" content="Backup Copy Fundamentals Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/06/new-backup-copy/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="New Backup Copy Modes Bring 3-2-1 to More Workloads">
+  <meta property="og:description" content="Backup Copy Fundamentals Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an existing restore point and duplicate it as a fully functional restore point in another repository. A restore point might be a single .vbk full or a chain of .vbk &#43; .vib files—Backup Copy preserves whatever structure the source job created.
+Backup Copy typically uses a forever-incremental chain. The first run produces a .vbk full; every subsequent run writes .vib increments on top of that base. Synthetic fulls are created via the GFS schedule—for example:">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-06-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-06-02T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="New Backup Copy Modes Bring 3-2-1 to More Workloads">
+  <meta name="twitter:description" content="Backup Copy Fundamentals Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an existing restore point and duplicate it as a fully functional restore point in another repository. A restore point might be a single .vbk full or a chain of .vbk &#43; .vib files—Backup Copy preserves whatever structure the source job created.
+Backup Copy typically uses a forever-incremental chain. The first run produces a .vbk full; every subsequent run writes .vib increments on top of that base. Synthetic fulls are created via the GFS schedule—for example:">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/06/new-backup-copy/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/05/hidden-key-in-vbr/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/06/powercli-vsphere-permission/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "New Backup Copy Modes Bring 3-2-1 to More Workloads",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/06\/new-backup-copy\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  367 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/06\/new-backup-copy\/","datePublished": "2020-06-02T00:00:00+00:00","dateModified": "2020-06-02T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/06/new-backup-copy/">简体中文</option><option value="/en/2020/06/new-backup-copy/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/06/new-backup-copy/">简体中文</option><option value="/en/2020/06/new-backup-copy/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">New Backup Copy Modes Bring 3-2-1 to More Workloads</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-06-02">2020-06-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;367 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#backup-copy-fundamentals">Backup Copy Fundamentals</a></li>
+    <li><a href="#whats-new-in-v10">What’s New in V10</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="backup-copy-fundamentals">Backup Copy Fundamentals</h2>
+<p>Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an existing restore point and duplicate it as a fully functional restore point in another repository. A restore point might be a single <code>.vbk</code> full or a chain of <code>.vbk + .vib</code> files—Backup Copy preserves whatever structure the source job created.</p>
+<p>Backup Copy typically uses a forever-incremental chain. The first run produces a <code>.vbk</code> full; every subsequent run writes <code>.vib</code> increments on top of that base. Synthetic fulls are created via the GFS schedule—for example:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/02/tttSpR.png"
+        data-srcset="https://s1.ax1x.com/2020/06/02/tttSpR.png, https://s1.ax1x.com/2020/06/02/tttSpR.png 1.5x, https://s1.ax1x.com/2020/06/02/tttSpR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/02/tttSpR.png"
+        title="tttSpR.png" /></p>
+<p>With 14 restore points and a daily schedule, the chain looks like this after one cycle:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/02/ttwkYF.png"
+        data-srcset="https://s1.ax1x.com/2020/06/02/ttwkYF.png, https://s1.ax1x.com/2020/06/02/ttwkYF.png 1.5x, https://s1.ax1x.com/2020/06/02/ttwkYF.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/02/ttwkYF.png"
+        title="ttwkYF.png" /></p>
+<p>Enable Weekly GFS and set it to retain two weeks:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/02/ttwspQ.png"
+        data-srcset="https://s1.ax1x.com/2020/06/02/ttwspQ.png, https://s1.ax1x.com/2020/06/02/ttwspQ.png 1.5x, https://s1.ax1x.com/2020/06/02/ttwspQ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/02/ttwspQ.png"
+        title="ttwspQ.png" /></p>
+<p>Now you’ll see two synthetic weekly fulls alongside the forever-incremental chain:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/02/tt0lBq.png"
+        data-srcset="https://s1.ax1x.com/2020/06/02/tt0lBq.png, https://s1.ax1x.com/2020/06/02/tt0lBq.png 1.5x, https://s1.ax1x.com/2020/06/02/tt0lBq.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/02/tt0lBq.png"
+        title="tt0lBq.png" /></p>
+<h2 id="whats-new-in-v10">What’s New in V10</h2>
+<p>V10 introduces a brand-new mode while keeping the original behavior. The classic mode now carries the name <strong>Periodic Copy</strong>; the new one is <strong>Immediate Copy</strong>. Their capabilities differ slightly:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Source type</th>
+          <th>Immediate Copy</th>
+          <th>Periodic Copy</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>vSphere / Hyper-V VM backups</td>
+          <td>✔︎</td>
+          <td>✔︎</td>
+      </tr>
+      <tr>
+          <td>Centrally managed Veeam Agents</td>
+          <td>✔︎</td>
+          <td>✔︎</td>
+      </tr>
+      <tr>
+          <td>SQL &amp; Oracle transaction logs</td>
+          <td>✔︎</td>
+          <td>✖︎</td>
+      </tr>
+      <tr>
+          <td>Standalone Veeam Agents</td>
+          <td>✖︎</td>
+          <td>✔︎</td>
+      </tr>
+      <tr>
+          <td>Oracle RMAN / SAP HANA</td>
+          <td>✔︎</td>
+          <td>✖︎</td>
+      </tr>
+      <tr>
+          <td>Nutanix AHV</td>
+          <td>✖︎</td>
+          <td>✔︎</td>
+      </tr>
+      <tr>
+          <td>AWS EC2</td>
+          <td>✖︎</td>
+          <td>✔︎</td>
+      </tr>
+      <tr>
+          <td>Microsoft Azure VMs</td>
+          <td>✖︎</td>
+          <td>✔︎</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Immediate Copy</strong> mirrors restore points as soon as the primary job finishes. It’s a 1:1 mirror of restore points—not literal file copies. For example, if the primary job creates a synthetic full every Saturday, Immediate Copy runs immediately afterward and produces a matching restore point (implemented as a <code>.vib</code> increment). Because it keeps up with the primary job, it’s ideal for workloads that rely on transaction-log backups and need tighter RPOs for off-site DR.</p>
+<p><strong>Periodic Copy</strong> is the traditional schedule-based mode that runs at defined intervals.</p>
+<p>There’s no in-place conversion between modes. To adopt Immediate Copy, disable the legacy job and create a new Backup Copy job using Immediate Copy mode, checking <strong>Include database transaction log backups</strong> when needed.</p>
+<p>That’s the rundown. If you haven’t configured Backup Copy yet, now’s a great time to do it—more workloads than ever can benefit from 3-2-1 protection.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/06/new-backup-copy/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F06%2Fnew-backup-copy%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F06%2Fnew-backup-copy%2F&amp;text=New&#43;Backup&#43;Copy&#43;Modes&#43;Bring&#43;3-2-1&#43;to&#43;More&#43;Workloads" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F06%252Fnew-backup-copy%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F06%252Fnew-backup-copy%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/05/hidden-key-in-vbr/" class="prev" rel="prev" title="Hidden Shortcuts Inside VBR"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hidden Shortcuts Inside VBR</a>
+            <a href="/en/2020/06/powercli-vsphere-permission/" class="next" rel="next" title="Create a Minimal vSphere Role for Veeam via PowerCLI">Create a Minimal vSphere Role for Veeam via PowerCLI<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

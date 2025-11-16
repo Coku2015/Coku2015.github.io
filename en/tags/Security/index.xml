@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Security/</link>
+    <description>Recent content in Security on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 10 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</link>
+      <pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</guid>
+      <description>&lt;p&gt;In our previous articles, we introduced how Veeam v13 continues to enhance its YARA malware scanning capabilities. However, the limitation of official rule sets is a very real challenge. There aren&amp;rsquo;t many free YARA rule sources available online, and high-quality ones are even scarcer. Today, I want to introduce you to a hidden gem: Ransomware.live - a professional open-source ransomware threat intelligence platform that provides free YARA rules for 62 major ransomware gangs, making it a perfect complement to Veeam&amp;rsquo;s YARA scanning functionality.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>V13 Malware Detection Comprehensive Upgrade: Practical Evolution from Passive Protection to Active Response</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</guid>
+      <description>&lt;p&gt;In version v13, malware detection capabilities have achieved a significant leap forward. Compared to the real-time detection capabilities already available in the v12 era, v13 has brought qualitative improvements in threat response mechanisms, platform coverage, and intelligence levels. In my previous articles, I&amp;rsquo;ve detailed the ransomware attack detection principles and configuration methods for v12. Today, building on that foundation, let&amp;rsquo;s explore the key upgrades that v13 brings.&lt;/p&gt;&#xA;&lt;h2 id=&#34;v12-detection-capabilities-review-the-separation-of-detection-and-response&#34;&gt;v12 Detection Capabilities Review: The Separation of Detection and Response&lt;/h2&gt;&#xA;&lt;p&gt;In the v12 era, Veeam&amp;rsquo;s malware detection primarily relied on two mechanisms:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</link>
+      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</guid>
+      <description>&lt;p&gt;In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I&amp;rsquo;ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.&lt;/p&gt;&#xA;&lt;p&gt;Today, let&amp;rsquo;s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp;amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization&amp;rsquo;s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company&amp;rsquo;s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Setting Up Multi-Factor Authentication for Kasten with Azure EntraID</title>
+      <link>https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/</link>
+      <pubDate>Mon, 26 May 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/</guid>
+      <description>&lt;p&gt;In the world of Kubernetes backup and recovery, security isn&amp;rsquo;t just a feature—it&amp;rsquo;s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn&amp;rsquo;t just about adding another security layer; it&amp;rsquo;s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
+      <description>&lt;h2 id=&#34;series-index&#34;&gt;Series Index&lt;/h2&gt;&#xA;&lt;p&gt;Data protection is more than just backup—it&amp;rsquo;s about securing your organization&amp;rsquo;s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Part 1: Account-less and SSH service management for Linux backup agents&lt;/li&gt;&#xA;&lt;li&gt;Part 2: Using gMSA technology to manage Windows accounts&lt;/li&gt;&#xA;&lt;li&gt;Part 3: Four-Eyes Authorization: Dual control for backup system operations&lt;/li&gt;&#xA;&lt;li&gt;Part 4: Enabling Multi-Factor Authentication (MFA): Strengthening backup system account protection&lt;/li&gt;&#xA;&lt;li&gt;Part 5: Reducing network ports involved in backup operations&lt;/li&gt;&#xA;&lt;li&gt;Part 6: Using Syslog to manage logs in SIEM systems&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;four-eyes-authorization-securing-veeam-backup-operations&#34;&gt;&lt;strong&gt;Four-Eyes Authorization: Securing Veeam Backup Operations&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;In the digital age, data is the lifeblood of enterprises, making the security of backup and recovery operations particularly critical. A single misoperation or malicious act could lead to business interruption or data breaches. For this reason, &lt;strong&gt;Four-Eyes Authorization&lt;/strong&gt; has gradually become an important strategy for organizations to protect their backup processes, building a solid security barrier for critical tasks through a dual-review mechanism.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
+      <pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
+      <description>&lt;h2 id=&#34;series-overview&#34;&gt;Series Overview&lt;/h2&gt;&#xA;&lt;p&gt;Data protection isn&amp;rsquo;t just about backup—it&amp;rsquo;s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the start of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips introduced in VDP v12 and later versions—simple to implement yet powerful enough to safeguard your data security.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
+      <pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
+      <description>&lt;h2 id=&#34;series-overview&#34;&gt;Series Overview&lt;/h2&gt;&#xA;&lt;p&gt;Data protection isn&amp;rsquo;t just about backups—it&amp;rsquo;s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips and tricks introduced since VDP v12—simple yet powerful features that safeguard your data security.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring</title>
+      <link>https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
+      <pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
+      <description>&lt;p&gt;In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to monitoring and compliance management. To better help administrators improve backup system security, VBR has introduced a fully automated security compliance checking capability called Security &amp;amp; Compliance Analyzer. Additionally, in the Enterprise Edition, a completely new Threat Center dashboard has been launched.&lt;/p&gt;&#xA;&lt;h3 id=&#34;security--compliance-analyzer&#34;&gt;Security &amp;amp; Compliance Analyzer&lt;/h3&gt;&#xA;&lt;p&gt;This component actually existed in v12, where it was called Best Practices Analyzer, but the first version&amp;rsquo;s functionality wasn&amp;rsquo;t quite comprehensive and its detection capabilities were somewhat limited. In the new version, Best Practices Analyzer has been renamed to Security &amp;amp; Compliance Analyzer, and its capabilities have been significantly enhanced.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning</title>
+      <link>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
+      <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
+      <description>&lt;p&gt;Following up on yesterday&amp;rsquo;s post, let&amp;rsquo;s dive into the second major update: YARA Scan and Antivirus Scan.&lt;/p&gt;&#xA;&lt;p&gt;Beyond its ability to perform online scanning of backup data streams, Veeam Backup &amp;amp; Replication (VBR) now supports secondary scanning of already backed-up data. Version 12.1 introduces two powerful scanning engines: one that leverages antivirus software installed on the Mount Server, and another that utilizes YARA as the scanning engine.&lt;/p&gt;&#xA;&lt;h3 id=&#34;understanding-yara&#34;&gt;Understanding YARA&lt;/h3&gt;&#xA;&lt;p&gt;YARA (which stands for &lt;em&gt;Yet Another Recursive Acronym&lt;/em&gt;) is a tool primarily used by security experts and researchers to identify and classify malware. You can find the official documentation at &lt;a href=&#34;https://yara.readthedocs.io/en/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://yara.readthedocs.io/en/latest/&lt;/a&gt; and the GitHub repository at &lt;a href=&#34;https://github.com/virustotal/yara&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://github.com/virustotal/yara&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Feature Deep Dive Series (Part 1) - Ransomware Detection</title>
+      <link>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
+      <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m genuinely excited to share this deep dive into Veeam Data Platform v12.1&amp;rsquo;s security enhancements. When Veeam released this major update late last year, they packed it with significant security features that deserve proper attention. Starting today, I&amp;rsquo;ll be exploring each of these capabilities in detail, breaking down how they work and how to make the most of them.&lt;/p&gt;&#xA;&lt;p&gt;For this first installment, let&amp;rsquo;s dive into ransomware detection. In v12.1, Veeam introduced a comprehensive malware detection module that consists of two core components: Inline Entropy Scan and Index Scan. Both work together to provide multiple layers of protection against sophisticated attacks.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</guid>
+      <description>&lt;p&gt;After the release of Veeam v12, the official documentation provides &lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;methods for further system security hardening&lt;/a&gt; after building a Veeam hardened repository based on Ubuntu 20.04, and offers a fully automated configuration script. Therefore, after using my &lt;a href=&#34;https://github.com/Coku2015/Veeam_Repo_Configurator&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Configurator&lt;/a&gt; to build the Ubuntu repository, you can use this automated configuration script for more secure hardening.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Since the official script includes some US military compliance configurations that are not suitable for Chinese users, I have modified Veeam&amp;rsquo;s official script and republished it to make it suitable for Chinese users.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

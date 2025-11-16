@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Basics (Part 1) – Overview - Cloud.Virt.AI.Sec</title><meta name="description" content="There’s something exciting happening in the Veeam ecosystem. With the launch of Veeam Data Platform v12, we’re seeing a significant evolution in disaster …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-01/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Basics (Part 1) – Overview">
+  <meta property="og:description" content="There’s something exciting happening in the Veeam ecosystem. With the launch of Veeam Data Platform v12, we’re seeing a significant evolution in disaster recovery orchestration. The platform’s Platinum edition now includes Veeam Recovery Orchestrator (VRO) v6—the successor to Veeam Availability Orchestrator (VAO).
+What makes this particularly noteworthy is the massive leap forward from the previous VAO v2. VRO v6 works seamlessly alongside VBR v12 and Veeam ONE v12, delivering comprehensive enhancements that transform how we approach disaster recovery. The improvements are so substantial that I’ve completely refreshed my foundational “VRO Basics” series to share everything that’s new and powerful in this release.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-24T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-05-24T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Basics (Part 1) – Overview">
+  <meta name="twitter:description" content="There’s something exciting happening in the Veeam ecosystem. With the launch of Veeam Data Platform v12, we’re seeing a significant evolution in disaster recovery orchestration. The platform’s Platinum edition now includes Veeam Recovery Orchestrator (VRO) v6—the successor to Veeam Availability Orchestrator (VAO).
+What makes this particularly noteworthy is the massive leap forward from the previous VAO v2. VRO v6 works seamlessly alongside VBR v12 and Veeam ONE v12, delivering comprehensive enhancements that transform how we approach disaster recovery. The improvements are so substantial that I’ve completely refreshed my foundational “VRO Basics” series to share everything that’s new and powerful in this release.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-01/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/03/v12update-hidden-key/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Basics (Part 1) – Overview",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/05\/vro-v6-guide-01\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  980 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/05\/vro-v6-guide-01\/","datePublished": "2023-05-24T00:00:00+00:00","dateModified": "2023-05-24T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/05/vro-v6-guide-01/">简体中文</option><option value="/en/2023/05/vro-v6-guide-01/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/05/vro-v6-guide-01/">简体中文</option><option value="/en/2023/05/vro-v6-guide-01/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Basics (Part 1) – Overview</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-24">2023-05-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;980 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-vro">What Is VRO?</a></li>
+    <li><a href="#where-can-you-use-vro">Where Can You Use VRO?</a>
+      <ul>
+        <li><a href="#single-data-center">Single Data Center</a></li>
+        <li><a href="#primary-and-dr-data-centers">Primary and DR Data Centers</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-five-vro-plan-types">The Five VRO Plan Types</a></li>
+    <li><a href="#what-can-vro-do-for-you">What Can VRO Do For You?</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>There&rsquo;s something exciting happening in the Veeam ecosystem. With the launch of Veeam Data Platform v12, we&rsquo;re seeing a significant evolution in disaster recovery orchestration. The platform&rsquo;s Platinum edition now includes <strong>Veeam Recovery Orchestrator (VRO)</strong> v6—the successor to Veeam Availability Orchestrator (VAO).</p>
+<p>What makes this particularly noteworthy is the massive leap forward from the previous VAO v2. VRO v6 works seamlessly alongside VBR v12 and Veeam ONE v12, delivering comprehensive enhancements that transform how we approach disaster recovery. The improvements are so substantial that I&rsquo;ve completely refreshed my foundational &ldquo;VRO Basics&rdquo; series to share everything that&rsquo;s new and powerful in this release.</p>
+<h2 id="what-is-vro">What Is VRO?</h2>
+<p>Think of VRO as Veeam&rsquo;s premier orchestration layer that dramatically enhances Veeam Backup &amp; Replication&rsquo;s recovery capabilities. As the highest-tier component in the Veeam Data Platform, VRO v6 supports an impressive range of backup and disaster recovery data sources:</p>
+<ul>
+<li><strong>vSphere virtual machines</strong> protected by VBR backups</li>
+<li><strong>Windows and Linux systems</strong> protected by Veeam Agent backups</li>
+<li><strong>vSphere Replica archives</strong> created through VBR replication</li>
+<li><strong>Veeam CDP replica archives</strong> from continuous data protection</li>
+<li><strong>Storage volume replicas</strong> from NetApp and HPE storage arrays (vSphere environments only)</li>
+</ul>
+<p>In v6, these data sources power incredibly rich recovery scenarios and capabilities:</p>
+<ul>
+<li><strong>Policy-driven RPO/RTO enforcement</strong> through software-defined automation that ensures your disaster recovery infrastructure meets required service level objectives</li>
+<li><strong>Fully automated failover processes</strong> supporting backup archives, replica archives, and CDP archives with orchestrated workflows</li>
+<li><strong>Comprehensive disaster recovery validation</strong> through DataLabs, where every DR scenario can be rehearsed in complete 1:1 isolation</li>
+</ul>
+<p>And here&rsquo;s where VRO really expands the horizon: recovery destinations now extend beyond traditional vSphere environments to include <strong>Microsoft Azure cloud</strong>, enabling Direct-to-Azure recovery capabilities.</p>
+<p>VRO essentially enhances and replaces VBR&rsquo;s built-in Recovery, Failover, and SureBackup operations. It takes these three critical functions and adds powerful customization layers—you can inject custom steps and scripts that align perfectly with your actual business scenarios. For administrators, thoughtfully designing these additional steps can dramatically reduce the complexity of disaster recovery workflows in IT operations.</p>
+<h2 id="where-can-you-use-vro">Where Can You Use VRO?</h2>
+<p>VRO adapts to your infrastructure complexity, from simple setups to sophisticated multi-site environments. Let me walk through two fundamental architecture scenarios to illustrate how VRO fits into different designs.</p>
+<h3 id="single-data-center">Single Data Center</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/390jqx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/390jqx.png, https://s2.ax1x.com/2020/02/16/390jqx.png 1.5x, https://s2.ax1x.com/2020/02/16/390jqx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/390jqx.png"
+        title="Single site" /></p>
+<p>In a single data center deployment, adding VRO components introduces minimal changes to your existing backup architecture. All your VBR operations continue exactly as before—day-to-day backup and restore functions remain unchanged. What VRO brings is focused orchestration for your most critical workloads, ensuring their RPO and RTO requirements are consistently met.</p>
+<p>When critical systems experience downtime, they typically recover in-place, so there&rsquo;s no need for dedicated recovery resources. The beauty of this approach is its simplicity—you&rsquo;re essentially elevating protection for the VMs that matter most without overhauling your entire infrastructure.</p>
+<h3 id="primary-and-dr-data-centers">Primary and DR Data Centers</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/16/390OMR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/16/390OMR.png, https://s2.ax1x.com/2020/02/16/390OMR.png 1.5x, https://s2.ax1x.com/2020/02/16/390OMR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/16/390OMR.png"
+        title="Primary/DR" /></p>
+<p>This is a more complex but very common scenario: geographically distributed primary and backup data centers. Your primary site handles production workloads, while your secondary site serves as your disaster recovery target. Typically, you&rsquo;d already be copying backup archives to the DR site and potentially replicating critical VMs 1:1 to the recovery location.</p>
+<p>This is where VRO truly shines. The data recovery workflows at your DR site can all be orchestrated through VRO&rsquo;s Replica Plans or Restore Plans, and these plans undergo complete recovery validation in corresponding DataLabs. The architecture remains fundamentally similar to the single data center approach, but now you can strategically allocate resources specifically for disaster recovery preparation and execution.</p>
+<h2 id="the-five-vro-plan-types">The Five VRO Plan Types</h2>
+<p>It&rsquo;s important to understand that VRO doesn&rsquo;t provide backup or replication functionality itself—all source data processing happens in VBR. Instead, VRO v6 offers five distinct orchestration plans that bring everything together:</p>
+<ul>
+<li><strong>Replica Plan</strong> – Recovery plans based on replicas created through VBR replication functionality</li>
+<li><strong>CDP Replica Plan</strong> – Recovery plans leveraging replicas created through VBR&rsquo;s continuous data protection</li>
+<li><strong>Restore Plan</strong> – Recovery plans for restoring VBR vSphere backups and Veeam Agent backups to vSphere environments</li>
+<li><strong>Storage Plan</strong> – Recovery plans for restoring VMware Datastores from NetApp and HPE storage volume replications</li>
+<li><strong>Cloud Plan</strong> – Recovery plans for restoring VBR vSphere backups and Veeam Agent backups directly to Microsoft Azure</li>
+</ul>
+<p>Each plan type supports essential operations:</p>
+<ul>
+<li>Resource availability testing before execution</li>
+<li>Comprehensive automated reporting</li>
+<li>One-click fully automated recovery and failover</li>
+</ul>
+<p>What&rsquo;s particularly exciting is how VRO enhances DataLabs functionality—this has always been one of Veeam&rsquo;s standout features. In VRO, DataLabs not only support testing for Replica Plans and Restore Plans, but also leverage VRO&rsquo;s powerful scripting and step addition capabilities to automatically generate complex testing environments. Through this enhancement, complex test cases and environment deployment workflows transform into simple one-button operations, dramatically improving DataLabs efficiency and utilization.</p>
+<h2 id="what-can-vro-do-for-you">What Can VRO Do For You?</h2>
+<p>To put it simply, I&rsquo;ve summarized the key capabilities:</p>
+<ul>
+<li><strong>Fully automated recovery</strong> to both Azure cloud and VMware virtualization environments</li>
+<li><strong>&ldquo;Zero contamination&rdquo; restores</strong> through intelligent scanning engines that detect malware before restoration, ensuring recovered data remains uncompromised</li>
+<li><strong>Comprehensive automated disaster recovery and recovery testing</strong> with minimal manual intervention</li>
+<li><strong>Instantly usable DataLabs</strong> creation for isolated testing environments</li>
+<li><strong>Complete application availability validation</strong> to ensure business continuity</li>
+<li><strong>One-click disaster recovery</strong> execution for rapid response capabilities</li>
+<li><strong>Fully automated dynamic disaster recovery documentation</strong> that updates in real-time</li>
+</ul>
+<p>This marks the beginning of our updated VRO v6 journey. Stay tuned for this comprehensive series where I&rsquo;ll be sharing:</p>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 1) – Overview</a> (this post)</li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 5) – First Steps Toward a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 6) – DataLabs</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 7) – Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 8) – Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 9) – Document Template Deep Dive</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 10) – Using VRO with K10 for Automated Container Disaster Recovery</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/05/vro-v6-guide-01/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F05%2Fvro-v6-guide-01%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F05%2Fvro-v6-guide-01%2F&amp;text=VRO&#43;Basics&#43;%28Part&#43;1%29&#43;%E2%80%93&#43;Overview" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F05%252Fvro-v6-guide-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F05%252Fvro-v6-guide-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/03/v12update-hidden-key/" class="prev" rel="prev" title="Hidden Shortcuts in Veeam Backup &amp; Replication v12"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hidden Shortcuts in Veeam Backup & Replication v12</a>
+            <a href="/en/2023/05/vro-v6-guide-02/" class="next" rel="next" title="VRO Basics (Part 2) – Install &amp; Deploy">VRO Basics (Part 2) – Install & Deploy<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

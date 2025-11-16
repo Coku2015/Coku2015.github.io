@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GIF on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/GIF/</link>
+    <description>Recent content in GIF on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/GIF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>High-Resolution Backup Infrastructure GIFs (Updated Weekly)</title>
+      <link>https://blog.backupnext.cloud/en/2020/09/backup-infra-gifs/</link>
+      <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/09/backup-infra-gifs/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Week 01&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020‑09‑07 – Add vCenter&lt;br&gt;&#xA;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 1.5x, https://s1.ax1x.com/2020/09/06/wZ2oWR.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/wZ2oWR.gif&#34;&#xA;        title=&#34;wZ2oWR.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020‑09‑08 – Add VMware Windows Proxy&lt;br&gt;&#xA;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif, https://s1.ax1x.com/2020/09/06/weSFTe.gif 1.5x, https://s1.ax1x.com/2020/09/06/weSFTe.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/06/weSFTe.gif&#34;&#xA;        title=&#34;weSFTe.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020‑09‑09 – Add VMware Linux Proxy&lt;br&gt;&#xA;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 1.5x, https://s1.ax1x.com/2020/09/07/wnrw4A.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/07/wnrw4A.gif&#34;&#xA;        title=&#34;wnrw4A.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020‑09‑10 – Add File Proxy for NAS backups&lt;br&gt;&#xA;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 1.5x, https://s1.ax1x.com/2020/09/19/w5OZe1.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/19/w5OZe1.gif&#34;&#xA;        title=&#34;w5OZe1.gif&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;2020‑09‑11 – Add a Windows direct-attached disk as a repository&lt;br&gt;&#xA;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/19/w5OlSe.gif&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/19/w5OlSe.gif, https://s1.ax1x.com/2020/09/19/w5OlSe.gif 1.5x, https://s1.ax1x.com/2020/09/19/w5OlSe.gif 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/19/w5OlSe.gif&#34;&#xA;        title=&#34;w5OlSe.gif&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Learn Veeam in 10 Seconds via WeChat Search</title>
+      <link>https://blog.backupnext.cloud/en/2020/09/new-subscription-daily-gif/</link>
+      <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/09/new-subscription-daily-gif/</guid>
+      <description>&lt;p&gt;Veeam prides itself on simplicity, yet the growing feature set can overwhelm newcomers. To help, I launched a WeChat mini-program that posts a short GIF every workday—each around ten seconds—to teach one Veeam trick at a time.&lt;/p&gt;&#xA;&lt;p&gt;Scan the new QR code to follow:&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/09/07/wnkSC8.png&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/09/07/wnkSC8.png, https://s1.ax1x.com/2020/09/07/wnkSC8.png 1.5x, https://s1.ax1x.com/2020/09/07/wnkSC8.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/09/07/wnkSC8.png&#34;&#xA;        title=&#34;wnkSC8.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;WeChat compresses images heavily, so if you’d like the high-resolution versions, visit my &lt;a href=&#34;https://blog.backupnext.cloud/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;blog&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

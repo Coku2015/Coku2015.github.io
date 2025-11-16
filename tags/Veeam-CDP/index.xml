@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Veeam CDP on 虚化人生</title>
+    <title>Veeam CDP on 云虚智安</title>
     <link>https://blog.backupnext.cloud/tags/Veeam-CDP/</link>
-    <description>Recent content in Veeam CDP on 虚化人生</description>
+    <description>Recent content in Veeam CDP on 云虚智安</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <copyright>© Backup Next Cloud</copyright>
     <lastBuildDate>Fri, 19 Feb 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/Veeam-CDP/index.xml" rel="self" type="application/rss+xml" />
     <item>

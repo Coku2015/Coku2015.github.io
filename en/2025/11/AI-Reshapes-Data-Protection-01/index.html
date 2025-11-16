@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch - Cloud.Virt.AI.Sec</title><meta name="description" content="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch Vibe coding has been incredibly popular lately, with …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch">
+  <meta property="og:description" content="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I’m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-11T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Veeam">
+    <meta property="article:tag" content="Vibe Coding">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png">
+  <meta name="twitter:title" content="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch">
+  <meta name="twitter:description" content="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I’m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/" /><link rel="next" href="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2025\/11\/AI-Reshapes-Data-Protection-01\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-01\/featured-image.png"],"genre": "posts","keywords": "Backup, AI, Veeam, Vibe Coding","wordcount":  1012 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2025\/11\/AI-Reshapes-Data-Protection-01\/","datePublished": "2025-11-11T00:00:00+00:00","dateModified": "2025-11-11T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/11/AI-Reshapes-Data-Protection-01/">简体中文</option><option value="/en/2025/11/AI-Reshapes-Data-Protection-01/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/11/AI-Reshapes-Data-Protection-01/">简体中文</option><option value="/en/2025/11/AI-Reshapes-Data-Protection-01/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-11">2025-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1012 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png"
+        data-srcset="/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png, /2025/11/AI-Reshapes-Data-Protection-01/featured-image.png 1.5x, /2025/11/AI-Reshapes-Data-Protection-01/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png"
+        title="/2025/11/AI-Reshapes-Data-Protection-01/featured-image.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-claude-code">What is Claude Code?</a></li>
+    <li><a href="#preparing-the-basic-environment">Preparing the Basic Environment</a>
+      <ul>
+        <li><a href="#installing-cursor-editor">Installing Cursor Editor</a></li>
+        <li><a href="#environment-dependencies-git-and-nodejs">Environment Dependencies: Git and Node.js</a></li>
+      </ul>
+    </li>
+    <li><a href="#installing-and-configuring-claude-code">Installing and Configuring Claude Code</a>
+      <ul>
+        <li><a href="#installing-claude-code-software">Installing Claude Code Software</a></li>
+        <li><a href="#registering-for-glm-46">Registering for GLM-4.6</a></li>
+        <li><a href="#configuring-glm-46-for-claude-code">Configuring GLM 4.6 for Claude Code</a></li>
+        <li><a href="#creating-and-configuring-the-project-folder">Creating and Configuring the Project Folder</a></li>
+      </ul>
+    </li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch">AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch</h1>
+<p>Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.</p>
+<h2 id="what-is-claude-code">What is Claude Code?</h2>
+<p>The renowned Claude Code needs no introduction. You can check out <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener noreffer ">https://code.claude.com/docs/en/overview</a> if you&rsquo;re interested, and there are plenty of introductions across various online platforms. These cover not just AI programming, but also some creative uses like personal assistants, blog writing, travel companions, and more. The possibilities are limited only by your imagination.</p>
+<p>This article will guide you through using Claude Code from scratch. My goal isn&rsquo;t to teach you vibe coding for AI programming, but rather to use Claude Code as a tool to spark new insights and possibilities.</p>
+<h2 id="preparing-the-basic-environment">Preparing the Basic Environment</h2>
+<p>First, let&rsquo;s look at environment setup. Claude Code is a pure CLI tool, which is quite different from the web-based AI tools we typically use, such as ChatGPT, Copilot, or Doubao. Therefore, it&rsquo;s best to pair it with a suitable editor so you can observe the files it creates and modifies while working. For the basic environment setup, I&rsquo;ll start by installing a capable AI editor. I recommend using the Cursor editor, though you can choose any editor you&rsquo;re comfortable with.</p>
+<h3 id="installing-cursor-editor">Installing Cursor Editor</h3>
+<p>I&rsquo;m starting with Cursor for a simple reason: it has excellent AI integration, and its interface is nearly identical to VS Code, so there&rsquo;s no learning curve.</p>
+<p>The editor supports Windows, Linux, and macOS, making download and installation straightforward.</p>
+<ol>
+<li>Visit <a href="https://cursor.com/cn/download" target="_blank" rel="noopener noreffer ">Cursor.com</a> to download the appropriate version for your platform</li>
+<li>Run the installer and proceed through the setup with Next</li>
+<li>You&rsquo;ll need to log in on first launch - you can register a new account to get started</li>
+</ol>
+<h3 id="environment-dependencies-git-and-nodejs">Environment Dependencies: Git and Node.js</h3>
+<p>Before installing Claude Code, you need to configure Git and Node.js environments. This is particularly important for Windows users, who need to manually download Git from the <a href="https://git-scm.com/" target="_blank" rel="noopener noreffer ">Git website</a> and Node.js from the <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreffer ">Node.js website</a>. For Linux and macOS users, the process is more user-friendly, and installing git and node.js is less troublesome, so I won&rsquo;t elaborate further here. Once both prerequisite tools are installed successfully, you can verify them with the following commands:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git -v
+</span></span><span class="line"><span class="cl">$ node -v
+</span></span><span class="line"><span class="cl">$ npm -v</span></span></code></pre></div></div>
+<p>After confirming everything is installed, you might need to restart your Terminal.</p>
+<h2 id="installing-and-configuring-claude-code">Installing and Configuring Claude Code</h2>
+<h3 id="installing-claude-code-software">Installing Claude Code Software</h3>
+<p>Once the environment is ready, installing Claude Code is quite simple. Open any Terminal:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm install -g @anthropic-ai/claude-code</span></span></code></pre></div></div>
+<p>Verify the installation:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">claude --version</span></span></code></pre></div></div>
+<p>When you run it for the first time, you&rsquo;ll need to log into your Anthropic account. If you&rsquo;re using this in mainland China, you might encounter some connectivity issues. However, that&rsquo;s not a problem - today&rsquo;s tutorial will show you how to switch Claude Code&rsquo;s underlying model. We&rsquo;ll use Claude Code&rsquo;s CLI software but replace its backend model with a more cost-effective, top-tier domestic coding model: Zhipu AI&rsquo;s GLM-4.6.</p>
+<h3 id="registering-for-glm-46">Registering for GLM-4.6</h3>
+<p>Zhipu AI released its new flagship coding model - GLM-4.6 - during China&rsquo;s National Day holiday. According to reviews from major media outlets and users both domestically and internationally, its coding capabilities are very close to Claude Code&rsquo;s official offering, but at just 1/7 of the price. New users also receive a free token experience pack. You can scan the QR code to register and directly receive a 20 million token experience pack.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png"
+        data-srcset="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png, https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png 1.5x, https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png"
+        title="BigmodelPoster (1)" /></p>
+<p>Additionally, by activating the Coding Plan through the QR code above, you get an extra 10% discount, making it incredibly affordable at just 18 RMB per month. In terms of token usage, from my personal experience, I&rsquo;ve rarely hit the 5-hour limit. I recommend starting with the GLM Coding Lite 20 RMB first-month subscription. After the first month ends, if you want to continue, you can cancel the auto-renewal and choose the 3-month 60 RMB plan for continued savings, or the annual 240 RMB plan. This way, you&rsquo;re essentially using the service at the 18 RMB monthly tier, which is significantly cheaper than Claude Code&rsquo;s original $20/month model but with more generous usage.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/11/1fr8XzCL2jBdosF.png"
+        data-srcset="https://s2.loli.net/2025/11/11/1fr8XzCL2jBdosF.png, https://s2.loli.net/2025/11/11/1fr8XzCL2jBdosF.png 1.5x, https://s2.loli.net/2025/11/11/1fr8XzCL2jBdosF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/11/1fr8XzCL2jBdosF.png"
+        title="Xnip2025-11-11_17-19-35" /></p>
+<p>After registering, you can find your API Key in the top right corner of the homepage on the website. We&rsquo;ll need this API key in a moment to configure Claude Code and essentially give Claude Code a new &ldquo;brain.&rdquo;</p>
+<h3 id="configuring-glm-46-for-claude-code">Configuring GLM 4.6 for Claude Code</h3>
+<p>The configuration process is quite simple, and the GLM 4.6 official documentation clearly explains the specific setup method. You can find the details at:</p>
+<p><a href="https://docs.bigmodel.cn/cn/coding-plan/tool/claude" target="_blank" rel="noopener noreffer ">https://docs.bigmodel.cn/cn/coding-plan/tool/claude</a></p>
+<p>The documentation even provides automated configuration scripts for those who prefer not to modify settings manually.</p>
+<h3 id="creating-and-configuring-the-project-folder">Creating and Configuring the Project Folder</h3>
+<p>Now let&rsquo;s start using Claude Code. We typically perform our coding operations in a specific working directory, so we need to open Cursor and specify our working directory. In Cursor, open a project folder and activate the Terminal within Cursor. In the Terminal, type <code>claude</code> to enter Claude Code&rsquo;s main interface, as shown below:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png"
+        data-srcset="https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png, https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png 1.5x, https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/11/wF3o6TMUXYAmLEv.png"
+        title="Xnip2025-11-11_12-14-33" /></p>
+<p>As you can see from the gray text in the image, our Claude Code model has already been switched to the glm-4.6 version.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Besides GLM-4.6, there are other excellent models available in China, like Kimi K2, but they can&rsquo;t compare to GLM-4.6 in terms of cost-effectiveness. Feel free to explore these on your own if you&rsquo;re interested.</p>
+<p>With the basic environment setup complete, we can now interact directly with AI through the CLI interface. Because it has permissions to operate files and run local programs, Claude Code can do almost anything on your computer and query any information you want it to. This opens up countless possibilities. In the next installment, I&rsquo;ll use a VBR project to show you how Claude Code can help execute various commands.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-11-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2025/11/AI-Reshapes-Data-Protection-01/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F11%2FAI-Reshapes-Data-Protection-01%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F11%2FAI-Reshapes-Data-Protection-01%2F&amp;text=AI&#43;Reshapes&#43;Data&#43;Protection&#43;%28Part&#43;1%29%3A&#43;Claude&#43;Code&#43;%2B&#43;GLM-4.6&#43;in&#43;Practice%2C&#43;Building&#43;AI&#43;CLI&#43;Tools&#43;from&#43;Scratch" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F11%252FAI-Reshapes-Data-Protection-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F11%252FAI-Reshapes-Data-Protection-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/AI/">AI</a>,&nbsp;<a href="/en/tags/Veeam/">Veeam</a>,&nbsp;<a href="/en/tags/Vibe-Coding/">Vibe Coding</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2025/11/veeam13-security-features-03/" class="prev" rel="prev" title="Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration</a>
+            <a href="/en/2025/11/AI-Reshapes-Data-Protection-02/" class="next" rel="next" title="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server">AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

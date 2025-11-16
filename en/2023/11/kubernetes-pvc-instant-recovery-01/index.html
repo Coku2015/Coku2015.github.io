@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment - Cloud.Virt.AI.Sec</title><meta name="description" content="Do you remember last year when I introduced VMware’s FCD disks and experimented with instant data recovery on K8s using VBR’s Instant Disk Recovery? This year, …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment">
+  <meta property="og:description" content="Do you remember last year when I introduced VMware’s FCD disks and experimented with instant data recovery on K8s using VBR’s Instant Disk Recovery? This year, this feature has finally been officially released in the latest K10 in collaboration with VBR. Today, let me walk you through a demo to see how it works. My demo will be split into two parts: the first part will guide you through building a K3S cluster that can use vSphere Cloud Native Storage, and then in the second part, we’ll explore K10’s backup and recovery capabilities.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-11-02T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Instant Recovery">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment">
+  <meta name="twitter:description" content="Do you remember last year when I introduced VMware’s FCD disks and experimented with instant data recovery on K8s using VBR’s Instant Disk Recovery? This year, this feature has finally been officially released in the latest K10 in collaboration with VBR. Today, let me walk you through a demo to see how it works. My demo will be split into two parts: the first part will guide you through building a K3S cluster that can use vSphere Cloud Native Storage, and then in the second part, we’ll explore K10’s backup and recovery capabilities.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/10/vro-v6-guide-09/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/kubernetes-pvc-instant-recovery-01\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  1233 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/kubernetes-pvc-instant-recovery-01\/","datePublished": "2023-11-02T00:00:00+00:00","dateModified": "2023-11-02T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-01/">简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-01/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-01/">简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-01/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-02">2023-11-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1233 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#vsphere-csi-installation-and-configuration">vSphere CSI Installation and Configuration</a>
+      <ul>
+        <li><a href="#k3s-nodecluster-installation-and-configuration">k3s Node/Cluster Installation and Configuration</a></li>
+        <li><a href="#vsphere-csi-installation">vSphere CSI Installation</a>
+          <ul>
+            <li><a href="#vsphere-cloud-controller-manageryaml-file">vsphere-cloud-controller-manager.yaml File</a></li>
+            <li><a href="#csi-vsphereconf-file">csi-vsphere.conf File</a></li>
+            <li><a href="#vsphere-csi-driveryaml-file">vsphere-csi-driver.yaml File</a></li>
+            <li><a href="#storageclassyaml-file">storageclass.yaml File</a></li>
+            <li><a href="#csi-installation">CSI Installation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#configure-loadbalancer">Configure LoadBalancer</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Do you remember last year when I introduced VMware&rsquo;s FCD disks and experimented with instant data recovery on K8s using VBR&rsquo;s Instant Disk Recovery? This year, this feature has finally been officially released in the latest K10 in collaboration with VBR. Today, let me walk you through a demo to see how it works. My demo will be split into two parts: the first part will guide you through building a K3S cluster that can use vSphere Cloud Native Storage, and then in the second part, we&rsquo;ll explore K10&rsquo;s backup and recovery capabilities.</p>
+<h2 id="vsphere-csi-installation-and-configuration">vSphere CSI Installation and Configuration</h2>
+<p>Using the Instant Recovery feature is inseparable from vSphere. The first prerequisite is that the Kubernetes Storage Class must use vSphere Cloud Native Storage (CNS).</p>
+<p>For detailed vSphere CSI configuration, you can refer to the <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-C44D8071-85E7-4933-83EA-6797518C1837.html" target="_blank" rel="noopener noreffer ">official VMware documentation</a></p>
+<h3 id="k3s-nodecluster-installation-and-configuration">k3s Node/Cluster Installation and Configuration</h3>
+<p>For this demo, my experimental environment is deployed on a NUC11 Panther Canyon in my home lab. This NUC is configured with 64GB of memory and one NVME SSD hard drive, running vSphere 7u3.</p>
+<p>In this environment, I&rsquo;m using the lightweight K3S version 1.25s1 for Kubernetes, installed on Ubuntu 20.04, configured as a single-node experimental environment. By default, K3S deployment disables most Cloud Providers, so I need to adjust the K3S installation parameters and additionally install VMware Cloud Manager.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Installation command</span>
+</span></span><span class="line"><span class="cl">curl -sfL https://get.k3s.io <span class="p">|</span> <span class="nv">INSTALL_K3S_VERSION</span><span class="o">=</span><span class="s2">&#34;v1.25.8+k3s1&#34;</span> <span class="nv">INSTALL_K3S_EXEC</span><span class="o">=</span><span class="s2">&#34;server --disable-cloud-controller --disable=servicelb --disable=traefik --disable-network-policy --disable=local-storage&#34;</span> sh -s -</span></span></code></pre></div></div>
+<p>After installation completes, don&rsquo;t rush to start it yet. Actually, we&rsquo;re still missing some parameters that need to be configured in the <code>/etc/systemd/system/k3s.service</code> file. Open the k3s.service file with a VI editor, find ExecStart in the [Service] section, and add two additional startup parameters: <code>--kubelet-arg=cloud-provider=external</code> and <code>--kubelet-arg=provider-id=vsphere://$master_node_id</code>. After adding them, the final part of the k3s.service file looks like this:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>ExecStart=/usr/local/bin/k3s \
+    server \
+        &#39;--disable-cloud-controller&#39; \
+        &#39;--disable=servicelb&#39; \
+        &#39;--disable=traefik&#39; \
+        &#39;--disable-network-policy&#39; \
+        &#39;--disable=local-storage&#39; \
+        &#39;--kubelet-arg=cloud-provider=external&#39; \
+        &#39;--kubelet-arg=provider-id=vsphere://$master_node_id&#39; \</code></pre></div>
+<p>After modification, you can reload the k3s service and then restart it.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl daemon-reload
+</span></span><span class="line"><span class="cl">sudo service k3s restart</span></span></code></pre></div></div>
+<p>Afterward, you can access the cluster normally through the <a href="https://docs.k3s.io/cluster-access" target="_blank" rel="noopener noreffer ">config file provided by k3s</a>.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+kubectl get pods --all-namespaces</code></pre></div>
+<h3 id="vsphere-csi-installation">vSphere CSI Installation</h3>
+<p>Next, we need to mount the vSphere datastore for k3s to use. This requires preparing some configuration files - a total of 4 files, where 1 is a conf file and 3 are yaml files. They are as follows:</p>
+<p>vsphere-cloud-controller-manager.yaml</p>
+<p>csi-vsphere.conf</p>
+<p>vsphere-csi-driver.yaml</p>
+<p>storageclass.yaml</p>
+<h4 id="vsphere-cloud-controller-manageryaml-file">vsphere-cloud-controller-manager.yaml File</h4>
+<p>This file can be obtained as a template from the official Kubernetes GitHub repository. Different k8s versions have different templates. I&rsquo;m using version 1.25, so I downloaded the corresponding file for 1.25:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -O https://ghproxy/https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/releases/v1.25/vsphere-cloud-controller-manager.yaml</span></span></code></pre></div></div>
+<p>This file cannot be used directly after download; you need to modify the vCenter address and permission information inside it.</p>
+<p>The first part that needs modification is the stringData in the Secret, where you need to fill in the vCenter IP, username, and password according to the template example. Then the second part that needs modification is the content under data in the ConfigMap&rsquo;s vsphere.conf, where you can see some information about vCenter.</p>
+<p>Additionally, if you cannot access gcr.io, you also need to modify the container image addresses in the DaemonSet. In my Tencent personal image repository, I&rsquo;ve already placed the 1.25.2 image at the following address: <code>ccr.ccs.tencentyun.com/vsphere-csi/manager:v1.25.2</code></p>
+<p>After modification, you can set this file aside for later use.</p>
+<h4 id="csi-vsphereconf-file">csi-vsphere.conf File</h4>
+<p>This file is used to create secret users under the vmware-system-csi namespace. The template can also be found on the <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-BFF39F1D-F70A-4360-ABC9-85BDAFBE8864.html" target="_blank" rel="noopener noreffer ">official VMware website</a>. Below is the content I modified for use in my demo:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[Global]
+
+[VirtualCenter &#34;&lt;ipaddress or fqdn&gt;&#34;]
+insecure-flag = &#34;true&#34;
+user = &#34;&lt;account&gt;&#34;
+password = &#34;&lt;password&gt;&#34;
+port = &#34;443&#34;
+datacenters = &#34;&lt;datacenter name&gt;&#34;</code></pre></div>
+<h4 id="vsphere-csi-driveryaml-file">vsphere-csi-driver.yaml File</h4>
+<p>This file can also be obtained directly from VMware&rsquo;s GitHub repository. The content inside doesn&rsquo;t need modification after download and can be used directly.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>curl -O https://ghproxy/https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/v3.0.0/manifests/vanilla/vsphere-csi-driver.yaml</code></pre></div>
+<p>However, if like me you cannot access gcr.io, you still need to modify the image addresses used in this file. You can use these from my Tencent personal image repository:</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-attacher:v4.2.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-resizer:v1.7.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/driver:v3.0.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/livenessprobe:v2.9.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/syncer:v3.0.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-provisioner:v3.4.0</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-snapshotter:v6.2.1</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/csi-node-driver-registrar:v2.7.0</p>
+<h4 id="storageclassyaml-file">storageclass.yaml File</h4>
+<p>Finally, we need to prepare the yaml file for the storage class. This template can also be found on the <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-606E179E-4856-484C-8619-773848175396.html" target="_blank" rel="noopener noreffer ">official VMware website</a>. In my demo, I made some modifications to the file.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StorageClass</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">storage.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">standard</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storageclass.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">parameters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datastoreurl</span><span class="p">:</span><span class="w"> </span><span class="l">ds:///vmfs/volumes/578a0d70-0be672b6-a3f7-34e6d7803208/</span></span></span></code></pre></div></div>
+<p>This template only has two parts that need modification. One is the name field under metadata, which you can name as needed. The other is datastoreurl, which requires going to vCenter, finding the corresponding datastore, and looking for this information in the summary interface, as shown in the image.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/image-20231101121241408.png"
+        data-srcset="http://image.backupnext.cloud/uPic/image-20231101121241408.png, http://image.backupnext.cloud/uPic/image-20231101121241408.png 1.5x, http://image.backupnext.cloud/uPic/image-20231101121241408.png 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/image-20231101121241408.png"
+        title="image-20231101121241408" /></p>
+<h4 id="csi-installation">CSI Installation</h4>
+<p>Alright, after preparing the above files, we can begin the installation. The entire installation process is relatively simple, with commands as follows:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install ccm</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f vsphere-cloud-controller-manager.yaml
+</span></span><span class="line"><span class="cl"><span class="c1"># Create csi management namespace</span>
+</span></span><span class="line"><span class="cl">kubectl create namespace vmware-system-csi
+</span></span><span class="line"><span class="cl"><span class="c1"># Disable scheduling</span>
+</span></span><span class="line"><span class="cl">kubectl taint nodes <span class="nv">$nodeid</span> node-role.kubernetes.io/control-plane<span class="o">=</span>:NoSchedule
+</span></span><span class="line"><span class="cl"><span class="c1"># Confirm execution of previous command</span>
+</span></span><span class="line"><span class="cl">kubectl describe nodes <span class="p">|</span> egrep <span class="s2">&#34;Taints:|Name:&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Create secret for connecting to vc with username and password</span>
+</span></span><span class="line"><span class="cl">kubectl create secret generic vsphere-config-secret --from-file<span class="o">=</span>/home/lei/csi-vsphere.conf --namespace<span class="o">=</span>vmware-system-csi
+</span></span><span class="line"><span class="cl"><span class="c1"># Create and start csi driver</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f vsphere-csi-driver-ccr-ccs.yaml
+</span></span><span class="line"><span class="cl"><span class="c1"># After confirming all pods have started, re-enable container scheduling</span>
+</span></span><span class="line"><span class="cl">kubectl taint nodes <span class="nv">$nodeid</span> node-role.kubernetes.io/control-plane<span class="o">=</span>:NoSchedule-
+</span></span><span class="line"><span class="cl"><span class="c1"># Create storage class</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f storageclass.yaml</span></span></code></pre></div></div>
+<p>After installation completes, if there are no errors, you can see that all CSI-related containers have started normally. Next, let&rsquo;s deploy an application using this Storage Class to test it. The demo yaml is as follows.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolumeClaim</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pvc</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">alpine:3.7</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">256Mi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">100m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tail&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;/dev/null&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span></span></span></code></pre></div></div>
+<p>Let&rsquo;s deploy and see.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create namespace</span>
+</span></span><span class="line"><span class="cl">kubectl create ns demo
+</span></span><span class="line"><span class="cl"><span class="c1"># Deploy application</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f demo.yaml</span></span></code></pre></div></div>
+<p>After deployment, you can see the corresponding vmdk in vCenter, and with this status, the VMware CSI configuration is complete.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://image.backupnext.cloud/uPic/image-20231101123534330.png"
+        data-srcset="http://image.backupnext.cloud/uPic/image-20231101123534330.png, http://image.backupnext.cloud/uPic/image-20231101123534330.png 1.5x, http://image.backupnext.cloud/uPic/image-20231101123534330.png 2x"
+        data-sizes="auto"
+        alt="http://image.backupnext.cloud/uPic/image-20231101123534330.png"
+        title="image-20231101123534330" /></p>
+<h2 id="configure-loadbalancer">Configure LoadBalancer</h2>
+<p>In my demo, I also configured an additional local LoadBalancer to assign IP addresses to my applications. Here, I chose <a href="https://metallb.universe.tf/" target="_blank" rel="noopener noreffer ">MetalLB</a>. The installation is also very simple. In my environment, I used version 0.13.9, downloaded the yaml file from the official website, and then modified the image repository.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -O https://ghproxy/https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml</span></span></code></pre></div></div>
+<p>The modified images also have versions in my Tencent image repository:</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/metallb-controller:v0.13.9</p>
+<p>ccr.ccs.tencentyun.com/vsphere-csi/metallb-speaker:v0.13.9</p>
+<p>In addition to this standard LB application yaml, we also need an IP address configuration metallb-config.yaml. The <a href="https://metallb.universe.tf/usage/" target="_blank" rel="noopener noreffer ">template is also available on the official website</a>, which I&rsquo;ve slightly modified:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">metallb.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">IPAddressPool</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">first-pool</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">metallb-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">addresses</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">10.10.1.230-10.10.1.240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">metallb.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">L2Advertisement</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">l2-config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">metallb-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ipAddressPools</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">first-pool</span></span></span></code></pre></div></div>
+<p>Deploy using the kubectl apply command:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Deploy metallb</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f metallb-native.yaml
+</span></span><span class="line"><span class="cl"><span class="c1"># Configure metallb</span>
+</span></span><span class="line"><span class="cl">kubectl apply -f metallb-config.yaml</span></span></code></pre></div></div>
+<p>With this configuration complete, applications can be used directly. For K10, you only need to simply specify the externalGateway parameter as true, and metallb can automatically assign access addresses for K10, which is very convenient.</p>
+<p>That&rsquo;s all for the foundation environment setup. In the next installment, we&rsquo;ll detail K10&rsquo;s backup and instant recovery.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-11-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/11/kubernetes-pvc-instant-recovery-01/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-01%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fkubernetes-pvc-instant-recovery-01%2F&amp;text=Instant&#43;Recovery%3A&#43;A&#43;Deep&#43;Dive&#43;into&#43;Kubernetes&#43;Container&#43;Instant&#43;Recovery&#43;Technology&#43;%28Part&#43;1%29&#43;-&#43;Building&#43;the&#43;Foundation&#43;Environment" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fkubernetes-pvc-instant-recovery-01%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a>,&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/en/tags/Instant-Recovery/">Instant Recovery</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/10/vro-v6-guide-09/" class="prev" rel="prev" title="VRO Basic Guide (Part 9) - Document Template Analysis"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO Basic Guide (Part 9) - Document Template Analysis</a>
+            <a href="/en/2023/11/kubernetes-pvc-instant-recovery-02/" class="next" rel="next" title="Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore">Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

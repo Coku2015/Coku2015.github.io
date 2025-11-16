@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Agentless Backup and Application Awareness - Cloud.Virt.AI.Sec</title><meta name="description" content="Virtualization didn’t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2017/07/agentless-backup/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Agentless Backup and Application Awareness">
+  <meta property="og:description" content="Virtualization didn’t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in the backup world. The rise of virtualization brought us agentless backup, and suddenly the old way of doing things didn’t make so much sense anymore.
+Here’s the thing about backup architecture: it’s always been a debate between agents and no agents. Both approaches have their obvious trade-offs, but what if you could have the best of both worlds? That’s exactly where Veeam’s approach to agentless backup with application awareness changes the game.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-07-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-07-23T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Agentless Backup and Application Awareness">
+  <meta name="twitter:description" content="Virtualization didn’t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in the backup world. The rise of virtualization brought us agentless backup, and suddenly the old way of doing things didn’t make so much sense anymore.
+Here’s the thing about backup architecture: it’s always been a debate between agents and no agents. Both approaches have their obvious trade-offs, but what if you could have the best of both worlds? That’s exactly where Veeam’s approach to agentless backup with application awareness changes the game.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2017/07/agentless-backup/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2017/07/direct-nfs-access/" /><link rel="next" href="https://blog.backupnext.cloud/en/2017/08/speed-up-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Agentless Backup and Application Awareness",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2017\/07\/agentless-backup\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  773 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2017\/07\/agentless-backup\/","datePublished": "2017-07-23T00:00:00+00:00","dateModified": "2017-07-23T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/07/agentless-backup/">简体中文</option><option value="/en/2017/07/agentless-backup/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/07/agentless-backup/">简体中文</option><option value="/en/2017/07/agentless-backup/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Agentless Backup and Application Awareness</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-07-23">2017-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;773 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>Virtualization didn&rsquo;t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in the backup world. The rise of virtualization brought us agentless backup, and suddenly the old way of doing things didn&rsquo;t make so much sense anymore.</p>
+<p>Here&rsquo;s the thing about backup architecture: it&rsquo;s always been a debate between agents and no agents. Both approaches have their obvious trade-offs, but what if you could have the best of both worlds? That&rsquo;s exactly where Veeam&rsquo;s approach to agentless backup with application awareness changes the game.</p>
+<p><strong>What Exactly is a Software Agent?</strong></p>
+<p>Here&rsquo;s something interesting about our industry: we throw around the term &ldquo;agent&rdquo; all the time, but ask five IT professionals to define it and you&rsquo;ll get five different answers. Even in Chinese technical discussions, we tend to be vague about whether we mean agents in the broad sense or the narrow sense.</p>
+<p>I did some digging—checked Baidu Baike, consulted Wikipedia—and found that Wikipedia actually captures the essence well. A Software Agent typically has these characteristics:</p>
+<ul>
+<li><strong>Always-on</strong> - It runs continuously, sitting there waiting even when idle</li>
+<li><strong>Self-sufficient</strong> - It operates autonomously without human intervention</li>
+<li><strong>Interactive</strong> - It can communicate with other programs, activate modules, and work collaboratively</li>
+</ul>
+<p>When you think about traditional backup agents, they fit this profile perfectly. They&rsquo;re always running, always watching, always ready.</p>
+<p><strong>How Veeam Does It Differently</strong></p>
+<p>Veeam&rsquo;s approach to virtualization backup is fundamentally different: no agents required in any operating system. Your backups don&rsquo;t depend on anything being running inside the guest OS.</p>
+<p>But here&rsquo;s where it gets clever. When you need application-aware processing, Veeam temporarily runs a process inside the OS during backup to handle application consistency and file system quiescing. Once that work is done, the process shuts down cleanly. This isn&rsquo;t an agent—it&rsquo;s a temporary worker that shows up, does its job, and leaves.</p>
+<p>The contrast with traditional backup agents is stark. Think about all the headaches that come with conventional backup agents:</p>
+<ul>
+<li><strong>Installation fatigue</strong> - Every new VM needs manual agent installation (yes, even &ldquo;push&rdquo; installations require configuration work)</li>
+<li><strong>Update nightmares</strong> - Every single machine needs agent upgrades when software updates roll out</li>
+<li><strong>Monitoring overhead</strong> - You need dedicated tools just to watch your backup agents, what we call &ldquo;agent nannies&rdquo; to alert you when something goes wrong</li>
+<li><strong>Resource drain</strong> - All these agents constantly consume CPU, memory, network, and storage resources, often duplicating effort across your infrastructure</li>
+</ul>
+<p>Veeam&rsquo;s application-aware process runs for just a few minutes during backup initiation, then terminates. All those problems? They disappear. <strong>No deployment hassles, no update cycles, no monitoring requirements.</strong></p>
+<p><strong>The Security Angle You Might Not Consider</strong></p>
+<p>Here&rsquo;s something that keeps security professionals up at night: every running application increases your attack surface. The safest system is one with nothing running on it. Each additional process you add—whether it&rsquo;s a backup agent or anything else—creates another potential entry point for hackers, malware, or ransomware.</p>
+<p>By eliminating permanently running backup agents, you&rsquo;re systematically reducing your attack surface across every system in your environment.</p>
+<p>There&rsquo;s another practical advantage: what happens when systems are powered down? Traditional backup agents become completely useless in this scenario. We&rsquo;ve all seen that dreaded &ldquo;Backup target Offline&rdquo; status in backup consoles. The only solution? Track down whoever owns that system and get them to boot it up.</p>
+<p>With agentless backup, powered-off systems don&rsquo;t matter. The backup process continues unaffected. And when it comes time to recover, Veeam&rsquo;s granular recovery options still give you the flexibility to restore exactly what you need. That&rsquo;s what I call backup done right.</p>
+<p><strong>The DMZ Challenge: Where Traditional Agents Break</strong></p>
+<p>Here&rsquo;s where traditional backup agents really show their limitations in security-conscious environments. Agent-based backups typically require network connectivity to reach your systems. But what happens when you&rsquo;ve carefully designed your network with isolated DMZ zones and strict firewall rules?</p>
+<p>Suddenly, for the sake of backup, you need to open data paths into your DMZ—exactly the kind of connectivity you were trying to prevent. All that careful architecture planning, those security zones you spent weeks designing, gets compromised just to accommodate backup traffic. The very purpose of your isolation gets undermined.</p>
+<p>This is where Veeam&rsquo;s approach to application-aware processing demonstrates its architectural elegance. When Veeam needs to perform application-aware operations, it can work at the hypervisor level through VIX—without requiring network connectivity to the guest OS. The hypervisor already has privileged access to everything it hosts, so Veeam can leverage that existing trust relationship.</p>
+<p>The result? You get true application awareness while maintaining your network isolation. Your DMZ backups work without compromising your security architecture. That&rsquo;s not just convenient—it&rsquo;s architecturally sound security.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2017-07-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2017/07/agentless-backup/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F07%2Fagentless-backup%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F07%2Fagentless-backup%2F&amp;text=Agentless&#43;Backup&#43;and&#43;Application&#43;Awareness" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F07%252Fagentless-backup%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F07%252Fagentless-backup%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2017/07/direct-nfs-access/" class="prev" rel="prev" title="Veeam Black Technology: Direct NFS Access"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Black Technology: Direct NFS Access</a>
+            <a href="/en/2017/08/speed-up-01/" class="next" rel="next" title="Speed Up! Speed Up! Speed Up! (Part 1)">Speed Up! Speed Up! Speed Up! (Part 1)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

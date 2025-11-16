@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>One-Click Deployment Script: K3S&#43;vSphere CSI - Cloud.Virt.AI.Sec</title><meta name="description" content="I’ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="One-Click Deployment Script: K3S&#43;vSphere CSI">
+  <meta property="og:description" content="I’ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes environments. Back then, I walked you through the manual deployment process in detail. Today, I’m excited to bring you a one-click deployment script that makes everything incredibly simple.
+If you have a basic VMware environment and can connect to GitHub/k8s.io networks, this script will be a game-changer. Just run the script, wait about 10 minutes, and you’ll have a ready-to-use single-node K3s environment.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-02-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-02-21T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Instant Recovery">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="One-Click Deployment Script: K3S&#43;vSphere CSI">
+  <meta name="twitter:description" content="I’ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes environments. Back then, I walked you through the manual deployment process in detail. Today, I’m excited to bring you a one-click deployment script that makes everything incredibly simple.
+If you have a basic VMware environment and can connect to GitHub/k8s.io networks, this script will be a game-changer. Just run the script, wait about 10 minutes, and you’ll have a ready-to-use single-node K3s environment.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/" /><link rel="next" href="https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "One-Click Deployment Script: K3S+vSphere CSI",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2024\/02\/automate-deploy-k3s-with-vsphere-csi\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  962 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2024\/02\/automate-deploy-k3s-with-vsphere-csi\/","datePublished": "2024-02-21T00:00:00+00:00","dateModified": "2024-02-21T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/02/automate-deploy-k3s-with-vsphere-csi/">简体中文</option><option value="/en/2024/02/automate-deploy-k3s-with-vsphere-csi/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2024/02/automate-deploy-k3s-with-vsphere-csi/">简体中文</option><option value="/en/2024/02/automate-deploy-k3s-with-vsphere-csi/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">One-Click Deployment Script: K3S+vSphere CSI</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-21">2024-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;962 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a>
+      <ul>
+        <li><a href="#vm-template">VM Template</a></li>
+        <li><a href="#vm-customization-specification">VM Customization Specification</a></li>
+      </ul>
+    </li>
+    <li><a href="#script-usage-guide">Script Usage Guide</a>
+      <ul>
+        <li><a href="#environment-topology-overview">Environment Topology Overview:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>I&rsquo;ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes environments. Back then, I walked you through the manual deployment process in detail. Today, I&rsquo;m excited to bring you a one-click deployment script that makes everything incredibly simple.</p>
+<p>If you have a basic VMware environment and can connect to GitHub/k8s.io networks, this script will be a game-changer. Just run the script, wait about 10 minutes, and you&rsquo;ll have a ready-to-use single-node K3s environment.</p>
+<p>Script repository:</p>
+<p><a href="https://github.com/Coku2015/k3s_vsphere" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/k3s_vsphere</a></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before using this script, you&rsquo;ll need to prepare a VM template and customization specification for automated deployment. The script will automatically call these resources to deploy your K3s environment.</p>
+<h3 id="vm-template">VM Template</h3>
+<p>I recommend using Ubuntu 20.04 LTS as the base environment for running K3s, and suggest creating your VM template based on this version.</p>
+<p>For the template VM, modest hardware specifications are sufficient: 1 vCPU, 2GB RAM, and 50GB disk space.</p>
+<p>There are several ways to create a VM template. The most straightforward approach is performing a minimal installation from an ISO. After installation completes, you&rsquo;ll need to make some adjustments to enable fully automated remote configuration. First, enable key-based authentication for remote login:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create SSH key pair for remote connection on your Linux machine</span>
+</span></span><span class="line"><span class="cl">$ ssh-keygen
+</span></span><span class="line"><span class="cl"><span class="c1"># After creation, you&#39;ll get two files: id_rsa (private key) and id_rsa.pub (public key)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Copy the public key to the template machine, assuming ubuntu is the username</span>
+</span></span><span class="line"><span class="cl">$ ssh-copy-id ubuntu@ubuntu_template_vm
+</span></span><span class="line"><span class="cl"><span class="c1"># Test the connection - it should still prompt for password</span>
+</span></span><span class="line"><span class="cl">$ ssh ubuntu@ubuntu_template_vm</span></span></code></pre></div></div>
+<p>Next, SSH into this Ubuntu machine, switch to root with <code>sudo -i</code>, and run the following commands for further configuration:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Disable password authentication for SSH key-based login</span>
+</span></span><span class="line"><span class="cl">$ sed -i <span class="s1">&#39;s/#\?PasswordAuthentication yes/PasswordAuthentication no/&#39;</span> /etc/ssh/sshd_config
+</span></span><span class="line"><span class="cl"><span class="c1"># Restart SSH service</span>
+</span></span><span class="line"><span class="cl">$ systemctl restart sshd
+</span></span><span class="line"><span class="cl"><span class="c1"># Enable passwordless sudo (modify if username is not ubuntu)</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s1">&#39;ubuntu ALL=(ALL) NOPASSWD:ALL&#39;</span> &gt;&gt; /etc/sudoers
+</span></span><span class="line"><span class="cl"><span class="c1"># Fix VMware customization issues - see VMware KB56409 for details</span>
+</span></span><span class="line"><span class="cl">$ sed -i <span class="s1">&#39;/^\[Unit\]/a After=dbus.service&#39;</span> /lib/systemd/system/open-vm-tools.service
+</span></span><span class="line"><span class="cl">$ awk <span class="s1">&#39;NR==11 {$0=&#34;#D /tmp 1777 root root -&#34;} 1&#39;</span> /usr/lib/tmpfiles.d/tmp.conf <span class="p">|</span> tee /usr/lib/tmpfiles.d/tmp.conf
+</span></span><span class="line"><span class="cl"><span class="c1"># Disable Cloud Init</span>
+</span></span><span class="line"><span class="cl">$ touch /etc/cloud/cloud-init.disabled
+</span></span><span class="line"><span class="cl"><span class="c1"># Update system packages</span>
+</span></span><span class="line"><span class="cl">$ apt clean
+</span></span><span class="line"><span class="cl">$ apt update -y
+</span></span><span class="line"><span class="cl">$ apt upgrade -y
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove machine-id to avoid conflicts after template deployment</span>
+</span></span><span class="line"><span class="cl">$ rm /etc/machine-id
+</span></span><span class="line"><span class="cl">$ touch /etc/machine-id</span></span></code></pre></div></div>
+<p>Once you&rsquo;ve completed these configurations, exit SSH and test the connection again. Verify that password authentication is no longer required and that <code>sudo -i</code> works without a password prompt. If everything works as expected, congratulations - your template is ready! Simply shut down this virtual machine and convert it to a template.</p>
+<h3 id="vm-customization-specification">VM Customization Specification</h3>
+<p>Besides creating the template, we also need to configure a VM customization specification.</p>
+<ol>
+<li>In vSphere Client, find the &ldquo;VM Customization Specifications&rdquo; button in the shortcuts and click to enter.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttbcV" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttbcV.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttbcV.png, https://s11.ax1x.com/2024/02/21/pFttbcV.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttbcV.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttbcV.png"
+        title="pFttbcV.png" /></a></p>
+<ol start="2">
+<li>
+<p>Click the &ldquo;Create&rdquo; button to open the creation wizard.</p>
+</li>
+<li>
+<p>Set a name and select Linux as the operating system. This name will be used in the subsequent script.</p>
+</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttXBF" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttXBF.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttXBF.png, https://s11.ax1x.com/2024/02/21/pFttXBF.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttXBF.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttXBF.png"
+        title="pFttXBF.png" /></a></p>
+<ol start="4">
+<li>Configure the computer name. Select &ldquo;Use the virtual machine name&rdquo; to make it match the VM name, then enter any appropriate domain name in the field below. This step cannot be skipped - you must enter some text.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttOnU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttOnU.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttOnU.png, https://s11.ax1x.com/2024/02/21/pFttOnU.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttOnU.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttOnU.png"
+        title="pFttOnU.png" /></a></p>
+<ol start="5">
+<li>Select the timezone. I&rsquo;m choosing Asia/Shanghai for my location.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttqXT" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttqXT.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttqXT.png, https://s11.ax1x.com/2024/02/21/pFttqXT.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttqXT.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttqXT.png"
+        title="pFttqXT.png" /></a></p>
+<ol start="6">
+<li>No configuration needed for the custom script section - simply click Next.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttH10" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttH10.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttH10.png, https://s11.ax1x.com/2024/02/21/pFttH10.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttH10.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttH10.png"
+        title="pFttH10.png" /></a></p>
+<ol start="7">
+<li>Configure network settings. Select &ldquo;Manually select custom settings&rdquo;, then select Network adapter 1 below and click Edit for further configuration.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFtNShR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtNShR.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtNShR.png, https://s11.ax1x.com/2024/02/21/pFtNShR.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtNShR.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtNShR.png"
+        title="pFtNShR.png" /></a></p>
+<ol start="8">
+<li>In the network settings dialog, under IPv4, select &ldquo;Prompt the user for an IPv4 address when a specification is used&rdquo; on the left, and fill in your environment&rsquo;s subnet mask and gateway on the right. Leave IPv6 unconfigured by default, then click OK to save.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttxAJ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttxAJ.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttxAJ.png, https://s11.ax1x.com/2024/02/21/pFttxAJ.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttxAJ.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttxAJ.png"
+        title="pFttxAJ.png" /></a></p>
+<ol start="9">
+<li>Set up DNS by entering your environment&rsquo;s default DNS server addresses that can access the internet.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttj74" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttj74.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttj74.png, https://s11.ax1x.com/2024/02/21/pFttj74.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttj74.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttj74.png"
+        title="pFttj74.png" /></a></p>
+<ol start="10">
+<li>Click Finish to save the settings.</li>
+</ol>
+<p><a href="https://imgse.com/i/pFttzN9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFttzN9.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFttzN9.png, https://s11.ax1x.com/2024/02/21/pFttzN9.png 1.5x, https://s11.ax1x.com/2024/02/21/pFttzN9.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFttzN9.png"
+        title="pFttzN9.png" /></a></p>
+<p>Your customization specification is now configured and ready to be used in the script by referencing the name you set in step 3.</p>
+<h2 id="script-usage-guide">Script Usage Guide</h2>
+<h3 id="environment-topology-overview">Environment Topology Overview:</h3>
+<p><a href="https://imgse.com/i/pFtIS5d" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtIS5d.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtIS5d.png, https://s11.ax1x.com/2024/02/21/pFtIS5d.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtIS5d.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtIS5d.png"
+        title="pFtIS5d.png" /></a></p>
+<p>On your Linux control machine, use git clone to download the script repository:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ git clone https://github.com/Coku2015/k3s_vsphere.git</span></span></code></pre></div></div>
+<p>Navigate to the script directory after downloading:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">cd</span> k3s_vsphere</span></span></code></pre></div></div>
+<p>Open the script with vi editor and find the environment variables section at the beginning. Modify the parameters to match your environment:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#######################  Environment Variables Section  ######################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">###  Modify the following environment variables to match your environment  ###</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_SSH_USER</span><span class="o">=</span><span class="s2">&#34;ubuntu&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_SERVER</span><span class="o">=</span><span class="s2">&#34;172.16.0.100&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_USERNAME</span><span class="o">=</span><span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VSPHERE_PASSWORD</span><span class="o">=</span><span class="s2">&#34;VMware123!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_DATACENTER</span><span class="o">=</span><span class="s2">&#34;MyDatacenter&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_VM_TEMPLATE</span><span class="o">=</span><span class="s2">&#34;Ubuntu20.04LTS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MY_DATASTORE</span><span class="o">=</span><span class="s2">&#34;localdatastore&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#######################  Environment Section End   ###########################</span></span></span></code></pre></div></div>
+<p>The first variable, MY_SSH_USER, is the username for your Ubuntu template. The other information consists of standard vSphere access details - fill them in according to your actual environment.</p>
+<p>After saving and exiting, you&rsquo;re ready to run the script. Note that the script requires root privileges to install necessary software.</p>
+<p>Execute the script with the following command:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ bash deploy_k3s_with_vspherecsi.sh</span></span></code></pre></div></div>
+<p>The script will prompt you for three configuration parameters for this deployment:</p>
+<ol>
+<li>VM name prefix (the script will automatically add 4 random digits as a unique identifier)</li>
+<li>VM IP address (enter an available IP from your environment)</li>
+<li>K3s version (check k3s.io for available versions - theoretically any stable version should work):</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>              K3S with vSphere CSI automation script                  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  This script is used to create a single node k3s cluster on vSphere. <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  Intro: https://blog.backupnext.cloud                                <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  Bug Report: Lei.wei@veeam.com                                       <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Please enter the VM name:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default VM name will be <span class="s1">&#39;k3s-cluster-&lt;4 random number&gt;&#39;</span><span class="o">)</span>:
+</span></span><span class="line"><span class="cl">Please enter the IP address <span class="k">for</span> the VM:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default IP address will be <span class="s1">&#39;192.168.1.&lt;random number&gt;&#39;</span><span class="o">)</span>:10.10.1.103
+</span></span><span class="line"><span class="cl">Please enter the k3s version:
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Default version will be <span class="s1">&#39;v1.28.6+k3s2&#39;</span><span class="o">)</span>:v1.27.10+k3s2</span></span></code></pre></div></div>
+<p>After entering these parameters, the script begins automated deployment. In about 10 minutes, you&rsquo;ll have a ready-to-use K3s test environment just like I do!</p>
+<p><a href="https://imgse.com/i/pFtI9PA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s11.ax1x.com/2024/02/21/pFtI9PA.png"
+        data-srcset="https://s11.ax1x.com/2024/02/21/pFtI9PA.png, https://s11.ax1x.com/2024/02/21/pFtI9PA.png 1.5x, https://s11.ax1x.com/2024/02/21/pFtI9PA.png 2x"
+        data-sizes="auto"
+        alt="https://s11.ax1x.com/2024/02/21/pFtI9PA.png"
+        title="pFtI9PA.png" /></a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-02-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2024/02/automate-deploy-k3s-with-vsphere-csi/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F02%2Fautomate-deploy-k3s-with-vsphere-csi%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F02%2Fautomate-deploy-k3s-with-vsphere-csi%2F&amp;text=One-Click&#43;Deployment&#43;Script%3A&#43;K3S%2BvSphere&#43;CSI" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F02%252Fautomate-deploy-k3s-with-vsphere-csi%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F02%252Fautomate-deploy-k3s-with-vsphere-csi%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a>,&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/en/tags/Instant-Recovery/">Instant Recovery</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2024/02/veeam-hardened-ubuntu/" class="prev" rel="prev" title="Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories</a>
+            <a href="/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/" class="next" rel="next" title="VDP v12.1 Security Feature Deep Dive Series (Part 1) - Ransomware Detection">VDP v12.1 Security Feature Deep Dive Series (Part 1) - Ransomware Detection<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

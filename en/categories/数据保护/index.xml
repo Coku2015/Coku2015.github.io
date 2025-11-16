@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据保护 on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
+    <description>Recent content in 数据保护 on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>送 | 为裸奔中的电脑送一个备份保护</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/agent-backup/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/agent-backup/</guid>
+      <description>&lt;h3 id=&#34;remembering-norton-ghost-the-tool-that-defined-an-era&#34;&gt;Remembering Norton Ghost: The Tool That Defined an Era&lt;/h3&gt;&#xA;&lt;p&gt;How many of you remember Norton Ghost? For me, Ghost brings back memories from about 20 years ago when I first started building PCs. Back then, after assembling a new computer at the local tech market, the very first thing I&amp;rsquo;d do was create a system backup with Ghost.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg, https://s2.ax1x.com/2020/02/14/1jWmhF.jpg 1.5x, https://s2.ax1x.com/2020/02/14/1jWmhF.jpg 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg&#34;&#xA;        title=&#34;1jWmhF.jpg&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;From that moment forward, Ghost became essential equipment for every computer I owned. Even as we moved through the Windows 7 era ten years ago and into today&amp;rsquo;s Windows 10 world, many PCs still had that dual-boot setup. You know the one—second option: &amp;ldquo;Restore System with One-Click Ghost.&amp;rdquo; At its peak, Ghost wasn&amp;rsquo;t just popular; it was practically universal.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>不知勒索病毒的攻击原理，怎知如何防御？</title>
+      <link>https://blog.backupnext.cloud/en/2019/06/ransomeware-attack/</link>
+      <pubDate>Mon, 10 Jun 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/06/ransomeware-attack/</guid>
+      <description>&lt;p&gt;Ransomware seems to be one of those topics that just keeps getting hotter. Remember those service outage images from a year ago when the attacks first exploded? Most of us who weren&amp;rsquo;t hit watched them with that curious &amp;ldquo;glad it&amp;rsquo;s not me&amp;rdquo; feeling. I couldn&amp;rsquo;t resist sharing a few in my posts back then—capitalizing on the buzz helped boost my follower count.&lt;/p&gt;&#xA;&lt;p&gt;At first, I thought this ransomware craze would die down quickly. With security patches rolling out and protection getting stronger, surely these attacks wouldn&amp;rsquo;t last long. But that&amp;rsquo;s not what happened. Instead, ransomware keeps evolving, and this back-and-forth battle between attackers and defenders keeps getting more interesting.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

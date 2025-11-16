@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Create a Minimal vSphere Role for Veeam via PowerCLI - Cloud.Virt.AI.Sec</title><meta name="description" content="Hardening a Veeam deployment starts with a least-privilege vSphere account. As VBR adds features, the list of required rights keeps growing—check the full …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/06/powercli-vsphere-permission/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Create a Minimal vSphere Role for Veeam via PowerCLI">
+  <meta property="og:description" content="Hardening a Veeam deployment starts with a least-privilege vSphere account. As VBR adds features, the list of required rights keeps growing—check the full fine-grained permission matrix. Manually clicking through every checkbox is tedious, so here’s a slick PowerCLI script I recently found that builds the role automatically.
+Prerequisite: install VMware PowerCLI. VMware’s official blog post explains the process in detail; below is the short version.
+Install PowerShell Core 7. It’s required for PowerCLI and works on Windows, macOS, and Linux. On Windows, just run the MSI installer.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-06-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-06-05T00:00:00+00:00">
+    <meta property="article:tag" content="Automation">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Create a Minimal vSphere Role for Veeam via PowerCLI">
+  <meta name="twitter:description" content="Hardening a Veeam deployment starts with a least-privilege vSphere account. As VBR adds features, the list of required rights keeps growing—check the full fine-grained permission matrix. Manually clicking through every checkbox is tedious, so here’s a slick PowerCLI script I recently found that builds the role automatically.
+Prerequisite: install VMware PowerCLI. VMware’s official blog post explains the process in detail; below is the short version.
+Install PowerShell Core 7. It’s required for PowerCLI and works on Windows, macOS, and Linux. On Windows, just run the MSI installer.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/06/powercli-vsphere-permission/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/06/new-backup-copy/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/07/data-integration-api/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Create a Minimal vSphere Role for Veeam via PowerCLI",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/06\/powercli-vsphere-permission\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Automation","wordcount":  199 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/06\/powercli-vsphere-permission\/","datePublished": "2020-06-05T00:00:00+00:00","dateModified": "2020-06-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/06/powercli-vsphere-permission/">简体中文</option><option value="/en/2020/06/powercli-vsphere-permission/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/06/powercli-vsphere-permission/">简体中文</option><option value="/en/2020/06/powercli-vsphere-permission/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Create a Minimal vSphere Role for Veeam via PowerCLI</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-06-05">2020-06-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;199 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>Hardening a Veeam deployment starts with a least-privilege vSphere account. As VBR adds features, the list of required rights keeps growing—check the full <a href="https://helpcenter.veeam.com/docs/backup/permissions/cumulativepermissions.html?ver=100" target="_blank" rel="noopener noreffer ">fine-grained permission matrix</a>. Manually clicking through every checkbox is tedious, so here’s a slick PowerCLI script I recently found that builds the role automatically.</p>
+<p>Prerequisite: install VMware PowerCLI. VMware’s <a href="https://blogs.vmware.com/PowerCLI/2018/03/installing-powercli-10-0-0-macos.html" target="_blank" rel="noopener noreffer ">official blog post</a> explains the process in detail; below is the short version.</p>
+<ol>
+<li>
+<p>Install <a href="https://github.com/PowerShell/PowerShell" target="_blank" rel="noopener noreffer ">PowerShell Core 7</a>. It’s required for PowerCLI and works on Windows, macOS, and Linux. On Windows, just run the MSI installer.</p>
+</li>
+<li>
+<p>Launch the PowerShell 7 shortcut and install PowerCLI:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">VMware</span><span class="p">.</span><span class="py">PowerCLI</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span></span></span></code></pre></div></div>
+<p>Verify the modules with:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Get-Module</span> <span class="n">-Name</span> <span class="n">VMware</span><span class="p">.*</span> <span class="n">-ListAvailable</span></span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/05/tr87i6.png"
+        data-srcset="https://s1.ax1x.com/2020/06/05/tr87i6.png, https://s1.ax1x.com/2020/06/05/tr87i6.png 1.5x, https://s1.ax1x.com/2020/06/05/tr87i6.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/05/tr87i6.png"
+        title="tr87i6.png" /></p>
+</li>
+<li>
+<p>Run the <a href="https://www.virtualhome.blog/2020/04/22/creating-a-vcenter-role-for-veeam-with-powercli/" target="_blank" rel="noopener noreffer ">PowerCLI script</a> (also mirrored on GitHub). It prompts for the vCenter address, credentials, and desired role name; supply values that fit your environment.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/05/trJG38.png"
+        data-srcset="https://s1.ax1x.com/2020/06/05/trJG38.png, https://s1.ax1x.com/2020/06/05/trJG38.png 1.5x, https://s1.ax1x.com/2020/06/05/trJG38.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/05/trJG38.png"
+        title="trJG38.png" /></p>
+</li>
+<li>
+<p>Back in the vSphere Client, open <strong>Administration → Access Control → Roles</strong> and you’ll see the newly created <em>VBR Backup Admin</em> role.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/05/trYFbj.png"
+        data-srcset="https://s1.ax1x.com/2020/06/05/trYFbj.png, https://s1.ax1x.com/2020/06/05/trYFbj.png 1.5x, https://s1.ax1x.com/2020/06/05/trYFbj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/05/trYFbj.png"
+        title="trYFbj.png" /></p>
+</li>
+<li>
+<p>Under <strong>Single Sign On → Users and Groups</strong>, switch to the appropriate domain and create a dedicated user.</p>
+</li>
+<li>
+<p>Assign that user to the vCenter with the <em>VBR Backup Admin</em> role:<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2020/06/05/trtWfx.png"
+        data-srcset="https://s1.ax1x.com/2020/06/05/trtWfx.png, https://s1.ax1x.com/2020/06/05/trtWfx.png 1.5x, https://s1.ax1x.com/2020/06/05/trtWfx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2020/06/05/trtWfx.png"
+        title="trtWfx.png" /></p>
+</li>
+</ol>
+<p>That’s it—fast, repeatable, and aligned with least-privilege best practices. Script link for reference: <a href="https://github.com/falkobanaszak/vCenter-role-for-Veeam/blob/master/New_vCenterRole_Veeam.ps1" target="_blank" rel="noopener noreffer ">https://github.com/falkobanaszak/vCenter-role-for-Veeam/blob/master/New_vCenterRole_Veeam.ps1</a>.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/06/powercli-vsphere-permission/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F06%2Fpowercli-vsphere-permission%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F06%2Fpowercli-vsphere-permission%2F&amp;text=Create&#43;a&#43;Minimal&#43;vSphere&#43;Role&#43;for&#43;Veeam&#43;via&#43;PowerCLI" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F06%252Fpowercli-vsphere-permission%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F06%252Fpowercli-vsphere-permission%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Automation/">Automation</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/06/new-backup-copy/" class="prev" rel="prev" title="New Backup Copy Modes Bring 3-2-1 to More Workloads"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>New Backup Copy Modes Bring 3-2-1 to More Workloads</a>
+            <a href="/en/2020/07/data-integration-api/" class="next" rel="next" title="Is the Data Integration API “just an API”?">Is the Data Integration API “just an API”?<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

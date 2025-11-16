@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam&#39;s Major H2 2023 Product Line Update - Cloud.Virt.AI.Sec</title><meta name="description" content="Just yesterday, Veeam officially GA’d the important updates for their entire data protection platform product line in the second half of this year. Almost every …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Veeam&#39;s Major H2 2023 Product Line Update">
+  <meta property="og:description" content="Just yesterday, Veeam officially GA’d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you’re a Veeam power user, when you visit your Veeam homepage at https://my.veeam.com, you’ll see a full screen where all products show “New” status - these are all newly available versions released this week for download.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-12-07T00:00:00+00:00">
+    <meta property="article:tag" content="VDP">
+    <meta property="article:tag" content="VBR">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Veeam&#39;s Major H2 2023 Product Line Update">
+  <meta name="twitter:description" content="Just yesterday, Veeam officially GA’d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you’re a Veeam power user, when you visit your Veeam homepage at https://my.veeam.com, you’ll see a full screen where all products show “New” status - these are all newly available versions released this week for download.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/11/vro-v6-guide-10/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam's Major H2 2023 Product Line Update",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/12\/vdp23h2-update\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VDP, VBR, Backup","wordcount":  1154 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/12\/vdp23h2-update\/","datePublished": "2023-12-07T00:00:00+00:00","dateModified": "2023-12-07T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/12/vdp23h2-update/">简体中文</option><option value="/en/2023/12/vdp23h2-update/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/12/vdp23h2-update/">简体中文</option><option value="/en/2023/12/vdp23h2-update/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam's Major H2 2023 Product Line Update</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-07">2023-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1154 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#major-feature-updates">Major Feature Updates</a>
+      <ul>
+        <li><a href="#network-security-detection-and-discovery">Network Security Detection and Discovery</a></li>
+        <li><a href="#enhanced-ransomware-incident-recovery-response-capabilities">Enhanced Ransomware Incident Recovery Response Capabilities</a></li>
+        <li><a href="#ensuring-security-and-compliance">Ensuring Security and Compliance</a></li>
+        <li><a href="#other-major-updates">Other Major Updates</a></li>
+      </ul>
+    </li>
+    <li><a href="#other-updates">Other Updates</a></li>
+    <li><a href="#supported-platform-updates">Supported Platform Updates</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Just yesterday, Veeam officially GA&rsquo;d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you&rsquo;re a Veeam power user, when you visit your Veeam homepage at <a href="https://my.veeam.com" target="_blank" rel="noopener noreffer ">https://my.veeam.com</a>, you&rsquo;ll see a full screen where all products show &ldquo;New&rdquo; status - these are all newly available versions released this week for download.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png"
+        data-srcset="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png, https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png 1.5x, https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/fUvhwKGsALM4TJX.png"
+        title="image-20231207110403710" /></p>
+<p>The most important part of this product update is certainly the v12.1 update of the flagship VDP platform. Less than a year after the last major version v12 update, the Veeam R&amp;D team has delivered v12.1, which adds new features second only to a major version update. The most dazzling aspect is this year&rsquo;s super-hot AI large model technology, which has been integrated into backup, recovery, disaster recovery, and even daily operations to enhance the backup system&rsquo;s capabilities. You could say this update makes your data protection platform smarter.</p>
+<h2 id="major-feature-updates">Major Feature Updates</h2>
+<h3 id="network-security-detection-and-discovery">Network Security Detection and Discovery</h3>
+<ul>
+<li><strong>Inline Streaming Malware Detection</strong> - During the backup data transmission process, content analysis is performed on the data stream, and it can be compared and analyzed with known historical data stream states to determine the state change of data blocks from unencrypted to encrypted. Using the Veeam-trained AI model built into the product, it distinguishes malicious encryption behaviors and detects malicious attack signals.</li>
+<li><strong>Suspicious File System Behavior Detection</strong> - Unlike streaming analysis, after data backup is completed, for the backed-up file system, through Index indexing technology, it quickly scans and analyzes known malware extensions, ransomware notices, and malware indicators. This analysis technology can also perform historical backup data comparisons, further analyzing through data activities at different times to achieve suspicious behavior judgment. This technology built by Veeam includes virus definition databases similar to antivirus software vendors and supports online and offline virus database updates.</li>
+<li><strong>Early Threat Detection</strong> - A completely new Incident API has been opened for integration with third-party EDR tools, including current mainstream NDR, MDR, XDR, etc. Once attack signals are discovered in other systems, these third-party systems can sound the alarm and notify the backup system to &ldquo;close the door and beat the dog.&rdquo;</li>
+</ul>
+<h3 id="enhanced-ransomware-incident-recovery-response-capabilities">Enhanced Ransomware Incident Recovery Response Capabilities</h3>
+<ul>
+<li><strong>YARA Engine Scanning</strong> - In addition to using antivirus software to scan backup archives, this update also adds the industry-popular YARA engine, which makes scanning malware more convenient and efficient. At the same time, this engine&rsquo;s scanning is smarter, providing 3 different scanning modes.</li>
+<li><strong>Avoid Secondary Infection</strong> - Based on tracking different events&rsquo; ransomware behaviors, Veeam has built-in important crawler markers for malicious infections. In the graphical interface, you can clearly see which archives have infection risks and which are safe. During recovery, you can quickly select clean restore points to avoid secondary infection.</li>
+<li><strong>Event Forwarding Capability</strong> - Integrated standard Syslog service capabilities, which can forward most events to Syslog systems for further response and analysis.</li>
+</ul>
+<h3 id="ensuring-security-and-compliance">Ensuring Security and Compliance</h3>
+<ul>
+<li><strong>Four-Eyes Authorization</strong> - Two-person four-eyes, also called A-B role dual authorization, this is a traditional security process in IT. In backup systems, Veeam has also introduced such security management methods. For important operations, A-B roles need to jointly authorize to complete them.</li>
+<li><strong>KMS Key Management System Integration</strong> - Eliminate the insecurity of manual password management and use key management systems for data encryption and decryption. Veeam supports industry mainstream KMS key management systems for backup data encryption through the standard KMIP 1.4 protocol, avoiding backup data leakage risks.</li>
+<li><strong>Backup System Security Compliance Monitoring</strong> - Added more than 20 security self-checks. This part is an enhancement of v12 capabilities. The backup system will self-check security and regularly send security reports to customers to ensure the entire security architecture meets requirements and has not been compromised.</li>
+<li><strong>Veeam Threat Center</strong> - A brand-new center panel display that directly and intuitively displays the 3-2-1-1-0 best practices on the console. Take a look every morning when you come to work, and you&rsquo;ll know whether your data is secure now.</li>
+</ul>
+<h3 id="other-major-updates">Other Major Updates</h3>
+<ul>
+<li><strong>Object Storage Backup</strong> - New member of unstructured data backup, especially cloud-native applications, image hosting, intelligent video monitoring systems, static website hosting, and various other object storage usage scenarios. Now the Veeam platform can backup and restore this data.</li>
+<li><strong>CDP Capability Enhancement</strong> - Both performance and functionality have been greatly improved. Laboratory data shows that a single VBR supports second-level real-time replication of about 7000 VMs, achieving continuous data protection without pressure. And v12.1&rsquo;s CDP also supports Veeam&rsquo;s widely acclaimed regular features such as file-level recovery, application object recovery, and fully automated data lab recovery verification. More importantly, the streaming malware detection system added in v12.1 can also work here. After discovering IO exceptions, it can restore to historical time points with second-level precision, greatly reducing data loss.</li>
+<li><strong>Veeam AI Assistant</strong> - Built-in large model GPT, this large model is trained based on Veeam&rsquo;s official website operation manuals, specializing in various incomprehensions. If you get the software and don&rsquo;t know how to use it, the first thing is to open the assistant and ask questions.</li>
+</ul>
+<h2 id="other-updates">Other Updates</h2>
+<p>Let me talk about some of my favorite small updates.</p>
+<ul>
+<li><strong>Instant Disk Publishing</strong> - Actually, this is the previous data integration API, which has now become an instant disk recovery that can be directly operated in the graphical interface. This way, any Veeam disk image archive can be directly mounted to any Windows and Linux machines. After mounting, data recovery, data mining, data analysis, and other operations can be performed.</li>
+<li><strong>Data Lab Lite Version</strong> - A lightweight data lab specifically designed for security scanning and YARA scanning, which can be used even without a virtualization environment.</li>
+<li><strong>Instant PostgreSQL Database Recovery</strong> - The second version of Veeam Explorer for PostgreSQL, which completes Veeam&rsquo;s signature capability.</li>
+<li><strong>Linux Agent Deployer</strong> - Deployment gadget that can centrally manage Linux Agents without entering passwords on VBR.</li>
+<li><strong>Veeam Plugin Adds DB2 Support</strong> - Supports DB2 on both Linux and AIX, and can support complex architectures such as single-node, HADR architecture, IBM PowerHA, TSA, and Pacemaker.</li>
+<li><strong>Veeam Explorer Adds SAP HANA Support</strong> - Full graphical operation for SAP HANA is here. Backup and recovery can now be easily performed in the VBR console.</li>
+<li><strong>Enterprise Manager Chinese Version Support</strong> - The console for daily use, Enterprise Manager, is now completely in Chinese version. It can manage, backup, recover, and even provide self-service. Everything that can and cannot be done is here.</li>
+</ul>
+<h2 id="supported-platform-updates">Supported Platform Updates</h2>
+<ul>
+<li>Full feature support for VMware vSphere 8.0 U2</li>
+<li>Full feature support for VMware Cloud Director 10.5</li>
+<li>Full feature support for Microsoft Windows 11 23H2 version</li>
+<li>Linux part, full support for Debian 12.1, 12.2, Fedora 39, RHEL 8.9, 9.2 and 9.3, Ubuntu 23.10</li>
+<li>macOS 14 Sonoma support</li>
+</ul>
+<p>There are many other updates that I won&rsquo;t list all here. Interested friends can go to the official website to see the detailed <a href="https://www.veeam.com/veeam_backup_12_1_whats_new_wn.pdf" target="_blank" rel="noopener noreffer ">What&rsquo;s New</a> manual, or you can directly download the trial version to try it out.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/12/vdp23h2-update/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F12%2Fvdp23h2-update%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F12%2Fvdp23h2-update%2F&amp;text=Veeam%27s&#43;Major&#43;H2&#43;2023&#43;Product&#43;Line&#43;Update" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F12%252Fvdp23h2-update%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F12%252Fvdp23h2-update%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VDP/">VDP</a>,&nbsp;<a href="/en/tags/VBR/">VBR</a>,&nbsp;<a href="/en/tags/backup/">Backup</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/11/vro-v6-guide-10/" class="prev" rel="prev" title="VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</a>
+            <a href="/en/2023/12/mysql-backup-and-restore/" class="next" rel="next" title="MySQL Backup and Restore Best Practices with Veeam">MySQL Backup and Restore Best Practices with Veeam<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

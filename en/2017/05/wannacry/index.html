@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>A Few Words About the &#39;WannaCry&#39; Virus - Cloud.Virt.AI.Sec</title><meta name="description" content="It’s been a hectic 72 hours.
+From Friday evening through today, my phone hasn’t stopped ringing. Friends calling in panic, canceling weekend plans, activating …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2017/05/wannacry/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="A Few Words About the &#39;WannaCry&#39; Virus">
+  <meta property="og:description" content="It’s been a hectic 72 hours.
+From Friday evening through today, my phone hasn’t stopped ringing. Friends calling in panic, canceling weekend plans, activating emergency protocols, desperately trying to recover their data. This WannaCry ransomware earned its name—it’s left countless unprepared organizations literally wanting to cry.
+Whether you paid the ransom or managed to recover your data another way, now that the dust is settling a bit, it’s time to step back and think strategically. How do we prevent this from happening again? How do we build truly comprehensive protection that leaves no gaps?">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-05-15T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-05-15T00:00:00+00:00">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="A Few Words About the &#39;WannaCry&#39; Virus">
+  <meta name="twitter:description" content="It’s been a hectic 72 hours.
+From Friday evening through today, my phone hasn’t stopped ringing. Friends calling in panic, canceling weekend plans, activating emergency protocols, desperately trying to recover their data. This WannaCry ransomware earned its name—it’s left countless unprepared organizations literally wanting to cry.
+Whether you paid the ransom or managed to recover your data another way, now that the dust is settling a bit, it’s time to step back and think strategically. How do we prevent this from happening again? How do we build truly comprehensive protection that leaves no gaps?">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2017/05/wannacry/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/" /><link rel="next" href="https://blog.backupnext.cloud/en/2017/06/veeam-pn-intro/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "A Few Words About the 'WannaCry' Virus",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2017\/05\/wannacry\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  589 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2017\/05\/wannacry\/","datePublished": "2017-05-15T00:00:00+00:00","dateModified": "2017-05-15T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/05/wannacry/">简体中文</option><option value="/en/2017/05/wannacry/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/05/wannacry/">简体中文</option><option value="/en/2017/05/wannacry/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">A Few Words About the 'WannaCry' Virus</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-05-15">2017-05-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;589 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>It&rsquo;s been a hectic 72 hours.</p>
+<p>From Friday evening through today, my phone hasn&rsquo;t stopped ringing. Friends calling in panic, canceling weekend plans, activating emergency protocols, desperately trying to recover their data. This WannaCry ransomware earned its name—it&rsquo;s left countless unprepared organizations literally wanting to cry.</p>
+<p>Whether you paid the ransom or managed to recover your data another way, now that the dust is settling a bit, it&rsquo;s time to step back and think strategically. How do we prevent this from happening again? How do we build truly comprehensive protection that leaves no gaps?</p>
+<p><strong>Let&rsquo;s rewind to before the outbreak.</strong></p>
+<p>Backups! Backups! Backups!</p>
+<p>I can&rsquo;t say this enough. When a massive ransomware attack hits, having clean backup data from before the infection makes the difference between a minor inconvenience and a catastrophe. With proper backups, this ransomware becomes relatively trivial to defeat.</p>
+<p>But what does &ldquo;proper backup&rdquo; actually mean?</p>
+<p>First rule: never store backups with production data. This is the cardinal sin of backup strategy. Keeping them together is like putting all your money in one wallet—lose it, and you lose everything. It&rsquo;s the most overlooked basic principle, yet it&rsquo;s the mistake I see most often. And I don&rsquo;t just mean on the same server or storage array. True backup isolation means your backup data should have no direct connection to your production environment whatsoever.</p>
+<p>Second: redundancy matters. Multiple backup copies are never a mistake. When you have three or more independent copies of your data, you can face these situations with confidence instead of panic.</p>
+<p>Third: test your recovery procedures. If you regularly run drills and verify that every recovery point actually works, when disaster strikes, you&rsquo;ll operate with confidence instead of chaos.</p>
+<p><strong>Now, let&rsquo;s talk about when the outbreak happens.</strong></p>
+<p>Speed is everything. The faster you recover, the better. This is where instant virtual machine recovery becomes your best friend. We&rsquo;re talking about rolling back to a previous save point in under two minutes and getting operations back online. No embarrassing notices on your front door, no frantic customer service calls.</p>
+<p>Of course, the reality is more nuanced. Some system-level issues can be resolved with antivirus updates and patches. But for actual file decryption? There&rsquo;s no magic solution—backup software is your only real option. And since not all files are equally critical, you need flexible recovery options.</p>
+<p>Instant VM recovery is your blunt instrument—fast and effective. But instant file-level recovery is your surgical tool. This lets you selectively restore the most important files first, getting critical business functions running while you continue recovering less essential data in the background.</p>
+<p><strong>After the crisis: system maintenance.</strong></p>
+<p>Once you&rsquo;ve stabilized the immediate emergency, it&rsquo;s time to look at the systems that survived unscathed. Prevention is better than cure, and patches are available. But here&rsquo;s where things get tricky again.</p>
+<p>Have you ever applied a Microsoft patch only to see the dreaded blue screen? With thousands of Windows machines requiring patches and reboots, even a 5% failure rate becomes a nightmare. Suddenly you realize the systems that survived WannaCry are being taken down by Microsoft&rsquo;s own fixes.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/11/1T6qgg.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/11/1T6qgg.jpg, https://s2.ax1x.com/2020/02/11/1T6qgg.jpg 1.5x, https://s2.ax1x.com/2020/02/11/1T6qgg.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/11/1T6qgg.jpg"
+        title="1T6qgg.jpg" /></p>
+<p>Before patching anything, always follow this protocol:</p>
+<p>First, create a fresh backup. Ensure you can roll back if things go wrong. This isn&rsquo;t optional—it&rsquo;s mandatory.</p>
+<p>Second, test patches in a sandbox environment. Verify they install correctly and don&rsquo;t break system functionality. While you&rsquo;re at it, test whether the patched systems are still vulnerable to the attack vector.</p>
+<p>These are the hard-won lessons from the WannaCry outbreak. Learn them now, before the next crisis hits.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2017-05-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2017/05/wannacry/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F05%2Fwannacry%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F05%2Fwannacry%2F&amp;text=A&#43;Few&#43;Words&#43;About&#43;the&#43;%27WannaCry%27&#43;Virus" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F05%252Fwannacry%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F05%252Fwannacry%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2017/05/how-to-calculate-backup-size/" class="prev" rel="prev" title="How to Calculate Backup Size and Bandwidth in Data Centers"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to Calculate Backup Size and Bandwidth in Data Centers</a>
+            <a href="/en/2017/06/veeam-pn-intro/" class="next" rel="next" title="VeeamON 2017 Series: Alternative VPN -- Veeam PN">VeeamON 2017 Series: Alternative VPN -- Veeam PN<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

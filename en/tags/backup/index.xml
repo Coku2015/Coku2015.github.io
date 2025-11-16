@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Backup on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/backup/</link>
+    <description>Recent content in Backup on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</link>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+      <description>&lt;h1 id=&#34;ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server&#34;&gt;AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server&lt;/h1&gt;&#xA;&lt;p&gt;In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: &lt;strong&gt;zero-code&lt;/strong&gt; control of your Veeam Backup &amp;amp; Replication server through Veeam RestAPI. Don&amp;rsquo;t be intimidated by terms like API - in today&amp;rsquo;s content, you won&amp;rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</link>
+      <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+      <description>&lt;h1 id=&#34;ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch&#34;&gt;AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&amp;rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</link>
+      <pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</guid>
+      <description>&lt;p&gt;In our previous articles, we introduced how Veeam v13 continues to enhance its YARA malware scanning capabilities. However, the limitation of official rule sets is a very real challenge. There aren&amp;rsquo;t many free YARA rule sources available online, and high-quality ones are even scarcer. Today, I want to introduce you to a hidden gem: Ransomware.live - a professional open-source ransomware threat intelligence platform that provides free YARA rules for 62 major ransomware gangs, making it a perfect complement to Veeam&amp;rsquo;s YARA scanning functionality.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>V13 Malware Detection Comprehensive Upgrade: Practical Evolution from Passive Protection to Active Response</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</guid>
+      <description>&lt;p&gt;In version v13, malware detection capabilities have achieved a significant leap forward. Compared to the real-time detection capabilities already available in the v12 era, v13 has brought qualitative improvements in threat response mechanisms, platform coverage, and intelligence levels. In my previous articles, I&amp;rsquo;ve detailed the ransomware attack detection principles and configuration methods for v12. Today, building on that foundation, let&amp;rsquo;s explore the key upgrades that v13 brings.&lt;/p&gt;&#xA;&lt;h2 id=&#34;v12-detection-capabilities-review-the-separation-of-detection-and-response&#34;&gt;v12 Detection Capabilities Review: The Separation of Detection and Response&lt;/h2&gt;&#xA;&lt;p&gt;In the v12 era, Veeam&amp;rsquo;s malware detection primarily relied on two mechanisms:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</link>
+      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</guid>
+      <description>&lt;p&gt;In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I&amp;rsquo;ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.&lt;/p&gt;&#xA;&lt;p&gt;Today, let&amp;rsquo;s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp;amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization&amp;rsquo;s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company&amp;rsquo;s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
+      <description>&lt;h2 id=&#34;series-index&#34;&gt;Series Index&lt;/h2&gt;&#xA;&lt;p&gt;Data protection is more than just backup—it&amp;rsquo;s about securing your organization&amp;rsquo;s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Part 1: Account-less and SSH service management for Linux backup agents&lt;/li&gt;&#xA;&lt;li&gt;Part 2: Using gMSA technology to manage Windows accounts&lt;/li&gt;&#xA;&lt;li&gt;Part 3: Four-Eyes Authorization: Dual control for backup system operations&lt;/li&gt;&#xA;&lt;li&gt;Part 4: Enabling Multi-Factor Authentication (MFA): Strengthening backup system account protection&lt;/li&gt;&#xA;&lt;li&gt;Part 5: Reducing network ports involved in backup operations&lt;/li&gt;&#xA;&lt;li&gt;Part 6: Using Syslog to manage logs in SIEM systems&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;four-eyes-authorization-securing-veeam-backup-operations&#34;&gt;&lt;strong&gt;Four-Eyes Authorization: Securing Veeam Backup Operations&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;In the digital age, data is the lifeblood of enterprises, making the security of backup and recovery operations particularly critical. A single misoperation or malicious act could lead to business interruption or data breaches. For this reason, &lt;strong&gt;Four-Eyes Authorization&lt;/strong&gt; has gradually become an important strategy for organizations to protect their backup processes, building a solid security barrier for critical tasks through a dual-review mechanism.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
+      <pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
+      <description>&lt;h2 id=&#34;series-overview&#34;&gt;Series Overview&lt;/h2&gt;&#xA;&lt;p&gt;Data protection isn&amp;rsquo;t just about backup—it&amp;rsquo;s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the start of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips introduced in VDP v12 and later versions—simple to implement yet powerful enough to safeguard your data security.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents</title>
+      <link>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
+      <pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
+      <description>&lt;h2 id=&#34;series-overview&#34;&gt;Series Overview&lt;/h2&gt;&#xA;&lt;p&gt;Data protection isn&amp;rsquo;t just about backups—it&amp;rsquo;s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips and tricks introduced since VDP v12—simple yet powerful features that safeguard your data security.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP</title>
+      <link>https://blog.backupnext.cloud/en/2024/11/veeam-agent-for-linux-nosnap/</link>
+      <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/11/veeam-agent-for-linux-nosnap/</guid>
+      <description>&lt;p&gt;The highly flexible nature of Linux as an open-source system allows everyone to use it in their own unique way. This flexibility often creates compatibility challenges for backup software that depends deeply on the operating system. Even minor changes can cause backup failures, which is why backup software typically maintains a compatibility list—systems not on this list usually won&amp;rsquo;t work properly.&lt;/p&gt;&#xA;&lt;p&gt;These issues are common throughout the open-source world. While there&amp;rsquo;s no single solution to solve everything at once, addressing the majority of cases would be a significant improvement, wouldn&amp;rsquo;t it?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</link>
+      <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</guid>
+      <description>&lt;p&gt;In my previous post, I introduced Veeam&amp;rsquo;s Managed Hardened Repository community preview. Today, I&amp;rsquo;ll walk you through the complete installation and configuration process step by step.&lt;/p&gt;&#xA;&lt;p&gt;For this deployment, I used a VMware virtual machine for convenience. If you have dedicated hardware available, you can deploy on physical servers instead. Should you encounter any issues during deployment, please reach out with your feedback - it helps improve the community preview.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso/</link>
+      <pubDate>Thu, 03 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso/</guid>
+      <description>&lt;p&gt;Since Veeam v11, Veeam introduced the Hardened Backup Repository, which has been widely adopted by Veeam customers worldwide. Many customers have built their own hardened repositories using Linux systems, providing Veeam with secure and reliable data storage that has successfully resisted various ransomware attacks.&lt;/p&gt;&#xA;&lt;p&gt;Over the past few years, to help everyone configure hardened repositories more conveniently, I&amp;rsquo;ve created several scripts and tools:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/03/hardened-linux-repository/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Using This Method, Your Backup Data Will No Longer Fear Ransomware&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2022/02/Veeam-hardened-linux-repository-configurator/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Veeam Hardened Linux Repository Configurator&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2024/02/Veeam-hardened-ubuntu/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Further Security Hardening of Ubuntu Systems for Veeam Hardened Repositories&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;On September 30th, the Veeam R&amp;amp;D team officially released another deployment method for the Hardened Repository - a Linux ISO for building systems &amp;ldquo;from scratch.&amp;rdquo; Administrators can use this Veeam-packaged ISO to quickly deploy bare-metal servers, install the Hardened Repository operating system, and once installation is complete, the system will have already deployed a series of Veeam Hardened Repository best practices. Administrators can then perform subsequent configuration and management in VBR.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Features Deep Dive Series (Part 3) - Comprehensive Threat Monitoring</title>
+      <link>https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
+      <pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
+      <description>&lt;p&gt;In VDP v12.1, not only have security scanning capabilities been added during and after backup processes, but significant enhancements have also been made to monitoring and compliance management. To better help administrators improve backup system security, VBR has introduced a fully automated security compliance checking capability called Security &amp;amp; Compliance Analyzer. Additionally, in the Enterprise Edition, a completely new Threat Center dashboard has been launched.&lt;/p&gt;&#xA;&lt;h3 id=&#34;security--compliance-analyzer&#34;&gt;Security &amp;amp; Compliance Analyzer&lt;/h3&gt;&#xA;&lt;p&gt;This component actually existed in v12, where it was called Best Practices Analyzer, but the first version&amp;rsquo;s functionality wasn&amp;rsquo;t quite comprehensive and its detection capabilities were somewhat limited. In the new version, Best Practices Analyzer has been renamed to Security &amp;amp; Compliance Analyzer, and its capabilities have been significantly enhanced.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning</title>
+      <link>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
+      <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
+      <description>&lt;p&gt;Following up on yesterday&amp;rsquo;s post, let&amp;rsquo;s dive into the second major update: YARA Scan and Antivirus Scan.&lt;/p&gt;&#xA;&lt;p&gt;Beyond its ability to perform online scanning of backup data streams, Veeam Backup &amp;amp; Replication (VBR) now supports secondary scanning of already backed-up data. Version 12.1 introduces two powerful scanning engines: one that leverages antivirus software installed on the Mount Server, and another that utilizes YARA as the scanning engine.&lt;/p&gt;&#xA;&lt;h3 id=&#34;understanding-yara&#34;&gt;Understanding YARA&lt;/h3&gt;&#xA;&lt;p&gt;YARA (which stands for &lt;em&gt;Yet Another Recursive Acronym&lt;/em&gt;) is a tool primarily used by security experts and researchers to identify and classify malware. You can find the official documentation at &lt;a href=&#34;https://yara.readthedocs.io/en/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://yara.readthedocs.io/en/latest/&lt;/a&gt; and the GitHub repository at &lt;a href=&#34;https://github.com/virustotal/yara&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://github.com/virustotal/yara&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>VDP v12.1 Security Feature Deep Dive Series (Part 1) - Ransomware Detection</title>
+      <link>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
+      <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m genuinely excited to share this deep dive into Veeam Data Platform v12.1&amp;rsquo;s security enhancements. When Veeam released this major update late last year, they packed it with significant security features that deserve proper attention. Starting today, I&amp;rsquo;ll be exploring each of these capabilities in detail, breaking down how they work and how to make the most of them.&lt;/p&gt;&#xA;&lt;p&gt;For this first installment, let&amp;rsquo;s dive into ransomware detection. In v12.1, Veeam introduced a comprehensive malware detection module that consists of two core components: Inline Entropy Scan and Index Scan. Both work together to provide multiple layers of protection against sophisticated attacks.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</guid>
+      <description>&lt;p&gt;After the release of Veeam v12, the official documentation provides &lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;methods for further system security hardening&lt;/a&gt; after building a Veeam hardened repository based on Ubuntu 20.04, and offers a fully automated configuration script. Therefore, after using my &lt;a href=&#34;https://github.com/Coku2015/Veeam_Repo_Configurator&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Configurator&lt;/a&gt; to build the Ubuntu repository, you can use this automated configuration script for more secure hardening.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Since the official script includes some US military compliance configurations that are not suitable for Chinese users, I have modified Veeam&amp;rsquo;s official script and republished it to make it suitable for Chinese users.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Backup and Restore Best Practices with Veeam</title>
+      <link>https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/</link>
+      <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/</guid>
+      <description>&lt;p&gt;In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn&amp;rsquo;t prominently featured in the Veeam data protection platform. Today, I&amp;rsquo;ll explain what&amp;rsquo;s going on and how you should approach MySQL backup and recovery using Veeam.&lt;/p&gt;&#xA;&lt;h2 id=&#34;mysql-data-storage-engines&#34;&gt;MySQL Data Storage Engines&lt;/h2&gt;&#xA;&lt;p&gt;Before discussing MySQL backup, we need to talk about MySQL&amp;rsquo;s data storage engines because different engines directly determine MySQL&amp;rsquo;s data backup and recovery capabilities. In MySQL, &lt;code&gt;InnoDB&lt;/code&gt; is the most commonly used storage engine by default. Tables created with the &lt;code&gt;Create Table&lt;/code&gt; command without specifying an &lt;code&gt;Engine&lt;/code&gt; parameter will use the &lt;code&gt;InnoDB&lt;/code&gt; engine by default, and Oracle officially recommends using the &lt;code&gt;InnoDB&lt;/code&gt; engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the &lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;official documentation&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam&#39;s Major H2 2023 Product Line Update</title>
+      <link>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</guid>
+      <description>&lt;p&gt;Just yesterday, Veeam officially GA&amp;rsquo;d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you&amp;rsquo;re a Veeam power user, when you visit your Veeam homepage at &lt;a href=&#34;https://my.veeam.com&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://my.veeam.com&lt;/a&gt;, you&amp;rsquo;ll see a full screen where all products show &amp;ldquo;New&amp;rdquo; status - these are all newly available versions released this week for download.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Hardened Linux Repository Configurator</title>
+      <link>https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/</link>
+      <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/</guid>
+      <description>&lt;h2 id=&#34;script-purpose&#34;&gt;Script Purpose&lt;/h2&gt;&#xA;&lt;p&gt;According to Veeam best practices, this one-click script configures a Linux system. After the operating system configuration is complete, you can return to the VBR console to complete the repository addition.&lt;/p&gt;&#xA;&lt;p&gt;For manual configuration and principle introduction, please refer to the following posts:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/veeam-v11-hardened-linux-repository-%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-centos8-1188&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;veeam-v11-hardened-linux-repository-配置指南-centos8&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/%e5%8a%a0%e5%9b%ba%e7%9a%84%e5%a4%87%e4%bb%bd%e5%ad%98%e5%82%a8%e5%ba%93hardened-repository%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-ubuntu-1093&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;加固的备份存储库hardened-repository配置指南-ubuntu&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/veeam-hardened-repository-quick-starter-1410&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;veeam-hardened-repository-quick-starter&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;prerequisites-for-use&#34;&gt;Prerequisites for Use&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Ensure the system meets the minimum requirements for using Veeam Hardened Linux Repository.&lt;/li&gt;&#xA;&lt;li&gt;The server has unformatted disks such as /dev/sdb, /dev/sdc, etc.&lt;/li&gt;&#xA;&lt;li&gt;This script must be run using the root account.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;system-requirements&#34;&gt;System Requirements&lt;/h2&gt;&#xA;&lt;p&gt;This script has been tested on Redhat 8.2/CentOS 8.2/Ubuntu 20.04 and above versions. Other system versions are not currently supported.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Agent for Mac Standalone Guide</title>
+      <link>https://blog.backupnext.cloud/en/2021/04/mac-agent/</link>
+      <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/04/mac-agent/</guid>
+      <description>&lt;p&gt;Veeam Agent for Mac arrived with v11. I assumed it required central management by VBR, but the User Guide reveals a standalone mode. Here’s how to install, configure, and back up without a VBR server.&lt;/p&gt;&#xA;&lt;p&gt;You can grab the installer by running &lt;strong&gt;Create Protection Group&lt;/strong&gt; in VBR—or download the extracted &lt;code&gt;.pkg&lt;/code&gt; from my mirror: &lt;a href=&#34;https://cloud.189.cn/t/eEZVvifyqIrm&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://cloud.189.cn/t/eEZVvifyqIrm&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Install the package like any macOS app (double-click, Next, Next). Afterward, enable full disk access via &lt;strong&gt;System Preferences → Security &amp;amp; Privacy → Privacy&lt;/strong&gt; so the agent can read files:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>“Wildcard” Strategy – Rotating External Drives for Ransomware Defense</title>
+      <link>https://blog.backupnext.cloud/en/2021/04/rotated-driver/</link>
+      <pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/04/rotated-driver/</guid>
+      <description>&lt;p&gt;You’ve seen all the v11 ransomware-hardening tips—but attackers keep innovating, so we can’t stop. Here’s an unconventional approach: rotate offline external drives. It’s basically a DIY air gap. Not bulletproof, but a handy “wildcard” for environments that can’t invest in tape or immutable storage yet.&lt;/p&gt;&#xA;&lt;h2 id=&#34;requirements--scenario&#34;&gt;Requirements &amp;amp; Scenario&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;A hot-swap external enclosure (USB 3.0/USB-C or eSATA) for quick drive swaps.&lt;/li&gt;&#xA;&lt;li&gt;Multiple high-capacity SATA disks (7200 RPM).&lt;/li&gt;&#xA;&lt;li&gt;A rotation schedule: write backups to one drive, then eject and store it offline while another drive comes online.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;expected-outcome&#34;&gt;Expected Outcome&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;As long as the data isn’t encrypted before ejection, it’s safe once offline.&lt;/li&gt;&#xA;&lt;li&gt;Each drive’s backup chain is self-contained; no dependency on other drives.&lt;/li&gt;&#xA;&lt;li&gt;VBR writes its own metadata alongside the backups, so restores are easy when you plug the drive back in.&lt;/li&gt;&#xA;&lt;li&gt;Compared to tape, recovery is straightforward—just mount the drive and start restoring.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;how-to-use-it&#34;&gt;How to Use It&lt;/h2&gt;&#xA;&lt;p&gt;Watch the demo video below for the workflow.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Save Your Precious Memories—Right Here, Right Now!</title>
+      <link>https://blog.backupnext.cloud/en/2021/03/world-backup-day/</link>
+      <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/03/world-backup-day/</guid>
+      <description>&lt;p&gt;Today&amp;rsquo;s content is refreshingly simple—nothing too technical, just a friendly reminder that&amp;rsquo;s particularly important on this special day of the year. I want to encourage everyone to make a backup, whether for personal or company data. On this annual occasion, taking a moment to back up your data feels especially meaningful.&lt;/p&gt;&#xA;&lt;p&gt;Because today, March 31st, is World Backup Day.&lt;/p&gt;&#xA;&lt;h2 id=&#34;let-me-tell-you-about-this-day&#34;&gt;Let Me Tell You About This Day&lt;/h2&gt;&#xA;&lt;p&gt;Some of you might not be familiar with this particular celebration. The origin story is quite charming—it all started from an online community. A man named Ismail Jadun came across a Reddit post where someone was expressing deep regret after losing their data. Inspired by this moment, Ismail posted his own message on Reddit, suggesting that March 31st would be perfect—the day before April Fools&amp;rsquo; Day. His thinking was beautifully practical: backup your data the day before, so you don&amp;rsquo;t become the fool on April 1st.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to Calculate Backup Size and Bandwidth in Data Centers</title>
+      <link>https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/</link>
+      <pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/</guid>
+      <description>&lt;p&gt;One of the most common questions I get asked is: &amp;ldquo;How effective is your backup software&amp;rsquo;s deduplication, and how much storage space will my backups actually use?&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;The truth is, effectiveness varies dramatically depending on your data types and storage methods. Different environments and hardware configurations can produce vastly different results, making it impossible to give a one-size-fits-all answer. But regardless of these variables, backup data needs storage space, and capacity planning becomes a critical component of any backup infrastructure design.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

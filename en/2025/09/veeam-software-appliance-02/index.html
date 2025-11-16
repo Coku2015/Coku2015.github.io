@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment - Cloud.Virt.AI.Sec</title><meta name="description" content="In our previous article, we introduced Veeam’s latest product releases, particularly the brand-new Veeam Software Appliance. Many of you might have grasped the …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment">
+  <meta property="og:description" content="In our previous article, we introduced Veeam’s latest product releases, particularly the brand-new Veeam Software Appliance. Many of you might have grasped the concept but are still unsure about how to actually use, install, and configure it after downloading. Don’t worry - starting from this article, we’ll dive into hands-on implementation, guiding you step by step through the deployment and usage of Veeam Software Appliance.
+Veeam officially provides two deployment methods for this Appliance: ISO image and OVA template. To avoid overwhelming you with too many options, this article will focus specifically on the ISO image method. Unlike our usual practice of “mounting an ISO file” within an operating system, this ISO is a complete system boot disk. You need to use it to boot your server or virtual machine, just like installing a new operating system on a fresh computer.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-09-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-09-05T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment">
+  <meta name="twitter:description" content="In our previous article, we introduced Veeam’s latest product releases, particularly the brand-new Veeam Software Appliance. Many of you might have grasped the concept but are still unsure about how to actually use, install, and configure it after downloading. Don’t worry - starting from this article, we’ll dive into hands-on implementation, guiding you step by step through the deployment and usage of Veeam Software Appliance.
+Veeam officially provides two deployment methods for this Appliance: ISO image and OVA template. To avoid overwhelming you with too many options, this article will focus specifically on the ISO image method. Unlike our usual practice of “mounting an ISO file” within an operating system, this ISO is a complete system boot disk. You need to use it to boot your server or virtual machine, just like installing a new operating system on a fresh computer.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-01/" /><link rel="next" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2025\/09\/veeam-software-appliance-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  1579 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2025\/09\/veeam-software-appliance-02\/","datePublished": "2025-09-05T00:00:00+00:00","dateModified": "2025-09-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/09/veeam-software-appliance-02/">简体中文</option><option value="/en/2025/09/veeam-software-appliance-02/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/09/veeam-software-appliance-02/">简体中文</option><option value="/en/2025/09/veeam-software-appliance-02/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-09-05">2025-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1579 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#preparation-obtaining-the-iso-image">Preparation: Obtaining the ISO Image</a>
+      <ul>
+        <li><a href="#verification-methods-for-different-systems">Verification Methods for Different Systems</a></li>
+      </ul>
+    </li>
+    <li><a href="#understanding-iso-usage">Understanding ISO Usage</a></li>
+    <li><a href="#installation-and-initial-configuration">Installation and Initial Configuration</a>
+      <ul>
+        <li><a href="#boot-installation">Boot Installation</a></li>
+        <li><a href="#initial-configuration">Initial Configuration</a></li>
+        <li><a href="#using-webui-for-advanced-configuration">Using WebUI for Advanced Configuration</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary--next-steps">Summary &amp; Next Steps</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In our previous article, we introduced Veeam&rsquo;s latest product releases, particularly the brand-new <strong>Veeam Software Appliance</strong>. Many of you might have grasped the concept but are still unsure about how to actually use, install, and configure it after downloading. Don&rsquo;t worry - starting from this article, we&rsquo;ll dive into hands-on implementation, guiding you step by step through the deployment and usage of <strong>Veeam Software Appliance</strong>.</p>
+<p>Veeam officially provides two deployment methods for this Appliance: <strong>ISO image</strong> and <strong>OVA template</strong>. To avoid overwhelming you with too many options, this article will focus specifically on the <strong>ISO image</strong> method. Unlike our usual practice of &ldquo;mounting an ISO file&rdquo; within an operating system, this ISO is a complete system boot disk. You need to use it to boot your server or virtual machine, just like installing a new operating system on a fresh computer.</p>
+<h2 id="preparation-obtaining-the-iso-image">Preparation: Obtaining the ISO Image</h2>
+<p>In our previous article, we provided download links, so we won&rsquo;t repeat them here. However, before we begin hands-on work, I must <strong>emphatically remind everyone of one crucial step</strong>: No matter where you download the Veeam Software Appliance ISO from, <strong>always verify the MD5/SHA-1 checksum of your downloaded ISO file!</strong></p>
+<p>Why is this so important?</p>
+<p>In today&rsquo;s network environment, downloading large files isn&rsquo;t always &ldquo;clean.&rdquo; For example:</p>
+<ul>
+<li>
+<p>Some public Wi-Fi networks or malware-infected computers might <strong>hijack browser download requests</strong>, redirecting you to seemingly identical &ldquo;download addresses&rdquo;;</p>
+</li>
+<li>
+<p>Attackers might also perform &ldquo;man-in-the-middle&rdquo; substitutions, replacing the original official package with malicious versions containing backdoors;</p>
+</li>
+<li>
+<p>Even official websites, if briefly compromised or affected by DNS poisoning, could result in you receiving non-original files.</p>
+</li>
+</ul>
+<p>In these scenarios, users cannot visually detect any differences - the interface, filename, and size might all appear identical. The <strong>only reliable method</strong> is to compare against the MD5 or SHA-1 checksums provided on Veeam&rsquo;s official website - like comparing &ldquo;fingerprints,&rdquo; only matching fingerprints confirm authenticity.</p>
+<h3 id="verification-methods-for-different-systems">Verification Methods for Different Systems</h3>
+<p>Whether you&rsquo;re using Windows, Linux, or macOS, we now have very convenient verification methods. Here are the commands you can copy and paste directly into your command line for quick verification.</p>
+<p>💻 <strong>Windows</strong>
+Execute in PowerShell (official filename: <code>VeeamSoftwareAppliance_13.0.0.4967_20250822.iso</code>):</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Verify MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">VeeamSoftwareAppliance_13</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">4967_20250822</span><span class="p">.</span><span class="py">iso</span> <span class="n">-Algorithm</span> <span class="n">MD5</span><span class="p">).</span><span class="py">Hash</span><span class="p">.</span><span class="py">ToLower</span><span class="p">()</span> <span class="o">-eq</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;✅ MD5 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;❌ MD5 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Verify SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">((</span><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">VeeamSoftwareAppliance_13</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">0</span><span class="p">.</span><span class="py">4967_20250822</span><span class="p">.</span><span class="py">iso</span> <span class="n">-Algorithm</span> <span class="n">SHA1</span><span class="p">).</span><span class="py">Hash</span><span class="p">.</span><span class="py">ToLower</span><span class="p">()</span> <span class="o">-eq</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;✅ SHA-1 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Host</span> <span class="s2">&#34;❌ SHA-1 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>🍏 <strong>macOS</strong></p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>md5 -q VeeamSoftwareAppliance_13.0.0.4967_20250822.iso<span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ MD5 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ MD5 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Verify SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>shasum -a <span class="m">1</span> VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ SHA-1 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ SHA-1 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
+<p>💻 <strong>Linux</strong></p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify MD5</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>md5sum VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;30bb0eef0dca6544c36a2728642d35c9&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ MD5 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ MD5 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Verify SHA-1</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>sha1sum VeeamSoftwareAppliance_13.0.0.4967_20250822.iso <span class="p">|</span> awk <span class="s1">&#39;{print tolower($1)}&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;1aa8624419c71adcf5425d87c8cf53f90fafd1f6&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;✅ SHA-1 checksum matches&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;❌ SHA-1 checksum mismatch, please re-download&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
+<p>The checksum is the &ldquo;official fingerprint&rdquo; - only a complete match ensures you have the genuine official file, which is the only way to avoid malicious programs embedded in downloaded software from the internet.</p>
+<h2 id="understanding-iso-usage">Understanding ISO Usage</h2>
+<p>As mentioned at the beginning of this article, this ISO differs from traditional Veeam software installation packages. It&rsquo;s not just a software ISO, but rather an <strong>integrated image containing both the operating system and Veeam software</strong>. In other words, this ISO itself can boot a server or virtual machine like a brand-new operating system installation disk, enabling complete system deployment.</p>
+<p>Since most people rarely need to perform &ldquo;fresh OS installations&rdquo; these days, many readers might be unsure how to approach this type of ISO. Generally, there are three typical usage scenarios:</p>
+<ol>
+<li><strong>CD/DVD Burning</strong> (traditional method, simple process, won&rsquo;t elaborate here)</li>
+<li><strong>Virtual Machine ISO Mounting</strong> (directly loading the ISO in virtualization platforms, very straightforward)</li>
+<li><strong>Creating Bootable USB Drive</strong> (flashing the ISO to a USB drive, then booting the server from USB for installation)</li>
+</ol>
+<p>The first two methods are relatively easy to operate, so we won&rsquo;t detail them here. <strong>We&rsquo;ll focus on the third method - creating a bootable USB drive using Rufus</strong>.</p>
+<p>Rufus is a lightweight, portable, and powerful tool for creating bootable USB drives. Notably, it includes built-in <strong>MD5 and SHA-1 verification functionality</strong>, which perfectly complements the verification methods mentioned in our previous section, helping you quickly verify the integrity of your downloaded ISO file. Let&rsquo;s look at the download, installation, and usage steps for Rufus.</p>
+<p>Using Rufus is very simple:</p>
+<ol>
+<li>Visit the official Rufus website: <a href="https://rufus.ie/" target="_blank" rel="noopener noreffer ">https://rufus.ie/</a></li>
+<li>On the page, select the latest version <strong>portable edition</strong> and download it locally.</li>
+<li>After downloading, simply double-click to run it directly - no installation required. It features a full Chinese interface, making it very user-friendly.</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png"
+        data-srcset="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png, https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png 1.5x, https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/mWvzktf8qDCI6iu.png"
+        title="Xnip2025-09-05_10-17-20" /></p>
+<h2 id="installation-and-initial-configuration">Installation and Initial Configuration</h2>
+<h3 id="boot-installation">Boot Installation</h3>
+<p>When we use the USB drive we just created to boot the server or virtual machine, the screen doesn&rsquo;t show a traditional OS installation interface, but rather the dedicated <strong>Veeam Software Appliance</strong> installation menu. This ISO has packaged the operating system and Veeam software together, providing an &ldquo;all-in-one&rdquo; installation experience upon boot.</p>
+<p>The main menu clearly lists two main components:</p>
+<ul>
+<li><strong>Veeam Backup &amp; Replication</strong></li>
+<li><strong>Veeam Backup Enterprise Manager</strong></li>
+<li><strong>UEFI Firmware Settings</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png"
+        data-srcset="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png, https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png 1.5x, https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/6EY2FXanMDJSLAx.png"
+        title="Xnip2025-09-05_10-30-48" /></p>
+<p>For convenience, a <strong>UEFI settings option</strong> is also included, allowing you to adjust boot parameters without exiting the installation program.</p>
+<p>In the VBR or Enterprise Manager submenu, you&rsquo;ll see two operations:</p>
+<ul>
+<li><strong>Install</strong> – Fresh installation, deleting all data (recommended for new environments)</li>
+<li><strong>Reinstall</strong> – Reinstallation while preserving data</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png"
+        data-srcset="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png, https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png 1.5x, https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/4dOfGTLXFE8awCA.png"
+        title="Xnip2025-09-05_10-32-10" /></p>
+<p>If you choose <strong>Install</strong>, the system will immediately prompt: <strong>&ldquo;About to clear all data on disks mounted on the current server&rdquo;</strong>. Once you click <strong>Yes</strong> to confirm, you&rsquo;ll enter the fully automated installation process.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png"
+        data-srcset="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png, https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png 1.5x, https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/YtiIaqmczlMbf6B.png"
+        title="Xnip2025-09-05_10-33-09" /></p>
+<p>No complicated partitioning, no numerous options - the entire process requires minimal intervention, as simple as performing a Ghost restore on a computer.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png"
+        data-srcset="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png, https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png 1.5x, https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/34k7flnwXqQbKLI.png"
+        title="Xnip2025-09-05_10-33-30" /></p>
+<p>After installation completes, the Reboot System button in the bottom right will highlight. Click it or wait a few seconds for the system to automatically restart, then you can enter VBR.</p>
+<p>Once the Appliance installation is complete, it includes two standard device management consoles by default: one is a cool pure text interface (TUI), and the other is a browser-accessible Web interface (WebUI).</p>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<p>After restarting into the system, you&rsquo;ll directly enter the TUI, where you need to perform some initial configuration before the backup server can be used normally.</p>
+<p>In the first step of the initial configuration wizard, you&rsquo;ll encounter the Veeam EULA and some third-party license confirmation screens. Simply use the keyboard arrow keys or Tab key to navigate and select Accept to proceed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png"
+        data-srcset="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png, https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png 1.5x, https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/vdPjZ1KNF697kIy.png"
+        title="Xnip2025-09-05_10-46-17" /></p>
+<p>The second step is configuring the hostname. As in my case, I configured a complete FQDN and ensured proper DNS resolution on my DNS server.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png"
+        data-srcset="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png, https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png 1.5x, https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/72NaoGJf6lcukMb.png"
+        title="Xnip2025-09-05_10-47-14" /></p>
+<p>Next is network configuration. In my environment, IPv6 wasn&rsquo;t required, so I only configured IPv4 addresses.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png"
+        data-srcset="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png, https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png 1.5x, https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/jDcMdVJt42zqbQ6.png"
+        title="Xnip2025-09-05_10-49-19" /></p>
+<p>After configuration, click Next to proceed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png"
+        data-srcset="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png, https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png 1.5x, https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/8vARZeu6tgGkCcO.png"
+        title="Xnip2025-09-05_10-50-41" /></p>
+<p>Following that is timezone and time configuration, which is crucial for backup systems. Time synchronization is not only used for multi-factor authentication during login but also for various daily backup operations, including data immutability.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png"
+        data-srcset="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png, https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png 1.5x, https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/Qavj6VnflUeZmtX.png"
+        title="Xnip2025-09-05_10-51-26" /></p>
+<p>Then comes setting the first administrator password. The default administrator username is veeamadmin, and the password has very strict complexity requirements. For lab environment convenience, I typically set it to:</p>
+<ul>
+<li><code>123Q123q123!123</code></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png"
+        data-srcset="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png, https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png 1.5x, https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/AqQJU3EORTjpC98.png"
+        title="Xnip2025-09-05_10-52-01" /></p>
+<p>Next, you&rsquo;ll be prompted to bind a multi-factor authentication device. You can choose any suitable MFA app on your phone to scan the QR code for binding. I generally prefer Microsoft Authenticator, which supports data backup and is more reliable than some domestic apps.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png"
+        data-srcset="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png, https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png 1.5x, https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/yOeAlIwQoDFPZ5T.png"
+        title="Xnip2025-09-05_10-54-57" /></p>
+<p>The next step is the Security Officer option, which is recommended for complex production environments. For my lab, I simply checked &ldquo;Skip setting.&rdquo;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png"
+        data-srcset="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png, https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png 1.5x, https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/nbrQ4pTP3OEa8Cc.png"
+        title="Xnip2025-09-05_10-55-28" /></p>
+<p>Finally, you&rsquo;ll reach the Summary screen. After some configuration checks, click Finish to complete the initial configuration.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png"
+        data-srcset="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png, https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png 1.5x, https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/Z6nSF3Pl5qmc9RA.png"
+        title="Xnip2025-09-05_10-55-48" /></p>
+<p>After configuration completion, you&rsquo;ll enter the main standby interface.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png"
+        data-srcset="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png, https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png 1.5x, https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/rRx9XeYkE2BtdLP.png"
+        title="Xnip2025-09-05_11-41-09" /></p>
+<p>From here, you can access advanced TUI configuration through the main interface prompts for host configuration maintenance and adjustments, including host configuration, remote access configuration, password changes, system restart, and other regular maintenance functions.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png"
+        data-srcset="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png, https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png 1.5x, https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/09/05/6TaJhMgX9fHVzU3.png"
+        title="Xnip2025-09-05_11-42-47" /></p>
+<h3 id="using-webui-for-advanced-configuration">Using WebUI for Advanced Configuration</h3>
+<p>The TUI displays two addresses: one for the Host Management console and another for the Veeam Backup &amp; Replication web UI. For advanced management and configuration of the Appliance, you can access the Host Management console. You&rsquo;ll be prompted to enter your password and MFA verification code when accessing it.</p>
+<p>With this, Veeam Backup &amp; Replication installation is complete. As for Veeam Backup Enterprise Manager, the installation process is similar, so we won&rsquo;t detail it here - leaving that for your own exploration.</p>
+<h2 id="summary--next-steps">Summary &amp; Next Steps</h2>
+<p>In this article, I walked you through the entire <strong>Veeam Software Appliance</strong> ISO usage process:</p>
+<p>Downloading the image from the official website and verifying integrity → Creating a bootable USB drive with Rufus → Booting the server for automatic installation → Completing basic initialization and management through the TUI interface.</p>
+<p>You&rsquo;ll find that the entire process requires minimal complex operations. As long as you prepare the media and follow the steps with a few clicks, anyone can complete the installation successfully.</p>
+<p>In our next article, we&rsquo;ll officially explore the <strong>V13 version</strong> product interface, diving deep into its features and new capabilities to see just how powerful this new version really is.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-09-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2025/09/veeam-software-appliance-02/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F09%2Fveeam-software-appliance-02%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F09%2Fveeam-software-appliance-02%2F&amp;text=Easy&#43;Installation&#43;Guide%3A&#43;Step-by-Step&#43;Veeam&#43;Software&#43;Appliance&#43;Deployment" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F09%252Fveeam-software-appliance-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2025/09/veeam-software-appliance-01/" class="prev" rel="prev" title="Veeam Launches Software Appliance: New Download Experience and Documentation Overhaul"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam Launches Software Appliance: New Download Experience and Documentation Overhaul</a>
+            <a href="/en/2025/09/veeam-software-appliance-03/" class="next" rel="next" title="Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods">Everything You Need to Know: Veeam Software Appliance's New Management Methods<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VBR V11 实用技巧 on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+    <description>Recent content in VBR V11 实用技巧 on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 22 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Use This Method and Your Backup Data Will Never Fear Ransomware Again</title>
+      <link>https://blog.backupnext.cloud/en/2021/03/hardened-linux-repository/</link>
+      <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/03/hardened-linux-repository/</guid>
+      <description>&lt;p&gt;Ever since the massive outbreak on May 12, 2017, ransomware has continuously evolved over the past four years, generating various variants and learning different attack methods—even learning to bribe the security guard at the gate&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://imgtu.com/i/6TARg0&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://z3.ax1x.com/2021/03/22/6TARg0.jpg&#34;&#xA;        data-srcset=&#34;https://z3.ax1x.com/2021/03/22/6TARg0.jpg, https://z3.ax1x.com/2021/03/22/6TARg0.jpg 1.5x, https://z3.ax1x.com/2021/03/22/6TARg0.jpg 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://z3.ax1x.com/2021/03/22/6TARg0.jpg&#34;&#xA;        title=&#34;6TARg0.jpg&#34; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;But no matter what, the security guard is our most trusted ally, our final line of defense. Today I want to discuss with you how to build a secure backup data environment based on this final line of defense.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

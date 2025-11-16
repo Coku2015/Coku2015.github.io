@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Veeam Tools on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Veeam-Tools/</link>
+    <description>Recent content in Veeam Tools on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 16 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Veeam-Tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VeeamON 2017 Series: Alternative VPN -- Veeam PN</title>
+      <link>https://blog.backupnext.cloud/en/2017/06/veeam-pn-intro/</link>
+      <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/06/veeam-pn-intro/</guid>
+      <description>&lt;p&gt;Sometimes the most exciting announcements at conferences are the ones you never saw coming.&lt;/p&gt;&#xA;&lt;p&gt;At last month&amp;rsquo;s VeeamON conference, Veeam unveiled something completely unexpected—a product that has nothing to do with backup. They called it Veeam PN (short for Veeam Powered Network), and it&amp;rsquo;s a lightweight SDN solution that quickly connects multiple sites for both site-to-site and endpoint-to-site communication.&lt;/p&gt;&#xA;&lt;p&gt;Rather than attempting a comprehensive review (you can dive deeper in Veeam KB2271 and the official help manual), I want to share how I&amp;rsquo;m using it in my home lab.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to Calculate Backup Size and Bandwidth in Data Centers</title>
+      <link>https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/</link>
+      <pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/05/how-to-calculate-backup-size/</guid>
+      <description>&lt;p&gt;One of the most common questions I get asked is: &amp;ldquo;How effective is your backup software&amp;rsquo;s deduplication, and how much storage space will my backups actually use?&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;The truth is, effectiveness varies dramatically depending on your data types and storage methods. Different environments and hardware configurations can produce vastly different results, making it impossible to give a one-size-fits-all answer. But regardless of these variables, backup data needs storage space, and capacity planning becomes a critical component of any backup infrastructure design.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam&#39;s Quick Migration Technology</title>
+      <link>https://blog.backupnext.cloud/en/2017/04/veeam-quick-migration/</link>
+      <pubDate>Fri, 21 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/04/veeam-quick-migration/</guid>
+      <description>&lt;p&gt;While vSphere and Hyper-V each offer their own migration technologies, Veeam brings a different perspective to the table. As a data protection platform, Veeam offers IT administrators another approach to VM migration through what&amp;rsquo;s commonly known as Quick Migration.&lt;/p&gt;&#xA;&lt;p&gt;If you&amp;rsquo;ve worked with Veeam before, you might recognize Quick Migration as an option during Instant VM Recovery. It&amp;rsquo;s an optional step in the recovery process that becomes particularly useful when you need to move data from backup storage to production storage.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

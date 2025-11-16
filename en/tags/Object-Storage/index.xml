@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Object Storage on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Object-Storage/</link>
+    <description>Recent content in Object Storage on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Object-Storage/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/</guid>
+      <description>&lt;p&gt;On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product&amp;rsquo;s history. This update included a series of cloud-related feature modules, and this article will discuss in detail the most important one among them: cloud object storage.&lt;/p&gt;&#xA;&lt;p&gt;In VBR 9.5U4, you can use Amazon S3, Microsoft Azure Blob, IBM Cloud Object Storage, and various other S3-compatible object storages, which means that for our domestic users, AliCloud OSS and Tencent Cloud COS are also perfectly supported.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

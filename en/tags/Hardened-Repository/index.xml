@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hardened Repository on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Hardened-Repository/</link>
+    <description>Recent content in Hardened Repository on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Sat, 12 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Hardened-Repository/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</link>
+      <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</guid>
+      <description>&lt;p&gt;In my previous post, I introduced Veeam&amp;rsquo;s Managed Hardened Repository community preview. Today, I&amp;rsquo;ll walk you through the complete installation and configuration process step by step.&lt;/p&gt;&#xA;&lt;p&gt;For this deployment, I used a VMware virtual machine for convenience. If you have dedicated hardware available, you can deploy on physical servers instead. Should you encounter any issues during deployment, please reach out with your feedback - it helps improve the community preview.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

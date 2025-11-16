@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Table of Contents: VRO Fundamentals (Part 1) - Introduction VRO Fundamentals (Part 2) - Installation and Deployment VRO Fundamentals (Part 3) - Basic …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/11/vro-v6-guide-10/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10">
+  <meta property="og:description" content="Series Table of Contents: VRO Fundamentals (Part 1) - Introduction VRO Fundamentals (Part 2) - Installation and Deployment VRO Fundamentals (Part 3) - Basic Components · Part 1 VRO Fundamentals (Part 4) - Basic Components · Part 2 VRO Fundamentals (Part 5) - First Steps to Successful Disaster Recovery Planning VRO Fundamentals (Part 6) - Data Labs VRO Fundamentals (Part 7) - Plan Steps · Part 1 VRO Fundamentals (Part 8) - Plan Steps · Part 2 VRO Fundamentals (Part 9) - Document Template Analysis VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10 For this final article in the series, I’ll walk you through a practical implementation of using VRO to achieve fully automated container disaster recovery with K10, step by step.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-11-10T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10">
+  <meta name="twitter:description" content="Series Table of Contents: VRO Fundamentals (Part 1) - Introduction VRO Fundamentals (Part 2) - Installation and Deployment VRO Fundamentals (Part 3) - Basic Components · Part 1 VRO Fundamentals (Part 4) - Basic Components · Part 2 VRO Fundamentals (Part 5) - First Steps to Successful Disaster Recovery Planning VRO Fundamentals (Part 6) - Data Labs VRO Fundamentals (Part 7) - Plan Steps · Part 1 VRO Fundamentals (Part 8) - Plan Steps · Part 2 VRO Fundamentals (Part 9) - Document Template Analysis VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10 For this final article in the series, I’ll walk you through a practical implementation of using VRO to achieve fully automated container disaster recovery with K10, step by step.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/11/vro-v6-guide-10/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/vro-v6-guide-10\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  1112 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/11\/vro-v6-guide-10\/","datePublished": "2023-11-10T00:00:00+00:00","dateModified": "2023-11-10T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/11/vro-v6-guide-10/">简体中文</option><option value="/en/2023/11/vro-v6-guide-10/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/11/vro-v6-guide-10/">简体中文</option><option value="/en/2023/11/vro-v6-guide-10/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-11-10">2023-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1112 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-table-of-contents">Series Table of Contents:</a></li>
+    <li><a href="#basic-lab-environment-configuration">Basic Lab Environment Configuration</a></li>
+    <li><a href="#introduction-to-vro-and-k10-integration">Introduction to VRO and K10 Integration</a>
+      <ul>
+        <li><a href="#why-combine-vro-with-k10">Why Combine VRO with K10?</a></li>
+      </ul>
+    </li>
+    <li><a href="#prerequisites-for-integration">Prerequisites for Integration</a>
+      <ul>
+        <li><a href="#1-kubernetes-cluster-requirements">1. Kubernetes Cluster Requirements</a></li>
+        <li><a href="#2-k10-installation-and-configuration">2. K10 Installation and Configuration</a></li>
+        <li><a href="#3-vro-infrastructure">3. VRO Infrastructure</a></li>
+      </ul>
+    </li>
+    <li><a href="#architecture-overview">Architecture Overview</a></li>
+    <li><a href="#step-by-step-implementation">Step-by-Step Implementation</a>
+      <ul>
+        <li><a href="#step-1-configure-k10-backup-export">Step 1: Configure K10 Backup Export</a></li>
+        <li><a href="#step-2-set-up-vro-integration">Step 2: Set Up VRO Integration</a></li>
+        <li><a href="#step-3-define-orchestration-plan">Step 3: Define Orchestration Plan</a></li>
+        <li><a href="#step-4-configure-automated-testing">Step 4: Configure Automated Testing</a></li>
+        <li><a href="#step-5-implement-monitoring-and-alerting">Step 5: Implement Monitoring and Alerting</a></li>
+      </ul>
+    </li>
+    <li><a href="#advanced-configuration-options">Advanced Configuration Options</a>
+      <ul>
+        <li><a href="#multi-cloud-recovery-scenarios">Multi-Cloud Recovery Scenarios</a></li>
+        <li><a href="#custom-script-integration">Custom Script Integration</a></li>
+      </ul>
+    </li>
+    <li><a href="#best-practices-and-recommendations">Best Practices and Recommendations</a>
+      <ul>
+        <li><a href="#1-backup-strategy">1. Backup Strategy</a></li>
+        <li><a href="#2-recovery-planning">2. Recovery Planning</a></li>
+        <li><a href="#3-performance-optimization">3. Performance Optimization</a></li>
+      </ul>
+    </li>
+    <li><a href="#troubleshooting-common-issues">Troubleshooting Common Issues</a>
+      <ul>
+        <li><a href="#backup-failures">Backup Failures</a></li>
+        <li><a href="#recovery-challenges">Recovery Challenges</a></li>
+      </ul>
+    </li>
+    <li><a href="#compliance-and-governance">Compliance and Governance</a></li>
+    <li><a href="#future-considerations">Future Considerations</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 2) - Installation and Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 3) - Basic Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 4) - Basic Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 5) - First Steps to Successful Disaster Recovery Planning</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 6) - Data Labs</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 7) - Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 8) - Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 9) - Document Template Analysis</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</a></li>
+</ul>
+<p>For this final article in the series, I&rsquo;ll walk you through a practical implementation of using VRO to achieve fully automated container disaster recovery with K10, step by step.</p>
+<h2 id="basic-lab-environment-configuration">Basic Lab Environment Configuration</h2>
+<p><strong>vSphere 7.0</strong></p>
+<ul>
+<li>Kubernetes cluster running on vSphere VMs</li>
+<li>Kasten K10 installed and configured for container backup</li>
+<li>VRO v6 deployed and integrated with VBR v12</li>
+</ul>
+<h2 id="introduction-to-vro-and-k10-integration">Introduction to VRO and K10 Integration</h2>
+<p>As containerized applications become increasingly critical to business operations, the need for robust disaster recovery solutions for Kubernetes environments has never been more important. Veeam Recovery Orchestrator (VRO) v6, combined with Kasten K10, provides a comprehensive solution for automated container disaster recovery that extends Veeam&rsquo;s proven DR capabilities to Kubernetes workloads.</p>
+<h3 id="why-combine-vro-with-k10">Why Combine VRO with K10?</h3>
+<p>K10 excels at Kubernetes-native backup and recovery, providing application-consistent backups, policy-based automation, and multi-cloud mobility. However, when it comes to enterprise-grade disaster recovery orchestration, compliance reporting, and automated testing, VRO brings additional capabilities that are essential for production environments:</p>
+<ul>
+<li><strong>Automated DR Orchestration</strong>: VRO can orchestrate complex multi-step recovery processes</li>
+<li><strong>Comprehensive Testing</strong>: Built-in DataLabs for non-disruptive DR testing</li>
+<li><strong>Compliance Reporting</strong>: Automated documentation generation for audit requirements</li>
+<li><strong>Integration with Existing Infrastructure</strong>: Seamless integration with vSphere and traditional VM workloads</li>
+</ul>
+<h2 id="prerequisites-for-integration">Prerequisites for Integration</h2>
+<p>Before implementing VRO with K10, ensure you have the following components in place:</p>
+<h3 id="1-kubernetes-cluster-requirements">1. Kubernetes Cluster Requirements</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify cluster readiness</span>
+</span></span><span class="line"><span class="cl">kubectl cluster-info
+</span></span><span class="line"><span class="cl">kubectl get nodes
+</span></span><span class="line"><span class="cl">kubectl get storageclass</span></span></code></pre></div></div>
+<h3 id="2-k10-installation-and-configuration">2. K10 Installation and Configuration</h3>
+<p>Ensure K10 is properly installed with these key components:</p>
+<ul>
+<li>K10 dashboard accessible</li>
+<li>Storage profiles configured</li>
+<li>Backup policies in place</li>
+<li>Export location set up</li>
+</ul>
+<h3 id="3-vro-infrastructure">3. VRO Infrastructure</h3>
+<ul>
+<li>VRO v6 server deployed</li>
+<li>Integration with VBR v12 configured</li>
+<li>Appropriate licensing for container workloads</li>
+<li>Network connectivity between VRO and Kubernetes cluster</li>
+</ul>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>The integration architecture follows this pattern:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>[Kubernetes Cluster] ←→ [K10] ←→ [Object Storage] ←→ [VRO] ←→ [vSphere/VBR]
+      ↓                      ↓                ↓               ↓
+  Container           K10 Backup        Backup           VRO Orchestration
+  Workloads           Operations        Storage          and Automation</code></pre></div>
+<h2 id="step-by-step-implementation">Step-by-Step Implementation</h2>
+<h3 id="step-1-configure-k10-backup-export">Step 1: Configure K10 Backup Export</h3>
+<p>First, ensure K10 can export backups to a location accessible by VRO:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Example K10 export profile configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">config.kio.kasten.io/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ExportProfile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vro-storage-profile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kasten-io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">ObjectStore</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">objectStore</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">S3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vro-s3-store</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l">us-east-1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l">k10-backups</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">accessKey</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;your-access-key&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">secretKey</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;your-secret-key&gt;</span></span></span></code></pre></div></div>
+<h3 id="step-2-set-up-vro-integration">Step 2: Set Up VRO Integration</h3>
+<p>Configure VRO to recognize K10 backup locations:</p>
+<ol>
+<li>
+<p><strong>Add Storage Location in VRO</strong></p>
+<ul>
+<li>Navigate to Infrastructure → Storage</li>
+<li>Add new object storage location pointing to K10 export bucket</li>
+<li>Configure credentials and connection settings</li>
+</ul>
+</li>
+<li>
+<p><strong>Create Container Resource Group</strong></p>
+<ul>
+<li>Create a new resource group for container workloads</li>
+<li>Map Kubernetes namespaces to VRO resource groups</li>
+<li>Define recovery objectives (RPO/RTO)</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-3-define-orchestration-plan">Step 3: Define Orchestration Plan</h3>
+<p>Create a comprehensive orchestration plan for container DR:</p>
+<div class="mermaid" id="id-1"></div><h3 id="step-4-configure-automated-testing">Step 4: Configure Automated Testing</h3>
+<p>Set up regular DR testing using VRO DataLabs:</p>
+<ol>
+<li>
+<p><strong>Create DataLab Environment</strong></p>
+<ul>
+<li>Isolated network segment for testing</li>
+<li>Clone of production storage</li>
+<li>Automated environment provisioning</li>
+</ul>
+</li>
+<li>
+<p><strong>Define Test Scenarios</strong></p>
+<ul>
+<li>Application functionality tests</li>
+<li>Data integrity verification</li>
+<li>Performance benchmarking</li>
+<li>Security validation</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-5-implement-monitoring-and-alerting">Step 5: Implement Monitoring and Alerting</h3>
+<p>Configure comprehensive monitoring:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Example monitoring configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vro-monitoring</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">monitoring</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">prometheus.yml</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">    scrape_configs:
+</span></span></span><span class="line"><span class="cl"><span class="sd">      - job_name: &#39;vro-metrics&#39;
+</span></span></span><span class="line"><span class="cl"><span class="sd">        static_configs:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - targets: [&#39;vro-server:9100&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="sd">      - job_name: &#39;k10-metrics&#39;
+</span></span></span><span class="line"><span class="cl"><span class="sd">        static_configs:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - targets: [&#39;k10-service:8080&#39;]</span></span></span></code></pre></div></div>
+<h2 id="advanced-configuration-options">Advanced Configuration Options</h2>
+<h3 id="multi-cloud-recovery-scenarios">Multi-Cloud Recovery Scenarios</h3>
+<p>VRO enables sophisticated multi-cloud recovery strategies:</p>
+<ol>
+<li>
+<p><strong>Cross-Cloud Restore</strong></p>
+<ul>
+<li>Restore from on-premises to cloud</li>
+<li>Cloud-to-cloud disaster recovery</li>
+<li>Hybrid cloud scenarios</li>
+</ul>
+</li>
+<li>
+<p><strong>Application Mobility</strong></p>
+<ul>
+<li>Migrate applications between regions</li>
+<li>Blue-green deployment strategies</li>
+<li>A/B testing environments</li>
+</ul>
+</li>
+</ol>
+<h3 id="custom-script-integration">Custom Script Integration</h3>
+<p>Extend VRO capabilities with custom scripts:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Example PowerShell script for application verification</span>
+</span></span><span class="line"><span class="cl"><span class="k">param</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="no">string</span><span class="p">]</span><span class="nv">$Namespace</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="no">string</span><span class="p">]</span><span class="nv">$AppName</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Verify pod status</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$pods</span> <span class="p">=</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="n">-n</span> <span class="nv">$Namespace</span> <span class="n">-l</span> <span class="n">app</span><span class="p">=</span><span class="nv">$AppName</span> <span class="n">-o</span> <span class="n">json</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$runningPods</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$pods</span><span class="p">.</span><span class="py">items</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="py">status</span><span class="p">.</span><span class="py">phase</span> <span class="o">-eq</span> <span class="s2">&#34;Running&#34;</span> <span class="p">}).</span><span class="py">Count</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$runningPods</span> <span class="o">-eq</span> <span class="mf">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Error</span> <span class="s2">&#34;No running pods found for application </span><span class="nv">$AppName</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exit</span> <span class="mf">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Verify service connectivity</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$service</span> <span class="p">=</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">svc</span> <span class="nv">$AppName</span> <span class="n">-n</span> <span class="nv">$Namespace</span> <span class="n">-o</span> <span class="n">json</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">-not</span> <span class="nv">$service</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Write-Error</span> <span class="s2">&#34;Service not found for application </span><span class="nv">$AppName</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exit</span> <span class="mf">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Host</span> <span class="s2">&#34;Application </span><span class="nv">$AppName</span><span class="s2"> verification successful&#34;</span></span></span></code></pre></div></div>
+<h2 id="best-practices-and-recommendations">Best Practices and Recommendations</h2>
+<h3 id="1-backup-strategy">1. Backup Strategy</h3>
+<ul>
+<li><strong>Frequency</strong>: Align K10 backup policies with business RPO requirements</li>
+<li><strong>Retention</strong>: Implement appropriate retention policies for compliance</li>
+<li><strong>Testing</strong>: Regular validation of backup integrity</li>
+</ul>
+<h3 id="2-recovery-planning">2. Recovery Planning</h3>
+<ul>
+<li><strong>Documentation</strong>: Maintain comprehensive runbooks for DR procedures</li>
+<li><strong>Automation</strong>: Minimize manual intervention in recovery processes</li>
+<li><strong>Validation</strong>: Automated post-recovery verification</li>
+</ul>
+<h3 id="3-performance-optimization">3. Performance Optimization</h3>
+<ul>
+<li><strong>Resource Allocation</strong>: Ensure adequate resources for backup/restore operations</li>
+<li><strong>Network Optimization</strong>: Optimize network paths for data transfer</li>
+<li><strong>Storage Planning</strong>: Choose appropriate storage classes for different workloads</li>
+</ul>
+<h2 id="troubleshooting-common-issues">Troubleshooting Common Issues</h2>
+<h3 id="backup-failures">Backup Failures</h3>
+<ol>
+<li>
+<p><strong>K10 Backup Issues</strong></p>
+<ul>
+<li>Check K10 logs: <code>kubectl logs -n kasten-io deployment/k10</code></li>
+<li>Verify storage connectivity</li>
+<li>Validate resource quotas</li>
+</ul>
+</li>
+<li>
+<p><strong>VRO Integration Problems</strong></p>
+<ul>
+<li>Review VRO server logs</li>
+<li>Check credential configuration</li>
+<li>Validate network connectivity</li>
+</ul>
+</li>
+</ol>
+<h3 id="recovery-challenges">Recovery Challenges</h3>
+<ol>
+<li>
+<p><strong>Application Start-up Issues</strong></p>
+<ul>
+<li>Verify pod readiness probes</li>
+<li>Check resource constraints</li>
+<li>Validate configuration maps</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Integrity Concerns</strong></p>
+<ul>
+<li>Implement checksum verification</li>
+<li>Use application-level validation</li>
+<li>Document data consistency points</li>
+</ul>
+</li>
+</ol>
+<h2 id="compliance-and-governance">Compliance and Governance</h2>
+<p>VRO enhances compliance posture through:</p>
+<ol>
+<li>
+<p><strong>Automated Documentation</strong></p>
+<ul>
+<li>DR plan execution reports</li>
+<li>Test execution history</li>
+<li>Compliance audit trails</li>
+</ul>
+</li>
+<li>
+<p><strong>Policy Enforcement</strong></p>
+<ul>
+<li>Immutable backup policies</li>
+<li>Automated retention management</li>
+<li>Access control enforcement</li>
+</ul>
+</li>
+</ol>
+<h2 id="future-considerations">Future Considerations</h2>
+<p>As container environments evolve, consider these enhancements:</p>
+<ol>
+<li>
+<p><strong>GitOps Integration</strong></p>
+<ul>
+<li>Infrastructure as code for DR configurations</li>
+<li>Automated policy updates</li>
+<li>Version control for DR plans</li>
+</ul>
+</li>
+<li>
+<p><strong>AI/ML Integration</strong></p>
+<ul>
+<li>Predictive failure analysis</li>
+<li>Automated optimization recommendations</li>
+<li>Intelligent resource scaling</li>
+</ul>
+</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>The integration of VRO v6 with Kasten K10 provides enterprise organizations with a comprehensive solution for container disaster recovery. This combination leverages K10&rsquo;s Kubernetes-native capabilities with VRO&rsquo;s enterprise-grade orchestration, testing, and compliance features.</p>
+<p>Key benefits achieved:</p>
+<ul>
+<li><strong>Fully Automated DR</strong>: Minimal manual intervention required</li>
+<li><strong>Comprehensive Testing</strong>: Regular validation of DR capabilities</li>
+<li><strong>Compliance Ready</strong>: Automated documentation and reporting</li>
+<li><strong>Multi-Cloud Support</strong>: Flexible recovery options across environments</li>
+<li><strong>Enterprise Integration</strong>: Seamless integration with existing Veeam infrastructure</li>
+</ul>
+<p>As container adoption continues to grow, having a robust disaster recovery strategy becomes increasingly critical. The VRO and K10 integration provides the foundation needed to ensure business continuity for containerized applications while maintaining the governance and compliance requirements expected in enterprise environments.</p>
+<p>This concludes our VRO Fundamentals series. I hope these articles have provided valuable insights into implementing enterprise-grade disaster recovery with Veeam Recovery Orchestrator. Thank you for following along, and feel free to reach out with any questions or feedback!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-11-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/11/vro-v6-guide-10/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fvro-v6-guide-10%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F11%2Fvro-v6-guide-10%2F&amp;text=VRO&#43;Fundamentals&#43;%28Part&#43;10%29&#43;-&#43;Implementing&#43;Fully&#43;Automated&#43;Container&#43;Disaster&#43;Recovery&#43;with&#43;VRO&#43;and&#43;K10" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fvro-v6-guide-10%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F11%252Fvro-v6-guide-10%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/11/kubernetes-pvc-instant-recovery-02/" class="prev" rel="prev" title="Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore</a>
+            <a href="/en/2023/12/vdp23h2-update/" class="next" rel="next" title="Veeam&#39;s Major H2 2023 Product Line Update">Veeam's Major H2 2023 Product Line Update<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/mermaid/mermaid.min.js"></script><script>window.config={"comment":{},"data":{"id-1":"graph TD\n    A[Trigger Event] --\u003e B[Verify K10 Backup Status]\n    B --\u003e C[Validate Backup Integrity]\n    C --\u003e D[Prepare Target Environment]\n    D --\u003e E[Initiate K10 Restore]\n    E --\u003e F[Verify Application Health]\n    F --\u003e G[Update DNS/Load Balancer]\n    G --\u003e H[Generate DR Report]"},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

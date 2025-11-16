@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VeeamON on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/VeeamON/</link>
+    <description>Recent content in VeeamON on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 16 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/VeeamON/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VeeamON 2017 Series: Alternative VPN -- Veeam PN</title>
+      <link>https://blog.backupnext.cloud/en/2017/06/veeam-pn-intro/</link>
+      <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/06/veeam-pn-intro/</guid>
+      <description>&lt;p&gt;Sometimes the most exciting announcements at conferences are the ones you never saw coming.&lt;/p&gt;&#xA;&lt;p&gt;At last month&amp;rsquo;s VeeamON conference, Veeam unveiled something completely unexpected—a product that has nothing to do with backup. They called it Veeam PN (short for Veeam Powered Network), and it&amp;rsquo;s a lightweight SDN solution that quickly connects multiple sites for both site-to-site and endpoint-to-site communication.&lt;/p&gt;&#xA;&lt;p&gt;Rather than attempting a comprehensive review (you can dive deeper in Veeam KB2271 and the official help manual), I want to share how I&amp;rsquo;m using it in my home lab.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

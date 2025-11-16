@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Black Technology on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Black-Technology/</link>
+    <description>Recent content in Black Technology on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Tue, 04 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Black-Technology/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam Black Technology: Direct NFS Access</title>
+      <link>https://blog.backupnext.cloud/en/2017/07/direct-nfs-access/</link>
+      <pubDate>Tue, 04 Jul 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/07/direct-nfs-access/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been working with more VMware environments lately, and I&amp;rsquo;m noticing a clear trend: NFS datastores are becoming mainstream. It used to be that only NetApp enthusiasts would seriously consider NFS for VMware, but times have changed. With the rise of hyper-converged infrastructure, major platforms like Nutanix and Cisco HyperFlex are now delivering storage to VMware exclusively through NFS.&lt;/p&gt;&#xA;&lt;p&gt;This shift has always been a bit problematic for backup performance. When you&amp;rsquo;re using NFS datastores, your only option for virtual machine backups has been the network transport method (NBD), which caps you at just 40% of VMKernel&amp;rsquo;s total network throughput. Even with plenty of bandwidth available, you&amp;rsquo;d hit that performance ceiling every time.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

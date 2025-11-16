@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Instant Recovery on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Instant-Recovery/</link>
+    <description>Recent content in Instant Recovery on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Wed, 21 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Instant-Recovery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One-Click Deployment Script: K3S&#43;vSphere CSI</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/</link>
+      <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/automate-deploy-k3s-with-vsphere-csi/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve previously shared two articles about using K10 for instant recovery of Kubernetes applications. This feature has specific requirements for Kubernetes environments. Back then, I walked you through the manual deployment process in detail. Today, I&amp;rsquo;m excited to bring you a one-click deployment script that makes everything incredibly simple.&lt;/p&gt;&#xA;&lt;p&gt;If you have a basic VMware environment and can connect to GitHub/k8s.io networks, this script will be a game-changer. Just run the script, wait about 10 minutes, and you&amp;rsquo;ll have a ready-to-use single-node K3s environment.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore</title>
+      <link>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/</link>
+      <pubDate>Sun, 05 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-02/</guid>
+      <description>&lt;p&gt;In our previous article, we set up the basic Kubernetes environment. Now let&amp;rsquo;s dive deep into the backup and restore process.&lt;/p&gt;&#xA;&lt;h2 id=&#34;k10-installation-and-configuration&#34;&gt;K10 Installation and Configuration&lt;/h2&gt;&#xA;&lt;p&gt;First up is K10 installation - nothing particularly special here. Just follow the official installation guide from the website and use Helm for installation. The only thing to note is that for instant recovery support, K10 needs to be version 6.0.8 or higher, while VBR requires version 12 or above. Here are the K10 installation parameters I used for your reference:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Instant Recovery: A Deep Dive into Kubernetes Container Instant Recovery Technology (Part 1) - Building the Foundation Environment</title>
+      <link>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/11/kubernetes-pvc-instant-recovery-01/</guid>
+      <description>&lt;p&gt;Do you remember last year when I introduced VMware&amp;rsquo;s FCD disks and experimented with instant data recovery on K8s using VBR&amp;rsquo;s Instant Disk Recovery? This year, this feature has finally been officially released in the latest K10 in collaboration with VBR. Today, let me walk you through a demo to see how it works. My demo will be split into two parts: the first part will guide you through building a K3S cluster that can use vSphere Cloud Native Storage, and then in the second part, we&amp;rsquo;ll explore K10&amp;rsquo;s backup and recovery capabilities.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

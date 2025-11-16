@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server - Cloud.Virt.AI.Sec</title><meta name="description" content="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server In our previous article, we set up an AI terminal environment with Claude …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server">
+  <meta property="og:description" content="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server In our previous article, we set up an AI terminal environment with Claude Code &#43; GLM-4.6. Today, I want to show you a revolutionary way of working: zero-code control of your Veeam Backup &amp; Replication server through Veeam RestAPI. Don’t be intimidated by terms like API - in today’s content, you won’t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-12T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Veeam">
+    <meta property="article:tag" content="Vibe Coding">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png">
+  <meta name="twitter:title" content="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server">
+  <meta name="twitter:description" content="AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server In our previous article, we set up an AI terminal environment with Claude Code &#43; GLM-4.6. Today, I want to show you a revolutionary way of working: zero-code control of your Veeam Backup &amp; Replication server through Veeam RestAPI. Don’t be intimidated by terms like API - in today’s content, you won’t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2025\/11\/AI-Reshapes-Data-Protection-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/AI-Reshapes-Data-Protection-02\/featured-image.png"],"genre": "posts","keywords": "Backup, AI, Veeam, Vibe Coding","wordcount":  2313 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2025\/11\/AI-Reshapes-Data-Protection-02\/","datePublished": "2025-11-12T00:00:00+00:00","dateModified": "2025-11-12T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/11/AI-Reshapes-Data-Protection-02/">简体中文</option><option value="/en/2025/11/AI-Reshapes-Data-Protection-02/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/11/AI-Reshapes-Data-Protection-02/">简体中文</option><option value="/en/2025/11/AI-Reshapes-Data-Protection-02/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-12">2025-11-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2313 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png"
+        data-srcset="/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png, /2025/11/AI-Reshapes-Data-Protection-02/featured-image.png 1.5x, /2025/11/AI-Reshapes-Data-Protection-02/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png"
+        title="/2025/11/AI-Reshapes-Data-Protection-02/featured-image.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#initial-configuration">Initial Configuration</a>
+      <ul>
+        <li><a href="#1-create-working-directory">1. Create Working Directory</a></li>
+        <li><a href="#2-define-ai-assistant-role">2. Define AI Assistant Role</a></li>
+        <li><a href="#3-download-and-process-veeam-rest-api-interface-files">3. Download and Process Veeam Rest API Interface Files</a></li>
+        <li><a href="#4-initialize-project">4. Initialize Project</a></li>
+        <li><a href="#5-configure-vbr-connection-information">5. Configure VBR Connection Information</a></li>
+      </ul>
+    </li>
+    <li><a href="#practical-usage">Practical Usage</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server">AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</h1>
+<p>In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: <strong>zero-code</strong> control of your Veeam Backup &amp; Replication server through Veeam RestAPI. Don&rsquo;t be intimidated by terms like API - in today&rsquo;s content, you won&rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.</p>
+<blockquote>
+<p>Last week at Veeam100 Summit, Anthony Spiteri, Veeam&rsquo;s Product Management Director, shared about using Codex to operate backup servers through VBR Rest API. Today, I&rsquo;m sharing the detailed process of implementing this demo through Claude Code.</p>
+</blockquote>
+<h2 id="initial-configuration">Initial Configuration</h2>
+<p>Today&rsquo;s use case is actually standard CC usage. Once you learn it, as long as you have ideas, you can apply this workflow to various scenarios.</p>
+<h3 id="1-create-working-directory">1. Create Working Directory</h3>
+<p>When CC starts, it uses the current directory as the working environment. This is the foundation of our project, so after installing Claude on your computer, you can simply create an empty directory to begin. In Cursor, open this directory and adjust the layout. I generally prefer a 3-column layout: file navigation on the far left, text editing window in the middle, and Terminal window on the far right, with proportions roughly 1:2:3. You can adjust the layout according to your preferences, but remember to pull out the Terminal separately because all our conversation operations will be completed in the Terminal.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/mVMw7fSqxQbenXt.png"
+        data-srcset="https://s2.loli.net/2025/11/12/mVMw7fSqxQbenXt.png, https://s2.loli.net/2025/11/12/mVMw7fSqxQbenXt.png 1.5x, https://s2.loli.net/2025/11/12/mVMw7fSqxQbenXt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/mVMw7fSqxQbenXt.png"
+        title="Xnip2025-11-12_12-01-09" /></p>
+<p>After opening this layout, the interface is very clean with nothing there, which might make you wonder where to start. This truly returns us to the most primitive state, reflecting ultimate simplicity. We just need to type <code>Claude</code> in the Terminal and press Enter to properly enter Claude&rsquo;s conversation interface.</p>
+<h3 id="2-define-ai-assistant-role">2. Define AI Assistant Role</h3>
+<p>Before starting the conversation, let&rsquo;s not rush to chat with CC. Let&rsquo;s do some preparation first.</p>
+<p>We can predefine CC&rsquo;s identity in the project. This operation is also very simple - we just need to right-click in the file area on the left to add a new file. The filename can be arbitrary; I&rsquo;ll call it <code>assistant.md</code>. Enter the following content:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-markdown">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Character Description
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span><span class="k">-</span> You are my backup server operations assistant, capable of operating my backup server through REST API interfaces.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> OpenAPI specifications are in the docs/ directory
+</span></span><span class="line"><span class="cl"><span class="k">-</span> VBR server configuration is in the .env file
+</span></span><span class="line"><span class="cl"><span class="k">-</span> As an assistant, you only need to output results according to instructions, without outputting the implementation process in the window
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Do not output or record code in the conversation window - I don&#39;t care what code you use, only the results.
+</span></span><span class="line"><span class="cl">- Please do not output sensitive information such as access_token in the Claude Code conversation context.</span></span></code></pre></div></div>
+<p>You don&rsquo;t need to pay too much attention to the format of this file - just list the content you want in the file and save it. You can directly copy my content.</p>
+<p>After writing this file, we let CC set a standard for itself. In the CC dialog box, we use the @assistant.md method to call CC to review this file:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Please review the content in @assistant.md file, and based on the instructions, write a self-constraint and specification document. Remember to follow these constraints in subsequent conversations.</span></span></code></pre></div></div>
+<p>CC will then quickly automatically write a specification document. The content CC writes each time might be slightly different, but generally similar. Here&rsquo;s what mine looked like:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-markdown">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># AI Assistant Work Constraints Specification
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">## Core Positioning
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> **Role**: Backup Server Operations Assistant
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Responsibility**: Operate backup server through REST API, execute backup-related tasks
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Goal**: Provide professional, efficient backup management services
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Work Mode Constraints
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">### 1. Results-Oriented Principle
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> ✅ <span class="gs">**Output only results**</span>: Directly provide task execution results
+</span></span><span class="line"><span class="cl"><span class="k">-</span> ❌ <span class="gs">**Don&#39;t show process**</span>: Don&#39;t record code implementation, API call details
+</span></span><span class="line"><span class="cl"><span class="k">-</span> ❌ <span class="gs">**No technical demonstration**</span>: Don&#39;t explain what technology or methods were used
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 2. Information Security Red Line
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> 🔒 <span class="gs">**Strictly prohibit sensitive information**</span>: access_token, refresh_token, passwords, etc.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> 🔒 <span class="gs">**Internal data protection**</span>: All authentication information used internally only
+</span></span><span class="line"><span class="cl"><span class="k">-</span> 🔒 <span class="gs">**Clean context**</span>: No sensitive data appears in conversations
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3. Communication Style Standards
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> **Concise and direct**: Use minimal text to convey complete results
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Professional and accurate**: Use standard backup terminology and status descriptions
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **User-friendly**: Highlight key information
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Language use**: Always use Chinese as output language, regardless of received language instructions
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 4. Technical Implementation Confidentiality
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> **Code hiding**: Don&#39;t show any implementation code
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **API call confidentiality**: Don&#39;t record specific API request processes
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Tool usage implication**: Don&#39;t explain what tools or methods were used
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Reference Basis
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> 📁 <span class="ge">*API specifications*</span>: OpenAPI specifications in docs/ directory
+</span></span><span class="line"><span class="cl"><span class="k">-</span> ⚙️ <span class="gs">**Configuration file**</span>: Server configuration in .env file
+</span></span><span class="line"><span class="cl"><span class="k">-</span> 🔧 **Interface standards*: Strictly follow established API interfaces
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Execution Checklist
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Confirm before each response:
+</span></span><span class="line"><span class="cl"><span class="k">- [ ]</span> Does it contain only result information?
+</span></span><span class="line"><span class="cl"><span class="k">- [ ]</span> Is there no sensitive information leakage?
+</span></span><span class="line"><span class="cl"><span class="k">- [ ]</span> Are there no technical implementation details?
+</span></span><span class="line"><span class="cl"><span class="k">- [ ]</span> Is it concise and professional?
+</span></span><span class="line"><span class="cl"><span class="k">- [ ]</span> Does it match the assistant role positioning?
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Violation Handling
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>If violations of the above constraints are found:
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> Stop output immediately
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> Re-examine constraint requirements
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> Reorganize response according to specifications
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> Ensure all constraints are met before outputting
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl"><span class="gs">**Creation date**</span>: 2025-11-10
+</span></span><span class="line"><span class="cl"><span class="gs">**Version**</span>: 1.0
+</span></span><span class="line"><span class="cl"><span class="gs">**Constraint level**</span>: Strict execution</span></span></code></pre></div></div>
+<h3 id="3-download-and-process-veeam-rest-api-interface-files">3. Download and Process Veeam Rest API Interface Files</h3>
+<p>From the <a href="https://helpcenter.veeam.com/references/vbr/13/rest/1.3-rev0/tag/SectionAbout" target="_blank" rel="noopener noreffer ">Veeam official API manual</a>, click the Download button to download the swagger.json file and save it to the current project directory. Since the downloaded file is 2.5MB in size, it would be quite large for CC to process, especially when using it in context. Therefore, I recommend letting CC do a split processing first, breaking it into small units. You can directly assign this work to CC by entering the following in the conversation:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Please <span class="nb">help</span> me split the @swagger.json file. Currently, this JSON file is too large and somewhat inefficient to use. Please <span class="nb">help</span> me <span class="nb">break</span> it down into effective small files based on its structure <span class="k">for</span> easier reading and use. After splitting, save them to the docs/swagger/ directory. Please ensure the split files still conform to OpenAPI standards, maintain consistency with the original JSON file content, and that relevant clients can effectively parse this split data.</span></span></code></pre></div></div>
+<p>Next, CC will begin its first performance, automatically calling Python, processing the file, and efficiently splitting and storing it in your requested location. If needed, you can also ask it to perform consistency verification. After processing is complete, the swagger.json file can be deleted.</p>
+<h3 id="4-initialize-project">4. Initialize Project</h3>
+<p>Next, we formally enter the initialization environment. Before each CC instance officially starts working, we need to execute this command to enable it to effectively understand the current situation.</p>
+<p>Execute the <code>/init</code> command in CC:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/init</span></span></code></pre></div></div>
+<p>Claude will automatically create a <code>CLAUDE.md</code> file, which is CC&rsquo;s behavior specification file. It&rsquo;s equivalent to CC&rsquo;s code of conduct. After starting the /init command, CC will read through all relevant files in the directory and then update the instructions and constraints to <code>CLAUDE.md</code>.</p>
+<p>If you have any questions about what CC wrote, you can manually modify the <code>CLAUDE.md</code> file. Here&rsquo;s the content of my generated <code>CLAUDE.md</code> file:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-markdown">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># CLAUDE.md
+</span></span></span><span class="line"><span class="cl"><span class="gh"></span>
+</span></span><span class="line"><span class="cl">This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Project Overview
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">This is a <span class="gs">**Veeam Backup &amp; Replication REST API assistant**</span> project. The system acts as a backup server operation assistant that interacts with Veeam Backup &amp; Replication via REST API to manage backup jobs, infrastructure, and monitoring.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Server Configuration
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">The Veeam server configuration is stored in <span class="sb">`.env`</span>:
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Server: <span class="sb">`https://10.10.1.221:9419`</span> (default Veeam REST API port)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Username: <span class="sb">`veeamadmin`</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Currently uses insecure connection (for testing)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> API version: <span class="sb">`1.3-rev0`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## API Documentation
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">Complete OpenAPI specification is available in <span class="sb">`docs/swagger/`</span>:
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Main spec**: <span class="sb">`docs/swagger/openapi.json`</span> (1.3MB full specification)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Entry point**: <span class="sb">`docs/swagger.json`</span> (references main spec)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Path definitions**: <span class="sb">`docs/swagger/paths/`</span> (jobs, infrastructure, auth)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Schemas**: <span class="sb">`docs/swagger/components/schemas.json`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Key API Categories
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Job Management**</span> (<span class="sb">`paths/jobs.json`</span>):
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> CRUD operations on backup jobs
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Job control: start, stop, retry, disable
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Job state monitoring and filtering
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Infrastructure Management**</span>:
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> **Proxies** (<span class="sb">`paths/infra-proxies.json`</span>): Proxy server management
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> **Servers** (<span class="sb">`paths/infra-servers.json`</span>): Backup server management
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**Authentication**</span> (<span class="sb">`paths/misc.json`</span>):
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> OAuth 2.0 password grant authentication
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Token management (access: 60min, refresh: 14 days)
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> AD domain management
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Authentication Flow
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">All API calls require:
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**OAuth2 Token**</span>: POST <span class="sb">`/api/oauth2/token`</span> with password grant
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Bearer Token**</span>: All subsequent calls need <span class="sb">`Authorization: Bearer &lt;token&gt;`</span>
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**API Version Header**</span>: <span class="sb">`x-api-version: 1.3-rev0`</span> required for all requests
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Assistant Role and Behavior
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">Based on <span class="sb">`assistant.md`</span>, the assistant should:
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Act as backup server operation assistant via REST API
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Use OpenAPI specs in <span class="sb">`docs/`</span> for all operations
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Use <span class="sb">`.env`</span> configuration for server settings
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Output only results, not implementation details**
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Do not display or record code in conversation**
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Focus on operational results, not technical implementation
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Critical Constraints (from AI_ASSISTANT_CONSTRAINTS.md)
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> **Result-only output**: Never show implementation details or API calls
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Information security**: Never expose tokens, passwords, or sensitive data
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Language flexibility**: Respond in user&#39;s preferred language for effective communication
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Technical confidentiality**: Hide all code, tools, and methods used
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Professional communication**: Concise, accurate, backup-focused terminology
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## API Usage Patterns
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">### Standard Query Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> <span class="sb">`skip`</span>: Pagination offset
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`limit`</span>: Maximum items (default 200)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`orderColumn`</span>: Sort field
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`orderAsc`</span>: Sort direction (true/false)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`nameFilter`</span>: Text filtering with wildcards
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Common Operations:
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> **Jobs**: GET <span class="sb">`/api/v1/jobs`</span>, POST <span class="sb">`/api/v1/jobs`</span>, DELETE <span class="sb">`/api/v1/jobs/{id}`</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Job Control**: POST <span class="sb">`/api/v1/jobs/{id}/action`</span> (start/stop/retry)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Proxies**: GET/POST/PUT/DELETE <span class="sb">`/api/v1/infra/proxies`</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Servers**: GET/POST/PUT/DELETE <span class="sb">`/api/v1/infra/servers`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Security Notes
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Current configuration uses <span class="sb">`insecure: true`</span> (testing only)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Production should use proper SSL/TLS certificates
+</span></span><span class="line"><span class="cl"><span class="k">-</span> All credentials stored in <span class="sb">`.env`</span> file
+</span></span><span class="line"><span class="cl"><span class="k">-</span> OAuth2 token management with refresh capability
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Development Guidelines
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Use the provided <span class="sb">`.env`</span> configuration for server connection
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Reference the complete OpenAPI spec for detailed operation parameters
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Follow the assistant role: output results only, no implementation details
+</span></span><span class="line"><span class="cl"><span class="k">-</span> All API responses are in JSON format
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Error handling includes token expired, invalid token, and permission errors
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Working with this Project
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">This is NOT a traditional code development project. It&#39;s an API specification and assistant configuration project:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **No build/compile steps**: This is documentation and configuration only
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **No source code**: All functionality comes from Veeam REST API calls
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **No testing framework**: Testing involves API calls to Veeam server
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Development workflow**: Update API specs, modify assistant prompts, manage configurations
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Key Files to Understand
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> <span class="sb">`.env`</span>: Server connection and authentication
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`assistant.md`</span>: Chinese assistant role definition
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`AI_ASSISTANT_CONSTRAINTS.md`</span>: Strict working constraints and security rules
+</span></span><span class="line"><span class="cl"><span class="k">-</span> <span class="sb">`docs/swagger/`</span>: Complete Veeam API specification
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Security Notes
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Current configuration uses <span class="sb">`insecure: true`</span> (testing only)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Production should use proper SSL/TLS certificates
+</span></span><span class="line"><span class="cl"><span class="k">-</span> All credentials stored in <span class="sb">`.env`</span> file
+</span></span><span class="line"><span class="cl"><span class="k">-</span> OAuth2 token management with refresh capability
+</span></span><span class="line"><span class="cl">- **NEVER expose tokens or credentials in any output**</span></span></code></pre></div></div>
+<blockquote>
+<p>Of course, CC + GLM 4.6 can sometimes be a bit clueless and forget its own constraints in urgent situations, but most of the time it will follow these constraint conditions.</p>
+</blockquote>
+<h3 id="5-configure-vbr-connection-information">5. Configure VBR Connection Information</h3>
+<p>According to the hints we gave CC, we need to write an environment variable file to provide CC with the information it needs to connect to VBR. Let&rsquo;s continue by creating a new file in the project directory named <code>.env</code>, and simply enter the VBR server information. The format can be quite flexible, like mine below:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># VBR Server Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VBR_SERVER</span><span class="o">=</span>192.168.1.100
+</span></span><span class="line"><span class="cl"><span class="nv">VBR_PORT</span><span class="o">=</span><span class="m">9419</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VBR_USERNAME</span><span class="o">=</span>veeamadmin
+</span></span><span class="line"><span class="cl"><span class="nv">VBR_PASSWORD</span><span class="o">=</span>your_password
+</span></span><span class="line"><span class="cl"><span class="nv">insecure</span><span class="o">=</span>true</span></span></code></pre></div></div>
+<h2 id="practical-usage">Practical Usage</h2>
+<p>After the above configuration, our foundational work is complete, and we can now directly converse with CC. For example, we can first ask CC about its tasks and responsibilities:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Hi CC, please briefly describe your tasks and responsibilities.</span></span></code></pre></div></div>
+<p>It seems very clear about its positioning and immediately stated its responsibilities.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/Yg9izKedakUjupH.png"
+        data-srcset="https://s2.loli.net/2025/11/12/Yg9izKedakUjupH.png, https://s2.loli.net/2025/11/12/Yg9izKedakUjupH.png 1.5x, https://s2.loli.net/2025/11/12/Yg9izKedakUjupH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/Yg9izKedakUjupH.png"
+        title="Xnip2025-11-12_13-11-35" /></p>
+<p>See, that&rsquo;s quite good, isn&rsquo;t it? Very professional.</p>
+<p>Then, let&rsquo;s see if its work meets expectations. Let CC execute a small task:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Please <span class="nb">help</span> me check yesterday<span class="err">&#39;</span>s backup job status.</span></span></code></pre></div></div>
+<p>At this point, CC will execute the operation and output. Here, it instantly produced the following results:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/cGROgEHsAe9hkJZ.png"
+        data-srcset="https://s2.loli.net/2025/11/12/cGROgEHsAe9hkJZ.png, https://s2.loli.net/2025/11/12/cGROgEHsAe9hkJZ.png 1.5x, https://s2.loli.net/2025/11/12/cGROgEHsAe9hkJZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/cGROgEHsAe9hkJZ.png"
+        title="Xnip2025-11-12_13-14-01" /></p>
+<p>Isn&rsquo;t that super simple? No need to write any code - CC automatically uses the API to help us get the information we want and effectively outputs the information to us after reasonably formatting the content.</p>
+<p>Let&rsquo;s ask it to execute a backup task to see if it can follow instructions:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; Please <span class="nb">help</span> me execute the VM replication task.</span></span></code></pre></div></div>
+<p>CC is quite smart - it first found the current replication jobs and then confirmed the operation with me.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/HEFxTb1O85yNakz.png"
+        data-srcset="https://s2.loli.net/2025/11/12/HEFxTb1O85yNakz.png, https://s2.loli.net/2025/11/12/HEFxTb1O85yNakz.png 1.5x, https://s2.loli.net/2025/11/12/HEFxTb1O85yNakz.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/HEFxTb1O85yNakz.png"
+        title="Xnip2025-11-12_14-40-09" /></p>
+<p>When I gave the confirmation to execute, CC went ahead and started the VM replication task as requested.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/6v4XsPeInMG7rED.png"
+        data-srcset="https://s2.loli.net/2025/11/12/6v4XsPeInMG7rED.png, https://s2.loli.net/2025/11/12/6v4XsPeInMG7rED.png 1.5x, https://s2.loli.net/2025/11/12/6v4XsPeInMG7rED.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/6v4XsPeInMG7rED.png"
+        title="Xnip2025-11-12_14-38-58" /></p>
+<p>Checking back in the VBR console, you can see the task is already running. Looking at the start time, it matches what CC indicated.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/12/c17udTmlQy5ps4H.png"
+        data-srcset="https://s2.loli.net/2025/11/12/c17udTmlQy5ps4H.png, https://s2.loli.net/2025/11/12/c17udTmlQy5ps4H.png 1.5x, https://s2.loli.net/2025/11/12/c17udTmlQy5ps4H.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/12/c17udTmlQy5ps4H.png"
+        title="Xnip2025-11-12_14-38-38" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With the continuous development of AI technology, we can expect:</p>
+<ul>
+<li><strong>Stronger comprehension capabilities</strong>: AI will be able to understand more complex business requirements and technical scenarios</li>
+<li><strong>More automation</strong>: From passively executing instructions to proactively identifying problems and suggesting optimizations</li>
+<li><strong>Broader integration</strong>: Integration with more IT management tools and monitoring systems to form a unified management platform</li>
+</ul>
+<p>The above content is just a small attempt to spark ideas. AI technology is continuously bringing changes to our daily lives and our industry. I hope my sharing is helpful and inspiring to everyone, enabling AI technology to bring us more valuable application methods. If you also want to try it yourself, you can refer to these two articles completely, use Claude Code + GLM 4.6 to build your own environment, and experience AI&rsquo;s capabilities firsthand. Scan the code to register through the link below to get a 10% discount on GLM 4.6 Coding plan.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png"
+        data-srcset="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png, https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png 1.5x, https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/11/JZk8NxyMWaeVARI.png"
+        title="BigmodelPoster (1)" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-11-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2025/11/AI-Reshapes-Data-Protection-02/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F11%2FAI-Reshapes-Data-Protection-02%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F11%2FAI-Reshapes-Data-Protection-02%2F&amp;text=AI&#43;Reshaping&#43;Data&#43;Protection&#43;%28Part&#43;2%29%3A&#43;Using&#43;Claude&#43;Code&#43;to&#43;Control&#43;Your&#43;VBR&#43;Server" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F11%252FAI-Reshapes-Data-Protection-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F11%252FAI-Reshapes-Data-Protection-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/AI/">AI</a>,&nbsp;<a href="/en/tags/Veeam/">Veeam</a>,&nbsp;<a href="/en/tags/Vibe-Coding/">Vibe Coding</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2025/11/AI-Reshapes-Data-Protection-01/" class="prev" rel="prev" title="AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

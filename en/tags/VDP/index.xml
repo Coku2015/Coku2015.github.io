@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VDP on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/VDP/</link>
+    <description>Recent content in VDP on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 07 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/VDP/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam&#39;s Major H2 2023 Product Line Update</title>
+      <link>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</guid>
+      <description>&lt;p&gt;Just yesterday, Veeam officially GA&amp;rsquo;d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you&amp;rsquo;re a Veeam power user, when you visit your Veeam homepage at &lt;a href=&#34;https://my.veeam.com&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://my.veeam.com&lt;/a&gt;, you&amp;rsquo;ll see a full screen where all products show &amp;ldquo;New&amp;rdquo; status - these are all newly available versions released this week for download.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

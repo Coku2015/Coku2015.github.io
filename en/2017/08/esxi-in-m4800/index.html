@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Transforming HOME LAB: Installing ESXi on M6400 - Cloud.Virt.AI.Sec</title><meta name="description" content="Sometimes the best discoveries happen completely by accident. Last week at VeeamON Shanghai, I stumbled upon something that completely changed my perspective on …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2017/08/esxi-in-m4800/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Transforming HOME LAB: Installing ESXi on M6400">
+  <meta property="og:description" content="Sometimes the best discoveries happen completely by accident. Last week at VeeamON Shanghai, I stumbled upon something that completely changed my perspective on home lab setups. One of my colleagues casually mentioned he was running ESXi on his laptop, and I was blown away.
+Now, I’ve always assumed installing ESXi on a laptop would be a nightmare of driver hunting and compatibility issues. But here’s the game-changing insight: use Dell’s customized ESXi ISO. Everything just works out of the box—no driver hunting, no compatibility headaches. The installation process is literally one-click, and you’re up and running.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2017-08-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-08-27T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Transforming HOME LAB: Installing ESXi on M6400">
+  <meta name="twitter:description" content="Sometimes the best discoveries happen completely by accident. Last week at VeeamON Shanghai, I stumbled upon something that completely changed my perspective on home lab setups. One of my colleagues casually mentioned he was running ESXi on his laptop, and I was blown away.
+Now, I’ve always assumed installing ESXi on a laptop would be a nightmare of driver hunting and compatibility issues. But here’s the game-changing insight: use Dell’s customized ESXi ISO. Everything just works out of the box—no driver hunting, no compatibility headaches. The installation process is literally one-click, and you’re up and running.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2017/08/esxi-in-m4800/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2017/08/speed-up-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Transforming HOME LAB: Installing ESXi on M6400",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2017\/08\/esxi-in-m4800\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  735 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2017\/08\/esxi-in-m4800\/","datePublished": "2017-08-27T00:00:00+00:00","dateModified": "2017-08-27T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/08/esxi-in-m4800/">简体中文</option><option value="/en/2017/08/esxi-in-m4800/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/08/esxi-in-m4800/">简体中文</option><option value="/en/2017/08/esxi-in-m4800/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Transforming HOME LAB: Installing ESXi on M6400</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2017-08-27">2017-08-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;735 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-setup">The Setup</a></li>
+    <li><a href="#installation-surprisingly-simple">Installation: Surprisingly Simple</a></li>
+    <li><a href="#the-real-challenge-usb-datastore-setup">The Real Challenge: USB Datastore Setup</a>
+      <ul>
+        <li><a href="#step-1-enable-ssh-and-connect">Step 1: Enable SSH and Connect</a></li>
+        <li><a href="#step-2-identify-the-usb-drive">Step 2: Identify the USB Drive</a></li>
+        <li><a href="#step-3-create-the-partition-table">Step 3: Create the Partition Table</a></li>
+        <li><a href="#step-4-calculate-partition-layout">Step 4: Calculate Partition Layout</a></li>
+        <li><a href="#step-5-create-the-partition">Step 5: Create the Partition</a></li>
+        <li><a href="#step-6-format-as-vmfs5">Step 6: Format as VMFS5</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-result-perfect-dual-boot-setup">The Result: Perfect Dual-Boot Setup</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Sometimes the best discoveries happen completely by accident. Last week at VeeamON Shanghai, I stumbled upon something that completely changed my perspective on home lab setups. One of my colleagues casually mentioned he was running ESXi on his laptop, and I was blown away.</p>
+<p>Now, I&rsquo;ve always assumed installing ESXi on a laptop would be a nightmare of driver hunting and compatibility issues. But here&rsquo;s the game-changing insight: use Dell&rsquo;s customized ESXi ISO. Everything just works out of the box—no driver hunting, no compatibility headaches. The installation process is literally one-click, and you&rsquo;re up and running.</p>
+<p>I couldn&rsquo;t wait to try this myself.</p>
+<p>But as I started planning my weekend project, I hit a small snag. I still needed Hyper-V for some work, and formatting the internal drives of my Dell M4800 workstation into VMFS seemed like a waste. That&rsquo;s when inspiration struck: I had an old USB 3.0 external drive sitting around. What if I could create a dual-boot setup, keeping Hyper-V on the internal drives while running ESXi from external storage?</p>
+<p>A quick Google search confirmed it was totally possible, and I was ready to dive in.</p>
+<h2 id="the-setup">The Setup</h2>
+<p>Here&rsquo;s what I was working with:</p>
+<p><strong>Dell M4800 Specs:</strong></p>
+<ul>
+<li><strong>CPU:</strong> Intel Core i7-4710MQ @ 2.5GHz</li>
+<li><strong>Memory:</strong> 32GB DDR3</li>
+<li><strong>Internal Storage:</strong> Samsung 500GB SSD + Seagate 500GB SATA</li>
+<li><strong>Network:</strong> Intel i217-LM Gigabit Ethernet</li>
+</ul>
+<p><strong>External Hardware:</strong></p>
+<ul>
+<li><strong>Boot Media:</strong> 8GB USB flash drive</li>
+<li><strong>Storage:</strong> WD 2TB SATA drive connected via USB 3.0 (for VM datastore)</li>
+<li><strong>Software:</strong> Dell Customized ESXi ISO (available from Dell&rsquo;s support site)</li>
+</ul>
+<h2 id="installation-surprisingly-simple">Installation: Surprisingly Simple</h2>
+<p>Time to get my hands dirty! I was honestly expecting some complications, but the installation process was incredibly straightforward.</p>
+<p>The Dell customized ESXi ISO lived up to its reputation. The installer booted perfectly, detected all my hardware (including that tricky Intel NIC), and completed the entire installation in just five minutes. Seriously—five minutes from USB stick to fully functional ESXi host.</p>
+<p>After the basic setup, I configured the network settings, set a hostname, and joined it to my existing vCenter cluster. Everything just worked, exactly as promised.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ITHO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ITHO.png, https://s2.ax1x.com/2020/02/12/17ITHO.png 1.5x, https://s2.ax1x.com/2020/02/12/17ITHO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ITHO.png"
+        title="17ITHO.png" /></p>
+<h2 id="the-real-challenge-usb-datastore-setup">The Real Challenge: USB Datastore Setup</h2>
+<p>Now for the interesting part—getting that external USB drive working as a datastore. VMware officially doesn&rsquo;t support USB storage for production environments, which makes total sense from a reliability perspective. But for a home lab? This is exactly the kind of flexible setup that makes experimenting so much fun.</p>
+<p><strong>Quick note:</strong> These steps are specifically for ESXi 6.0. Your mileage may vary with other versions.</p>
+<p>Here&rsquo;s how I got it working:</p>
+<h3 id="step-1-enable-ssh-and-connect">Step 1: Enable SSH and Connect</h3>
+<p>First things first, I needed SSH access to the ESXi host. Once that was enabled, I could connect and start exploring the storage devices.</p>
+<h3 id="step-2-identify-the-usb-drive">Step 2: Identify the USB Drive</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@esxim4800:~<span class="o">]</span> ls /dev/disks</span></span></code></pre></div></div>
+<p>In the output, I looked for my USB drive and found these entries:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>mpx.vmhba38:C0:T0:L0
+mpx.vmhba38:C0:T0:L0:1
+mpx.vmhba38:C0:T0:L0:2</code></pre></div>
+<h3 id="step-3-create-the-partition-table">Step 3: Create the Partition Table</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@esxim4800:~<span class="o">]</span> partedUtil mklabel /dev/disks/mpx.vmhba38:C0:T0:L0 gpt</span></span></code></pre></div></div>
+<h3 id="step-4-calculate-partition-layout">Step 4: Calculate Partition Layout</h3>
+<p>This was the trickiest part—I needed to calculate the end sector for the VMFS volume:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@esxim4800:~<span class="o">]</span> <span class="nb">eval</span> expr <span class="k">$(</span>partedUtil getptbl /dev/disks/mpx.vmhba38:C0:T0:L0 <span class="p">|</span> tail -1 <span class="p">|</span> awk <span class="s1">&#39;{print $1 &#34;* &#34; $2 &#34; * &#34; $3}&#39;</span><span class="k">)</span> – <span class="m">13907024064</span></span></span></code></pre></div></div>
+<h3 id="step-5-create-the-partition">Step 5: Create the Partition</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@esxim4800:~<span class="o">]</span> partedUtil setptbl /dev/disks/mpx.vmhba38:C0:T0:L0 gpt <span class="s2">&#34;12048 3907024064 AA31E02A400F11DB9590000C2911D1B8&#34;</span></span></span></code></pre></div></div>
+<h3 id="step-6-format-as-vmfs5">Step 6: Format as VMFS5</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@esxim4800:~<span class="o">]</span> vmkfstools -C vmfs5 -S USB-LOCAL /dev/disks/mpx.vmhba38:C0:T0:L0:1</span></span></code></pre></div></div>
+<p>And there it was! Back in the vSphere Client, I could see my new &ldquo;USB-LOCAL&rdquo; datastore ready to use.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17IbUe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17IbUe.png, https://s2.ax1x.com/2020/02/12/17IbUe.png 1.5x, https://s2.ax1x.com/2020/02/12/17IbUe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17IbUe.png"
+        title="17IbUe.png" /></p>
+<h2 id="the-result-perfect-dual-boot-setup">The Result: Perfect Dual-Boot Setup</h2>
+<p>Mission accomplished! My Dell M4800 now has the best of both worlds. When I need to work with Hyper-V, I simply boot from the internal drives into Windows Server 2016. For my VMware home lab adventures, I boot from the USB drive and have a full ESXi environment with 2TB of external storage.</p>
+<p>This setup gives me incredible flexibility without sacrificing anything. I can experiment with VMware, run test VMs, and explore virtualization techniques while keeping my work environment completely separate. The external USB storage provides plenty of room for VMs, and because it&rsquo;s all on removable media, I can even take my lab environment with me if needed.</p>
+<p><strong>Would I recommend this approach?</strong> Absolutely—for home lab enthusiasts. It&rsquo;s not something I&rsquo;d deploy in production, but for learning, testing, and experimentation? It&rsquo;s perfect.</p>
+<p>The key takeaway here is that sometimes the most creative solutions come from working within constraints. Don&rsquo;t let conventional thinking limit your home lab possibilities!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2017-08-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2017/08/esxi-in-m4800/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F08%2Fesxi-in-m4800%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2017%2F08%2Fesxi-in-m4800%2F&amp;text=Transforming&#43;HOME&#43;LAB%3A&#43;Installing&#43;ESXi&#43;on&#43;M6400" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F08%252Fesxi-in-m4800%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2017%252F08%252Fesxi-in-m4800%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2017/08/speed-up-02/" class="prev" rel="prev" title="Speed Up! Speed Up! Speed Up! (Part 2)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Speed Up! Speed Up! Speed Up! (Part 2)</a>
+            <a href="/en/2018/01/centrilized-agent-management/" class="next" rel="next" title="First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management">First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

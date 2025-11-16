@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agent on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Agent/</link>
+    <description>Recent content in Agent on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Wed, 03 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Agent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Restoring Data from Your Veeam Backups: A Complete Guide</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/agent-backup-and-restore/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/agent-backup-and-restore/</guid>
+      <description>&lt;p&gt;Yesterday, I walked you through setting up Veeam Agent for Microsoft Windows and creating your first backups. But a backup strategy isn&amp;rsquo;t complete without knowing how to restore when disaster strikes.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s why today I&amp;rsquo;m covering the essential recovery methods that make Veeam Agent such a powerful tool for Windows users. Whether you need to recover a single file or rebuild an entire system, understanding these recovery options will give you the confidence to handle any data loss scenario.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>送 | 为裸奔中的电脑送一个备份保护</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/agent-backup/</link>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/agent-backup/</guid>
+      <description>&lt;h3 id=&#34;remembering-norton-ghost-the-tool-that-defined-an-era&#34;&gt;Remembering Norton Ghost: The Tool That Defined an Era&lt;/h3&gt;&#xA;&lt;p&gt;How many of you remember Norton Ghost? For me, Ghost brings back memories from about 20 years ago when I first started building PCs. Back then, after assembling a new computer at the local tech market, the very first thing I&amp;rsquo;d do was create a system backup with Ghost.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg, https://s2.ax1x.com/2020/02/14/1jWmhF.jpg 1.5x, https://s2.ax1x.com/2020/02/14/1jWmhF.jpg 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/14/1jWmhF.jpg&#34;&#xA;        title=&#34;1jWmhF.jpg&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;From that moment forward, Ghost became essential equipment for every computer I owned. Even as we moved through the Windows 7 era ten years ago and into today&amp;rsquo;s Windows 10 world, many PCs still had that dual-boot setup. You know the one—second option: &amp;ldquo;Restore System with One-Click Ghost.&amp;rdquo; At its peak, Ghost wasn&amp;rsquo;t just popular; it was practically universal.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management</title>
+      <link>https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/</guid>
+      <description>&lt;p&gt;Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle physical and cloud infrastructure backups. The interface has evolved significantly, but don&amp;rsquo;t worry — Veeam maintains its familiar wizard-driven approach that we all know and love.&lt;/p&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s dive into what&amp;rsquo;s new and explore how this centralized management works.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png, https://s2.ax1x.com/2020/02/12/17owIe.png 1.5x, https://s2.ax1x.com/2020/02/12/17owIe.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png&#34;&#xA;        title=&#34;17owIe.png&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

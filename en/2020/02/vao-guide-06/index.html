@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO Basics (Part 6) – The First Step to a Successful DR Plan - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/02/vao-guide-06/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VAO Basics (Part 6) – The First Step to a Successful DR Plan">
+  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive With the earlier configuration work completed, VAO is ready for day-to-day use. Plan Authors can sign in, see only the scopes they’re allowed to touch, and work with the objects inside those scopes—Orchestration Plans, DataLabs, and Reports.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-02-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-02-25T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VAO Basics (Part 6) – The First Step to a Successful DR Plan">
+  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive With the earlier configuration work completed, VAO is ready for day-to-day use. Plan Authors can sign in, see only the scopes they’re allowed to touch, and work with the objects inside those scopes—Orchestration Plans, DataLabs, and Reports.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-06/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-05/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-07/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO Basics (Part 6) – The First Step to a Successful DR Plan",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-06\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  868 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-06\/","datePublished": "2020-02-25T00:00:00+00:00","dateModified": "2020-02-25T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/02/vao-guide-06/">简体中文</option><option value="/en/2020/02/vao-guide-06/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/02/vao-guide-06/">简体中文</option><option value="/en/2020/02/vao-guide-06/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO Basics (Part 6) – The First Step to a Successful DR Plan</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-02-25">2020-02-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;868 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index</a></li>
+    <li><a href="#orchestration-plan">Orchestration Plan</a></li>
+    <li><a href="#datalab-testing">Datalab Testing</a>
+      <ul>
+        <li><a href="#restore-plan-test">Restore Plan Test</a></li>
+        <li><a href="#failover-plan-test">Failover Plan Test</a></li>
+        <li><a href="#scheduling-datalab-tests">Scheduling Datalab Tests</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Essential Configuration Notes</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step to a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<p>With the earlier configuration work completed, VAO is ready for day-to-day use. Plan Authors can sign in, see only the scopes they’re allowed to touch, and work with the objects inside those scopes—Orchestration Plans, DataLabs, and Reports.</p>
+<p>Meeting an enterprise’s RPO/RTO targets takes more than raw compute and software; administrators must also understand how the tool behaves. VAO is powerful, but the DR team needs to know every step and its expected outcome. The first step toward a successful DR plan is to understand how VAO executes one. For the walkthrough below I’m using the Plan Author account <code>user1@sedemolab.local</code>, which can access “Scope A” and “Scope B”.</p>
+<h2 id="orchestration-plan">Orchestration Plan</h2>
+<p>VAO supports two plan types: <strong>Restore Plans</strong> (backup-based) and <strong>Failover Plans</strong> (replica-based). Both are the backbone of your disaster recovery processes; every automated action runs through them. My recommendation is to start small—stick with the built-in Plan Steps, keep the workflow short, and only introduce custom scripts after you’re comfortable with the mechanics.</p>
+<ol>
+<li>Open <strong>Orchestration Plans</strong> on the left. In the toolbar, expand <strong>Manage → New</strong> to launch the plan wizard.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/23/33lwpn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/23/33lwpn.png, https://s2.ax1x.com/2020/02/23/33lwpn.png 1.5x, https://s2.ax1x.com/2020/02/23/33lwpn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/23/33lwpn.png"
+        title="33lwpn.png" /></li>
+<li>Choose the scope this plan belongs to. Each scope already bundles VM Groups, Recovery Locations, Plan Steps, etc., so the plan must live within a specific scope. Select Scope A and click <strong>Next</strong>.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/23/331sgI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/23/331sgI.png, https://s2.ax1x.com/2020/02/23/331sgI.png 1.5x, https://s2.ax1x.com/2020/02/23/331sgI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/23/331sgI.png"
+        title="331sgI.png" /></li>
+<li>Fill out <strong>Plan Info</strong>. These details flow into the generated reports.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/23/3335dO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/23/3335dO.png, https://s2.ax1x.com/2020/02/23/3335dO.png 1.5x, https://s2.ax1x.com/2020/02/23/3335dO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/23/3335dO.png"
+        title="3335dO.png" /></li>
+<li>Pick the <strong>Plan Type</strong> (Restore or Failover). Restore Plans include a Recovery Location step; choose one of the locations defined earlier in Plan Components.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/24/33jxzt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/24/33jxzt.png, https://s2.ax1x.com/2020/02/24/33jxzt.png 1.5x, https://s2.ax1x.com/2020/02/24/33jxzt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/24/33jxzt.png"
+        title="33jxzt.png" /></li>
+<li>Select the <strong>VM Groups</strong> to recover. Available groups come from the scope; move the required groups into <strong>Plan Groups</strong>. Use <strong>View VMs</strong> to inspect the members.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3Jh1at.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3Jh1at.png, https://s2.ax1x.com/2020/02/25/3Jh1at.png 1.5x, https://s2.ax1x.com/2020/02/25/3Jh1at.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3Jh1at.png"
+        title="3Jh1at.png" /></li>
+<li>Configure <strong>VM Recovery Options</strong>:
+<ul>
+<li><em>If any VM recovery fails then</em>: decide whether the plan continues with the remaining VMs or stops immediately.</li>
+<li><em>Recover the VMs in each group</em>: run simultaneously or in sequence.</li>
+<li><em>Recover simultaneously max of VMs</em>: limit parallel recoveries (default 10). Test and tune this to match your resources.</li>
+<li><em>Restore VM Tags</em>: typically leave unchecked when restoring to a new location to avoid tag conflicts.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3J57Ke.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3J57Ke.png, https://s2.ax1x.com/2020/02/25/3J57Ke.png 1.5x, https://s2.ax1x.com/2020/02/25/3J57Ke.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3J57Ke.png"
+        title="3J57Ke.png" /></li>
+</ul>
+</li>
+<li>On <strong>VM Steps</strong>, choose the steps to run for each VM. VAO selects “Restore VM” and “Check VM Heartbeat” by default. While learning the product, experiment by adding steps one at a time so you understand what each does before baking it into production plans.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3Y9bUP.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3Y9bUP.png, https://s2.ax1x.com/2020/02/25/3Y9bUP.png 1.5x, https://s2.ax1x.com/2020/02/25/3Y9bUP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3Y9bUP.png"
+        title="3Y9bUP.png" /></li>
+<li><strong>Protect VM Groups</strong> lets VAO back up the restored VMs immediately. Tick the option and select a Template Job (defined earlier under Plan Components).<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YuNLV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YuNLV.png, https://s2.ax1x.com/2020/02/25/3YuNLV.png 1.5x, https://s2.ax1x.com/2020/02/25/3YuNLV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YuNLV.png"
+        title="3YuNLV.png" /></li>
+<li>Define the plan’s <strong>RTO</strong> and <strong>RPO</strong> targets. VAO actively tracks these and raises warnings if they’re missed. Values can be configured down to the minute.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YMMCQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YMMCQ.png, https://s2.ax1x.com/2020/02/25/3YMMCQ.png 1.5x, https://s2.ax1x.com/2020/02/25/3YMMCQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YMMCQ.png"
+        title="3YMMCQ.png" /></li>
+<li>Choose the <strong>Report Template</strong> (PDF or Word). I’ll cover custom templates in Part 9.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YMqIS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YMqIS.png, https://s2.ax1x.com/2020/02/25/3YMqIS.png 1.5x, https://s2.ax1x.com/2020/02/25/3YMqIS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YMqIS.png"
+        title="3YMqIS.png" /></li>
+<li>Schedule automatic report generation. VAO currently supports daily schedules—pick the time of day that fits your workflow.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YQYQA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YQYQA.png, https://s2.ax1x.com/2020/02/25/3YQYQA.png 1.5x, https://s2.ax1x.com/2020/02/25/3YQYQA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YQYQA.png"
+        title="3YQYQA.png" /></li>
+<li>Optionally enable the immediate <strong>Readiness Check</strong> so VAO validates resource availability right after the plan is created.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YQ7l9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YQ7l9.png, https://s2.ax1x.com/2020/02/25/3YQ7l9.png 1.5x, https://s2.ax1x.com/2020/02/25/3YQ7l9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YQ7l9.png"
+        title="3YQ7l9.png" /></li>
+<li>Review the <strong>Summary</strong> and click <strong>Finish</strong>. The new plan appears in the list.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YldXR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YldXR.png, https://s2.ax1x.com/2020/02/25/3YldXR.png 1.5x, https://s2.ax1x.com/2020/02/25/3YldXR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YldXR.png"
+        title="3YldXR.png" /></li>
+</ol>
+<p>Once created, you can:</p>
+<ul>
+<li><strong>Launch</strong>: Run now or schedule.</li>
+<li><strong>Manage</strong>: Enable/Disable, create a new plan, edit, reset, delete.</li>
+<li><strong>Verify</strong>: Run a Datalab test or a Readiness check.</li>
+<li><strong>Report</strong>: Generate or download documentation.</li>
+</ul>
+<p>Fresh plans start disabled (grey icon). Use <strong>Manage → Enable</strong> to activate. After executing a plan, click <strong>Manage → Reset</strong> before reusing it.</p>
+<h2 id="datalab-testing">Datalab Testing</h2>
+<p>Under <strong>Verify</strong> you’ll find <strong>Run Datalab test</strong>. This wizard spins up a near-production rehearsal of the plan, including every custom script. Networking stays isolated inside the chosen DataLab, so you can measure the recovery process and timing safely.</p>
+<h3 id="restore-plan-test">Restore Plan Test</h3>
+<ol>
+<li>Pick the DataLab to run in (all scope-assigned labs appear here).<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YJNLj.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YJNLj.png, https://s2.ax1x.com/2020/02/25/3YJNLj.png 1.5x, https://s2.ax1x.com/2020/02/25/3YJNLj.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YJNLj.png"
+        title="3YJNLj.png" /></li>
+<li>Choose a <strong>Quick Test</strong> (Instant VM Recovery only) or a <strong>Full Test</strong> (includes migrations).<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YYyNt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YYyNt.png, https://s2.ax1x.com/2020/02/25/3YYyNt.png 1.5x, https://s2.ax1x.com/2020/02/25/3YYyNt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YYyNt.png"
+        title="3YYyNt.png" /></li>
+<li>Select the <strong>Recovery Location</strong> for the test, even if the plan already specifies one. This selection is specific to the Datalab run.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3Yvdk8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3Yvdk8.png, https://s2.ax1x.com/2020/02/25/3Yvdk8.png 1.5x, https://s2.ax1x.com/2020/02/25/3Yvdk8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3Yvdk8.png"
+        title="3Yvdk8.png" /></li>
+<li>Decide what happens after the automated checks finish—power off immediately or keep the lab running for additional testing, specifying the number of hours to keep it alive.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YxiHP.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YxiHP.png, https://s2.ax1x.com/2020/02/25/3YxiHP.png 1.5x, https://s2.ax1x.com/2020/02/25/3YxiHP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YxiHP.png"
+        title="3YxiHP.png" /></li>
+<li>Select any required <strong>Lab Groups</strong> (similar to Application Groups in VBR). This step is optional.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3YzMxH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3YzMxH.png, https://s2.ax1x.com/2020/02/25/3YzMxH.png 1.5x, https://s2.ax1x.com/2020/02/25/3YzMxH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3YzMxH.png"
+        title="3YzMxH.png" /></li>
+<li>Review the <strong>Summary</strong> and click <strong>Finish</strong> to start the test.</li>
+</ol>
+<h3 id="failover-plan-test">Failover Plan Test</h3>
+<p>Failover Plans follow the same wizard but skip the test-type and Recovery Location steps—you jump straight to power options and Lab Group selection.</p>
+<h3 id="scheduling-datalab-tests">Scheduling Datalab Tests</h3>
+<p>You can automate these exercises via the <strong>Datalab Calendar</strong> on the dashboard. Click <strong>Create Schedule</strong> to define a recurring plan: set the time window and choose which plans to test in the selected lab. Existing schedules are shown on the calendar so you always know what’s pending.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3tSN01.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3tSN01.png, https://s2.ax1x.com/2020/02/25/3tSN01.png 1.5x, https://s2.ax1x.com/2020/02/25/3tSN01.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3tSN01.png"
+        title="3tSN01.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3tS59S.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3tS59S.png, https://s2.ax1x.com/2020/02/25/3tS59S.png 1.5x, https://s2.ax1x.com/2020/02/25/3tS59S.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3tS59S.png"
+        title="3tS59S.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/25/3tSI1g.png"
+        data-srcset="https://s2.ax1x.com/2020/02/25/3tSI1g.png, https://s2.ax1x.com/2020/02/25/3tSI1g.png 1.5x, https://s2.ax1x.com/2020/02/25/3tSI1g.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/25/3tSI1g.png"
+        title="3tSI1g.png" /></p>
+<p>These basics—creating Orchestration Plans and validating them with Datalab tests—lay the groundwork for successful disaster recovery. Stay tuned for the next installment!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-02-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/02/vao-guide-06/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-06%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-06%2F&amp;text=VAO&#43;Basics&#43;%28Part&#43;6%29&#43;%E2%80%93&#43;The&#43;First&#43;Step&#43;to&#43;a&#43;Successful&#43;DR&#43;Plan" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-06%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-06%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/02/vao-guide-05/" class="prev" rel="prev" title="VAO Basics (Part 5) – Essential Configuration Notes"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO Basics (Part 5) – Essential Configuration Notes</a>
+            <a href="/en/2020/02/vao-guide-07/" class="next" rel="next" title="VAO Basics (Part 7) – Plan Steps · Part 1">VAO Basics (Part 7) – Plan Steps · Part 1<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Getting Started Guide (8) - Plan Step · Part 2 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Table of Contents: VRO Getting Started Guide (1) - Introduction VRO Getting Started Guide (2) - Installation and Deployment VRO Getting Started Guide (3) …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-08/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Getting Started Guide (8) - Plan Step · Part 2">
+  <meta property="og:description" content="Series Table of Contents: VRO Getting Started Guide (1) - Introduction VRO Getting Started Guide (2) - Installation and Deployment VRO Getting Started Guide (3) - Basic Components · Part 1 VRO Getting Started Guide (4) - Basic Components · Part 2 VRO Getting Started Guide (5) - First Steps to a Successful Disaster Recovery Plan VRO Getting Started Guide (6) - Data Lab VRO Getting Started Guide (7) - Plan Step · Part 1 VRO Getting Started Guide (8) - Plan Step · Part 2 VRO Getting Started Guide (9) - Document Template Analysis VRO Getting Started Guide (10) - Using VRO with K10 for Fully Automated Container Disaster Recovery In the previous article, I introduced the basic configuration and usage of Plan Steps. Today, I’ll provide a detailed breakdown of custom scripts within Plan Steps. I’ll walk you through using custom scripts through a practical example.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-16T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-06-16T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Getting Started Guide (8) - Plan Step · Part 2">
+  <meta name="twitter:description" content="Series Table of Contents: VRO Getting Started Guide (1) - Introduction VRO Getting Started Guide (2) - Installation and Deployment VRO Getting Started Guide (3) - Basic Components · Part 1 VRO Getting Started Guide (4) - Basic Components · Part 2 VRO Getting Started Guide (5) - First Steps to a Successful Disaster Recovery Plan VRO Getting Started Guide (6) - Data Lab VRO Getting Started Guide (7) - Plan Step · Part 1 VRO Getting Started Guide (8) - Plan Step · Part 2 VRO Getting Started Guide (9) - Document Template Analysis VRO Getting Started Guide (10) - Using VRO with K10 for Fully Automated Container Disaster Recovery In the previous article, I introduced the basic configuration and usage of Plan Steps. Today, I’ll provide a detailed breakdown of custom scripts within Plan Steps. I’ll walk you through using custom scripts through a practical example.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-08/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-07/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/10/vro-v6-guide-09/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Getting Started Guide (8) - Plan Step · Part 2",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/06\/vro-v6-guide-08\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  970 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/06\/vro-v6-guide-08\/","datePublished": "2023-06-16T00:00:00+00:00","dateModified": "2023-06-16T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/06/vro-v6-guide-08/">简体中文</option><option value="/en/2023/06/vro-v6-guide-08/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/06/vro-v6-guide-08/">简体中文</option><option value="/en/2023/06/vro-v6-guide-08/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Getting Started Guide (8) - Plan Step · Part 2</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-16">2023-06-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;970 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-table-of-contents">Series Table of Contents:</a></li>
+    <li><a href="#creation-and-configuration">Creation and Configuration</a></li>
+    <li><a href="#hello-my-script">Hello! My Script</a></li>
+    <li><a href="#lets-make-it-more-complex">Let&rsquo;s Make It More Complex</a></li>
+    <li><a href="#more-parameter-passing">More Parameter Passing</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (2) - Installation and Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (3) - Basic Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (4) - Basic Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (5) - First Steps to a Successful Disaster Recovery Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (6) - Data Lab</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (7) - Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (8) - Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (9) - Document Template Analysis</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (10) - Using VRO with K10 for Fully Automated Container Disaster Recovery</a></li>
+</ul>
+<p>In the previous article, I introduced the basic configuration and usage of Plan Steps. Today, I&rsquo;ll provide a detailed breakdown of custom scripts within Plan Steps. I&rsquo;ll walk you through using custom scripts through a practical example.</p>
+<h2 id="creation-and-configuration">Creation and Configuration</h2>
+<p>Configuring custom scripts requires logging into the VRO platform with an account belonging to the Administrators group. After entering the Administration console, you can find Plan Steps under Configuration. Here you can manage all Plan Steps. Besides creating custom Steps, you can also make personalized configurations to the built-in Steps here.</p>
+<p><a href="https://imgse.com/i/pCMURXR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMURXR.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMURXR.png, https://s1.ax1x.com/2023/06/16/pCMURXR.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMURXR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMURXR.png"
+        title="pCMURXR.png" /></a></p>
+<ol>
+<li>Click the Add button to enter the creation wizard. The process is very simple - give it a catchy name, such as <code>Remote Advanced Operations Test</code>, then click Next to proceed.</li>
+</ol>
+<p><a href="https://imgse.com/i/pCMU2c9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMU2c9.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMU2c9.png, https://s1.ax1x.com/2023/06/16/pCMU2c9.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMU2c9.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMU2c9.png"
+        title="pCMU2c9.png" /></a></p>
+<ol start="2">
+<li>In the Script step, find the File field and click Browse to select the prepared PowerShell script from the current client. The uploaded script will display detailed content in Preview. Click Next to proceed.</li>
+</ol>
+<p><a href="https://imgse.com/i/pCMUcp4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMUcp4.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMUcp4.png, https://s1.ax1x.com/2023/06/16/pCMUcp4.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMUcp4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMUcp4.png"
+        title="pCMUcp4.png" /></a></p>
+<ol start="3">
+<li>In the Step Visibility step, if you don&rsquo;t want all disaster recovery administrators to see this advanced script, you can uncheck the checkbox on this interface.</li>
+</ol>
+<p><a href="https://imgse.com/i/pCMUstU" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMUstU.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMUstU.png, https://s1.ax1x.com/2023/06/16/pCMUstU.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMUstU.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMUstU.png"
+        title="pCMUstU.png" /></a></p>
+<ol start="4">
+<li>
+<p>Finally, as usual, the Summary will provide an overview, and clicking Finish will complete the creation.</p>
+</li>
+<li>
+<p>However, this is just the creation complete - don&rsquo;t think you can immediately use it. Let me emphasize this particularly important point: custom scripts can have two different execution locations - one is execution on the disaster recovery machine, and the other is execution on VBR. This must be manually configured by clicking the Step name after creating the Plan Step, finding Edit to modify it. At this point, you&rsquo;ll notice that in addition to the creation wizard steps, there&rsquo;s an additional step called Step Parameters where you can make more detailed configurations, including modifying the default execution location.</p>
+</li>
+</ol>
+<p><a href="https://imgse.com/i/pCMUfn1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMUfn1.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMUfn1.png, https://s1.ax1x.com/2023/06/16/pCMUfn1.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMUfn1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMUfn1.png"
+        title="pCMUfn1.png" /></a></p>
+<ol start="6">
+<li>The default value is execution on VBR. For example, the test I&rsquo;m doing today needs to be adjusted to change it to In-Guest OS.</li>
+</ol>
+<p><a href="https://imgse.com/i/pCMUyhF.png" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMUyhF.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMUyhF.png, https://s1.ax1x.com/2023/06/16/pCMUyhF.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMUyhF.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMUyhF.png"
+        title="pCMUyhF.png" /></a></p>
+<p>It&rsquo;s important to note that the configuration of this Step is global, meaning if this Step is provided for all Scopes to use, this configuration content is shared by all Scopes and cannot be changed in scheduled tasks. Therefore, if necessary, administrators need to define these Plan Steps individually based on actual requirements in the Plan Steps management page.</p>
+<h2 id="hello-my-script">Hello! My Script</h2>
+<p>Now, let&rsquo;s configure a Script and run it. Let&rsquo;s start with something simple, with the following content:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">###########</span>
+</span></span><span class="line"><span class="cl"><span class="c">#Lei Wei - 02/28/20</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># This script represents advanced operations, please look carefully</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># v1.0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$S</span> <span class="p">=</span> <span class="nb">Get-Date</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">Add-Content</span> <span class="n">c:</span><span class="p">\</span><span class="n">VRO_log</span><span class="p">.</span><span class="py">txt</span> <span class="s2">&#34;</span><span class="nv">$S</span><span class="s2"> - Recording date &#34;</span></span></span></code></pre></div></div>
+<p>If everything goes well, you&rsquo;ll see the following information in VRO:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/27/30RZZD.jpg"
+        data-srcset="https://s2.ax1x.com/2020/02/27/30RZZD.jpg, https://s2.ax1x.com/2020/02/27/30RZZD.jpg 1.5x, https://s2.ax1x.com/2020/02/27/30RZZD.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/27/30RZZD.jpg"
+        title="30RZZD.jpg" /></p>
+<h2 id="lets-make-it-more-complex">Let&rsquo;s Make It More Complex</h2>
+<p>This script is really simple and almost impossible to fail. But if it&rsquo;s more complex, can VRO capture these errors to make it easier for our administrators to know what problems occurred in the system? Please see the following code:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">###########</span>
+</span></span><span class="line"><span class="cl"><span class="c">#Lei Wei - 02/27/20</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># This script represents advanced operations, please look carefully</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># v1.1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$S</span> <span class="p">=</span> <span class="nb">Get-Date</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Add-Content</span> <span class="n">c:</span><span class="p">\</span><span class="n">VRO_log</span><span class="p">.</span><span class="py">txt</span> <span class="s2">&#34;</span><span class="nv">$S</span><span class="s2"> - Recording date. &#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Host</span> <span class="s2">&#34;Precise timing, advanced operation successful&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">Catch</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Error</span> <span class="s2">&#34; Something went wrong, failed!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Error</span> <span class="nv">$_</span><span class="p">.</span><span class="py">Exception</span><span class="p">.</span><span class="py">Message</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>After switching to this PowerShell script, you can see the successful execution record in the VRO interface below. Besides recording success or failure, the information from the script in my settings is also passed into the VRO interface.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/27/30Iizd.png"
+        data-srcset="https://s2.ax1x.com/2020/02/27/30Iizd.png, https://s2.ax1x.com/2020/02/27/30Iizd.png 1.5x, https://s2.ax1x.com/2020/02/27/30Iizd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/27/30Iizd.png"
+        title="30Iizd.png" /></p>
+<h2 id="more-parameter-passing">More Parameter Passing</h2>
+<p>The scripts used by VRO can be even more complex. For example, VRO can pass some parameters to the script. Let&rsquo;s continue modifying the above script as follows:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">###########</span>
+</span></span><span class="line"><span class="cl"><span class="c">#Lei Wei - 02/27/20</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># This script represents advanced operations, please look carefully</span>
+</span></span><span class="line"><span class="cl"><span class="c">#</span>
+</span></span><span class="line"><span class="cl"><span class="c"># v1.2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">Param</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nb">Parameter</span><span class="p">(</span><span class="na">Mandatory</span><span class="p">=</span><span class="vm">$true</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="no">string</span><span class="p">]</span><span class="nv">$planName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="no">string</span><span class="p">]</span><span class="nv">$text</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$S</span> <span class="p">=</span> <span class="nb">Get-Date</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Add-Content</span> <span class="n">c:</span><span class="p">\</span><span class="n">VRO_log</span><span class="p">.</span><span class="py">txt</span> <span class="s2">&#34;</span><span class="nv">$S</span><span class="s2"> - Recording date. &#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Host</span> <span class="s2">&#34;Precise timing, advanced operation successful&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Host</span> <span class="s2">&#34;Precise timing, advanced operation successful, </span><span class="nv">$planName</span><span class="s2">, </span><span class="nv">$text</span><span class="s2"> !&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">Catch</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Error</span> <span class="s2">&#34; Something went wrong, failed!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Write-Error</span> <span class="nv">$_</span><span class="p">.</span><span class="py">Exception</span><span class="p">.</span><span class="py">Message</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
+<p>In this script, we&rsquo;ve configured two parameters: $planName and $text. If you want to correctly use parameters in VRO and pass relevant parameters to the script, you need to add additional parameters to this Plan Step. This can be done through the Add button on the right side of the Plan Step.</p>
+<p>It&rsquo;s important to note that the parameters we Add must have names that match the parameter names in the script to be passed correctly. As shown in the figure below, we set planName and text.</p>
+<p><a href="https://imgse.com/i/pCMUg1J" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/16/pCMUg1J.png"
+        data-srcset="https://s1.ax1x.com/2023/06/16/pCMUg1J.png, https://s1.ax1x.com/2023/06/16/pCMUg1J.png 1.5x, https://s1.ax1x.com/2023/06/16/pCMUg1J.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/16/pCMUg1J.png"
+        title="pCMUg1J.png" /></a></p>
+<p>Here, the default value for planName is set to $plan_name$, which is one of the system built-in variables in VRO. In our parameter passing, we can use these variables directly. The specific list will pop up for us to select when clicking the Edit button.</p>
+<p>For $text, we directly input the Default Value instead of using VRO built-in system variables, with the input content: &ldquo;Complete parameter passing&rdquo;.</p>
+<p>Finally, let&rsquo;s see what the execution result of this advanced script operation in the Orchestration Plan looks like, and what will appear in our Step Details and Report:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/28/307qk6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/28/307qk6.png, https://s2.ax1x.com/2020/02/28/307qk6.png 1.5x, https://s2.ax1x.com/2020/02/28/307qk6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/28/307qk6.png"
+        title="307qk6.png" /></p>
+<p>How does that feel? Isn&rsquo;t VRO great? Hurry up and give it a try!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-06-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/06/vro-v6-guide-08/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F06%2Fvro-v6-guide-08%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F06%2Fvro-v6-guide-08%2F&amp;text=VRO&#43;Getting&#43;Started&#43;Guide&#43;%288%29&#43;-&#43;Plan&#43;Step&#43;%C2%B7&#43;Part&#43;2" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F06%252Fvro-v6-guide-08%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F06%252Fvro-v6-guide-08%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/06/vro-v6-guide-07/" class="prev" rel="prev" title="VRO Basic Tutorial (Part 7) - Plan Step · Part 1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO Basic Tutorial (Part 7) - Plan Step · Part 1</a>
+            <a href="/en/2023/10/vro-v6-guide-09/" class="next" rel="next" title="VRO Basic Guide (Part 9) - Document Template Analysis">VRO Basic Guide (Part 9) - Document Template Analysis<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Repository on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Repository/</link>
+    <description>Recent content in Repository on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Sat, 12 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Repository/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</link>
+      <pubDate>Sat, 12 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/</guid>
+      <description>&lt;p&gt;In my previous post, I introduced Veeam&amp;rsquo;s Managed Hardened Repository community preview. Today, I&amp;rsquo;ll walk you through the complete installation and configuration process step by step.&lt;/p&gt;&#xA;&lt;p&gt;For this deployment, I used a VMware virtual machine for convenience. If you have dedicated hardware available, you can deploy on physical servers instead. Should you encounter any issues during deployment, please reach out with your feedback - it helps improve the community preview.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso/</link>
+      <pubDate>Thu, 03 Oct 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso/</guid>
+      <description>&lt;p&gt;Since Veeam v11, Veeam introduced the Hardened Backup Repository, which has been widely adopted by Veeam customers worldwide. Many customers have built their own hardened repositories using Linux systems, providing Veeam with secure and reliable data storage that has successfully resisted various ransomware attacks.&lt;/p&gt;&#xA;&lt;p&gt;Over the past few years, to help everyone configure hardened repositories more conveniently, I&amp;rsquo;ve created several scripts and tools:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2021/03/hardened-linux-repository/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Using This Method, Your Backup Data Will No Longer Fear Ransomware&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2022/02/Veeam-hardened-linux-repository-configurator/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Veeam Hardened Linux Repository Configurator&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://blog.backupnext.cloud/2024/02/Veeam-hardened-ubuntu/&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Further Security Hardening of Ubuntu Systems for Veeam Hardened Repositories&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;On September 30th, the Veeam R&amp;amp;D team officially released another deployment method for the Hardened Repository - a Linux ISO for building systems &amp;ldquo;from scratch.&amp;rdquo; Administrators can use this Veeam-packaged ISO to quickly deploy bare-metal servers, install the Hardened Repository operating system, and once installation is complete, the system will have already deployed a series of Veeam Hardened Repository best practices. Administrators can then perform subsequent configuration and management in VBR.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</guid>
+      <description>&lt;p&gt;After the release of Veeam v12, the official documentation provides &lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;methods for further system security hardening&lt;/a&gt; after building a Veeam hardened repository based on Ubuntu 20.04, and offers a fully automated configuration script. Therefore, after using my &lt;a href=&#34;https://github.com/Coku2015/Veeam_Repo_Configurator&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Configurator&lt;/a&gt; to build the Ubuntu repository, you can use this automated configuration script for more secure hardening.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Since the official script includes some US military compliance configurations that are not suitable for Chinese users, I have modified Veeam&amp;rsquo;s official script and republished it to make it suitable for Chinese users.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Hardened Linux Repository Configurator</title>
+      <link>https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/</link>
+      <pubDate>Fri, 25 Feb 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2022/02/veeam-hardened-linux-repository-configurator/</guid>
+      <description>&lt;h2 id=&#34;script-purpose&#34;&gt;Script Purpose&lt;/h2&gt;&#xA;&lt;p&gt;According to Veeam best practices, this one-click script configures a Linux system. After the operating system configuration is complete, you can return to the VBR console to complete the repository addition.&lt;/p&gt;&#xA;&lt;p&gt;For manual configuration and principle introduction, please refer to the following posts:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/veeam-v11-hardened-linux-repository-%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-centos8-1188&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;veeam-v11-hardened-linux-repository-配置指南-centos8&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/%e5%8a%a0%e5%9b%ba%e7%9a%84%e5%a4%87%e4%bb%bd%e5%ad%98%e5%82%a8%e5%ba%93hardened-repository%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-ubuntu-1093&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;加固的备份存储库hardened-repository配置指南-ubuntu&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://community.veeam.com/vug-china-85/veeam-hardened-repository-quick-starter-1410&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;veeam-hardened-repository-quick-starter&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;prerequisites-for-use&#34;&gt;Prerequisites for Use&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Ensure the system meets the minimum requirements for using Veeam Hardened Linux Repository.&lt;/li&gt;&#xA;&lt;li&gt;The server has unformatted disks such as /dev/sdb, /dev/sdc, etc.&lt;/li&gt;&#xA;&lt;li&gt;This script must be run using the root account.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;system-requirements&#34;&gt;System Requirements&lt;/h2&gt;&#xA;&lt;p&gt;This script has been tested on Redhat 8.2/CentOS 8.2/Ubuntu 20.04 and above versions. Other system versions are not currently supported.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

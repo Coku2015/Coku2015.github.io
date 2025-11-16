@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO Basics (Part 4) – Core Components · Part 2 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/02/vao-guide-04/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VAO Basics (Part 4) – Core Components · Part 2">
+  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Key Configuration Points VAO Basics (6) – The First Step of a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive Plan Components The following components must be configured for each scope. Part 3 showed you where to edit them; now we’ll discuss what each component is and how to configure it.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-02-20T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-02-20T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VAO Basics (Part 4) – Core Components · Part 2">
+  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Key Configuration Points VAO Basics (6) – The First Step of a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive Plan Components The following components must be configured for each scope. Part 3 showed you where to edit them; now we’ll discuss what each component is and how to configure it.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-04/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-03/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-05/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO Basics (Part 4) – Core Components · Part 2",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-04\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  1551 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-04\/","datePublished": "2020-02-20T00:00:00+00:00","dateModified": "2020-02-20T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/02/vao-guide-04/">简体中文</option><option value="/en/2020/02/vao-guide-04/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/02/vao-guide-04/">简体中文</option><option value="/en/2020/02/vao-guide-04/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO Basics (Part 4) – Core Components · Part 2</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-02-20">2020-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1551 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index</a></li>
+    <li><a href="#plan-components">Plan Components</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#vm-groups">VM Groups</a>
+              <ul>
+                <li><a href="#vsphere-tags">vSphere Tags</a></li>
+                <li><a href="#import-via-csv">Import via .CSV</a></li>
+                <li><a href="#custom-business-view-policies">Custom Business View policies</a></li>
+              </ul>
+            </li>
+            <li><a href="#recovery-locations">Recovery Locations</a></li>
+            <li><a href="#plan-steps">Plan Steps</a></li>
+            <li><a href="#credentials">Credentials</a></li>
+            <li><a href="#template-jobs">Template Jobs</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Key Configuration Points</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step of a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<h2 id="plan-components">Plan Components</h2>
+<p>The following components must be configured for each scope. Part 3 showed you where to edit them; now we’ll discuss what each component is and how to configure it.</p>
+<h4 id="vm-groups">VM Groups</h4>
+<p>VM Groups define which VMs a scope is allowed to operate on. In other words, they draw the boundary of “which virtual machines belong to this scope, and which production VMs will our Orchestration Plans touch.”</p>
+<p>Unlike simple “check a VM” workflows, VAO does not let you freely select VMs inside the product. Instead, VM groups come from Veeam ONE’s Business View engine, which is tightly integrated with VAO and provides the classification logic. See the docs for details:</p>
+<ul>
+<li><a href="https://helpcenter.veeam.com/docs/vao/categorization/about.html?ver=20" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/vao/categorization/about.html?ver=20</a></li>
+<li><a href="https://helpcenter.veeam.com/docs/one/monitor/bv_categorization_model.html?ver=100" target="_blank" rel="noopener noreffer ">https://helpcenter.veeam.com/docs/one/monitor/bv_categorization_model.html?ver=100</a></li>
+</ul>
+<p>Business View recognizes three approaches:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>1. vSphere tags  
+2. Import via .CSV  
+3. Custom Business View categorization policies</code></pre></div>
+<p>None is inherently superior; pick what your admins feel comfortable with.</p>
+<h5 id="vsphere-tags">vSphere Tags</h5>
+<p>This grouping method needs to be performed in vSphere. By applying different tags to different VMs, VMs with the same tag name will be grouped into the same VM Group, and the name of this VM Group will be the tag name from vSphere.</p>
+<p>This grouping method cannot be modified in the Veeam system - it only needs to be operated in vSphere. After the operation is complete, VAO will receive the operation results after a short wait. This operation is fully automatic synchronization.</p>
+<h5 id="import-via-csv">Import via .CSV</h5>
+<p>This can be done manually or automatically. This operation needs to be performed on the embedded Veeam ONE in VAO. Open the Veeam ONE Monitor console, and you can find the Business View tab in Server Settings. Here you will find options for automatic synchronization from CSV files and manual one-time import from CSV files.</p>
+<p>It should be noted that the grouping method imported this way requires proper organization of the CSV file structure. The structure is as shown in the following table:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Server</th>
+          <th>ObjectType</th>
+          <th>MoRef</th>
+          <th>Category1</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>server.local</td>
+          <td>VirtualMachine</td>
+          <td>vm-01</td>
+          <td>Group1</td>
+      </tr>
+      <tr>
+          <td>server.local</td>
+          <td>VirtualMachine</td>
+          <td>vm-02</td>
+          <td>Excluded</td>
+      </tr>
+  </tbody>
+</table>
+<p>This CSV file can be created and updated manually, or generated by third-party systems.</p>
+<p>Personally, I think this method is rather rigid and not very easy to use.</p>
+<h5 id="custom-business-view-policies">Custom Business View policies</h5>
+<p>Inside Business View, right-click and choose <strong>Add Category</strong> to launch the policy wizard, which can build groups based on attributes. In practice the conditions aren’t as flexible as we’d like, so most environments still land on vSphere tags.</p>
+<p>Therefore, I still recommend everyone to use vSphere Tags for grouping. After completing the operation in vSphere, you just need to wait for a while, and the relevant VM Groups will appear in VAO. As shown in the figure below:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3E8owV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3E8owV.png, https://s2.ax1x.com/2020/02/19/3E8owV.png 1.5x, https://s2.ax1x.com/2020/02/19/3E8owV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3E8owV.png"
+        title="3E8owV.png" /></p>
+<p>Here, the naming combination of VM Groups is <em>vSphere Tags Category Name</em> - <em>vSphere Tag Name</em>. Therefore, we see that the VAO Backup tag in vSphere is displayed as VAO Tags Group - VAO Backup in the VM Groups in VAO. After selecting this VM Group, you can see the list of virtual machines included in this VM Group on the right side of the screen. Click the Include button above to add this VM Group to the currently selected Scope.</p>
+<h4 id="recovery-locations">Recovery Locations</h4>
+<p>Recovery Locations are the physical computing resources that our Orchestration Plan will use during recovery, including the three core resources: Compute, Storage, and Network. When converted to vSphere, they have the following corresponding relationships:</p>
+<table>
+  <thead>
+      <tr>
+          <th>VAO Recovery Locations name</th>
+          <th>vSphere resources</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Compute</td>
+          <td>ESXi、Cluster</td>
+      </tr>
+      <tr>
+          <td>Storage</td>
+          <td>Datastore</td>
+      </tr>
+      <tr>
+          <td>Network</td>
+          <td>Port group names on virtual switches</td>
+      </tr>
+  </tbody>
+</table>
+<p>In VAO, just like selecting VM Groups, we cannot directly select a specific ESXi or Datastore as our Recovery Location. We can only obtain them through the Business View engine embedded in Veeam ONE. Similar to the VM Group settings above, we can group ESXi or Cluster and Datastore through vSphere Tags. After grouping is complete, VAO can read this information. It&rsquo;s slightly more complicated - this information also needs to be arranged in a certain order through the Recovery Locations addition wizard to ensure the corresponding relationship between ESXi, Datastore and port groups on virtual switches.</p>
+<p>Recovery Locations are set in Recovery Locations under Configuration in Administration. After entering this setting interface, you will see that VAO has built a default Recovery Location, which is to restore to the original location of the virtual machine. For this default Recovery Location, we can only edit it and cannot delete it. The content that can be adjusted by editing operations is also very limited.</p>
+<p>We can create new Recovery Locations for restoring to a new location. We can create multiple Recovery Locations here. Through the Add button, we can open the addition wizard:</p>
+<ol>
+<li>
+<p>In Location Info, you only need to fill in the name and description.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3ENar9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3ENar9.png, https://s2.ax1x.com/2020/02/19/3ENar9.png 1.5x, https://s2.ax1x.com/2020/02/19/3ENar9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3ENar9.png"
+        title="3ENar9.png" /></p>
+</li>
+<li>
+<p>In the Compute Resources selection step, select the appropriate ESXi or Cluster corresponding Tags and click Add to add them to this Recovery Location. Of course, the content display here is not very intuitive. VAO provides a view button. Click the View Resource button on the right to see the ESXi or Cluster included under this Tags. If the Tags here are assigned to a certain Cluster, then in View Resources you can only see the name of the Cluster, and when actually executing the plan, VAO needs the Cluster&rsquo;s DRS policy to decide which ESXi Host to place the recovered VM on.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3ENy8O.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3ENy8O.png, https://s2.ax1x.com/2020/02/19/3ENy8O.png 1.5x, https://s2.ax1x.com/2020/02/19/3ENy8O.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3ENy8O.png"
+        title="3ENy8O.png" /></p>
+</li>
+<li>
+<p>In the Storage Resources selection step, please be very careful in your selection. One rather unintelligent point in VAO is that even though this page already prompts &ldquo;Only Storage resources available to the previously selected Compute resources are shown here&rdquo;, Storage Resources will still list some unrelated Storage Groups. They are just not displayed with green checkmarks on the left, but with a green half-circle plus a white half-circle, which means they are partially available for the above Compute Resource. What we need to do is ensure that the selected Storage Group displays a green checkmark, meaning it must be completely available for the Compute Resources selected in the previous layer to avoid various warnings and failures in subsequent Orchestration Plans.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3EN62D.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3EN62D.png, https://s2.ax1x.com/2020/02/19/3EN62D.png 1.5x, https://s2.ax1x.com/2020/02/19/3EN62D.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3EN62D.png"
+        title="3EN62D.png" /></p>
+</li>
+<li>
+<p>Resource Usage, set the upper limit of storage resource usage to ensure storage resources are not exhausted.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3ENcxe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3ENcxe.png, https://s2.ax1x.com/2020/02/19/3ENcxe.png 1.5x, https://s2.ax1x.com/2020/02/19/3ENcxe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3ENcxe.png"
+        title="3ENcxe.png" /></p>
+</li>
+<li>
+<p>Instant VM Recovery, select whether to enable IVR.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3ENdbR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3ENdbR.png, https://s2.ax1x.com/2020/02/19/3ENdbR.png 1.5x, https://s2.ax1x.com/2020/02/19/3ENdbR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3ENdbR.png"
+        title="3ENdbR.png" /></p>
+</li>
+<li>
+<p>Re-IP Rules, VAO has a built-in function to modify IP addresses after disaster recovery or failover. When we need to change the IP of the recovered system, we can use the Re-IP Rules here to modify it. According to the rules set here, VAO automatically applies this rule to systems that meet the conditions. The setting of this rule is also very simple. It can be a one-to-one correspondence of IP subnets. In other words, it only changes the subnet of the corresponding system, while the last digit of the address is not changed. For example, if the address of the source virtual machine is 10.10.1.25, and the corresponding rule is to change from 10.10.1.x to 10.10.3.x, then the result of this change is 10.10.3.25.</p>
+<p>Of course, this can also be single IP address Re-Mapping.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3ENsPK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3ENsPK.png, https://s2.ax1x.com/2020/02/19/3ENsPK.png 1.5x, https://s2.ax1x.com/2020/02/19/3ENsPK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3ENsPK.png"
+        title="3ENsPK.png" /></p>
+</li>
+<li>
+<p>In Network Mapping, you can set the port groups of source VMs to the port groups that need to be used for disaster recovery failover. This will list all port groups from both the source vCenter and the target vCenter. We only need to select the one-to-one correspondence relationship, unlike the previous Compute and Storage which require setting Tags in vSphere to achieve.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3END56.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3END56.png, https://s2.ax1x.com/2020/02/19/3END56.png 1.5x, https://s2.ax1x.com/2020/02/19/3END56.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3END56.png"
+        title="3END56.png" /></p>
+</li>
+</ol>
+<p>After new locations are created, return to <strong>Plan Components</strong> and include the relevant locations per scope:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3EwBOe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3EwBOe.png, https://s2.ax1x.com/2020/02/19/3EwBOe.png 1.5x, https://s2.ax1x.com/2020/02/19/3EwBOe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3EwBOe.png"
+        title="3EwBOe.png" /></p>
+<h4 id="plan-steps">Plan Steps</h4>
+<p>Plan Steps are reusable building blocks that VAO combines when executing a plan. The product includes a wide array of built-in steps (power operations, scripts, waits, checkpoints, etc.), and you can add your own in <strong>Administration → Configuration → Plan Steps</strong>. Once defined, switch back to <strong>Plan Components → Plan Steps</strong> and check <strong>Include</strong> for each step you want available in a scope.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3EBSv8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3EBSv8.png, https://s2.ax1x.com/2020/02/19/3EBSv8.png 1.5x, https://s2.ax1x.com/2020/02/19/3EBSv8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3EBSv8.png"
+        title="3EBSv8.png" /></p>
+<h4 id="credentials">Credentials</h4>
+<p>Plan execution often needs OS-level credentials. VAO automatically inherits every credential stored in VBR; you can also create new ones by clicking <strong>Add</strong>. Then, under <strong>Plan Components → Credentials</strong>, select the appropriate scope and click <strong>Include</strong> so those credentials become available to that scope’s plans.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/19/3EsxoQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/19/3EsxoQ.png, https://s2.ax1x.com/2020/02/19/3EsxoQ.png 1.5x, https://s2.ax1x.com/2020/02/19/3EsxoQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/19/3EsxoQ.png"
+        title="3EsxoQ.png" /></p>
+<h4 id="template-jobs">Template Jobs</h4>
+<p>After VAO completes disaster recovery failover and disaster recovery, it can immediately protect the newly recovered systems at the first opportunity, ensuring that the system is in a protected state at the first time. This function requires VAO to have a template of a VBR backup job as a reference. In each Scope, you can set the Template Job that needs to be used. This Template Job is not set in VAO; it is directly obtained from VBR. The acquisition rule is also very simple: as long as the Description of the job in VBR&rsquo;s Backup Job contains <strong>[VAO TEMPLATE]</strong>, it can be correctly acquired by VAO.</p>
+<p>The above are all the basic components of VAO. Thank you for reading and following.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-02-20</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/02/vao-guide-04/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-04%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-04%2F&amp;text=VAO&#43;Basics&#43;%28Part&#43;4%29&#43;%E2%80%93&#43;Core&#43;Components&#43;%C2%B7&#43;Part&#43;2" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-04%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-04%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/02/vao-guide-03/" class="prev" rel="prev" title="VAO Basics (Part 3) – Core Components · Part 1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO Basics (Part 3) – Core Components · Part 1</a>
+            <a href="/en/2020/02/vao-guide-05/" class="next" rel="next" title="VAO Basics (Part 5) – Essential Configuration Notes">VAO Basics (Part 5) – Essential Configuration Notes<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

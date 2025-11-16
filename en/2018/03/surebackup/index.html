@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It - Cloud.Virt.AI.Sec</title><meta name="description" content="There’s one fundamental truth in backup and recovery that every IT professional eventually learns: you don’t know if your backup archives can actually be …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2018/03/surebackup/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It">
+  <meta property="og:description" content="There’s one fundamental truth in backup and recovery that every IT professional eventually learns: you don’t know if your backup archives can actually be restored until you’ve tried to restore them.
+Veeam has a remarkable feature that automatically verifies backup archive availability online, ensuring your backed-up content can be properly restored when disaster strikes.
+The magic happens because SureBackup starts backup archives as normal virtual machines in an isolated environment, then runs comprehensive automated tests. It checks everything from VM heartbeats and network connectivity to application and service status within the VMs. After testing completes, it generates a detailed verification report about the archive’s recoverability.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-03-05T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It">
+  <meta name="twitter:description" content="There’s one fundamental truth in backup and recovery that every IT professional eventually learns: you don’t know if your backup archives can actually be restored until you’ve tried to restore them.
+Veeam has a remarkable feature that automatically verifies backup archive availability online, ensuring your backed-up content can be properly restored when disaster strikes.
+The magic happens because SureBackup starts backup archives as normal virtual machines in an isolated environment, then runs comprehensive automated tests. It checks everything from VM heartbeats and network connectivity to application and service status within the VMs. After testing completes, it generates a detailed verification report about the archive’s recoverability.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2018/03/surebackup/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/" /><link rel="next" href="https://blog.backupnext.cloud/en/2018/03/vpower-nfs/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "You Only Know if Backup Archives Can Be Restored When You've Actually Done It",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2018\/03\/surebackup\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1277 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2018\/03\/surebackup\/","datePublished": "2018-03-05T00:00:00+00:00","dateModified": "2018-03-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2018/03/surebackup/">简体中文</option><option value="/en/2018/03/surebackup/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2018/03/surebackup/">简体中文</option><option value="/en/2018/03/surebackup/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">You Only Know if Backup Archives Can Be Restored When You've Actually Done It</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-03-05">2018-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1277 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#key-components">Key Components</a></li>
+        <li><a href="#implementation-guide">Implementation Guide</a>
+          <ul>
+            <li><a href="#application-group">Application Group</a></li>
+            <li><a href="#virtual-lab">Virtual Lab</a></li>
+            <li><a href="#surebackup-job">SureBackup Job</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>There&rsquo;s one fundamental truth in backup and recovery that every IT professional eventually learns: you don&rsquo;t know if your backup archives can actually be restored until you&rsquo;ve tried to restore them.</p>
+<p>Veeam has a remarkable feature that automatically verifies backup archive availability online, ensuring your backed-up content can be properly restored when disaster strikes.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        title="1blqUA.png" /></p>
+<p>The magic happens because SureBackup starts backup archives as normal virtual machines in an isolated environment, then runs comprehensive automated tests. It checks everything from VM heartbeats and network connectivity to application and service status within the VMs. After testing completes, it generates a detailed verification report about the archive&rsquo;s recoverability.</p>
+<p>While SureBackup works with both VMware and Hyper-V, I&rsquo;ll focus on VMware environments to explain the technical principles and implementation methods.</p>
+<h3 id="how-it-works">How It Works</h3>
+<p>SureBackup follows a methodical sequence to complete the verification process:</p>
+<blockquote>
+<ol>
+<li>Veeam Backup &amp; Replication publishes Application Groups and target VMs to an isolated sandbox environment called &ldquo;DataLab.&rdquo; These VMs start directly from compressed, deduplicated backup files in the backup repository—no pre-restoration to VMware Datastores required. This relies on Veeam&rsquo;s Instant VM Recovery and vPower NFS Service.</li>
+<li>Veeam performs automated verification tests on Application Groups and target VMs, typically including VM heartbeats, network pings, and custom application script tests.</li>
+<li>After basic verification, you can optionally run file-level CRC checks on backup archives to ensure original files remain unmodified during testing.</li>
+<li>When verification completes, Veeam unpublishes the VMs and generates a test report sent to designated administrators via email.</li>
+</ol>
+</blockquote>
+<p>Throughout verification, Veeam maintains all backup archives in read-only mode. All runtime data gets stored in VM Redo Logs on VMware storage, which Veeam deletes after verification to reclaim temporary space.</p>
+<h3 id="key-components">Key Components</h3>
+<p>Unlike standard backup infrastructure, SureBackup requires several specialized objects:</p>
+<ol>
+<li>
+<p><strong>Application Group</strong>: Some VMs depend on others to start and function properly. Application Groups provide these dependencies—think AD and DNS servers for an Exchange server. When you need to verify an Exchange server, you add VMs providing AD and DNS services to the Application Group to support startup dependencies.</p>
+</li>
+<li>
+<p><strong>Virtual Lab</strong>: An isolated virtual sandbox where Application Group VMs and target VMs start up for testing.</p>
+</li>
+<li>
+<p><strong>SureBackup Job</strong>: The automated or manual task that executes backup archive verification on schedule or demand.</p>
+</li>
+</ol>
+<h3 id="implementation-guide">Implementation Guide</h3>
+<p>SureBackup requires configuring all three components. Let&rsquo;s walk through each one.</p>
+<h4 id="application-group">Application Group</h4>
+<p>These are your production infrastructure&rsquo;s cornerstone services—everything else depends on them. Application Groups define essential VM sets that other verified VMs can&rsquo;t function without.</p>
+<p>Crucially, Application Group VMs start from backup images, not production environment VMs. They must be pre-backed up and include their own verification tests. SureBackup validates Application Group VMs first—if they fail, verification stops entirely because other VMs can&rsquo;t start without their dependencies.</p>
+<p>Keep Application Groups minimal. If target VMs don&rsquo;t need application or service dependencies, don&rsquo;t add VMs to the group.</p>
+<p><strong>Configuration Method</strong></p>
+<p>Creating Application Groups is straightforward. In Veeam Backup &amp; Replication, navigate to Backup Infrastructure, select the SureBackup node, and click &ldquo;Add Application Group.&rdquo;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPjR1.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPjR1.png, https://s2.ax1x.com/2020/02/12/1HPjR1.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPjR1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPjR1.png"
+        title="1HPjR1.png" /></p>
+<p>This launches Veeam&rsquo;s classic wizard interface.</p>
+<p>First, set the Application Group name and description following your organization&rsquo;s naming conventions.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPvxx.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPvxx.png, https://s2.ax1x.com/2020/02/12/1HPvxx.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPvxx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPvxx.png"
+        title="1HPvxx.png" /></p>
+<p>Next, select VMs for this group. You can add VMs from backup archives, replica archives, or storage snapshot archives—each supporting different SureBackup functions (SureBackup/SureReplica/On-demand Sandbox for Storage Snapshots). We&rsquo;ll use &ldquo;From Backup,&rdquo; the most common approach for regular backup verification.</p>
+<p>Remember: Application Group VMs must be pre-backed up—you can&rsquo;t select production environment VMs directly.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPqIJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPqIJ.png, https://s2.ax1x.com/2020/02/12/1HPqIJ.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPqIJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPqIJ.png"
+        title="1HPqIJ.png" /></p>
+<p>After selecting VMs, configure verification options. Application Group VMs must pass verification before other VMs get tested. Options include built-in server roles like DNS Server, Domain Controller, Global Catalog, Mail Server, SQL Server, and Web Server. When selected, Veeam automatically applies predefined verification scripts for each role.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiPde.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiPde.png, https://s2.ax1x.com/2020/02/12/1HiPde.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiPde.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiPde.png"
+        title="1HiPde.png" /></p>
+<p>Additional verification options include startup settings, test scripts, and account credentials—detailed settings helpful for specialized applications. Consult Veeam&rsquo;s official documentation for specific configurations.</p>
+<p>Review your settings on the Summary page to complete the Application Group setup.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HipqO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HipqO.png, https://s2.ax1x.com/2020/02/12/1HipqO.png 1.5x, https://s2.ax1x.com/2020/02/12/1HipqO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HipqO.png"
+        title="1HipqO.png" /></p>
+<h4 id="virtual-lab">Virtual Lab</h4>
+<p>This isolated environment runs your verified VMs. Here, Veeam starts Application Group VMs first, then launches target VMs for verification.</p>
+<p>Virtual Labs consume minimal resources and can deploy on any ESXi host. They request compute resources only when VMs start. Virtual Labs create network environments that completely mirror production networks—VMs maintain identical IP configurations, functioning exactly as they would in production.</p>
+<p>Three critical concepts within Virtual Labs: Proxy Appliance, IP Masquerading, and Static IP Mapping.</p>
+<p><strong>Proxy Appliance</strong></p>
+<p>For production network communication, Veeam uses a Linux-based lightweight Proxy Appliance created in each Virtual Lab. Multiple network cards connect Virtual Lab VMs to the production environment.</p>
+<p><strong>IP Masquerading</strong></p>
+<p>Veeam establishes rules allowing production network access to isolated networks through specific IPs without modifying internal IP configurations.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiAJA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiAJA.png, https://s2.ax1x.com/2020/02/12/1HiAJA.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiAJA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiAJA.png"
+        title="1HiAJA.png" /></p>
+<p>Each production IP gets a corresponding isolated network IP through IP Masquerading. For example, if production uses 172.16.10.10 with IP Masquerading rule 172.16.10.X/24 mapping to 172.18.10.X/24, the VM&rsquo;s masquerade IP becomes 172.18.10.10.</p>
+<p>Veeam adds these as static routes to the VBR backup server and Virtual Lab Client desktops. When accessing 172.18.10.10, the Proxy Appliance acts as a NAT server, forwarding requests to the Virtual Lab VM. The VM&rsquo;s actual IP remains unchanged.</p>
+<p><strong>Static IP Mapping</strong></p>
+<p>Since static routes only get added to VBR servers and Virtual Lab Clients, accessing VMs from multiple clients becomes cumbersome.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiERI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiERI.png, https://s2.ax1x.com/2020/02/12/1HiERI.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiERI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiERI.png"
+        title="1HiERI.png" /></p>
+<p>Veeam provides Static IP Mapping for broader access. Using an available production IP (like 172.16.10.99), you can map it to 172.18.10.10. All network clients then access the Virtual Lab VM via 172.16.10.99 without individual static route configurations.</p>
+<p><strong>Virtual Lab Configuration</strong></p>
+<p>Virtual Labs offer three configuration modes. I&rsquo;ll cover the most common: Advanced Single-Host Virtual Lab.</p>
+<p>Navigate to Backup Infrastructure, select SureBackup, and click &ldquo;Add Virtual Lab.&rdquo;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blyB4.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blyB4.png, https://s2.ax1x.com/2020/02/12/1blyB4.png 1.5x, https://s2.ax1x.com/2020/02/12/1blyB4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blyB4.png"
+        title="1blyB4.png" /></p>
+<p>Set the Virtual Lab name and description following your naming conventions.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl6HJ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl6HJ.png, https://s2.ax1x.com/2020/02/12/1bl6HJ.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl6HJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl6HJ.png"
+        title="1bl6HJ.png" /></p>
+<p>Select the ESXi host—each Virtual Lab runs on only one ESXi host.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blsuF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blsuF.png, https://s2.ax1x.com/2020/02/12/1blsuF.png 1.5x, https://s2.ax1x.com/2020/02/12/1blsuF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blsuF.png"
+        title="1blsuF.png" /></p>
+<p>Choose the datastore for temporary data, Virtual Lab runtime files, and temporary VM Redo logs. Capacity requirements depend on data changes during testing—minimal for typical verification scenarios.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blDjU.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blDjU.png, https://s2.ax1x.com/2020/02/12/1blDjU.png 1.5x, https://s2.ax1x.com/2020/02/12/1blDjU.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blDjU.png"
+        title="1blDjU.png" /></p>
+<p>Configure the Proxy Appliance—essential for fully automated verification and data labs. Without it, all verifications require manual console access. Configure the VM name, IP settings, and internet proxy settings if needed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blh36.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blh36.png, https://s2.ax1x.com/2020/02/12/1blh36.png 1.5x, https://s2.ax1x.com/2020/02/12/1blh36.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blh36.png"
+        title="1blh36.png" /></p>
+<p>Set up isolated networks. Configure one-to-one mappings between production networks (Application Groups and target VMs) and isolated networks. Four production port groups require four corresponding isolated port groups.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blBcT.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blBcT.png, https://s2.ax1x.com/2020/02/12/1blBcT.png 1.5x, https://s2.ax1x.com/2020/02/12/1blBcT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blBcT.png"
+        title="1blBcT.png" /></p>
+<p>Configure network settings. Assign IP addresses to Proxy Appliance vNICs connecting to each isolated network and set IP Masquerading rules. Typically, vNICs get production network gateway addresses, preventing conflicts and eliminating VM modifications.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blgE9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blgE9.png, https://s2.ax1x.com/2020/02/12/1blgE9.png 1.5x, https://s2.ax1x.com/2020/02/12/1blgE9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blgE9.png"
+        title="1blgE9.png" /></p>
+<p>Configure Static IP Mapping as needed—optional for limited client access scenarios.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl4gK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl4gK.png, https://s2.ax1x.com/2020/02/12/1bl4gK.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl4gK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl4gK.png"
+        title="1bl4gK.png" /></p>
+<p>Review your Virtual Lab configuration to complete setup.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blouD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blouD.png, https://s2.ax1x.com/2020/02/12/1blouD.png 1.5x, https://s2.ax1x.com/2020/02/12/1blouD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blouD.png"
+        title="1blouD.png" /></p>
+<h4 id="surebackup-job">SureBackup Job</h4>
+<p>Finally, define which VMs to verify, where to verify them, and when to run verification—all configured in SureBackup Jobs.</p>
+<p>Launch the SureBackup Job creation wizard.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1Himsf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1Himsf.png, https://s2.ax1x.com/2020/02/12/1Himsf.png 1.5x, https://s2.ax1x.com/2020/02/12/1Himsf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1Himsf.png"
+        title="1Himsf.png" /></p>
+<p>Set the job name and description.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blY7j.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blY7j.png, https://s2.ax1x.com/2020/02/12/1blY7j.png 1.5x, https://s2.ax1x.com/2020/02/12/1blY7j.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blY7j.png"
+        title="1blY7j.png" /></p>
+<p>Select the Virtual Lab for running this SureBackup Job.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blUNn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blUNn.png, https://s2.ax1x.com/2020/02/12/1blUNn.png 1.5x, https://s2.ax1x.com/2020/02/12/1blUNn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blUNn.png"
+        title="1blUNn.png" /></p>
+<p>Choose whether Application Groups are needed and which ones to use.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HiVzt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HiVzt.png, https://s2.ax1x.com/2020/02/12/1HiVzt.png 1.5x, https://s2.ax1x.com/2020/02/12/1HiVzt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HiVzt.png"
+        title="1HiVzt.png" /></p>
+<p>Select which backup jobs need verification after completion.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blJBQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blJBQ.png, https://s2.ax1x.com/2020/02/12/1blJBQ.png 1.5x, https://s2.ax1x.com/2020/02/12/1blJBQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blJBQ.png"
+        title="1blJBQ.png" /></p>
+<p>Configure detailed settings for individual VMs within backup jobs—similar to Application Group configurations.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blahq.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blahq.png, https://s2.ax1x.com/2020/02/12/1blahq.png 1.5x, https://s2.ax1x.com/2020/02/12/1blahq.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blahq.png"
+        title="1blahq.png" /></p>
+<p>Set up administrator notifications for verification completion.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl3jS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl3jS.png, https://s2.ax1x.com/2020/02/12/1bl3jS.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl3jS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl3jS.png"
+        title="1bl3jS.png" /></p>
+<p>Schedule the SureBackup Job. Typically, select &ldquo;After this Job&rdquo; to immediately verify backup results after backup completion.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blNAs.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blNAs.png, https://s2.ax1x.com/2020/02/12/1blNAs.png 1.5x, https://s2.ax1x.com/2020/02/12/1blNAs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blNAs.png"
+        title="1blNAs.png" /></p>
+<p>With proper configuration, SureBackup runs automatically, ensuring your backups remain valid and recoverable.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1bl03V.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1bl03V.png, https://s2.ax1x.com/2020/02/12/1bl03V.png 1.5x, https://s2.ax1x.com/2020/02/12/1bl03V.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1bl03V.png"
+        title="1bl03V.png" /></p>
+<p>You&rsquo;ll receive verification reports like this via email.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blw90.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blw90.png, https://s2.ax1x.com/2020/02/12/1blw90.png 1.5x, https://s2.ax1x.com/2020/02/12/1blw90.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blw90.png"
+        title="1blw90.png" /></p>
+<p><strong>A Note on Licensing</strong></p>
+<p>SureBackup is included in Veeam Backup &amp; Replication Enterprise and Enterprise Plus editions. Standard edition users must rely on completely manual backup archive verification methods.</p>
+<p>The wisdom in the Chinese title rings true: backup archive recoverability is something you only truly understand after you&rsquo;ve actually done it. SureBackup transforms this practical wisdom into automated assurance.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2018-03-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2018/03/surebackup/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F03%2Fsurebackup%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F03%2Fsurebackup%2F&amp;text=You&#43;Only&#43;Know&#43;if&#43;Backup&#43;Archives&#43;Can&#43;Be&#43;Restored&#43;When&#43;You%27ve&#43;Actually&#43;Done&#43;It" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F03%252Fsurebackup%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F03%252Fsurebackup%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2018/01/centrilized-agent-management/" class="prev" rel="prev" title="First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management</a>
+            <a href="/en/2018/03/vpower-nfs/" class="next" rel="next" title="Veeam Cutting-edge Technology: vPower NFS">Veeam Cutting-edge Technology: vPower NFS<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

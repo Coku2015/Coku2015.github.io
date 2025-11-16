@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP - Cloud.Virt.AI.Sec</title><meta name="description" content="The highly flexible nature of Linux as an open-source system allows everyone to use it in their own unique way. This flexibility often creates compatibility …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/11/veeam-agent-for-linux-nosnap/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP">
+  <meta property="og:description" content="The highly flexible nature of Linux as an open-source system allows everyone to use it in their own unique way. This flexibility often creates compatibility challenges for backup software that depends deeply on the operating system. Even minor changes can cause backup failures, which is why backup software typically maintains a compatibility list—systems not on this list usually won’t work properly.
+These issues are common throughout the open-source world. While there’s no single solution to solve everything at once, addressing the majority of cases would be a significant improvement, wouldn’t it?">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-11-25T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP">
+  <meta name="twitter:description" content="The highly flexible nature of Linux as an open-source system allows everyone to use it in their own unique way. This flexibility often creates compatibility challenges for backup software that depends deeply on the operating system. Even minor changes can cause backup failures, which is why backup software typically maintains a compatibility list—systems not on this list usually won’t work properly.
+These issues are common throughout the open-source world. While there’s no single solution to solve everything at once, addressing the majority of cases would be a significant improvement, wouldn’t it?">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2024/11/veeam-agent-for-linux-nosnap/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2024/10/veeam-hardened-repository-iso-2/" /><link rel="next" href="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2024\/11\/veeam-agent-for-linux-nosnap\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "backup","wordcount":  1111 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2024\/11\/veeam-agent-for-linux-nosnap\/","datePublished": "2024-11-25T00:00:00+00:00","dateModified": "2024-11-25T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/11/veeam-agent-for-linux-nosnap/">简体中文</option><option value="/en/2024/11/veeam-agent-for-linux-nosnap/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2024/11/veeam-agent-for-linux-nosnap/">简体中文</option><option value="/en/2024/11/veeam-agent-for-linux-nosnap/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Backing Up Various Custom Linux Distributions with Veeam Agent for Linux NOSNAP</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-11-25">2024-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1111 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#where-to-find-this-agent">Where to Find This Agent?</a></li>
+        <li><a href="#installation-and-configuration">Installation and Configuration</a></li>
+        <li><a href="#backup-modes">Backup Modes</a></li>
+        <li><a href="#lvm-snapshot-prerequisites">LVM Snapshot Prerequisites</a></li>
+        <li><a href="#backup-and-recovery">Backup and Recovery</a></li>
+        <li><a href="#bmr-recovery-process">BMR Recovery Process</a></li>
+        <li><a href="#important-considerations">Important Considerations</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>The highly flexible nature of Linux as an open-source system allows everyone to use it in their own unique way. This flexibility often creates compatibility challenges for backup software that depends deeply on the operating system. Even minor changes can cause backup failures, which is why backup software typically maintains a compatibility list—systems not on this list usually won&rsquo;t work properly.</p>
+<p>These issues are common throughout the open-source world. While there&rsquo;s no single solution to solve everything at once, addressing the majority of cases would be a significant improvement, wouldn&rsquo;t it?</p>
+<p>In Veeam Agent for Linux, there&rsquo;s a special working mode that I call the &ldquo;universal mode.&rdquo; It doesn&rsquo;t require loading the Veeamsnap driver or compiling drivers using dkms modules, making it compatible with most environments and enabling data backups in non-standard environments.</p>
+<p>As we know, Veeam&rsquo;s official list of supported Linux operating systems is limited. Popular Chinese distributions like EulerOS, Loongnix, UOS, and Kylin typically can&rsquo;t be installed using the standard Veeam Linux Agent configuration steps. This is where manually installing Veeam Linux Agent in no-snap mode can solve the problem, allowing these systems to back up to Veeam repositories.</p>
+<p>Additionally, with a few additional conditions, you can even achieve entire machine backup and Bare Metal Recovery (BMR).</p>
+<p>This article uses OpenEuler as an example to walk through the entire process and highlight important considerations.</p>
+<h3 id="where-to-find-this-agent">Where to Find This Agent?</h3>
+<p>Like other Veeam Agents for Linux, we have two ways to obtain this agent installation package. One method is through the VBR console, where we simply need to create a Protection Group of type <code>Computers with pre-installed backup agents</code>.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png"
+        data-srcset="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png, https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png 1.5x, https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/E6OepKzJVAI3YoL.png"
+        title="Xnip2024-11-23_13-15-37" /></p>
+<p>In the creation wizard, you&rsquo;ll find various Linux versions of Nosnap agents. For our experiment with the Red Hat-based Euler system, we&rsquo;ll select <code>Red Hat 9 x64 no-snap - 6.2.0.101</code>.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png"
+        data-srcset="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png, https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png 1.5x, https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/IaeRylhOztMubLN.png"
+        title="Xnip2024-11-23_13-18-08" /></p>
+<p>After setting up the Export path, click Apply to generate the no-snap installation package. You&rsquo;ll find the corresponding rpm package in the Export path.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png"
+        data-srcset="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png, https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png 1.5x, https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/XQIZ1Rq4j2iafmk.png"
+        title="Xnip2024-11-23_13-18-33" /></p>
+<p>Alternatively, you can download the nosnap package directly from Veeam&rsquo;s official software repository.</p>
+<p>The URL is: <a href="https://repository.veeam.com/backup/linux/agent/rpm/el/9/x86_64/" target="_blank" rel="noopener noreffer ">https://repository.veeam.com/backup/linux/agent/rpm/el/9/x86_64/</a></p>
+<p>For the latest version, you&rsquo;ll need to download two files: veeam-nosnap-6.2.0.101-1.el9.x86_64.rpm and veeam-libs-6.2.0.101-1.x86_64.rpm.</p>
+<h3 id="installation-and-configuration">Installation and Configuration</h3>
+<p>Installing this package is straightforward—simply run the command <code>yum install ~/nosnap/veeam*</code>. Yum will automatically resolve the required dependencies. Generally, there are no additional dependencies needed, and the installation completes within seconds.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png"
+        data-srcset="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png, https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png 1.5x, https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/n48HXxrb2ZCM19T.png"
+        title="Xnip2024-11-23_16-54-58" /></p>
+<p>After installation, return to the VBR console and either find a suitable Protection Group or create a new one, then add this machine to it. This allows VBR to manage the OpenEuler system.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png"
+        data-srcset="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png, https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png 1.5x, https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/3sDrLqCpFEWOZen.png"
+        title="Xnip2024-11-23_16-59-37" /></p>
+<p>Give the new Protection Group a name:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png"
+        data-srcset="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png, https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png 1.5x, https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/PdnbtLm2J8qH3Ne.png"
+        title="Xnip2024-11-23_17-00-01" /></p>
+<p>Add the target computer using its IP address:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png"
+        data-srcset="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png, https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png 1.5x, https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/oOxPqcJHu1Sa7nB.png"
+        title="Xnip2024-11-23_17-05-49" /></p>
+<p>After adding and completing the wizard, VBR will detect the pre-installed Agent on the target server. Once it finds the agent, it won&rsquo;t check for compatibility or installation requirements, instead using the existing installation directly.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png"
+        data-srcset="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png, https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png 1.5x, https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/9A4ITO5cFqPQaZX.png"
+        title="Xnip2024-11-23_17-07-32" /></p>
+<p>At this point, the VBR console correctly displays the current operating system as OpenEuler.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png"
+        data-srcset="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png, https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png 1.5x, https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/LZlMQ6Nuib4njco.png"
+        title="Xnip2024-11-23_17-07-53" /></p>
+<h3 id="backup-modes">Backup Modes</h3>
+<p>The no-snap Linux agent isn&rsquo;t completely without snapshots. This agent actually has two working modes. One truly doesn&rsquo;t take snapshots, which means some open files—like those being edited during backup—might be skipped. The other mode doesn&rsquo;t use Veeamsnap but instead uses LVM volume snapshots as a substitute. This mode works almost identically to Veeamsnap, with the main difference being the snapshot technology used. All prerequisites for LVM snapshots must be met for this mode to work properly.</p>
+<h3 id="lvm-snapshot-prerequisites">LVM Snapshot Prerequisites</h3>
+<p>Simply put, you need sufficient Free PE space. You can check this space using the <code>vgdisplay</code> command, as shown below.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png"
+        data-srcset="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png, https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png 1.5x, https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/Ek2dSUHqQ1fvFXn.png"
+        title="Xnip2024-11-23_16-58-44" /></p>
+<p>LVM volume snapshots store changed data in this area, so when planning LVM partition layout, you need to allocate space for this region—at least 10-20% of total disk capacity.</p>
+<h3 id="backup-and-recovery">Backup and Recovery</h3>
+<p>Backup and recovery are straightforward. Veeam Agent automatically detects the underlying configuration and uses LVM volume snapshot capabilities for data backup. For recovery options, all standard recovery methods are available for these backup archives, including BMR recovery.</p>
+<p>When using LVM volume snapshots for backup, you can choose either <code>Entire Machine</code> or <code>Volume level backup</code> mode in the backup job settings.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png"
+        data-srcset="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png, https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png 1.5x, https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/4Cb2fH8iqGsrDN6.png"
+        title="Xnip2024-11-23_17-09-07" /></p>
+<p>This allows the backup job to properly utilize snapshots during execution.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png"
+        data-srcset="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png, https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png 1.5x, https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/PMusKBy1efhD4aZ.png"
+        title="Xnip2024-11-23_17-17-05" /></p>
+<p>After backup completion, all standard recovery options are available, including BMR, FLR, application item recovery, cross-platform migration, and more.</p>
+<p>For bare metal BMR recovery, you&rsquo;ll need to download the appropriate Recovery Media from Veeam&rsquo;s official software repository to boot the bare metal server. The download URL is:</p>
+<p><a href="https://repository.veeam.com/backup/linux/agent/veeam-recovery-media/x64/veeam-recovery-amd64-6.0.0.iso" target="_blank" rel="noopener noreffer ">https://repository.veeam.com/backup/linux/agent/veeam-recovery-media/x64/veeam-recovery-amd64-6.0.0.iso</a></p>
+<h3 id="bmr-recovery-process">BMR Recovery Process</h3>
+<p>After booting the server with this downloaded ISO, the target server will automatically enter Veeam&rsquo;s boot interface. On this screen, select the first option <code>Veeam recovery 6.1.0-23-amd64</code>.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png"
+        data-srcset="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png, https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png 1.5x, https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/HAIP3QlkRTZi1Gu.png"
+        title="Xnip2024-11-24_15-03-40" /></p>
+<p>After selection, the system will prompt for SSH connection. If console access is inconvenient, you can choose &ldquo;Start SSH now&rdquo; to enable remote SSH control for recovery through the Veeam Recovery Media.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png"
+        data-srcset="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png, https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png 1.5x, https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/5QoZpFyjKvODNXs.png"
+        title="Xnip2024-11-24_15-03-55" /></p>
+<p>Next, as usual before use, you&rsquo;ll need to accept the license agreement. Select both options with <code>X</code> and choose <code>Continue</code> to proceed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png"
+        data-srcset="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png, https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png 1.5x, https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/6VGHbxczotvSlpm.png"
+        title="Xnip2024-11-24_15-04-42" /></p>
+<p>The system will then enter the Veeam Recovery Media main recovery menu, which includes volume recovery, file recovery, network configuration, return to shell, and restart/shutdown options.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png"
+        data-srcset="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png, https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png 1.5x, https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/dqheRHX3WU6FYTw.png"
+        title="Xnip2024-11-24_15-04-59" /></p>
+<p>Before use, let&rsquo;s configure the network so we can connect to the VBR server via network interface to read backup archives. Network configuration is straightforward—just set up a standard IPv4 address and configure DNS servers as needed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png"
+        data-srcset="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png, https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png 1.5x, https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/K2b87FR9MnGXUva.png"
+        title="Xnip2024-11-24_15-06-23" /></p>
+<p>After configuring the IP address, clicking &ldquo;Restore Volume&rdquo; will bring up the backup location selection window. Here we select the VBR backup server.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png"
+        data-srcset="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png, https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png 1.5x, https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/eZPVfU3h8i9T7Rw.png"
+        title="Xnip2024-11-24_15-07-03" /></p>
+<p>Note that for more secure recovery, you need to create a Token for the relevant backup archive on the backup server. After creating the token, save it carefully—it defaults to being valid for 24 hours.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png"
+        data-srcset="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png, https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png 1.5x, https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/3fYDH9STz6GlKOd.png"
+        title="Xnip2024-11-24_15-08-38" /></p>
+<p>On the backup server connection screen, enter the IP address and port, select &ldquo;Recovery Token,&rdquo; input the newly generated token, and click Next to connect.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png"
+        data-srcset="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png, https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png 1.5x, https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/sMgAy1BY7H6PWZm.png"
+        title="Xnip2024-11-24_15-11-32" /></p>
+<p>If there are issues with self-signed certificate trust, you might see a warning like I did. This isn&rsquo;t a major issue—simply select Accept.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png"
+        data-srcset="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png, https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png 1.5x, https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/cts6G5fNOLxA8Uh.png"
+        title="Xnip2024-11-24_15-11-54" /></p>
+<p>At this point, your restore points will appear. Select the restore point to proceed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png"
+        data-srcset="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png, https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png 1.5x, https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/iE8qUojA6XgRTL7.png"
+        title="Xnip2024-11-24_15-12-27" /></p>
+<p>The system will automatically read current partitions. If partition sizes are the same, you can automatically select the relevant devices on the right for mapping. After mapping is complete, press S to begin automatic recovery.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png"
+        data-srcset="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png, https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png 1.5x, https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/11/24/zudAtVTZkNIPKef.png"
+        title="Xnip2024-11-24_15-13-52" /></p>
+<p>Other recovery methods include instant VM recovery, file-level recovery, and export to VHD and VMDK formats.</p>
+<h3 id="important-considerations">Important Considerations</h3>
+<p>When using the no-snap method for data backup and recovery, Veeam&rsquo;s official system support list remains important. While operating systems not on the official support list may work properly, Veeam&rsquo;s official support team won&rsquo;t provide售后 support for these systems. Any technical issues will need to be resolved by our skilled Linux system administrators.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-11-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2024/11/veeam-agent-for-linux-nosnap/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F11%2Fveeam-agent-for-linux-nosnap%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F11%2Fveeam-agent-for-linux-nosnap%2F&amp;text=Backing&#43;Up&#43;Various&#43;Custom&#43;Linux&#43;Distributions&#43;with&#43;Veeam&#43;Agent&#43;for&#43;Linux&#43;NOSNAP" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F11%252Fveeam-agent-for-linux-nosnap%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F11%252Fveeam-agent-for-linux-nosnap%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2024/10/veeam-hardened-repository-iso-2/" class="prev" rel="prev" title="[Community Preview] Managed Hardened Repository ISO by Veeam (Part 2)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Community Preview] Managed Hardened Repository ISO by Veeam (Part 2)</a>
+            <a href="/en/2024/12/vdp-v12-other-security-features-deep-dive-01/" class="next" rel="next" title="VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents">VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

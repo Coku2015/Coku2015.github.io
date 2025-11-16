@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Basics (Part 3) - Core Components · Part 1 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index: VRO Basics (Part 1) - Introduction VRO Basics (Part 2) - Installation &amp; Deployment VRO Basics (Part 3) - Core Components · Part 1 VRO Basics (Part …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-03/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Basics (Part 3) - Core Components · Part 1">
+  <meta property="og:description" content="Series Index: VRO Basics (Part 1) - Introduction VRO Basics (Part 2) - Installation &amp; Deployment VRO Basics (Part 3) - Core Components · Part 1 VRO Basics (Part 4) - Core Components · Part 2 VRO Basics (Part 5) - The First Step of a Successful DR Plan VRO Basics (Part 6) - DataLabs VRO Basics (Part 7) - Plan Steps · Part 1 VRO Basics (Part 8) - Plan Steps · Part 2 VRO Basics (Part 9) - Document Template Deep Dive VRO Basics (Part 10) - Using VRO with K10 for Fully Automated Container DR As a disaster recovery management system, access control is critically important. Therefore, I want to start by explaining VRO’s role-based permission management. In VRO, this permission management system isn’t called RBAC. Instead, VRO uses Scopes to control all user access permissions. Scopes determine which backup and DR resources users can access in VRO and what operations they can perform on those resources.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-26T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-05-26T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Basics (Part 3) - Core Components · Part 1">
+  <meta name="twitter:description" content="Series Index: VRO Basics (Part 1) - Introduction VRO Basics (Part 2) - Installation &amp; Deployment VRO Basics (Part 3) - Core Components · Part 1 VRO Basics (Part 4) - Core Components · Part 2 VRO Basics (Part 5) - The First Step of a Successful DR Plan VRO Basics (Part 6) - DataLabs VRO Basics (Part 7) - Plan Steps · Part 1 VRO Basics (Part 8) - Plan Steps · Part 2 VRO Basics (Part 9) - Document Template Deep Dive VRO Basics (Part 10) - Using VRO with K10 for Fully Automated Container DR As a disaster recovery management system, access control is critically important. Therefore, I want to start by explaining VRO’s role-based permission management. In VRO, this permission management system isn’t called RBAC. Instead, VRO uses Scopes to control all user access permissions. Scopes determine which backup and DR resources users can access in VRO and what operations they can perform on those resources.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-03/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/05/vro-v6-guide-04/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Basics (Part 3) - Core Components · Part 1",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/05\/vro-v6-guide-03\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  1144 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/05\/vro-v6-guide-03\/","datePublished": "2023-05-26T00:00:00+00:00","dateModified": "2023-05-26T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/05/vro-v6-guide-03/">简体中文</option><option value="/en/2023/05/vro-v6-guide-03/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/05/vro-v6-guide-03/">简体中文</option><option value="/en/2023/05/vro-v6-guide-03/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Basics (Part 3) - Core Components · Part 1</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-26">2023-05-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1144 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index:</a></li>
+    <li><a href="#scope-operation-permissions">Scope Operation Permissions</a></li>
+    <li><a href="#scope-creation-and-user-assignment">Scope Creation and User Assignment</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#configuring-scope-inclusions">Configuring Scope Inclusions</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#datalabs">DataLabs</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#lab-groups">Lab Groups</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 2) - Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 3) - Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 4) - Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 5) - The First Step of a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 6) - DataLabs</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 7) - Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 8) - Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 9) - Document Template Deep Dive</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 10) - Using VRO with K10 for Fully Automated Container DR</a></li>
+</ul>
+<p>As a disaster recovery management system, access control is critically important. Therefore, I want to start by explaining VRO&rsquo;s role-based permission management. In VRO, this permission management system isn&rsquo;t called RBAC. Instead, VRO uses <strong>Scopes</strong> to control all user access permissions. Scopes determine which backup and DR resources users can access in VRO and what operations they can perform on those resources.</p>
+<h2 id="scope-operation-permissions">Scope Operation Permissions</h2>
+<p>Let&rsquo;s first discuss Scope operation permissions. Similar to other systems&rsquo; RBAC permission classification settings, in VRO, these permission categories are called <strong>Scope Inclusions</strong>, which include the following five types:</p>
+<ul>
+<li>Groups</li>
+<li>Recovery Locations</li>
+<li>Plan Steps</li>
+<li>Credentials</li>
+<li>Template Jobs</li>
+</ul>
+<p>For a Scope that has operational permissions on any resource within these five Scope Inclusions categories, that Scope can use this object. Each of these five major object types can belong to different Scopes simultaneously.</p>
+<p>Additionally, there&rsquo;s a very special object in Scopes &ndash; <strong>DataLab</strong>. Each DataLab corresponds one-to-one with a Scope, meaning every Scope has <strong>one or more</strong> independent DataLabs that belong exclusively to it.</p>
+<p>Scope Inclusions will be covered in detail in <a href="https://blog.backupnext.cloud/_posts/2020-02-20-VRO-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Basics (Part 4) - Core Components · Part 2</a>.</p>
+<h2 id="scope-creation-and-user-assignment">Scope Creation and User Assignment</h2>
+<p>Each Scope can be assigned three different role types:</p>
+<ul>
+<li><strong>Administrators</strong> - Can perform all operations</li>
+<li><strong>Plan Authors</strong> - Can enable, disable, reset, create, edit, and test disaster recovery plans</li>
+<li><strong>Plan Operators</strong> - Can only handle disaster recovery plans that are in an enabled state</li>
+</ul>
+<p>VRO has a built-in Admin Scope. By default, the Administrator role in this Scope has the highest privileges and can perform all operations. Users can create new Scopes to limit different permissions for different users and allow them to perform different operations.</p>
+<p>For user-created Scopes, you can modify the name and delete them. The roles for these Scopes are limited to Plan Authors and Plan Operators. Taking Plan Authors as an example, in each Scope&rsquo;s Plan Authors role, we can add different users to that Scope. As shown in the figure below:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3F05i6.png, https://s2.ax1x.com/2020/02/18/3F05i6.png 1.5x, https://s2.ax1x.com/2020/02/18/3F05i6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        title="3F05i6.png" /></p>
+<p>In VRO, this Scope concept can be difficult to understand, but don&rsquo;t worry &ndash; let me use an analogy to explain it:</p>
+<p>You can think of Scopes as rooms, where each room has a lock with multiple keys. We distribute these keys to different users, so these users can enter <code>Room (Scope A)</code> with key A, <code>Room (Scope B)</code> with key B, and <code>Room (Scope C)</code> with key C. This forms VRO&rsquo;s special permission management system:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>Current rooms (Scopes): A, B, C, D
+
+User 1: Has keys for rooms A and B.
+
+User 2: Has keys for rooms B, C, and D.
+
+User 3: Has key for room D.</code></pre></div>
+<p>Converting this to VRO&rsquo;s Scope management:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>Room (Scope A): User 1
+
+Room (Scope B): User 1, User 2
+
+Room (Scope C): User 2
+
+Room (Scope D): User 2, User 3</code></pre></div>
+<p>The method of distributing keys is by setting <code>Users and Scopes</code> in VRO. In VRO, after logging in with a User who has the Administrator Role, you can go to the <code>Administration</code> interface, find <code>Permissions -&gt; Users and Scope</code> to set the above management permissions, as shown below:</p>
+<p><a href="https://imgse.com/i/p9qF3nI" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qF3nI.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qF3nI.png, https://s1.ax1x.com/2023/05/26/p9qF3nI.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qF3nI.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qF3nI.png"
+        title="p9qF3nI.png" /></a></p>
+<p>After completing these settings, when we log back into the VRO system with test01, we can see the current user&rsquo;s Scopes displayed on the Dashboard as shown below:</p>
+<p><a href="https://imgse.com/i/p9qFljA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qFljA.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qFljA.png, https://s1.ax1x.com/2023/05/26/p9qFljA.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qFljA.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qFljA.png"
+        title="p9qFljA.png" /></a></p>
+<p>Similarly, when the test02 user logs into the system, they will see rooms B, C, and D, while test03 will only see room D after logging in.</p>
+<h4 id="configuring-scope-inclusions">Configuring Scope Inclusions</h4>
+<p>Go to the <code>Administration</code> interface, under <code>Permissions</code>, you can find <code>Scope Inclusions</code>. On this interface, you can set different available components for each <code>Scope</code>. As shown in the figure below, you can select a Scope in the red box area to switch and configure.</p>
+<p><a href="https://imgse.com/i/p9qF8Bt" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qF8Bt.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qF8Bt.png, https://s1.ax1x.com/2023/05/26/p9qF8Bt.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qF8Bt.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qF8Bt.png"
+        title="p9qF8Bt.png" /></a></p>
+<p>You&rsquo;ll notice this is a checkbox, meaning you can select multiple Scopes simultaneously for related settings. However, for more accurate configuration of related content, I still recommend checking and configuring each Scope individually.</p>
+<h2 id="datalabs">DataLabs</h2>
+<p>VRO&rsquo;s DataLab is essentially the Virtual Lab from VBR. As long as Virtual Lab is configured in VBR, VRO can directly recognize it. After detecting these Virtual Labs, VRO needs to perform an allocation action, assigning these Virtual Labs to different Scopes according to actual usage needs. It&rsquo;s important to note that each Virtual Lab can only be assigned to one specific Scope.</p>
+<p>To assign DataLab, you can use an Administrator account to enter the <code>Administration</code> interface, find <code>Datalab Configuration</code> under <code>Permissions</code>. On this page, check the Virtual Lab name scanned by VRO in the middle column, then click the Edit button.</p>
+<p><a href="https://imgse.com/i/p9qk324" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qk324.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qk324.png, https://s1.ax1x.com/2023/05/26/p9qk324.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qk324.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qk324.png"
+        title="p9qk324.png" /></a></p>
+<p>After clicking the Edit button, the Edit DataLab Configuration dialog will open. Here, simply select which Scope to assign it to. As shown below:</p>
+<p><a href="https://imgse.com/i/p9qkEvj" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qkEvj.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qkEvj.png, https://s1.ax1x.com/2023/05/26/p9qkEvj.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qkEvj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qkEvj.png"
+        title="p9qkEvj.png" /></a></p>
+<p>If you need to adjust or reassign DataLab, you can check the Virtual Lab name, then click the Edit button again to return to the previous wizard interface, and use the Clear button to cancel the association.</p>
+<h4 id="lab-groups">Lab Groups</h4>
+<p>I believe those familiar with DataLabs will be curious &ndash; we know that VBR&rsquo;s DataLabs functionality includes three core components: Virtual Lab, Application Group, and SureBackup Job. So in VRO, we&rsquo;ve made DataLab correspond one-to-one with VBR&rsquo;s Virtual Lab, but where did the remaining Application Group and SureBackup Job go?</p>
+<p>In VRO, there&rsquo;s also a component that corresponds one-to-one with VBR&rsquo;s Application Group &ndash; that&rsquo;s <strong>Lab Groups</strong>. There&rsquo;s no Lab Groups setting in the Administration console. Lab Groups need to be configured by each user logging into their own VRO console with their respective account and entering the DataLabs main page to make settings. Unlike Virtual Lab, Lab Groups are not inherited from VBR&rsquo;s Application Groups. In VRO, Lab Groups are created from scratch and need to be created using objects within VRO.</p>
+<p><a href="https://imgse.com/i/p9qFM1H" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qFM1H.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qFM1H.png, https://s1.ax1x.com/2023/05/26/p9qFM1H.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qFM1H.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qFM1H.png"
+        title="p9qFM1H.png" /></a></p>
+<p>Generally, Lab Groups can remain empty, which is completely consistent with what we mentioned in the Application Group explanation. Unless there are business dependencies that require relying on a certain system to run, in that case, we need to put this system that other systems depend on into the Lab Group.</p>
+<p><a href="https://imgse.com/i/p9qFQcd" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/05/26/p9qFQcd.png"
+        data-srcset="https://s1.ax1x.com/2023/05/26/p9qFQcd.png, https://s1.ax1x.com/2023/05/26/p9qFQcd.png 1.5x, https://s1.ax1x.com/2023/05/26/p9qFQcd.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/05/26/p9qFQcd.png"
+        title="p9qFQcd.png" /></a></p>
+<p>As for SureBackup Job, it&rsquo;s no longer needed in VRO. This Job is automatically integrated into the Orchestration Plan, so I won&rsquo;t elaborate here &ndash; it will be covered in detail in later chapters.</p>
+<p>That concludes the main content of this chapter. Thank you for your attention.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/05/vro-v6-guide-03/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F05%2Fvro-v6-guide-03%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F05%2Fvro-v6-guide-03%2F&amp;text=VRO&#43;Basics&#43;%28Part&#43;3%29&#43;-&#43;Core&#43;Components&#43;%C2%B7&#43;Part&#43;1" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F05%252Fvro-v6-guide-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F05%252Fvro-v6-guide-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/05/vro-v6-guide-02/" class="prev" rel="prev" title="VRO Basics (Part 2) – Install &amp; Deploy"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO Basics (Part 2) – Install & Deploy</a>
+            <a href="/en/2023/05/vro-v6-guide-04/" class="next" rel="next" title="VRO Basic Guide (Part 4) - Basic Components · Volume 2">VRO Basic Guide (Part 4) - Basic Components · Volume 2<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

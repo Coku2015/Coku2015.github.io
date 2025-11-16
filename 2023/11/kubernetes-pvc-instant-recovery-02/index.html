@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复 - 虚化人生</title><meta name="description" content="上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。
+        <title>极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复 - 云虚智安</title><meta name="description" content="上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。
 K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安 …"><meta property="og:url" content="https://blog.backupnext.cloud/2023/11/kubernetes-pvc-instant-recovery-02/">
-  <meta property="og:site_name" content="虚化人生">
+  <meta property="og:site_name" content="云虚智安">
   <meta property="og:title" content="极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复">
   <meta property="og:description" content="上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。
 K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：">
@@ -25,8 +25,8 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
   <meta name="twitter:title" content="极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复">
   <meta name="twitter:description" content="上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。
 K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：">
-<meta name="application-name" content="虚化人生">
-<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2023/11/kubernetes-pvc-instant-recovery-02/" /><link rel="prev" href="https://blog.backupnext.cloud/2023/11/kubernetes-pvc-instant-recovery-01/" /><link rel="next" href="https://blog.backupnext.cloud/2023/11/vro-v6-guide-10/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -41,9 +41,9 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
             "@type": "WebPage",
             "@id": "https:\/\/blog.backupnext.cloud\/2023\/11\/kubernetes-pvc-instant-recovery-02\/"
         },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware, Kubernetes, Instant Recovery","wordcount":  1407 ,
-        "url": "https:\/\/blog.backupnext.cloud\/2023\/11\/kubernetes-pvc-instant-recovery-02\/","datePublished": "2023-11-05T00:00:00+00:00","dateModified": "2023-11-05T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+        "url": "https:\/\/blog.backupnext.cloud\/2023\/11\/kubernetes-pvc-instant-recovery-02\/","datePublished": "2023-11-05T00:00:00+00:00","dateModified": "2023-11-05T00:00:00+00:00","publisher": {
             "@type": "Organization",
-            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Lei Wei"
             },"description": ""
@@ -65,7 +65,7 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="虚化人生">虚化人生</a>
+            <a href="/" title="云虚智安">云虚智安</a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
@@ -81,6 +81,9 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
                         </span>
                     </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-02/" selected>简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-02/">English</option></select>
                 </a></div>
         </div>
     </div>
@@ -88,7 +91,7 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="虚化人生">虚化人生</a>
+                <a href="/" title="云虚智安">云虚智安</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -112,7 +115,10 @@ K10 安装和配置 首先是 K10 安装，没啥特别之处，用官网标准�
                     </a>
                 </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/11/kubernetes-pvc-instant-recovery-02/" selected>简体中文</option><option value="/en/2023/11/kubernetes-pvc-instant-recovery-02/">English</option></select>
+                </div></div>
     </div>
 </header><div class="search-dropdown desktop">
         <div id="search-dropdown-desktop"></div>

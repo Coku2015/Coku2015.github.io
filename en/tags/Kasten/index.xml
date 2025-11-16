@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kasten on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Kasten/</link>
+    <description>Recent content in Kasten on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 26 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Kasten/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting Up Multi-Factor Authentication for Kasten with Azure EntraID</title>
+      <link>https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/</link>
+      <pubDate>Mon, 26 May 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/</guid>
+      <description>&lt;p&gt;In the world of Kubernetes backup and recovery, security isn&amp;rsquo;t just a feature—it&amp;rsquo;s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn&amp;rsquo;t just about adding another security layer; it&amp;rsquo;s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

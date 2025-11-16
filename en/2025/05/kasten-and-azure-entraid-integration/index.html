@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Setting Up Multi-Factor Authentication for Kasten with Azure EntraID - Cloud.Virt.AI.Sec</title><meta name="description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
+  <meta property="og:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
+Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn’t just about adding another security layer; it’s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-26T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-05-26T00:00:00+00:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Kasten">
+    <meta property="article:tag" content="Azure">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
+  <meta name="twitter:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
+Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn’t just about adding another security layer; it’s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/" /><link rel="next" href="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-01/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Setting Up Multi-Factor Authentication for Kasten with Azure EntraID",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2025\/05\/kasten-and-azure-entraid-integration\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Kubernetes, Kasten, Azure, Security","wordcount":  1457 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2025\/05\/kasten-and-azure-entraid-integration\/","datePublished": "2025-05-26T00:00:00+00:00","dateModified": "2025-05-26T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/05/kasten-and-azure-entraid-integration/">简体中文</option><option value="/en/2025/05/kasten-and-azure-entraid-integration/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/05/kasten-and-azure-entraid-integration/">简体中文</option><option value="/en/2025/05/kasten-and-azure-entraid-integration/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Setting Up Multi-Factor Authentication for Kasten with Azure EntraID</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-26">2025-05-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1457 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#azure-configuration">Azure Configuration</a>
+      <ul>
+        <li><a href="#step-1-create-kasten-user-group">Step 1: Create Kasten User Group</a></li>
+        <li><a href="#step-2-app-registration">Step 2: App Registration</a></li>
+        <li><a href="#step-3-collect-configuration-information-for-kasten">Step 3: Collect Configuration Information for Kasten</a></li>
+      </ul>
+    </li>
+    <li><a href="#kasten-configuration">Kasten Configuration</a></li>
+    <li><a href="#using-azure-entraid-authentication">Using Azure EntraID Authentication</a></li>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#wrapping-up">Wrapping Up</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In the world of Kubernetes backup and recovery, security isn&rsquo;t just a feature—it&rsquo;s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.</p>
+<p>Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn&rsquo;t just about adding another security layer; it&rsquo;s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.</p>
+<p>The setup process breaks down into two main parts: configuring Azure EntraID on one side, and then updating Kasten K10 to use it. Let&rsquo;s dive in.</p>
+<h2 id="azure-configuration">Azure Configuration</h2>
+<h3 id="step-1-create-kasten-user-group">Step 1: Create Kasten User Group</h3>
+<p>First things first in Azure EntraID—we need to set up a security group that will contain all the users who should have access to the Kasten web console. This is where we&rsquo;ll manage who can and can&rsquo;t access your backup infrastructure.</p>
+<p>In the Azure EntraID console, navigate to Groups and click &ldquo;New group&rdquo; to get started. You&rsquo;ll want to select &ldquo;Security&rdquo; as the group type (this is important for the OIDC integration), give it a descriptive name—I&rsquo;m using &ldquo;Kasten Users&rdquo; for simplicity—and keep the other settings at their defaults:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/8vQZrBwt3XAnDOb.png"
+        data-srcset="https://s2.loli.net/2025/05/25/8vQZrBwt3XAnDOb.png, https://s2.loli.net/2025/05/25/8vQZrBwt3XAnDOb.png 1.5x, https://s2.loli.net/2025/05/25/8vQZrBwt3XAnDOb.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/8vQZrBwt3XAnDOb.png"
+        title="image-20250525141056077" /></p>
+<p>Once you click Create, head back to the All groups list where you should see your newly created group waiting for you.</p>
+<p>Now it&rsquo;s time to populate it with actual users. Click into your group, find the Members section, and use the &ldquo;Add members&rdquo; button to grant access. In my case, I&rsquo;ve already added Lei Wei to the group:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/LCmM9QoaKXw6fEd.png"
+        data-srcset="https://s2.loli.net/2025/05/25/LCmM9QoaKXw6fEd.png, https://s2.loli.net/2025/05/25/LCmM9QoaKXw6fEd.png 1.5x, https://s2.loli.net/2025/05/25/LCmM9QoaKXw6fEd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/LCmM9QoaKXw6fEd.png"
+        title="image-20250525141032819" /></p>
+<h3 id="step-2-app-registration">Step 2: App Registration</h3>
+<p>Now for the core piece: we need to create an application registration in Azure EntraID that will act as the bridge between Kasten and your identity provider. This is essentially the OAuth/OIDC client that Kasten will use to authenticate users.</p>
+<p>Head over to App registrations in Azure EntraID and click &ldquo;New registration&rdquo; to kick things off:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/bN8xUeMK4iJCXAY.png"
+        data-srcset="https://s2.loli.net/2025/05/25/bN8xUeMK4iJCXAY.png, https://s2.loli.net/2025/05/25/bN8xUeMK4iJCXAY.png 1.5x, https://s2.loli.net/2025/05/25/bN8xUeMK4iJCXAY.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/bN8xUeMK4iJCXAY.png"
+        title="image-20250525141000594" /></p>
+<p>In the registration wizard, give your application a meaningful name—I&rsquo;m going with &ldquo;kasten-service&rdquo; to keep things clear—and stick with the default options for now:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/QRx5IjBbvoA7GTO.png"
+        data-srcset="https://s2.loli.net/2025/05/25/QRx5IjBbvoA7GTO.png, https://s2.loli.net/2025/05/25/QRx5IjBbvoA7GTO.png 1.5x, https://s2.loli.net/2025/05/25/QRx5IjBbvoA7GTO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/QRx5IjBbvoA7GTO.png"
+        title="image-20250525140937124" /></p>
+<p>Once the registration completes, you&rsquo;ll land on the application&rsquo;s properties page. This is where the real configuration begins. Under the Manage section, find Authentication—this is where we&rsquo;ll tell Azure how Kasten will be connecting.</p>
+<p>Click &ldquo;Add a platform&rdquo; and select Web from the options:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/r9Lsb8qhDgYXT7t.png"
+        data-srcset="https://s2.loli.net/2025/05/25/r9Lsb8qhDgYXT7t.png, https://s2.loli.net/2025/05/25/r9Lsb8qhDgYXT7t.png 1.5x, https://s2.loli.net/2025/05/25/r9Lsb8qhDgYXT7t.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/r9Lsb8qhDgYXT7t.png"
+        title="image-20250525140903111" /></p>
+<p>Now comes the critical part: configuring the redirect URI. This tells Azure where to send users after they&rsquo;ve authenticated. You&rsquo;ll need your Kasten web UI address for this. In my environment, the Kasten UI is at:
+<a href="https://k10-lab-1-node01-71.suzhou.backupnext.cloud/k10" target="_blank" rel="noopener noreffer ">https://k10-lab-1-node01-71.suzhou.backupnext.cloud/k10</a></p>
+<p>The complete redirect URI needs the OIDC callback path appended, so the full URL becomes:
+<a href="https://k10-lab-1-node01-71.suzhou.backupnext.cloud/k10/auth-svc/v0/oidc/redirect" target="_blank" rel="noopener noreffer ">https://k10-lab-1-node01-71.suzhou.backupnext.cloud/k10/auth-svc/v0/oidc/redirect</a></p>
+<p>Don&rsquo;t forget to check the &ldquo;ID tokens&rdquo; option—this is essential for the OpenID Connect flow:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/OapRHZh2igYvQ9u.png"
+        data-srcset="https://s2.loli.net/2025/05/25/OapRHZh2igYvQ9u.png, https://s2.loli.net/2025/05/25/OapRHZh2igYvQ9u.png 1.5x, https://s2.loli.net/2025/05/25/OapRHZh2igYvQ9u.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/OapRHZh2igYvQ9u.png"
+        title="image-20250525140818645" /></p>
+<p>Save those changes and we&rsquo;re moving on.</p>
+<p>Next up: creating a client secret. Navigate to Certificates &amp; secrets under Manage, create a new client secret, and—this is important—copy it immediately and save it somewhere secure. You won&rsquo;t see it again, and do keep an eye on the expiration date:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/eR3Z4QpHLtCi7Mh.png"
+        data-srcset="https://s2.loli.net/2025/05/25/eR3Z4QpHLtCi7Mh.png, https://s2.loli.net/2025/05/25/eR3Z4QpHLtCi7Mh.png 1.5x, https://s2.loli.net/2025/05/25/eR3Z4QpHLtCi7Mh.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/eR3Z4QpHLtCi7Mh.png"
+        title="image-20250525140742618" /></p>
+<p>Once created, use that copy button to grab the secret value before navigating away:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/87CwqaDkJnGcPhx.png"
+        data-srcset="https://s2.loli.net/2025/05/25/87CwqaDkJnGcPhx.png, https://s2.loli.net/2025/05/25/87CwqaDkJnGcPhx.png 1.5x, https://s2.loli.net/2025/05/25/87CwqaDkJnGcPhx.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/87CwqaDkJnGcPhx.png"
+        title="image-20250525140703688" /></p>
+<p>Last but not least, we need to configure group claims so Azure includes security group information in the authentication tokens. Under Token configuration, click &ldquo;Add group claim&rdquo;, select Security groups, and add it:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/WcR4CbwxKBkuL8y.png"
+        data-srcset="https://s2.loli.net/2025/05/25/WcR4CbwxKBkuL8y.png, https://s2.loli.net/2025/05/25/WcR4CbwxKBkuL8y.png 1.5x, https://s2.loli.net/2025/05/25/WcR4CbwxKBkuL8y.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/WcR4CbwxKBkuL8y.png"
+        title="image-20250525140636856" /></p>
+<h3 id="step-3-collect-configuration-information-for-kasten">Step 3: Collect Configuration Information for Kasten</h3>
+<p>Alright, the Azure side is set up—now we need to gather the pieces of information that Kasten will need to talk to Azure. Let&rsquo;s walk through the Helm values configuration we&rsquo;ll be using:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">auth</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">oidcAuth</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l">3cae7658-5192-4122-b31a-1efcb9355a6f</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="l">xxxxxxxxxxxxxxxxxxxxxxx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groupClaim</span><span class="p">:</span><span class="w"> </span><span class="l">groups</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groupPrefix</span><span class="p">:</span><span class="w"> </span><span class="l">kasten_azure_</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="l">select_account</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">providerURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://login.microsoftonline.com/6d2374b4-aceb-42ac-966a-716a93f07db0/v2.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">redirectURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://k10-lab-1-node01-71.suzhou.backupnext.cloud</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">scopes</span><span class="p">:</span><span class="w"> </span><span class="l">openid email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">usernameClaim</span><span class="p">:</span><span class="w"> </span><span class="l">sub</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">usernamePrefix</span><span class="p">:</span><span class="w"> </span><span class="l">kasten_azure_</span></span></span></code></pre></div></div>
+<p>The key pieces we need to extract from our Azure setup are:</p>
+<ul>
+<li><strong>clientID</strong>: This identifies our Kasten application to Azure</li>
+<li><strong>clientSecret</strong>: The secret key we just created (you did save it, right?)</li>
+<li><strong>providerURL</strong>: The Azure AD endpoint for authentication</li>
+</ul>
+<p>You can find the clientID and endpoints on your app registration&rsquo;s Overview page. Click on &ldquo;Endpoints&rdquo; to see all the available URLs:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/tuQafIBGpw8kTgH.png"
+        data-srcset="https://s2.loli.net/2025/05/25/tuQafIBGpw8kTgH.png, https://s2.loli.net/2025/05/25/tuQafIBGpw8kTgH.png 1.5x, https://s2.loli.net/2025/05/25/tuQafIBGpw8kTgH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/tuQafIBGpw8kTgH.png"
+        title="image-20250525140555007" /></p>
+<p>Pro tip: For the providerURL, you&rsquo;ll need to take the OpenID Connect configuration URL and ensure it includes the <code>/v2.0</code> path. The clientSecret is exactly what we saved earlier from the Certificates &amp; secrets section.</p>
+<p>We also need one more crucial piece: the Object ID of our security group. This will be used when we set up permissions in Kubernetes. Navigate back to your &ldquo;Kasten Users&rdquo; group and grab the Object ID from the Overview page:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/GtWE1Ndp4oLO7sI.png"
+        data-srcset="https://s2.loli.net/2025/05/25/GtWE1Ndp4oLO7sI.png, https://s2.loli.net/2025/05/25/GtWE1Ndp4oLO7sI.png 1.5x, https://s2.loli.net/2025/05/25/GtWE1Ndp4oLO7sI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/GtWE1Ndp4oLO7sI.png"
+        title="image-20250525140516814" /></p>
+<h2 id="kasten-configuration">Kasten Configuration</h2>
+<p>Now let&rsquo;s switch gears to the Kasten side. First, we&rsquo;ll want to export our current Helm configuration so we don&rsquo;t lose any existing settings:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">helm get values k10 -n kasten-io &gt; k10_values.yaml</span></span></code></pre></div></div>
+<p>Now edit the <code>k10_values.yaml</code> file and add the OIDC authentication section with the information we gathered from Azure:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">auth</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">oidcAuth</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l">3cae7658-5192-4122-b31a-1efcb9355a6f</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="l">xxxxxxxxxxxxxxxxxxxxxxx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groupClaim</span><span class="p">:</span><span class="w"> </span><span class="l">groups</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groupPrefix</span><span class="p">:</span><span class="w"> </span><span class="l">kasten_azure_</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="l">select_account</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">providerURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://login.microsoftonline.com/6d2374b4-aceb-42ac-966a-716a93f07db0/v2.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">redirectURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://k10-lab-1-node01-71.suzhou.backupnext.cloud</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">scopes</span><span class="p">:</span><span class="w"> </span><span class="l">openid email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">usernameClaim</span><span class="p">:</span><span class="w"> </span><span class="l">sub</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">usernamePrefix</span><span class="p">:</span><span class="w"> </span><span class="l">kasten_azure_</span></span></span></code></pre></div></div>
+<p>With the configuration updated, let&rsquo;s apply the changes to our Kasten deployment:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">helm upgrade k10 kasten/k10 -n kasten-io -f k10_values.yaml</span></span></code></pre></div></div>
+<p>Give it a few minutes for the Kasten pods to restart with the new configuration. Once they&rsquo;re back up, try accessing the Kasten web interface again—you should now be redirected to Azure EntraID for authentication instead of seeing the local login screen.</p>
+<p>Here&rsquo;s where things get interesting: after you authenticate with Azure EntraID, you&rsquo;ll land in the Kasten UI but notice you don&rsquo;t have any permissions. This is expected behavior—we need to explicitly grant Kasten permissions to our Azure users.</p>
+<p>The key here is that Kasten needs to map Azure AD groups to Kubernetes RBAC roles. We&rsquo;ll use the security group&rsquo;s Object ID we captured earlier, combined with the groupPrefix from our configuration. In my setup, the groupPrefix is <code>kasten_azure_</code> and my security group ID is <code>d228b7e7-c10c-488b-9b13-8714682dbb0c</code>, so the full group name becomes <code>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c</code>.</p>
+<p>Let&rsquo;s create the necessary role bindings:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create clusterrolebinding for cluster-wide admin access</span>
+</span></span><span class="line"><span class="cl">kubectl create clusterrolebinding k10-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --clusterrole<span class="o">=</span>k10-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create rolebinding for namespace-specific admin access</span>
+</span></span><span class="line"><span class="cl">kubectl create rolebinding k10-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --role<span class="o">=</span>k10-ns-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --namespace<span class="o">=</span>kasten-io</span></span></code></pre></div></div>
+<p>Once those role bindings are in place, refresh your browser and you should have full access to the Kasten console. Congratulations—you&rsquo;ve successfully integrated Azure EntraID with Kasten!</p>
+<h2 id="using-azure-entraid-authentication">Using Azure EntraID Authentication</h2>
+<p>Let&rsquo;s see this in action. When you navigate to your Kasten web console, you&rsquo;ll no longer see the familiar login screen. Instead, you&rsquo;ll be immediately redirected to the Azure EntraID authentication interface:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/uURfhF61Vpc9tKB.png"
+        data-srcset="https://s2.loli.net/2025/05/25/uURfhF61Vpc9tKB.png, https://s2.loli.net/2025/05/25/uURfhF61Vpc9tKB.png 1.5x, https://s2.loli.net/2025/05/25/uURfhF61Vpc9tKB.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/uURfhF61Vpc9tKB.png"
+        title="image-20250525144441652" /></p>
+<p>Enter your Azure AD credentials, and you&rsquo;ll be prompted for multi-factor authentication through your authenticator app (or whatever MFA method you have configured):</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/9ae25GC7K6DXTS1.png"
+        data-srcset="https://s2.loli.net/2025/05/25/9ae25GC7K6DXTS1.png, https://s2.loli.net/2025/05/25/9ae25GC7K6DXTS1.png 1.5x, https://s2.loli.net/2025/05/25/9ae25GC7K6DXTS1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/9ae25GC7K6DXTS1.png"
+        title="image-20250525144619335" /></p>
+<p>Once you complete the MFA challenge, you&rsquo;ll be logged into the Kasten console. If you look in the top-right corner, you&rsquo;ll see your current user information—notice the <code>kasten_azure_</code> prefix followed by your Azure AD user ID. This is how Kasten identifies authenticated users from Azure:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/05/25/ZclKfx7g5sTIJiF.png"
+        data-srcset="https://s2.loli.net/2025/05/25/ZclKfx7g5sTIJiF.png, https://s2.loli.net/2025/05/25/ZclKfx7g5sTIJiF.png 1.5x, https://s2.loli.net/2025/05/25/ZclKfx7g5sTIJiF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/05/25/ZclKfx7g5sTIJiF.png"
+        title="image-20250525144725581" /></p>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p>Integrating Kasten with Azure EntraID isn&rsquo;t just about adding another authentication method—it&rsquo;s about bringing enterprise-grade identity management to your Kubernetes backup infrastructure. Here&rsquo;s what you&rsquo;re getting:</p>
+<ul>
+<li>
+<p><strong>Centralized Identity Management</strong>: No more separate Kasten user accounts to manage. Your Azure AD becomes the single source of truth for who can access your backup system.</p>
+</li>
+<li>
+<p><strong>Multi-Factor Authentication</strong>: Every login is protected by whatever MFA policies you have in Azure AD, dramatically reducing the risk of credential theft.</p>
+</li>
+<li>
+<p><strong>Audit Trail</strong>: All authentication attempts are logged in Azure AD, giving you comprehensive visibility into who&rsquo;s accessing your backup infrastructure and when.</p>
+</li>
+<li>
+<p><strong>Seamless User Experience</strong>: Your users get the same authentication experience they&rsquo;re used to across all your Azure-integrated applications.</p>
+</li>
+<li>
+<p><strong>Lifecycle Management</strong>: When users leave your organization, their access to Kasten is automatically revoked when their Azure AD account is disabled.</p>
+</li>
+</ul>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>Setting up Azure EntraID integration with Kasten might seem like a few steps, but the payoff in terms of security and operational efficiency is substantial. You&rsquo;re essentially elevating your backup infrastructure from having its own isolated authentication system to being part of your enterprise identity fabric.</p>
+<p>The configuration we walked through today gives you a solid foundation for secure access management, but you can extend this further by creating different security groups for different access levels (read-only, backup operators, full administrators, etc.) and mapping them to appropriate Kubernetes RBAC roles.</p>
+<p>Remember to keep an eye on those client secrets—they do expire, and you&rsquo;ll need to update your Kasten configuration when they do. Also, consider setting up monitoring or alerts for authentication failures to stay ahead of any potential access issues.</p>
+<p>That&rsquo;s it for today. Happy (and secure) backing up!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-05-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2025/05/kasten-and-azure-entraid-integration/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F05%2Fkasten-and-azure-entraid-integration%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2025%2F05%2Fkasten-and-azure-entraid-integration%2F&amp;text=Setting&#43;Up&#43;Multi-Factor&#43;Authentication&#43;for&#43;Kasten&#43;with&#43;Azure&#43;EntraID" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F05%252Fkasten-and-azure-entraid-integration%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2025%252F05%252Fkasten-and-azure-entraid-integration%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/en/tags/Kasten/">Kasten</a>,&nbsp;<a href="/en/tags/Azure/">Azure</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2024/12/vdp-v12-other-security-features-deep-dive-03/" class="prev" rel="prev" title="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations</a>
+            <a href="/en/2025/09/veeam-software-appliance-01/" class="next" rel="next" title="Veeam Launches Software Appliance: New Download Experience and Documentation Overhaul">Veeam Launches Software Appliance: New Download Experience and Documentation Overhaul<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

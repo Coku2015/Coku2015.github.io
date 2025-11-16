@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Enterprise Manager on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Enterprise-Manager/</link>
+    <description>Recent content in Enterprise Manager on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Enterprise-Manager/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DIY Chrome Extension – Enterprise Manager UI in Chinese (Beta)</title>
+      <link>https://blog.backupnext.cloud/en/2020/03/localized-web-ui/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/03/localized-web-ui/</guid>
+      <description>&lt;p&gt;Ever since I joined Veeam, people have been asking, “When will we get a Chinese UI?” It’s a tough challenge, and I’ve always been pessimistic about the timeline.&lt;/p&gt;&#xA;&lt;p&gt;Still, where there’s a will, there’s a way. Today I’m sharing a small treat: a Chinese localization plug-in for the Veeam Enterprise Manager web interface.&lt;/p&gt;&#xA;&lt;p&gt;Here’s a preview:&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s1.ax1x.com/2020/03/13/8nUz38.png&#34;&#xA;        data-srcset=&#34;https://s1.ax1x.com/2020/03/13/8nUz38.png, https://s1.ax1x.com/2020/03/13/8nUz38.png 1.5x, https://s1.ax1x.com/2020/03/13/8nUz38.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s1.ax1x.com/2020/03/13/8nUz38.png&#34;&#xA;        title=&#34;8nUz38.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;Download:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gitee.com/veeamchinadocs/veeam-webui-cn-plugin&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://gitee.com/veeamchinadocs/veeam-webui-cn-plugin&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Usage is simple: download the archive, place the &lt;code&gt;Veeam-CN-WebUI-Beta-1.x.x&lt;/code&gt; folder on any machine running Chrome (it doesn’t need to be the Enterprise Manager server), and follow the included instructions.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

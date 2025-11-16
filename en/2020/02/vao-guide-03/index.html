@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO Basics (Part 3) – Core Components · Part 1 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/02/vao-guide-03/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VAO Basics (Part 3) – Core Components · Part 1">
+  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Key Configuration Points VAO Basics (6) – The First Step of a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive VAO defines a special set of concepts for the components it uses. Names may change as releases evolve, but this article reflects v2.0 (and later). If a future version changes again, I’ll update it in a later post.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-02-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-02-19T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VAO Basics (Part 3) – Core Components · Part 1">
+  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Key Configuration Points VAO Basics (6) – The First Step of a Successful DR Plan VAO Basics (7) – Plan Step · Part 1 VAO Basics (8) – Plan Step · Part 2 VAO Basics (9) – Document Template Deep Dive VAO defines a special set of concepts for the components it uses. Names may change as releases evolve, but this article reflects v2.0 (and later). If a future version changes again, I’ll update it in a later post.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-03/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-02/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-04/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO Basics (Part 3) – Core Components · Part 1",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-03\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  775 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-03\/","datePublished": "2020-02-19T00:00:00+00:00","dateModified": "2020-02-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/02/vao-guide-03/">简体中文</option><option value="/en/2020/02/vao-guide-03/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/02/vao-guide-03/">简体中文</option><option value="/en/2020/02/vao-guide-03/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO Basics (Part 3) – Core Components · Part 1</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-02-19">2020-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;775 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index</a></li>
+    <li><a href="#scope">Scope</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#definition--purpose">Definition &amp; Purpose</a></li>
+            <li><a href="#types--creation">Types &amp; Creation</a></li>
+            <li><a href="#assigning-plan-components">Assigning Plan Components</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#datalabs">DataLabs</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#lab-groups">Lab Groups</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Key Configuration Points</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step of a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<p>VAO defines a special set of concepts for the components it uses. Names may change as releases evolve, but this article reflects v2.0 (and later). If a future version changes again, I’ll update it in a later post.</p>
+<h2 id="scope">Scope</h2>
+<h4 id="definition--purpose">Definition &amp; Purpose</h4>
+<p>Scope is the most fundamental concept in VAO, first introduced in v2.0. Each scope contains the elements a DR plan needs; VAO refers to them collectively as <strong>Plan Components</strong>:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code> - VM Groups
+ - Recovery Locations
+ - Plan Steps
+ - Credentials
+ - Template Jobs</code></pre></div>
+<p>Picture a scope as a room. The furniture in that room corresponds to the components above. When we create an Orchestration Plan, we select and arrange those components—like furniture—to build a one-click recovery workflow.</p>
+<p>In addition, each scope has one or more DataLabs of its own. In other words, every scope has one or more dedicated DataLabs. We’ll go deeper into Plan Components and DataLabs in <a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">Part 4</a>.</p>
+<h4 id="types--creation">Types &amp; Creation</h4>
+<p>Scopes fall into two categories. The first is the built-in <code>Default</code> scope, which can neither be renamed nor deleted. The <strong>Administrators</strong> role lives exclusively in this scope. If you want to grant any user the ability to perform <code>Administration</code> tasks, you must add that user to the Administrators role under <code>Default</code>. Recall from Part 2: the account we added during the initialization wizard was automatically placed in this role. You can add more administrative users later.</p>
+<p>The second category is every additional scope you create. These can be renamed or deleted, and their roles are limited to <strong>Plan Authors</strong>. Under each scope’s Plan Authors role, you assign whichever users you want. Example:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3F05i6.png, https://s2.ax1x.com/2020/02/18/3F05i6.png 1.5x, https://s2.ax1x.com/2020/02/18/3F05i6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3F05i6.png"
+        title="3F05i6.png" /></p>
+<p>If the “room” analogy helps: each scope is a room with a lock. You cut different keys for different users. Key <strong>A</strong> opens room A, key <strong>B</strong> opens room B, etc. Translating that into VAO permissions:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>Rooms (Scopes): A, B, C, D
+
+User 1 holds the keys for rooms A and B.
+User 2 holds the keys for rooms B, C, and D.
+User 3 holds the key for room D.</code></pre></div>
+<p>Which in VAO terms becomes:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>Scope A: User 1
+Scope B: User 1, User 2
+Scope C: User 2
+Scope D: User 2, User 3</code></pre></div>
+<p>To assign those keys, log in with an account that has the Administrator role and open <strong>Administration → Permissions → Users and Scope</strong>:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k3G4J.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k3G4J.png, https://s2.ax1x.com/2020/02/18/3k3G4J.png 1.5x, https://s2.ax1x.com/2020/02/18/3k3G4J.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k3G4J.png"
+        title="3k3G4J.png" /></p>
+<p>After saving the assignments, if User 1 logs in again, the Dashboard shows exactly which scopes they can access (for User 1 that means A and B):</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k38N4.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k38N4.png, https://s2.ax1x.com/2020/02/18/3k38N4.png 1.5x, https://s2.ax1x.com/2020/02/18/3k38N4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k38N4.png"
+        title="3k38N4.png" /></p>
+<h4 id="assigning-plan-components">Assigning Plan Components</h4>
+<p>Still under <strong>Administration → Permissions</strong>, switch to <strong>Plan Components</strong>. Here you decide which components each scope can use. The selector in the red box lets you check one or multiple scopes. Technically you can configure several scopes at once, but to avoid mistakes I recommend selecting and configuring one scope at a time.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3k3YC9.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3k3YC9.png, https://s2.ax1x.com/2020/02/18/3k3YC9.png 1.5x, https://s2.ax1x.com/2020/02/18/3k3YC9.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3k3YC9.png"
+        title="3k3YC9.png" /></p>
+<h2 id="datalabs">DataLabs</h2>
+<p>A VAO DataLab is simply the Virtual Lab you configured in VBR. Once a Virtual Lab exists in VBR, VAO detects it and lets you assign it to scopes. Each Virtual Lab can be assigned to <strong>exactly one</strong> scope.</p>
+<p>To assign a DataLab, log in as an Administrator, go to <strong>Administration → Permissions → Datalab Assignment</strong>, select the Virtual Lab in the middle column, and click <strong>Assign</strong>. Choose the scope in the pop-up dialog:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kt6XR.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kt6XR.png, https://s2.ax1x.com/2020/02/18/3kt6XR.png 1.5x, https://s2.ax1x.com/2020/02/18/3kt6XR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kt6XR.png"
+        title="3kt6XR.png" /></p>
+<p>Need to move it to another scope? Select the Virtual Lab and click <strong>Unassign</strong>. Once unassigned, you can assign it elsewhere.</p>
+<h4 id="lab-groups">Lab Groups</h4>
+<p>If you’re used to VBR’s Virtual Lab, Application Group, SureBackup Job—you might wonder where the latter two went. In VAO, Application Groups correspond to <strong>Lab Groups</strong>. You won’t find them in the Administration console; instead, each user signs into their own VAO UI, goes to <strong>DataLabs</strong>, and creates Lab Groups under their scope. Lab Groups aren’t inherited from VBR—they’re created from scratch inside VAO.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kwKJK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kwKJK.png, https://s2.ax1x.com/2020/02/18/3kwKJK.png 1.5x, https://s2.ax1x.com/2020/02/18/3kwKJK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kwKJK.png"
+        title="3kwKJK.png" /></p>
+<p>Usually Lab Groups can remain empty, just like Application Groups. Only when an application has dependencies—i.e., one VM depends on another—do you add those supporting systems to the Lab Group.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/18/3kwMRO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/18/3kwMRO.png, https://s2.ax1x.com/2020/02/18/3kwMRO.png 1.5x, https://s2.ax1x.com/2020/02/18/3kwMRO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/18/3kwMRO.png"
+        title="3kwMRO.png" /></p>
+<p>As for SureBackup jobs: VAO no longer needs you to configure them separately. SureBackup is baked directly into each Orchestration Plan. We’ll dive deeper into that in later chapters.</p>
+<p>That’s it for this installment—thanks for reading!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-02-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/02/vao-guide-03/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-03%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-03%2F&amp;text=VAO&#43;Basics&#43;%28Part&#43;3%29&#43;%E2%80%93&#43;Core&#43;Components&#43;%C2%B7&#43;Part&#43;1" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-03%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/02/vao-guide-02/" class="prev" rel="prev" title="VAO Basics (Part 2) – Installation &amp; Deployment"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO Basics (Part 2) – Installation & Deployment</a>
+            <a href="/en/2020/02/vao-guide-04/" class="next" rel="next" title="VAO Basics (Part 4) – Core Components · Part 2">VAO Basics (Part 4) – Core Components · Part 2<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

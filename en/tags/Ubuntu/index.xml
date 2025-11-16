@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Ubuntu/</link>
+    <description>Recent content in Ubuntu on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 02 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories</title>
+      <link>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/</guid>
+      <description>&lt;p&gt;After the release of Veeam v12, the official documentation provides &lt;a href=&#34;https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;methods for further system security hardening&lt;/a&gt; after building a Veeam hardened repository based on Ubuntu 20.04, and offers a fully automated configuration script. Therefore, after using my &lt;a href=&#34;https://github.com/Coku2015/Veeam_Repo_Configurator&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Configurator&lt;/a&gt; to build the Ubuntu repository, you can use this automated configuration script for more secure hardening.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Since the official script includes some US military compliance configurations that are not suitable for Chinese users, I have modified Veeam&amp;rsquo;s official script and republished it to make it suitable for Chinese users.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Exploring Tanzu Community Edition in the Homelab - Cloud.Virt.AI.Sec</title><meta name="description" content="I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Exploring Tanzu Community Edition in the Homelab">
+  <meta property="og:description" content="I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp; Replication to really put it through its paces.
+Hardware Setup My environment consists of two machines - a Dell Precision M4800 that’s been serving me faithfully for over six years, and a newly added NUC11 Panther Canyon. The Dell laptop is really just playing a supporting role in this setup, while the Panther Canyon is the star of the show with these specifications:">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Exploring Tanzu Community Edition in the Homelab">
+  <meta name="twitter:description" content="I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp; Replication to really put it through its paces.
+Hardware Setup My environment consists of two machines - a Dell Precision M4800 that’s been serving me faithfully for over six years, and a newly added NUC11 Panther Canyon. The Dell laptop is really just playing a supporting role in this setup, while the Panther Canyon is the star of the show with these specifications:">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" /><link rel="next" href="https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Exploring Tanzu Community Edition in the Homelab",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2022\/03\/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  2511 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2022\/03\/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9\/","datePublished": "2022-03-19T00:00:00+00:00","dateModified": "2022-03-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">简体中文</option><option value="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">简体中文</option><option value="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Exploring Tanzu Community Edition in the Homelab</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-19">2022-03-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2511 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#hardware-setup">Hardware Setup</a></li>
+    <li><a href="#software-stack">Software Stack</a></li>
+    <li><a href="#getting-started-with-tce-installation">Getting Started with TCE Installation</a>
+      <ul>
+        <li><a href="#environment-preparation">Environment Preparation</a></li>
+        <li><a href="#deploying-the-management-cluster">Deploying the Management Cluster</a></li>
+        <li><a href="#deploying-a-workload-cluster">Deploying a Workload Cluster</a></li>
+        <li><a href="#configuring-storage-resources">Configuring Storage Resources</a></li>
+        <li><a href="#testing-the-environment-with-a-demo-application">Testing the Environment with a Demo Application</a></li>
+      </ul>
+    </li>
+    <li><a href="#installing-and-configuring-k10">Installing and Configuring K10</a>
+      <ul>
+        <li><a href="#installing-k10">Installing K10</a></li>
+        <li><a href="#configuring-k10-with-vcenter-and-vbr">Configuring K10 with vCenter and VBR</a></li>
+      </ul>
+    </li>
+    <li><a href="#resource-summary">Resource Summary</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp; Replication to really put it through its paces.</p>
+<h2 id="hardware-setup">Hardware Setup</h2>
+<p>My environment consists of two machines - a Dell Precision M4800 that&rsquo;s been serving me faithfully for over six years, and a newly added NUC11 Panther Canyon. The Dell laptop is really just playing a supporting role in this setup, while the Panther Canyon is the star of the show with these specifications:</p>
+<ul>
+<li><strong>CPU</strong>: Intel(R) Core(TM) i5-1135G7 @ 2.40GHz</li>
+<li><strong>Memory</strong>: ADATA 32GB×2 DDR4-3200 (64GB total)</li>
+<li><strong>Storage</strong>: aigo NVMe SSD P2000 1TB</li>
+<li><strong>Network</strong>: Intel Corporation Ethernet Controller I225-V</li>
+</ul>
+<h2 id="software-stack">Software Stack</h2>
+<p>On the M4800, I&rsquo;m using DellEMC&rsquo;s custom ESXi image, which you can download from the DellEMC website. It includes all the necessary drivers for Dell hardware.</p>
+<p>The biggest challenge with installing ESXi on the NUC11 was the network card driver. This is a 2.5GbE NIC that isn&rsquo;t included in VMware&rsquo;s official drivers, but as always, the community has a solution. You can find the community network driver <a href="https://williamlam.com/2021/02/new-community-networking-driver-for-esxi-fling.html" target="_blank" rel="noopener noreffer ">right here</a>.</p>
+<p>Both hosts are running vSphere 7.0.3, with vCenter also at version 7.0.3.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/13/bqZqXR.png"
+        data-srcset="https://s1.ax1x.com/2022/03/13/bqZqXR.png, https://s1.ax1x.com/2022/03/13/bqZqXR.png 1.5x, https://s1.ax1x.com/2022/03/13/bqZqXR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/13/bqZqXR.png"
+        title="vSphere Environment" /></p>
+<h2 id="getting-started-with-tce-installation">Getting Started with TCE Installation</h2>
+<h3 id="environment-preparation">Environment Preparation</h3>
+<p>First, I needed a console VM to install and operate TCE. The <a href="https://tanzucommunityedition.io/docs/latest/cli-installation/" target="_blank" rel="noopener noreffer ">official TCE documentation</a> provides installation instructions for macOS, Linux, and Windows. I chose to deploy an Ubuntu 20.04 LTS virtual machine in my environment to install the Tanzu CLI.</p>
+<p>This Ubuntu VM isn&rsquo;t just a minimal installation - it needs some additional preparation:</p>
+<ul>
+<li>
+<p><strong>Install Docker and configure non-root user access</strong>. The configuration is straightforward. Just execute these commands as a non-root user after installing Docker:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 1. Create the docker group</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ sudo groupadd docker
+</span></span><span class="line"><span class="cl"><span class="c1">## 2. Add current user to docker group</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ sudo usermod -aG docker <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 3. Either log out and log back in, or activate with this command</span>
+</span></span><span class="line"><span class="cl">$ newgrp docker
+</span></span><span class="line"><span class="cl"><span class="c1">## 4. Test docker command to verify it works</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ docker run hello-world</span></span></code></pre></div></div>
+</li>
+<li>
+<p><strong>Install kubectl</strong> - nothing special here, just follow the official documentation or other guides to install it.</p>
+</li>
+</ul>
+<p>With these prerequisites in place, I could follow the TCE official documentation to install the Tanzu CLI.</p>
+<p>After installing the Tanzu CLI, I also needed to <a href="https://customerconnect.vmware.com/downloads/get-download?downloadGroup=TCE-0100" target="_blank" rel="noopener noreffer ">download the OVA image</a> from VMware&rsquo;s website. This image is used to deploy Kubernetes nodes in vSphere. I chose <code>ubuntu-2004-kube-v1.21.5+vmware.1-tkg.1-12483545147728596280-tce-010.ova</code>.</p>
+<p>Once downloaded, I imported this OVA into vSphere and immediately converted it to a template. You should see something like this in vSphere:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVeOOg.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVeOOg.png, https://s1.ax1x.com/2022/03/19/qVeOOg.png 1.5x, https://s1.ax1x.com/2022/03/19/qVeOOg.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVeOOg.png"
+        title="Node Template" /></p>
+<p>Additionally, I needed to configure a DHCP server in my environment since TCE requires DHCP to complete the cluster deployment process.</p>
+<p>Finally, I prepared an SSH public key for the graphical installation wizard:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## Create SSH key pair</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;administrator@backupnext.cloud&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Get the public key for later use</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ cat .ssh/id_rsa.pub</span></span></code></pre></div></div>
+<h3 id="deploying-the-management-cluster">Deploying the Management Cluster</h3>
+<p>Like other Tanzu offerings, TCE consists of a Management Cluster and Workload Clusters. In my environment, I first needed to configure a management cluster. Starting the configuration is simple - just run this command:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ tanzu management-cluster create --ui --bind 0.0.0.0:8080 --browser none</span></span></code></pre></div></div>
+<p>After running this command, I could open <code>http://&lt;ubuntu-ip&gt;:8080/</code> in my local browser to access the Tanzu installation wizard.</p>
+<p>The wizard walks you through several steps:</p>
+<ol>
+<li>
+<p><strong>Select deployment platform</strong> - VMware vSphere
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQTYj.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQTYj.png, https://s1.ax1x.com/2022/03/19/qVQTYj.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQTYj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQTYj.png"
+        title="Platform Selection" /></p>
+</li>
+<li>
+<p><strong>Enter vCenter information and connect</strong> - After connecting, you need to paste the SSH public key you prepared earlier into the SSH Public Key field.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQokQ.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQokQ.png, https://s1.ax1x.com/2022/03/19/qVQokQ.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQokQ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQokQ.png"
+        title="vCenter Connection" /></p>
+</li>
+<li>
+<p><strong>Configure management cluster settings</strong> - I chose Development mode since my small lab only needs one Control Plane node. I selected the Small instance type for minimum configuration, named my Management Cluster <code>leihome</code>, enabled Machine Health Checks, chose Kube-vip as the Control Plane Endpoint Provider with endpoint address 10.10.1.182, set Worker Node Instance Type to Small, and disabled Audit Logging.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qVbam4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qVbam4.png, https://s1.ax1x.com/2022/03/20/qVbam4.png 1.5x, https://s1.ax1x.com/2022/03/20/qVbam4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qVbam4.png"
+        title="Cluster Configuration" /></p>
+</li>
+<li>
+<p><strong>VMware NSX Advanced Load Balancer and Metadata</strong> - I disabled both of these options.</p>
+</li>
+<li>
+<p><strong>Resource configuration</strong> - I specified deployment to VM Folder <code>/HomelabDC/vm/tkg</code>, Datastore <code>/HomelabDC/datastore/localnvme</code>, and selected the <code>TanzuCE</code> resource pool for Cluster, Hosts, and Resource Pools.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQ40S.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQ40S.png, https://s1.ax1x.com/2022/03/19/qVQ40S.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQ40S.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQ40S.png"
+        title="Resource Settings" /></p>
+</li>
+<li>
+<p><strong>Kubernetes Network</strong> - I kept the default network configuration.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQhm8.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQhm8.png, https://s1.ax1x.com/2022/03/19/qVQhm8.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQhm8.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQhm8.png"
+        title="Network Settings" /></p>
+</li>
+<li>
+<p><strong>Identity Management</strong> - I disabled Identity Management Settings.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQWOf.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQWOf.png, https://s1.ax1x.com/2022/03/19/qVQWOf.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQWOf.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQWOf.png"
+        title="Identity Settings" /></p>
+</li>
+<li>
+<p><strong>OS Image</strong> - I selected the node VM template that was imported during preparation.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/19/qVQ7fs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/19/qVQ7fs.png, https://s1.ax1x.com/2022/03/19/qVQ7fs.png 1.5x, https://s1.ax1x.com/2022/03/19/qVQ7fs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/19/qVQ7fs.png"
+        title="OS Image Selection" /></p>
+</li>
+<li>
+<p>After reviewing the configuration, the deployment begins automatically. About half an hour later, the management cluster was deployed and ready to use.</p>
+</li>
+</ol>
+<p>Once the management cluster deployment completed, I returned to my Ubuntu console and ran:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## Check the installed management cluster</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ tanzu management-cluster get
+</span></span><span class="line"><span class="cl">  NAME     NAMESPACE   STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES
+</span></span><span class="line"><span class="cl">  leihome  tkg-system  running  1/1           1/1      v1.21.5+vmware.1  management
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Details:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                                        READY  SEVERITY  REASON  SINCE  MESSAGE
+</span></span><span class="line"><span class="cl">/leihome                                                    True                     8d
+</span></span><span class="line"><span class="cl">├─ClusterInfrastructure - VSphereCluster/leihome            True                     8d
+</span></span><span class="line"><span class="cl">├─ControlPlane - KubeadmControlPlane/leihome-control-plane  True                     8d
+</span></span><span class="line"><span class="cl">│ └─Machine/leihome-control-plane-2mz2v                     True                     8d
+</span></span><span class="line"><span class="cl">└─Workers
+</span></span><span class="line"><span class="cl">  └─MachineDeployment/leihome-md-0
+</span></span><span class="line"><span class="cl">    └─Machine/leihome-md-0-6f69758844-zpfsj                 True                     8d
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Providers:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  NAMESPACE                          NAME                    TYPE                    PROVIDERNAME  VERSION  WATCHNAMESPACE
+</span></span><span class="line"><span class="cl">  capi-kubeadm-bootstrap-system      bootstrap-kubeadm       BootstrapProvider       kubeadm       v0.3.23
+</span></span><span class="line"><span class="cl">  capi-kubeadm-control-plane-system  control-plane-kubeadm   ControlPlaneProvider    kubeadm       v0.3.23
+</span></span><span class="line"><span class="cl">  capi-system                        cluster-api             CoreProvider            cluster-api   v0.3.23
+</span></span><span class="line"><span class="cl">  capv-system                        infrastructure-vsphere  InfrastructureProvider  vsphere       v0.7.10
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Get kubectl management permissions</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ tanzu management-cluster kubeconfig get leihome --admin
+</span></span><span class="line"><span class="cl">Credentials of cluster <span class="s1">&#39;leihome&#39;</span> have been saved
+</span></span><span class="line"><span class="cl">You can now access the cluster by running <span class="s1">&#39;kubectl config use-context leihome-admin@leihome&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Test kubectl access</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl get node
+</span></span><span class="line"><span class="cl">NAME                            STATUS   ROLES                  AGE   VERSION
+</span></span><span class="line"><span class="cl">leihome-control-plane-2mz2v     Ready    control-plane,master   8d    v1.21.5+vmware.1
+</span></span><span class="line"><span class="cl">leihome-md-0-6f69758844-zpfsj   Ready    &lt;none&gt;                 8d    v1.21.5+vmware.1</span></span></code></pre></div></div>
+<p>And with that, the management cluster setup was complete. Back in vCenter, I could see the two corresponding node virtual machines.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZPdxJ.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZPdxJ.png, https://s1.ax1x.com/2022/03/20/qZPdxJ.png 1.5x, https://s1.ax1x.com/2022/03/20/qZPdxJ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZPdxJ.png"
+        title="Management Cluster Nodes" /></p>
+<h3 id="deploying-a-workload-cluster">Deploying a Workload Cluster</h3>
+<p>After the management cluster deployment, the cluster configuration is automatically saved as a YAML file in the <code>~/.config/tanzu/tkg/clusterconfigs/</code> directory. Deploying a workload cluster is straightforward - just copy the auto-generated management cluster YAML file and make a few modifications.</p>
+<p>I created and modified a YAML file for the workload cluster deployment:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ cp  ~/.config/tanzu/tkg/clusterconfigs/pkwmre6kuu.yaml ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ vi ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml</span></span></code></pre></div></div>
+<p>I modified these key fields:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">CLUSTER_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">leihome-workload-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">VSPHERE_CONTROL_PLANE_ENDPOINT</span><span class="p">:</span><span class="w"> </span><span class="m">10.10.1.191</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">VSPHERE_WORKER_MEM_MIB</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;8192&#34;</span></span></span></code></pre></div></div>
+<p><code>CLUSTER_NAME</code> is the workload cluster name - I used <code>leihome-workload-01</code>. <code>VSPHERE_CONTROL_PLANE_ENDPOINT</code> is the API server access address for this workload cluster - it&rsquo;s best to set this to a fixed IP, so I used <code>10.10.1.191</code>. <code>VSPHERE_WORKER_MEM_MIB</code> is the workload cluster memory - the default Small configuration of 4GB wasn&rsquo;t sufficient for my environment, so I set it to <code>8192</code>.</p>
+<p>After making these changes, I ran this command to automatically deploy the workload cluster:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ tanzu cluster create leihome-workload-01 --file ~/.config/tanzu/tkg/clusterconfigs/workload1.yaml</span></span></code></pre></div></div>
+<p>About 10 minutes later, the workload cluster was deployed. Like the management cluster, it defaults to one Control Plane and one Worker node. Since I planned to run several applications, I used this command to add another Worker Node:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ tanzu cluster scale leihome-workload-01 --worker-machine-count<span class="o">=</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">Successfully updated worker node machine deployment replica count <span class="k">for</span> cluster leihome-workload-01
+</span></span><span class="line"><span class="cl">Workload cluster <span class="s1">&#39;leihome-workload-01&#39;</span> is being scaled</span></span></code></pre></div></div>
+<p>After the workload cluster deployment, I needed to get access credentials just like with the management cluster:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## Get current workload cluster list</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ tanzu cluster list
+</span></span><span class="line"><span class="cl">  NAME                 NAMESPACE  STATUS   CONTROLPLANE  WORKERS  KUBERNETES        ROLES   PLAN
+</span></span><span class="line"><span class="cl">  leihome-workload-01  default    running  1/1           2/2      v1.21.5+vmware.1  &lt;none&gt;  dev
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Get access credentials for leihome-workload-01 workload cluster</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ tanzu cluster kubeconfig get leihome-workload-01 --admin
+</span></span><span class="line"><span class="cl">Credentials of cluster <span class="s1">&#39;leihome-workload-01&#39;</span> have been saved
+</span></span><span class="line"><span class="cl">You can now access the cluster by running <span class="s1">&#39;kubectl config use-context leihome-workload-01-admin@leihome-workload-01&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Check current context list with kubectl</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl config get-contexts
+</span></span><span class="line"><span class="cl">CURRENT   NAME                                            CLUSTER               AUTHINFO                    NAMESPACE
+</span></span><span class="line"><span class="cl">*         leihome-admin@leihome                           leihome               leihome-admin
+</span></span><span class="line"><span class="cl">          leihome-workload-01-admin@leihome-workload-01   leihome-workload-01   leihome-workload-01-admin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Switch clusters with kubectl and start using the deployed cluster</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl config use-context leihome-workload-01-admin@leihome-workload-01
+</span></span><span class="line"><span class="cl">Switched to context <span class="s2">&#34;leihome-workload-01-admin@leihome-workload-01&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Get node information</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl get node
+</span></span><span class="line"><span class="cl">NAME                                        STATUS   ROLES                  AGE     VERSION
+</span></span><span class="line"><span class="cl">leihome-workload-01-control-plane-c4k4q     Ready    control-plane,master   7d18h   v1.21.5+vmware.1
+</span></span><span class="line"><span class="cl">leihome-workload-01-md-0-668d8747d6-4hd6z   Ready    &lt;none&gt;                 7d18h   v1.21.5+vmware.1
+</span></span><span class="line"><span class="cl">leihome-workload-01-md-0-668d8747d6-hcs4k   Ready    &lt;none&gt;                 7d18h   v1.21.5+vmware.1</span></span></code></pre></div></div>
+<p>Back in vCenter, I could see the three Workload Node virtual machines were up and running.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZYjl4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZYjl4.png, https://s1.ax1x.com/2022/03/20/qZYjl4.png 1.5x, https://s1.ax1x.com/2022/03/20/qZYjl4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZYjl4.png"
+        title="Workload Cluster Nodes" /></p>
+<p>At this point, the Kubernetes cluster compute resources were fully configured.</p>
+<h3 id="configuring-storage-resources">Configuring Storage Resources</h3>
+<p>Tanzu clusters can use vSphere 7.0 datastores for persistent data through the vSphere CSI driver, but by default, datastores aren&rsquo;t automatically associated with Tanzu clusters. I used this YAML file to grant the workload cluster access to the datastore:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StorageClass</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">storage.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">standard</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storageclass.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">parameters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datastoreurl</span><span class="p">:</span><span class="w"> </span><span class="l">ds:///vmfs/volumes/622a19d3-91aee82b-59df-1c697aafcbf9/</span></span></span></code></pre></div></div>
+<p>The <code>datastoreurl</code> on the last line can be obtained from the datastore summary in vCenter, as shown here:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qZNnv4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qZNnv4.png, https://s1.ax1x.com/2022/03/20/qZNnv4.png 1.5x, https://s1.ax1x.com/2022/03/20/qZNnv4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qZNnv4.png"
+        title="Datastore URL" /></p>
+<p>I applied this new StorageClass and removed the original default StorageClass:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## Add new Storage Class connecting to vSphere Datastore</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl apply -f ~/storage/localnvme.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Remove the original Hostpath default Storage Class (or you can delete the default storage class directly)</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl patch storageclass default -p <span class="s1">&#39;{&#34;metadata&#34;: {&#34;annotations&#34;:{&#34;storageclass.kubernetes.io/is-default-class&#34;:&#34;false&#34;}}}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Check current StorageClass status with kubectl</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl get sc
+</span></span><span class="line"><span class="cl">NAME                 PROVISIONER              RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+</span></span><span class="line"><span class="cl">default              csi.vsphere.vmware.com   Delete          Immediate           <span class="nb">true</span>                   7d19h
+</span></span><span class="line"><span class="cl">standard <span class="o">(</span>default<span class="o">)</span>   csi.vsphere.vmware.com   Delete          Immediate           <span class="nb">false</span>                  7d18h</span></span></code></pre></div></div>
+<h3 id="testing-the-environment-with-a-demo-application">Testing the Environment with a Demo Application</h3>
+<p>This little demo is simple - just an Alpine Linux container with a mounted data directory <code>/data</code>. This data directory actually maps to the vSphere datastore, creating a VMDK file. I&rsquo;ll save the details about this VMDK file for a future post.</p>
+<p>Here&rsquo;s the demo YAML:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolumeClaim</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pvc</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">alpine:3.7</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">256Mi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">100m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;tail&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;/dev/null&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">demo-pvc</span></span></span></code></pre></div></div>
+<p>The creation process is simple - just these two commands. After creation, I copied a file into the persistent data volume to test:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ kubectl create ns leihomedemo
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl apply -n leihomedemo -f ~/demo/demoapp.yaml
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl cp mytest leihomedemo/demo-app-696f676d47-dsbcr:/data/
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl <span class="nb">exec</span> --namespace<span class="o">=</span>leihomedemo demo-app-696f676d47-dsbcr -- ls -l /data
+</span></span><span class="line"><span class="cl">total <span class="m">24</span>
+</span></span><span class="line"><span class="cl">drwx------    <span class="m">2</span> root     root         <span class="m">16384</span> Mar <span class="m">12</span> 14:01 lost+found
+</span></span><span class="line"><span class="cl">-rw-rw-r--    <span class="m">1</span> <span class="m">1000</span>     <span class="m">117</span>             <span class="m">13</span> Mar <span class="m">12</span> 14:33 mytest</span></span></code></pre></div></div>
+<p>Everything worked perfectly - the environment was running smoothly.</p>
+<h2 id="installing-and-configuring-k10">Installing and Configuring K10</h2>
+<h3 id="installing-k10">Installing K10</h3>
+<p>Before installing K10, I prepared a VBR v11a Windows server and a Minio S3 object storage to store K10 backup data.</p>
+<p>The K10 installation process is no different from regular deployments. Before installation, I ran the pre-flight script to check the environment:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ curl https://docs.kasten.io/tools/k10_primer.sh <span class="p">|</span> bash
+</span></span><span class="line"><span class="cl">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span class="line"><span class="cl">                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span class="line"><span class="cl"><span class="m">100</span>  <span class="m">7045</span>  <span class="m">100</span>  <span class="m">7045</span>    <span class="m">0</span>     <span class="m">0</span>    <span class="m">918</span>      <span class="m">0</span>  0:00:07  0:00:07 --:--:--  <span class="m">1757</span>
+</span></span><span class="line"><span class="cl">Namespace option not provided, using default namespace
+</span></span><span class="line"><span class="cl">Checking <span class="k">for</span> tools
+</span></span><span class="line"><span class="cl"> --&gt; Found kubectl
+</span></span><span class="line"><span class="cl"> --&gt; Found helm
+</span></span><span class="line"><span class="cl">Checking <span class="k">if</span> the Kasten Helm repo is present
+</span></span><span class="line"><span class="cl"> --&gt; The Kasten Helm repo was found
+</span></span><span class="line"><span class="cl">Checking <span class="k">for</span> required Helm version <span class="o">(</span>&gt;<span class="o">=</span> v3.0.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> --&gt; No Tiller needed with Helm v3.4.1
+</span></span><span class="line"><span class="cl">K10Primer image
+</span></span><span class="line"><span class="cl"> --&gt; Using Image <span class="o">(</span>gcr.io/kasten-images/k10tools:4.5.11<span class="o">)</span> to run <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">Checking access to the Kubernetes context leihome-workload-01-admin@leihome-workload-01
+</span></span><span class="line"><span class="cl"> --&gt; Able to access the default Kubernetes namespace
+</span></span><span class="line"><span class="cl">K10 Kanister tools image
+</span></span><span class="line"><span class="cl"> --&gt; Using Kanister tools image <span class="o">(</span>ghcr.io/kanisterio/kanister-tools:0.74.0<span class="o">)</span> to run <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Running K10Primer Job in cluster with command-
+</span></span><span class="line"><span class="cl">     ./k10tools primer
+</span></span><span class="line"><span class="cl">serviceaccount/k10-primer created
+</span></span><span class="line"><span class="cl">clusterrolebinding.rbac.authorization.k8s.io/k10-primer created
+</span></span><span class="line"><span class="cl">job.batch/k10primer created
+</span></span><span class="line"><span class="cl">Waiting <span class="k">for</span> pod k10primer-b5nf9 to be ready - ContainerCreating
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Pod Ready!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">I0319 05:28:41.931353       <span class="m">8</span> request.go:665<span class="o">]</span> Waited <span class="k">for</span> 1.043641473s due to client-side throttling, not priority and fairness, request: GET:https://100.64.0.1:443/apis/scheduling.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">Kubernetes Version Check:
+</span></span><span class="line"><span class="cl">  Valid kubernetes version <span class="o">(</span>v1.21.5+vmware.1<span class="o">)</span>  -  OK
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">RBAC Check:
+</span></span><span class="line"><span class="cl">  Kubernetes RBAC is enabled  -  OK
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Aggregated Layer Check:
+</span></span><span class="line"><span class="cl">  The Kubernetes Aggregated Layer is enabled  -  OK
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">W0319 05:28:42.188135       <span class="m">8</span> warnings.go:70<span class="o">]</span> storage.k8s.io/v1beta1 CSIDriver is deprecated in v1.19+, unavailable in v1.22+<span class="p">;</span> use storage.k8s.io/v1 CSIDriver
+</span></span><span class="line"><span class="cl">CSI Capabilities Check:
+</span></span><span class="line"><span class="cl">  VolumeSnapshot CRD-based APIs are not installed  -  Error
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Validating Provisioners:
+</span></span><span class="line"><span class="cl">csi.vsphere.vmware.com:
+</span></span><span class="line"><span class="cl">  Storage Classes:
+</span></span><span class="line"><span class="cl">    default
+</span></span><span class="line"><span class="cl">      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+</span></span><span class="line"><span class="cl">      Valid Storage Class  -  OK
+</span></span><span class="line"><span class="cl">    isonfs
+</span></span><span class="line"><span class="cl">      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+</span></span><span class="line"><span class="cl">      Valid Storage Class  -  OK
+</span></span><span class="line"><span class="cl">    standard
+</span></span><span class="line"><span class="cl">      K10 supports the vSphere CSI driver natively. Creation of a K10 infrastucture profile is required.
+</span></span><span class="line"><span class="cl">      Valid Storage Class  -  OK
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Validate Generic Volume Snapshot:
+</span></span><span class="line"><span class="cl">  Pod Created successfully  -  OK
+</span></span><span class="line"><span class="cl">  GVS Backup <span class="nb">command</span> executed successfully  -  OK
+</span></span><span class="line"><span class="cl">  Pod deleted successfully  -  OK
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">serviceaccount <span class="s2">&#34;k10-primer&#34;</span> deleted
+</span></span><span class="line"><span class="cl">clusterrolebinding.rbac.authorization.k8s.io <span class="s2">&#34;k10-primer&#34;</span> deleted
+</span></span><span class="line"><span class="cl">job.batch <span class="s2">&#34;k10primer&#34;</span> deleted</span></span></code></pre></div></div>
+<p>You can see there&rsquo;s an Error in the CSI Capabilities Check, but that&rsquo;s fine. Since I&rsquo;m using vSphere CSI, the snapshot functionality uses vSphere&rsquo;s native VMDK snapshots, so I didn&rsquo;t install VolumeSnapshotClass in the cluster.</p>
+<p>Installing K10 followed the standard method from the official documentation, though I still used the <code>ccr.ccs.tencentyun.com/kasten</code> image registry:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">k10@tceconsole:~$ helm repo add kasten https://charts.kasten.io/
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ helm repo update
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ helm install k10 kasten/k10 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	--namespace<span class="o">=</span>kasten-io <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	--set global.persistence.storageClass<span class="o">=</span>standard <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	--set global.airgapped.repository<span class="o">=</span>ccr.ccs.tencentyun.com/kasten <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	--set metering.mode<span class="o">=</span>airgap
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Expose K10 UI via NodePort</span>
+</span></span><span class="line"><span class="cl">k10@tceconsole:~$ kubectl expose -n kasten-io deployment gateway --type<span class="o">=</span>NodePort --name<span class="o">=</span>gateway-nodeport-svc --port<span class="o">=</span><span class="m">8000</span></span></span></code></pre></div></div>
+<p>After about 10 minutes, I could access K10 at <code>http://10.10.1.14:32080/k10/#/</code>.</p>
+<h3 id="configuring-k10-with-vcenter-and-vbr">Configuring K10 with vCenter and VBR</h3>
+<p>After logging into the K10 dashboard, I went to Settings and found Location Profile. First, I needed to add an S3 object storage as the primary backup storage - even though I have a VBR repository, this is still required. The configuration is very simple:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe4KG8.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe4KG8.png, https://s1.ax1x.com/2022/03/20/qe4KG8.png 1.5x, https://s1.ax1x.com/2022/03/20/qe4KG8.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe4KG8.png"
+        title="S3 Configuration" /></p>
+<p>Next, I added a VBR Repository for VMDK data backup storage, which means PVC backups:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe48qs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe48qs.png, https://s1.ax1x.com/2022/03/20/qe48qs.png 1.5x, https://s1.ax1x.com/2022/03/20/qe48qs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe48qs.png"
+        title="VBR Repository" /></p>
+<p>Under Location Profile, I found Infrastructure and used the New Profile button to add a vCenter connection. The configuration is very straightforward - just IP address, username, and password, the same as adding any device to vCenter.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe4JZn.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe4JZn.png, https://s1.ax1x.com/2022/03/20/qe4JZn.png 1.5x, https://s1.ax1x.com/2022/03/20/qe4JZn.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe4JZn.png"
+        title="vCenter Configuration" /></p>
+<p>With that done, I could configure backup policies. The backup policies for Kubernetes platforms are slightly different. In Snapshot Retention, you can see that K10 automatically detected this is a VMware platform and provided VMware platform snapshot retention best practices, recommending no more than 3 snapshots. As shown below, I set Snapshot to 1. In Export Location Profile, I could select the Minio S3 object storage as the first-level backup export target - the VBR Location Profile wasn&rsquo;t available here.</p>
+<p>After checking <code>Enable Backups via Snapshot Exports</code>, a new option appeared: <code>Export snapshot data to a Veeam Backup Server repository</code>. After checking this option, I could select the Veeam Backup Location Profile.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qefZyd.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qefZyd.png, https://s1.ax1x.com/2022/03/20/qefZyd.png 1.5x, https://s1.ax1x.com/2022/03/20/qefZyd.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qefZyd.png"
+        title="Backup Policy Configuration" /></p>
+<p>The other configurations were standard. Here&rsquo;s the final policy:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qehDEt.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qehDEt.png, https://s1.ax1x.com/2022/03/20/qehDEt.png 1.5x, https://s1.ax1x.com/2022/03/20/qehDEt.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qehDEt.png"
+        title="Final Policy" /></p>
+<p>When the backup runs automatically, you can see detailed backup action information from the Dashboard. The VBR export part is handled by Kanister:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qe5kWT.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qe5kWT.png, https://s1.ax1x.com/2022/03/20/qe5kWT.png 1.5x, https://s1.ax1x.com/2022/03/20/qe5kWT.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qe5kWT.png"
+        title="Backup Actions" /></p>
+<p>In VBR, you can see the K10 Policy and K10 backup archives have appeared:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qeIlHs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qeIlHs.png, https://s1.ax1x.com/2022/03/20/qeIlHs.png 1.5x, https://s1.ax1x.com/2022/03/20/qeIlHs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qeIlHs.png"
+        title="VBR K10 Policy" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/20/qeIQBj.png"
+        data-srcset="https://s1.ax1x.com/2022/03/20/qeIQBj.png, https://s1.ax1x.com/2022/03/20/qeIQBj.png 1.5x, https://s1.ax1x.com/2022/03/20/qeIQBj.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/20/qeIQBj.png"
+        title="VBR K10 Archives" /></p>
+<p>For more information about K10 operations in VBR, you can refer to the <a href="https://helpcenter.veeam.com/docs/backup/kasten_integration/overview.html?ver=110" target="_blank" rel="noopener noreffer ">official Veeam documentation</a>, which is now available on the website.</p>
+<h2 id="resource-summary">Resource Summary</h2>
+<p>At this point, the entire environment resource consumption looks like this:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Virtual Machine</th>
+          <th>Purpose</th>
+          <th>CPU</th>
+          <th>Memory</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>vCenter</td>
+          <td>vCenter Server</td>
+          <td>2vCPU</td>
+          <td>12GB</td>
+      </tr>
+      <tr>
+          <td>TCEconsole</td>
+          <td>Tanzu Console</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>leihome-control-plane-2mz2v</td>
+          <td>TCE Management Cluster Control Node</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-md-0-6f69758844-zpfsj</td>
+          <td>TCE Management Cluster Worker Node</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-control-plane-c4k4q</td>
+          <td>TCE Workload Cluster Control Node</td>
+          <td>2vCPU</td>
+          <td>4GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-md-0-668d8747d6-4hd6z</td>
+          <td>TCE Workload Cluster Worker Node</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>leihome-workload-01-md-0-668d8747d6-hcs4k</td>
+          <td>TCE Workload Cluster Worker Node</td>
+          <td>2vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td>VBR</td>
+          <td>Veeam Backup &amp; Replication</td>
+          <td>4vCPU</td>
+          <td>8GB</td>
+      </tr>
+      <tr>
+          <td><strong>Total</strong></td>
+          <td></td>
+          <td><strong>18vCPU</strong></td>
+          <td><strong>56GB</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>This hasn&rsquo;t exceeded my NUC11&rsquo;s total memory - a single NUC11 handles this environment with ease!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F03%2Fvmware-tanzu-community-edition-%25E8%25AF%2595%25E7%258E%25A9%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F03%2Fvmware-tanzu-community-edition-%25E8%25AF%2595%25E7%258E%25A9%2F&amp;text=Exploring&#43;Tanzu&#43;Community&#43;Edition&#43;in&#43;the&#43;Homelab" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F03%252Fvmware-tanzu-community-edition-%2525E8%2525AF%252595%2525E7%25258E%2525A9%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F03%252Fvmware-tanzu-community-edition-%2525E8%2525AF%252595%2525E7%25258E%2525A9%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/" class="prev" rel="prev" title="vCenter Converter Retired – How to Handle P2V Now"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>vCenter Converter Retired – How to Handle P2V Now</a>
+            <a href="/en/2022/03/pvc-and-fcd/" class="next" rel="next" title="First Class Disks (FCD) Explained">First Class Disks (FCD) Explained<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

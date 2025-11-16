@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VMware on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/VMware/</link>
+    <description>Recent content in VMware on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 19 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/VMware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VMware VAIO Overview</title>
+      <link>https://blog.backupnext.cloud/en/2021/02/vmware-vaio-overview/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/02/vmware-vaio-overview/</guid>
+      <description>&lt;p&gt;Next week, Veeam is releasing the highly anticipated v11 version of their flagship VAS suite, and the crown jewel feature is Veeam CDP. I know many of you have been waiting for this functionality for quite some time—and with good reason. After nearly five years of meticulous development and refinement, Veeam is finally bringing this feature to market in v11.&lt;/p&gt;&#xA;&lt;p&gt;What makes this CDP implementation particularly fascinating from a technical perspective is how fundamentally different it is from traditional backup and replication approaches. Since Veeam CDP leverages VMware-related technologies in ways we haven&amp;rsquo;t seen before, I wanted to give you a comprehensive primer on the underlying VMware technologies and APIs that power this feature. Understanding these foundations will help you appreciate the technical sophistication and be better prepared for deployment.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

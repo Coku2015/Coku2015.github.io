@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Automation Powershell on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Automation-Powershell/</link>
+    <description>Recent content in Automation Powershell on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 13 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Automation-Powershell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Is the Data Integration API “just an API”?</title>
+      <link>https://blog.backupnext.cloud/en/2020/07/data-integration-api/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/07/data-integration-api/</guid>
+      <description>&lt;p&gt;When Veeam released V10 it added a brand-new capability tucked away behind PowerShell cmdlets and a rather intimidating name: &lt;strong&gt;Data Integration API&lt;/strong&gt;. Many admins saw the term and assumed they’d need to write code, so they never looked deeper.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-it-actually-does&#34;&gt;What It Actually Does&lt;/h2&gt;&#xA;&lt;p&gt;In reality, the feature is straightforward. It uses Windows’ iSCSI services to publish Veeam backup data as iSCSI disks. Think of it as a new data-lab use case: any image-level backup can be presented to a Windows or Linux host over iSCSI—no VMware or Hyper-V required. Supported sources include:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

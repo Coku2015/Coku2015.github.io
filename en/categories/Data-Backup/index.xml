@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Backup on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Data-Backup/</link>
+    <description>Recent content in Data Backup on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Fri, 30 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Data-Backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Good news, Veeam passes another VMware Ready certification!</title>
+      <link>https://blog.backupnext.cloud/en/2017/06/another-vmware-ready/</link>
+      <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/06/another-vmware-ready/</guid>
+      <description>&lt;p&gt;Great news from the Veeam team! Last week, we achieved another significant milestone by passing the newly available VMware Web Client Plug-in Ready certification for vSphere 6.5. This is genuinely exciting news for anyone managing VMware infrastructure with Veeam.&lt;/p&gt;&#xA;&lt;p&gt;You can verify our certification status on VMware&amp;rsquo;s official compatibility list: &lt;a href=&#34;https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://www.vmware.com/resources/compatibility/search.php?deviceCategory=wcp&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png, https://s2.ax1x.com/2020/02/11/1T0COx.png 1.5x, https://s2.ax1x.com/2020/02/11/1T0COx.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/11/1T0COx.png&#34;&#xA;        title=&#34;1T0COx.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-vmware-ready-certification-matters&#34;&gt;Why VMware Ready Certification Matters&lt;/h2&gt;&#xA;&lt;p&gt;If you&amp;rsquo;re not familiar with VMware Ready certification, here&amp;rsquo;s why it&amp;rsquo;s such a big deal. This certification ensures that plug-ins meet VMware&amp;rsquo;s highest standards, providing several key advantages:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

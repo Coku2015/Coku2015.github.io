@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>First Class Disks (FCD) Explained - Cloud.Virt.AI.Sec</title><meta name="description" content="After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:
+Starting with vSphere 6.5, VMware …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="First Class Disks (FCD) Explained">
+  <meta property="og:description" content="After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:
+Starting with vSphere 6.5, VMware introduced a completely new disk format called “First Class Disks” (FCD). The name is certainly bold, and in fact, these virtual disks do have their own unique “privileges.” Today, I’d like to explain these FCDs in detail.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-03-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-03-23T00:00:00+00:00">
+    <meta property="article:tag" content="VMware">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="First Class Disks (FCD) Explained">
+  <meta name="twitter:description" content="After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:
+Starting with vSphere 6.5, VMware introduced a completely new disk format called “First Class Disks” (FCD). The name is certainly bold, and in fact, these virtual disks do have their own unique “privileges.” Today, I’d like to explain these FCDs in detail.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2022/03/pvc-and-fcd/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" /><link rel="next" href="https://blog.backupnext.cloud/en/2022/07/nested-tkgs-lab-automation-script/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "First Class Disks (FCD) Explained",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2022\/03\/pvc-and-fcd\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1377 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2022\/03\/pvc-and-fcd\/","datePublished": "2022-03-23T00:00:00+00:00","dateModified": "2022-03-23T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/03/pvc-and-fcd/">简体中文</option><option value="/en/2022/03/pvc-and-fcd/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/03/pvc-and-fcd/">简体中文</option><option value="/en/2022/03/pvc-and-fcd/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">First Class Disks (FCD) Explained</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-23">2022-03-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1377 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#background">Background</a></li>
+    <li><a href="#kubernetes-using-vsphere-fcd">Kubernetes Using vSphere FCD</a></li>
+    <li><a href="#k10-backups">K10 Backups</a></li>
+    <li><a href="#instant-pvc-recovery-experiment">Instant PVC Recovery Experiment</a>
+      <ul>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#steps">Steps</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:</p>
+<p><a href="https://imgtu.com/i/q3e6I0" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q3e6I0.png, https://s1.ax1x.com/2022/03/23/q3e6I0.png 1.5x, https://s1.ax1x.com/2022/03/23/q3e6I0.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        title="q3e6I0.png" /></a></p>
+<p>Starting with vSphere 6.5, VMware introduced a completely new disk format called &ldquo;First Class Disks&rdquo; (FCD). The name is certainly bold, and in fact, these virtual disks do have their own unique &ldquo;privileges.&rdquo; Today, I&rsquo;d like to explain these FCDs in detail.</p>
+<h2 id="background">Background</h2>
+<p>Let me start with some background. In early vSphere versions, FCDs were originally called &ldquo;Improved Virtual Disk&rdquo; (IVD). So essentially, an FCD is just a VMware virtual disk: a VMDK. We know that in vSphere, each virtual machine has one or more virtual disks, and the daily management of these virtual disks is tightly coupled with their corresponding virtual machines.</p>
+<p>Let&rsquo;s draw a simple analogy between physical and virtual environments:</p>
+<ul>
+<li>
+<p>A physical server connects to multiple storage volumes on storage devices. If the storage device has snapshot functionality, it can perform snapshot operations on individual volumes.</p>
+</li>
+<li>
+<p>A VMware virtual machine has multiple VMDKs, but snapshots can only be performed on the entire virtual machine, not on individual VMDKs.</p>
+</li>
+</ul>
+<p>FCDs were born in this context. FCD management is completely independent of the VM lifecycle—the VMDK becomes a separate storage object managed independently of any virtual machine. We can perform create, delete, snapshot, backup, restore, and other disk lifecycle management operations directly on the disk without worrying about its attachment status.</p>
+<p>After FCDs emerged, they found use in many scenarios, such as VDI, OpenStack Cinder, and others. Today, I&rsquo;ll discuss an important scenario I&rsquo;ve been using in my Homelab recently: vSphere Cloud Native Storage (CNS) providing persistent storage for Kubernetes environments.</p>
+<h2 id="kubernetes-using-vsphere-fcd">Kubernetes Using vSphere FCD</h2>
+<p>FCDs are stored in the <code>fcd</code> directory under each Datastore, as shown here:</p>
+<p><a href="https://imgtu.com/i/qMJXFA" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/22/qMJXFA.png"
+        data-srcset="https://s1.ax1x.com/2022/03/22/qMJXFA.png, https://s1.ax1x.com/2022/03/22/qMJXFA.png 1.5x, https://s1.ax1x.com/2022/03/22/qMJXFA.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/22/qMJXFA.png"
+        title="qMJXFA.png" /></a></p>
+<p>Each FCD consists of a VMDK file and a VMFD file, meaning it has one additional VMFD file compared to regular VMDKs.</p>
+<p>FCDs are not visible in the vSphere Client. In fact, all FCD management operations are performed through APIs. A convenient entry point is management through vSphere Mob:</p>
+<p>https://<vCenter IP>/vslm/mob//?moid=VStorageObjectManager</p>
+<p>In this Mob manager, you can perform various operations on FCDs such as create, mount, clone, snapshot management, and delete.</p>
+<p>However, the Mob manager isn&rsquo;t quite sufficient for all operations. PowerCLI can provide additional capabilities, such as querying all registered FCD disks in the current vCenter using PowerCLI.</p>
+<p><a href="https://developer.vmware.com/docs/powercli/latest/vmware.vimautomation.storage/commands/get-vdisk/#Default" target="_blank" rel="noopener noreffer ">Get-VDisk</a></p>
+<p><a href="https://imgtu.com/i/qMU6pR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/22/qMU6pR.png"
+        data-srcset="https://s1.ax1x.com/2022/03/22/qMU6pR.png, https://s1.ax1x.com/2022/03/22/qMU6pR.png 1.5x, https://s1.ax1x.com/2022/03/22/qMU6pR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/22/qMU6pR.png"
+        title="qMU6pR.png" /></a></p>
+<p>Each FCD has a unique identifier UUID for recognition. This UUID is stored in vCenter&rsquo;s catalog, so whether using vSphere Mob or PowerCLI, you need this ID to operate on these FCDs.</p>
+<p>When these FCDs are associated with PVCs in Kubernetes, you can see them in vSphere Client under each Datastore&rsquo;s Monitor → Cloud Native Storage → Container Volumes.</p>
+<p><a href="https://imgtu.com/i/qMd7OP" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/22/qMd7OP.png"
+        data-srcset="https://s1.ax1x.com/2022/03/22/qMd7OP.png, https://s1.ax1x.com/2022/03/22/qMd7OP.png 1.5x, https://s1.ax1x.com/2022/03/22/qMd7OP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/22/qMd7OP.png"
+        title="qMd7OP.png" /></a></p>
+<p>Here, Volume Name corresponds to the PVC Name in Kubernetes, while Volume ID is the FCD&rsquo;s UUID in vSphere.</p>
+<p>When vSphere provides PVC storage for Kubernetes Worker Nodes, these FCDs are actually attached to each Worker Node&rsquo;s virtual machine. For example, this Worker Node of mine:</p>
+<p><a href="https://imgtu.com/i/qMBsQs" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/22/qMBsQs.png"
+        data-srcset="https://s1.ax1x.com/2022/03/22/qMBsQs.png, https://s1.ax1x.com/2022/03/22/qMBsQs.png 1.5x, https://s1.ax1x.com/2022/03/22/qMBsQs.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/22/qMBsQs.png"
+        title="qMBsQs.png" /></a></p>
+<p>This makes it easy to understand how applications in Kubernetes write data to their persistent PVCs. During operation, these Worker Node virtual machines are actually writing data to these VMDKs.</p>
+<h2 id="k10-backups">K10 Backups</h2>
+<p>When K10 uses vSphere Integration to back up applications on Kubernetes, K10 no longer needs VolumeSnapshot CRDs to complete PVC volume snapshots. Instead, it uses vSphere FCD Snapshots. As we mentioned at the beginning of this article, FCD lifecycle management is completely independent of virtual machines. When we initiate a backup task, K10 doesn&rsquo;t need to snapshot the entire Worker Node; instead, it snapshots individual FCDs, achieving PVC snapshots on the Kubernetes platform.</p>
+<p><a href="https://imgtu.com/i/qMriv9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/22/qMriv9.png"
+        data-srcset="https://s1.ax1x.com/2022/03/22/qMriv9.png, https://s1.ax1x.com/2022/03/22/qMriv9.png 1.5x, https://s1.ax1x.com/2022/03/22/qMriv9.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/22/qMriv9.png"
+        title="qMriv9.png" /></a></p>
+<p>FCD snapshots have exactly the same structure as regular VMDK snapshots, consisting of parent and child disks in a delta disk mode. The file composition and filename structure are also identical. Therefore, the issues that have plagued VMDKs for years still exist with FCDs, but isn&rsquo;t that also an advantage?</p>
+<p>For this reason, during K10 backups, we recommend keeping no more than 3 snapshots. For performance and capacity considerations, I suggest 1 snapshot is sufficient—move other data to the Repository.</p>
+<p>Some of the data backed up by K10 can be exported to VBR. This data is essentially the FCD snapshot images. After VBR receives this data, it can use its powerful recovery capabilities to restore FCDs.</p>
+<p>In fact, in VBR, VBR can convert any data volume into FCDs on VMware using the VBR Instant Disk Recovery feature.</p>
+<h2 id="instant-pvc-recovery-experiment">Instant PVC Recovery Experiment</h2>
+<p>In my Lab, I conducted a small experiment using VBR&rsquo;s Instant Disk Recovery for PVC recovery, trying to combine these powerful technologies to create some sparks.</p>
+<h3 id="scenario">Scenario</h3>
+<p>In my Tanzu cluster, I have an app called <code>leihomedemo3</code>. This app is very simple—it&rsquo;s just an Alpine Linux container. Currently, this Alpine doesn&rsquo;t have any data volumes mounted. I want to use instant FCD recovery technology to restore a previously backed up FCD and mount it to this Alpine Linux&rsquo;s <code>/data</code> directory.</p>
+<h3 id="steps">Steps</h3>
+<ol>
+<li>
+<p>In VBR, find the K10 backup archive, use the Instant Disk Recovery button to open the recovery wizard, and select the latest restore point.
+<a href="https://imgtu.com/i/q3wqHI" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q3wqHI.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q3wqHI.png, https://s1.ax1x.com/2022/03/23/q3wqHI.png 1.5x, https://s1.ax1x.com/2022/03/23/q3wqHI.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q3wqHI.png"
+        title="q3wqHI.png" /></a></p>
+</li>
+<li>
+<p>In Mount Mode, select First class disk (FCD).
+<a href="https://imgtu.com/i/q3e6I0" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q3e6I0.png, https://s1.ax1x.com/2022/03/23/q3e6I0.png 1.5x, https://s1.ax1x.com/2022/03/23/q3e6I0.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        title="q3e6I0.png" /></a></p>
+</li>
+<li>
+<p>In Disks, you can see some information about the disk to be recovered. I&rsquo;ll keep the defaults here without any modifications.
+<a href="https://imgtu.com/i/q30nv4" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q30nv4.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q30nv4.png, https://s1.ax1x.com/2022/03/23/q30nv4.png 1.5x, https://s1.ax1x.com/2022/03/23/q30nv4.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q30nv4.png"
+        title="q30nv4.png" /></a></p>
+</li>
+<li>
+<p>In Destination, select the Tanzu Cluster running in my environment.
+<a href="https://imgtu.com/i/q30rIP" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q30rIP.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q30rIP.png, https://s1.ax1x.com/2022/03/23/q30rIP.png 1.5x, https://s1.ax1x.com/2022/03/23/q30rIP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q30rIP.png"
+        title="q30rIP.png" /></a></p>
+</li>
+<li>
+<p>After Write Cache, I don&rsquo;t modify any subsequent steps until reaching Finish, which starts the instant disk recovery. After about tens of seconds, this FCD is successfully mounted. In the instant recovery session, you can see this disk is registered as an FCD with ID <code>540eedc6-9a48-4f07-9ec1-cd3b9ec9a67e</code>.
+<a href="https://imgtu.com/i/q30zIx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q30zIx.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q30zIx.png, https://s1.ax1x.com/2022/03/23/q30zIx.png 1.5x, https://s1.ax1x.com/2022/03/23/q30zIx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q30zIx.png"
+        title="q30zIx.png" /></a></p>
+</li>
+<li>
+<p>With this FCD ID, I come to the Tanzu cluster and bind this FCD as a PVC using the following YAML file:</p>
+</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StorageClass</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">storage.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstant</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storageclass.kubernetes.io/is-default-class</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">parameters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">datastoreurl</span><span class="p">:</span><span class="w"> </span><span class="l">ds:///vmfs/volumes/ae2b924e-83e53e07/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolume</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstantrecoverypv</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pv.kubernetes.io/provisioned-by</span><span class="p">:</span><span class="w"> </span><span class="l">csi.vsphere.vmware.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstant</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">capacity</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Delete</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">csi</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;csi.vsphere.vmware.com&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumeAttributes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;vSphere CNS Block Volume&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumeHandle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;540eedc6-9a48-4f07-9ec1-cd3b9ec9a67e&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">PersistentVolumeClaim</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstantrecoverypvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">leihomedemo3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">ReadWriteOnce</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstant</span></span></span></code></pre></div></div>
+<p>Execute the command on the Tanzu console:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~/demo$ kubectl apply -f vbrdemopvc.yaml
+storageclass.storage.k8s.io/vbrinstant unchanged
+persistentvolume/vbrinstantrecoverypv created
+persistentvolumeclaim/vbrinstantrecoverypvc created
+k10@tceconsole:~/demo$ kubectl get pvc -n leihomedemo3
+NAME                    STATUS   VOLUME                 CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+vbrinstantrecoverypvc   Bound    vbrinstantrecoverypv   1Gi        RWO            vbrinstant     28s</code></pre></div>
+<p>The binding is successful, and the FCD is officially converted into a Container Volume. At this point, you can also see the bound PV volume in vSphere Client.</p>
+<p><a href="https://imgtu.com/i/q3DcuQ" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q3DcuQ.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q3DcuQ.png, https://s1.ax1x.com/2022/03/23/q3DcuQ.png 1.5x, https://s1.ax1x.com/2022/03/23/q3DcuQ.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q3DcuQ.png"
+        title="q3DcuQ.png" /></a></p>
+<ol start="7">
+<li>
+<p>Modify the deployment to add the mount volume. After modification, the deployment restarts, and within a few seconds, the restart is complete. At this point, you can see the data inside the pod.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">k10@tceconsole:~/demo$ kubectl edit deploy -n leihomedemo3 demo-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## Add mount volume in container section</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">demo-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## Add PVC volume name in template spec</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">vbrinstantrecoverypvc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">deployment.apps/demo-app edited</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">k10@tceconsole:~/demo$ kubectl exec --namespace=leihomedemo3 demo-app-7758b547ff-gf4n8 -- ls -l /data/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">total 24</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>-<span class="l">rw-rw-r--    1 1000     117            811 Mar 15 05:49 depoly-pvc.yaml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">drwx------    2 root     root         16384 Mar 12 14:01 lost+found</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>-<span class="l">rw-rw-r--    1 1000     117             13 Mar 12 14:33 mytest</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>In VBR, you can still use the traditional method, Migration to Production, to migrate the PVC from VBR&rsquo;s cache to the production system&rsquo;s Datastore.
+<a href="https://imgtu.com/i/q36tRP" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q36tRP.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q36tRP.png, https://s1.ax1x.com/2022/03/23/q36tRP.png 1.5x, https://s1.ax1x.com/2022/03/23/q36tRP.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q36tRP.png"
+        title="q36tRP.png" /></a></p>
+</li>
+<li>
+<p>Throughout the entire migration process, the system experienced no interruption. After migration completion, no modifications are needed in Tanzu—the system continues to function normally. The only minor issue is that when querying the PVC through <code>kubectl get pvc -n leihomedemo3</code>, you&rsquo;ll see it&rsquo;s still located on the VBR-mounted StorageClass. The fix isn&rsquo;t complicated, and not fixing it doesn&rsquo;t affect usage:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>k10@tceconsole:~/demo$ kubectl delete -n leihomedemo3 pvc vbrinstantrecoverypvc
+persistentvolumeclaim &#34;vbrinstantrecoverypvc&#34; deleted
+## The system will get stuck at this step, just end the command with ctrl+c, then run the following command to force removal
+k10@tceconsole:~/demo$ kubectl patch pvc -n leihomedemo3 vbrinstantrecoverypvc -p &#39;{&#34;metadata&#34;:{&#34;finalizers&#34;:null}}&#39;
+## In the binding YAML used in step 6, change storageClassName: vbrinstant in the PV and PVC sections to storageClassName:isonfs, then reapply this YAML.
+k10@tceconsole:~/demo$ kubectl apply -f vbrdemopvc.yaml
+storageclass.storage.k8s.io/vbrinstant unchanged
+persistentvolume/vbrinstantrecoverypv configured
+persistentvolumeclaim/vbrinstantrecoverypvc created</code></pre></div>
+</li>
+</ol>
+<p>That concludes my sharing about FCD, these entirely new First Class Disks. Welcome to follow my updates for more content.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2022/03/pvc-and-fcd/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F03%2Fpvc-and-fcd%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2022%2F03%2Fpvc-and-fcd%2F&amp;text=First&#43;Class&#43;Disks&#43;%28FCD%29&#43;Explained" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F03%252Fpvc-and-fcd%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2022%252F03%252Fpvc-and-fcd%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/" class="prev" rel="prev" title="Exploring Tanzu Community Edition in the Homelab"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Exploring Tanzu Community Edition in the Homelab</a>
+            <a href="/en/2022/07/nested-tkgs-lab-automation-script/" class="next" rel="next" title="Automated Nested TKGs Lab Environment Script">Automated Nested TKGs Lab Environment Script<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

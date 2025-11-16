@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VBR on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/VBR/</link>
+    <description>Recent content in VBR on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Tue, 23 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/VBR/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>In-Depth Analysis: Veeam V13 Release Strategy and Deployment Options</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</link>
+      <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</guid>
+      <description>&lt;p&gt;Recently, Veeam&amp;rsquo;s Chief Product Officer Anton Gostev published an FAQ on the &lt;a href=&#34;https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;R&amp;amp;D forums&lt;/a&gt; that clearly explains V13&amp;rsquo;s release schedule, deployment options, licensing, and migration strategy. For customers and partner engineers, this isn&amp;rsquo;t just &amp;ldquo;news&amp;rdquo; – it&amp;rsquo;s a practical guide that will influence decisions about &amp;ldquo;whether to upgrade immediately and how to plan migration paths.&amp;rdquo; This article uses that post as a starting point, combining it with official release information to analyze its actual impact on users of different scales, and provides actionable recommendations.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</link>
+      <pubDate>Mon, 22 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</guid>
+      <description>&lt;p&gt;In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the &lt;strong&gt;Veeam Infrastructure Appliance&lt;/strong&gt; specifically designed to host role services. If the Software Appliance is the &amp;ldquo;command center,&amp;rdquo; then the Infrastructure Appliance is more like a pre-configured, ready-to-use &amp;ldquo;execution unit&amp;rdquo;: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-why-choose-infrastructure-appliance&#34;&gt;1. Why Choose Infrastructure Appliance&lt;/h2&gt;&#xA;&lt;p&gt;The reasons for choosing Infrastructure Appliance can be summarized in three points: &lt;strong&gt;fast, simple, secure&lt;/strong&gt;. Veeam&amp;rsquo;s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you&amp;rsquo;re essentially getting a Linux server optimized for backup roles according to best practices that&amp;rsquo;s ready to use out of the box.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Making Veeam Updates Both Secure and Fast: A Complete Guide to Building Local Update Repository Servers</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</guid>
+      <description>&lt;p&gt;In the previous articles of this series, we&amp;rsquo;ve installed and run the Veeam Software Appliance, experiencing its &amp;ldquo;secure by default&amp;rdquo; management approach. Now, let&amp;rsquo;s tackle a question many people genuinely care about: &lt;strong&gt;How to enable Veeam Software Appliance to automatically receive updates in an offline environment, just like it would online&lt;/strong&gt;. The official documentation mentions specifying a local mirror repository, but it doesn&amp;rsquo;t provide detailed instructions on how to build, sync, or configure certificates. Based on my lab testing, I&amp;rsquo;ll walk you through the complete process step by step.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/</link>
+      <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/</guid>
+      <description>&lt;p&gt;In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to automated installation, followed by initial TUI setup and basic management. Many of you have successfully gotten this &amp;ldquo;backup powerhouse&amp;rdquo; up and running.&lt;/p&gt;&#xA;&lt;p&gt;But once the system is actually running, new questions arise:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;What new features does Veeam Software Appliance actually offer?&lt;/li&gt;&#xA;&lt;li&gt;How does this Linux-based Appliance differ from the previous Windows version?&lt;/li&gt;&#xA;&lt;li&gt;Should I use the WebUI or TUI console?&lt;/li&gt;&#xA;&lt;li&gt;How do I handle user management?&lt;/li&gt;&#xA;&lt;li&gt;What about upgrades and updates?&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;In this installment, we&amp;rsquo;ll tackle these most pressing questions, guiding you through &lt;strong&gt;Veeam Software Appliance&amp;rsquo;s new features&lt;/strong&gt; and &lt;strong&gt;Appliance-specific management methods&lt;/strong&gt;, while walking you through &lt;strong&gt;the use cases for both host console UIs&lt;/strong&gt;. This will ensure you can use and manage your Appliance confidently after installation.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/</link>
+      <pubDate>Fri, 05 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/</guid>
+      <description>&lt;p&gt;In our previous article, we introduced Veeam&amp;rsquo;s latest product releases, particularly the brand-new &lt;strong&gt;Veeam Software Appliance&lt;/strong&gt;. Many of you might have grasped the concept but are still unsure about how to actually use, install, and configure it after downloading. Don&amp;rsquo;t worry - starting from this article, we&amp;rsquo;ll dive into hands-on implementation, guiding you step by step through the deployment and usage of &lt;strong&gt;Veeam Software Appliance&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Veeam officially provides two deployment methods for this Appliance: &lt;strong&gt;ISO image&lt;/strong&gt; and &lt;strong&gt;OVA template&lt;/strong&gt;. To avoid overwhelming you with too many options, this article will focus specifically on the &lt;strong&gt;ISO image&lt;/strong&gt; method. Unlike our usual practice of &amp;ldquo;mounting an ISO file&amp;rdquo; within an operating system, this ISO is a complete system boot disk. You need to use it to boot your server or virtual machine, just like installing a new operating system on a fresh computer.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Launches Software Appliance: New Download Experience and Documentation Overhaul</title>
+      <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-01/</link>
+      <pubDate>Thu, 04 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-01/</guid>
+      <description>&lt;h2 id=&#34;introduction-the-background-of-veeam-software-appliance&#34;&gt;Introduction: The Background of Veeam Software Appliance&lt;/h2&gt;&#xA;&lt;p&gt;Yesterday, Veeam quietly launched a new product on their official website: &lt;a href=&#34;https://www.veeam.com/blog/veeam-software-appliance.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;Veeam Software Appliance&lt;/a&gt;. For many of us, Veeam has traditionally followed the Windows installer + manual configuration approach. This Software Appliance clearly takes a different path: both installation and security are pre-configured, significantly simplifying the onboarding process. For instance, it&amp;rsquo;s built on a pre-hardened Rocky Linux platform, comes with immutable storage, zero-trust access control, and automatic patching - eliminating the need to purchase Windows licenses or perform your own security hardening. You can deploy it directly using ISO or OVA formats, and it runs on virtual machines, physical servers, or in the cloud.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Backup and Restore Best Practices with Veeam</title>
+      <link>https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/</link>
+      <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/</guid>
+      <description>&lt;p&gt;In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn&amp;rsquo;t prominently featured in the Veeam data protection platform. Today, I&amp;rsquo;ll explain what&amp;rsquo;s going on and how you should approach MySQL backup and recovery using Veeam.&lt;/p&gt;&#xA;&lt;h2 id=&#34;mysql-data-storage-engines&#34;&gt;MySQL Data Storage Engines&lt;/h2&gt;&#xA;&lt;p&gt;Before discussing MySQL backup, we need to talk about MySQL&amp;rsquo;s data storage engines because different engines directly determine MySQL&amp;rsquo;s data backup and recovery capabilities. In MySQL, &lt;code&gt;InnoDB&lt;/code&gt; is the most commonly used storage engine by default. Tables created with the &lt;code&gt;Create Table&lt;/code&gt; command without specifying an &lt;code&gt;Engine&lt;/code&gt; parameter will use the &lt;code&gt;InnoDB&lt;/code&gt; engine by default, and Oracle officially recommends using the &lt;code&gt;InnoDB&lt;/code&gt; engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the &lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;official documentation&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam&#39;s Major H2 2023 Product Line Update</title>
+      <link>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/</guid>
+      <description>&lt;p&gt;Just yesterday, Veeam officially GA&amp;rsquo;d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you&amp;rsquo;re a Veeam power user, when you visit your Veeam homepage at &lt;a href=&#34;https://my.veeam.com&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;https://my.veeam.com&lt;/a&gt;, you&amp;rsquo;ll see a full screen where all products show &amp;ldquo;New&amp;rdquo; status - these are all newly available versions released this week for download.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hidden Shortcuts in Veeam Backup &amp; Replication v12</title>
+      <link>https://blog.backupnext.cloud/en/2023/03/v12update-hidden-key/</link>
+      <pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2023/03/v12update-hidden-key/</guid>
+      <description>&lt;p&gt;There&amp;rsquo;s something special about discovering hidden features in software—the kind that aren&amp;rsquo;t in the release notes but make your daily work so much better. Veeam Backup &amp;amp; Replication v10 introduced some fantastic hidden features, and with the recent v12 release, there are even more gems waiting to be found.&lt;/p&gt;&#xA;&lt;p&gt;Let me share the hidden shortcuts and features I&amp;rsquo;ve uncovered in v12 that could save you hours of frustration.&lt;/p&gt;&#xA;&lt;h2 id=&#34;ctrl--right-click-your-new-best-friend&#34;&gt;Ctrl + Right-Click: Your New Best Friend&lt;/h2&gt;&#xA;&lt;h3 id=&#34;repair-corrupted-vacm-files&#34;&gt;Repair Corrupted VACM Files&lt;/h3&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s a scenario that keeps backup administrators up at night. With v12, almost all your data can be safely stored in Veeam Hardened Repositories (VHR), protected by WORM functionality. But there&amp;rsquo;s a catch: Enterprise Plugins like Oracle RMAN, SAP HANA, and the new SQL Plugins store their backup job metadata (VACM files) outside the hardened repository.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Free Tools Done Right</title>
+      <link>https://blog.backupnext.cloud/en/2021/03/gift-from-veeam-free-community-edition/</link>
+      <pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/03/gift-from-veeam-free-community-edition/</guid>
+      <description>&lt;p&gt;Great tools shouldn&amp;rsquo;t come with hidden strings attached. As IT administrators, we&amp;rsquo;re always hunting for utilities that make our lives easier without breaking the budget. That&amp;rsquo;s why I&amp;rsquo;m excited about Veeam&amp;rsquo;s Community Edition—a complete toolkit that&amp;rsquo;s genuinely free, not just a trial in disguise.&lt;/p&gt;&#xA;&lt;p&gt;Beyond their flagship Veeam Availability Suite, Veeam provides every IT admin with a full set of Community Edition tools. No ads, no usage limits, no nagging upgrade prompts. They&amp;rsquo;re not quite open source, but they&amp;rsquo;re completely free to use. Think of them as Veeam&amp;rsquo;s gift to the IT community.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Backup Server Upgrade Guide (v11 Edition)</title>
+      <link>https://blog.backupnext.cloud/en/2021/03/how-to-upgrade-vbr-v11-edition/</link>
+      <pubDate>Wed, 03 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2021/03/how-to-upgrade-vbr-v11-edition/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;On February 25, Veeam released the all-new v11 version. Last year, I published a post about upgrading to v10. Actually, this v11 upgrade process isn&amp;rsquo;t much different from the previous v10 upgrade. Today&amp;rsquo;s content will make some v11-specific adjustments to the previous post I mentioned—consider it a small update.&lt;/p&gt;&#xA;&lt;h3 id=&#34;before-you-upgrade&#34;&gt;Before You Upgrade&lt;/h3&gt;&#xA;&lt;p&gt;Please follow the flowchart below to check your current environment and ensure all other components are properly upgraded before upgrading VBR.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Agent for Linux 101</title>
+      <link>https://blog.backupnext.cloud/en/2020/09/veeam-linux-agent-101/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/09/veeam-linux-agent-101/</guid>
+      <description>&lt;p&gt;Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there&amp;rsquo;s always a use case for VAL. However, we&amp;rsquo;ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the &amp;ldquo;It just works!&amp;rdquo; slogan difficult to confidently claim.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>New Backup Copy Modes Bring 3-2-1 to More Workloads</title>
+      <link>https://blog.backupnext.cloud/en/2020/06/new-backup-copy/</link>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/06/new-backup-copy/</guid>
+      <description>&lt;h2 id=&#34;backup-copy-fundamentals&#34;&gt;Backup Copy Fundamentals&lt;/h2&gt;&#xA;&lt;p&gt;Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an existing restore point and duplicate it as a fully functional restore point in another repository. A restore point might be a single &lt;code&gt;.vbk&lt;/code&gt; full or a chain of &lt;code&gt;.vbk + .vib&lt;/code&gt; files—Backup Copy preserves whatever structure the source job created.&lt;/p&gt;&#xA;&lt;p&gt;Backup Copy typically uses a forever-incremental chain. The first run produces a &lt;code&gt;.vbk&lt;/code&gt; full; every subsequent run writes &lt;code&gt;.vib&lt;/code&gt; increments on top of that base. Synthetic fulls are created via the GFS schedule—for example:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hidden Shortcuts Inside VBR</title>
+      <link>https://blog.backupnext.cloud/en/2020/05/hidden-key-in-vbr/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/05/hidden-key-in-vbr/</guid>
+      <description>&lt;p&gt;After upgrading to V10, VBR gained lots of new features—and a surprising number of hidden shortcuts. Here are a few of my favorites.&lt;/p&gt;&#xA;&lt;h3 id=&#34;ctrl--right-click&#34;&gt;Ctrl + Right-click&lt;/h3&gt;&#xA;&lt;p&gt;In many views you can hold &lt;strong&gt;Ctrl&lt;/strong&gt; and right-click to reveal additional menu items that aren’t visible otherwise.&lt;/p&gt;&#xA;&lt;h4 id=&#34;start-a-fresh-nas-backup-chain&#34;&gt;Start a Fresh NAS Backup Chain&lt;/h4&gt;&#xA;&lt;p&gt;NAS jobs are forever-incremental, but sometimes you just need a brand-new full. In the Files shares backup job list, select the job, hold &lt;code&gt;Ctrl&lt;/code&gt;, right-click, and the &lt;strong&gt;Start new backup chain&lt;/strong&gt; button appears.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Backup Server Upgrade Guide</title>
+      <link>https://blog.backupnext.cloud/en/2020/02/how-to-upgrade-vbr/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/02/how-to-upgrade-vbr/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Veeam is about to launch the new v10 version. In this version, Veeam supports upgrading from previous VBR to v10. The smooth upgrade process is not complicated and is similar to previous VBR upgrades, though there are some details to pay attention to.&lt;/p&gt;&#xA;&lt;h3 id=&#34;before-upgrade&#34;&gt;Before Upgrade&lt;/h3&gt;&#xA;&lt;p&gt;Please check your current environment according to the flowchart below. Ensure other components are properly upgraded before upgrading VBR.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/13/1L4P8H.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/13/1L4P8H.png, https://s2.ax1x.com/2020/02/13/1L4P8H.png 1.5x, https://s2.ax1x.com/2020/02/13/1L4P8H.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/13/1L4P8H.png&#34;&#xA;        title=&#34;1L4P8H.png&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

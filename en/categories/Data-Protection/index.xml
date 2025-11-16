@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Protection on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/Data-Protection/</link>
+    <description>Recent content in Data Protection on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/Data-Protection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam Agent for Linux 101</title>
+      <link>https://blog.backupnext.cloud/en/2020/09/veeam-linux-agent-101/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2020/09/veeam-linux-agent-101/</guid>
+      <description>&lt;p&gt;Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there&amp;rsquo;s always a use case for VAL. However, we&amp;rsquo;ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the &amp;ldquo;It just works!&amp;rdquo; slogan difficult to confidently claim.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Cloud Tier – Understanding Cloud Object Storage Architecture (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2019/03/cloud-tier-02/</link>
+      <pubDate>Mon, 04 Mar 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/03/cloud-tier-02/</guid>
+      <description>&lt;p&gt;Last time, we covered the fundamentals of Veeam&amp;rsquo;s Cloud Tier functionality. I noticed a few technical details in that post that needed clarification, so if you&amp;rsquo;re looking for the updated version, just drop me a message with &amp;ldquo;Cloud&amp;rdquo; and I&amp;rsquo;ll share the corrected version.&lt;/p&gt;&#xA;&lt;p&gt;Today, we&amp;rsquo;re diving deeper for those of you who want to understand the sophisticated architecture behind Veeam&amp;rsquo;s cloud storage optimization.&lt;/p&gt;&#xA;&lt;p&gt;One of the first things you&amp;rsquo;ll notice when using Cloud Tier is that Veeam maintains full recovery capabilities regardless of where your backup archives live—whether in your local data center or in cloud object storage. This includes Veeam&amp;rsquo;s groundbreaking Instant VM Recovery technology, which we pioneered back in 2010. If you want to explore that technology in detail, I covered it thoroughly in &lt;a href=&#34;http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247483838&amp;amp;idx=1&amp;amp;sn=d5ba99c0f7c8d649a5efe247159d4ebf&amp;amp;chksm=fdf0a76bca872e7d0161cbb7fcd9e1a5c4e6426d17fef21b24876d9222c8772aba3c710e6411&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;this earlier post about vPower NFS&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Cloud Tier – Detailed Usage of Cloud Object Storage (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/02/cloud-tier-01/</guid>
+      <description>&lt;p&gt;On January 23, 2019, Veeam released VBR 9.5U4, which was the most feature-rich update in the product&amp;rsquo;s history. This update included a series of cloud-related feature modules, and this article will discuss in detail the most important one among them: cloud object storage.&lt;/p&gt;&#xA;&lt;p&gt;In VBR 9.5U4, you can use Amazon S3, Microsoft Azure Blob, IBM Cloud Object Storage, and various other S3-compatible object storages, which means that for our domestic users, AliCloud OSS and Tencent Cloud COS are also perfectly supported.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2018/07/van-02/</link>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/07/van-02/</guid>
+      <description>&lt;p&gt;Now that we&amp;rsquo;ve covered the installation and configuration of Veeam Availability for Nutanix AHV (VAN) in our previous article, it&amp;rsquo;s time to dive into the core operations that make this solution so valuable. Today, we&amp;rsquo;ll explore how VAN handles backup and recovery operations for your AHV virtual machines.&lt;/p&gt;&#xA;&lt;p&gt;What I find particularly interesting about VAN&amp;rsquo;s approach is how it bridges the familiar Veeam workflow with the unique requirements of Nutanix environments. While the concepts remain consistent with traditional Veeam Backup &amp;amp; Replication (VBR), the implementation details reflect thoughtful adaptation to the AHV ecosystem.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2018/07/van-01/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/07/van-01/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m thrilled to share that Veeam Availability for Nutanix AHV (VAN) has finally been released! As someone who works extensively with both Nutanix and Veeam technologies, I&amp;rsquo;ve been eagerly anticipating this integration. Today, I want to walk you through everything you need to know to get started with this powerful new tool.&lt;/p&gt;&#xA;&lt;p&gt;VAN comes as a Proxy Appliance that you can download directly from the Veeam website. Once you extract the ZIP file, you&amp;rsquo;ll find a disk image in VMDK format. Just like other Veeam products, you can grab a 30-day trial license to test everything out before committing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Recovering MySQL Database with Veeam U-Air</title>
+      <link>https://blog.backupnext.cloud/en/2018/04/uair/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/04/uair/</guid>
+      <description>&lt;p&gt;One question I get asked frequently is whether Veeam supports application-level recovery for specific databases. The interesting thing about this question is that the answer has nothing to do with which database you&amp;rsquo;re using — it&amp;rsquo;s always yes.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s because Veeam includes a powerful feature called U-AIR (Universal Application-Item Recovery) that makes application-level recovery possible for virtually any system.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to walk you through a practical MySQL recovery scenario to show you how this works in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It</title>
+      <link>https://blog.backupnext.cloud/en/2018/03/surebackup/</link>
+      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/03/surebackup/</guid>
+      <description>&lt;p&gt;There&amp;rsquo;s one fundamental truth in backup and recovery that every IT professional eventually learns: you don&amp;rsquo;t know if your backup archives can actually be restored until you&amp;rsquo;ve tried to restore them.&lt;/p&gt;&#xA;&lt;p&gt;Veeam has a remarkable feature that automatically verifies backup archive availability online, ensuring your backed-up content can be properly restored when disaster strikes.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/12/1blqUA.png&#34;&#xA;        title=&#34;1blqUA.png&#34; /&gt;&lt;/p&gt;&#xA;&lt;p&gt;The magic happens because SureBackup starts backup archives as normal virtual machines in an isolated environment, then runs comprehensive automated tests. It checks everything from VM heartbeats and network connectivity to application and service status within the VMs. After testing completes, it generates a detailed verification report about the archive&amp;rsquo;s recoverability.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management</title>
+      <link>https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/</guid>
+      <description>&lt;p&gt;Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle physical and cloud infrastructure backups. The interface has evolved significantly, but don&amp;rsquo;t worry — Veeam maintains its familiar wizard-driven approach that we all know and love.&lt;/p&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s dive into what&amp;rsquo;s new and explore how this centralized management works.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img&#xA;        class=&#34;lazyload&#34;&#xA;        src=&#34;https://blog.backupnext.cloud/svg/loading.min.svg&#34;&#xA;        data-src=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png&#34;&#xA;        data-srcset=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png, https://s2.ax1x.com/2020/02/12/17owIe.png 1.5x, https://s2.ax1x.com/2020/02/12/17owIe.png 2x&#34;&#xA;        data-sizes=&#34;auto&#34;&#xA;        alt=&#34;https://s2.ax1x.com/2020/02/12/17owIe.png&#34;&#xA;        title=&#34;17owIe.png&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Speed Up! Speed Up! Speed Up! (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2017/08/speed-up-02/</link>
+      <pubDate>Mon, 07 Aug 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/08/speed-up-02/</guid>
+      <description>&lt;p&gt;In our last post, we explored how to &lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;amp;mid=2247483745&amp;amp;idx=1&amp;amp;sn=c9b28d97eec1426dece66490a9655b43&amp;amp;chksm=fdf0a7b4ca872ea207c5d96dfdac2646fdc1b8a507b5e85cd267fdd720d3dff7d0b5e546680b&amp;amp;scene=21#wechat_redirect&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;accelerate the backup engine&lt;/a&gt; — a critical optimization for maximizing backup performance and improving your RPO.&lt;/p&gt;&#xA;&lt;p&gt;But that&amp;rsquo;s just one piece of the performance puzzle.&lt;/p&gt;&#xA;&lt;p&gt;Today, I want to share another game-changing accelerator that Veeam introduced: the vSphere communication acceleration technology. And trust me, the results are absolutely stunning.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-broker-service-revolution&#34;&gt;The Broker Service Revolution&lt;/h2&gt;&#xA;&lt;p&gt;Introduced in Veeam 9.5, the Broker Service is one of those features that seems simple on the surface but delivers incredible performance gains in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Speed Up! Speed Up! Speed Up! (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2017/08/speed-up-01/</link>
+      <pubDate>Tue, 01 Aug 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/08/speed-up-01/</guid>
+      <description>&lt;p&gt;I don&amp;rsquo;t often talk about speed and performance, because I&amp;rsquo;ve always considered it a fundamental requirement—like a good car&amp;rsquo;s engine. You expect it to work well, and you don&amp;rsquo;t really think about it until something goes wrong.&lt;/p&gt;&#xA;&lt;p&gt;But here&amp;rsquo;s the thing: in the world of backup and recovery, that engine is everything. It&amp;rsquo;s where backup software truly proves its worth. Today, I want to dive deep into Veeam&amp;rsquo;s acceleration technologies.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Agentless Backup and Application Awareness</title>
+      <link>https://blog.backupnext.cloud/en/2017/07/agentless-backup/</link>
+      <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2017/07/agentless-backup/</guid>
+      <description>&lt;p&gt;Virtualization didn&amp;rsquo;t just change IT—it revolutionized it. But while we were busy transforming our infrastructure, something equally profound was happening in the backup world. The rise of virtualization brought us agentless backup, and suddenly the old way of doing things didn&amp;rsquo;t make so much sense anymore.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s the thing about backup architecture: it&amp;rsquo;s always been a debate between agents and no agents. Both approaches have their obvious trade-offs, but what if you could have the best of both worlds? That&amp;rsquo;s exactly where Veeam&amp;rsquo;s approach to agentless backup with application awareness changes the game.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

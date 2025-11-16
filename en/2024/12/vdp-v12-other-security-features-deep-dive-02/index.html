@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Overview Data protection isn’t just about backup—it’s about the last line of defense for enterprise security. Veeam integrates security into every detail …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology">
+  <meta property="og:description" content="Series Overview Data protection isn’t just about backup—it’s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the start of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips introduced in VDP v12 and later versions—simple to implement yet powerful enough to safeguard your data security.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-12-09T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Security">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology">
+  <meta name="twitter:description" content="Series Overview Data protection isn’t just about backup—it’s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the start of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips introduced in VDP v12 and later versions—simple to implement yet powerful enough to safeguard your data security.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-02/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-01/" /><link rel="next" href="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2024\/12\/vdp-v12-other-security-features-deep-dive-02\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1436 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2024\/12\/vdp-v12-other-security-features-deep-dive-02\/","datePublished": "2024-12-09T00:00:00+00:00","dateModified": "2024-12-09T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/12/vdp-v12-other-security-features-deep-dive-02/">简体中文</option><option value="/en/2024/12/vdp-v12-other-security-features-deep-dive-02/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2024/12/vdp-v12-other-security-features-deep-dive-02/">简体中文</option><option value="/en/2024/12/vdp-v12-other-security-features-deep-dive-02/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VDP Security Series Part 2 - Managing Windows Accounts Using gMSA Technology</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-09">2024-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1436 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-overview">Series Overview</a>
+      <ul>
+        <li><a href="#technical-background">Technical Background</a></li>
+        <li><a href="#applicable-environment">Applicable Environment</a></li>
+        <li><a href="#environment-preparation-and-configuration-steps">Environment Preparation and Configuration Steps</a></li>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-overview">Series Overview</h2>
+<p>Data protection isn&rsquo;t just about backup—it&rsquo;s about the last line of defense for enterprise security. Veeam integrates security into every detail of its products through a zero-trust design philosophy. From the start of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series brings together new security tips introduced in VDP v12 and later versions—simple to implement yet powerful enough to safeguard your data security.</p>
+<ul>
+<li>Part 1: Account-less Linux Backup Agent Management with SSH Service</li>
+<li>Part 2: Managing Windows Accounts Using gMSA Technology</li>
+<li>Part 3: Four-Eyes Authentication: Dual-Control Backup System Management</li>
+<li>Part 4: Enabling Multi-Factor Authentication (MFA): Enhanced Backup System Account Protection</li>
+<li>Part 5: Reducing Network Ports Involved in Backup Operations</li>
+<li>Part 6: Managing Logs with Syslog Integration to SIEM Systems</li>
+</ul>
+<p>In our previous article, we detailed how to manage backup agents through account-less and SSH services in Linux systems. However, Windows systems present different challenges, especially in various operational scenarios within the Veeam backup platform where local administrator accounts are frequently required. For instance, when executing virtual machine Guest Processing, Indexing tasks, managing Windows agents, or performing various recovery operations, Veeam typically stores these accounts in the local database, which introduces potential security risks. Attackers could potentially compromise high-privilege accounts by cracking the Veeam local database. Additionally, it creates management complexity, requiring periodic synchronization of account passwords stored in the backup system to ensure security and compliance.</p>
+<p>Today, we&rsquo;ll introduce a completely new approach to account management—Group Managed Service Accounts built into Windows systems. Veeam leverages this technology to avoid storing Windows system account passwords during Guest Processing and Indexing, further reducing the risk of credential leakage.</p>
+<p>This technology is called Group Managed Service Account (gMSA). Although gMSA was introduced in Windows 2012 and later versions (making it over a decade old), it&rsquo;s relatively uncommon in practice, which means tutorials and documentation about it are scarce.</p>
+<p>I hope this article helps you better understand and apply this technology!</p>
+<h3 id="technical-background">Technical Background</h3>
+<p>gMSA is a technology in Windows systems for managing and storing service account passwords that enhances security while simplifying management. It has these key characteristics:</p>
+<ul>
+<li><strong>Dynamic Password Management</strong>: gMSA passwords are managed by Active Directory and automatically updated regularly. No one can access or needs to use this account&rsquo;s password.</li>
+<li><strong>Reduced Password Risk</strong>: With gMSA, administrators don&rsquo;t need to remember service passwords. The system automatically retrieves required passwords from AD for operation, and dynamic automatic updates further enhance its security.</li>
+<li><strong>Simplified Usage</strong>: After implementing gMSA, there&rsquo;s no need for regular manual updates and configuration of account passwords on the backup system, reducing complexity.</li>
+</ul>
+<p>Through dynamic management and automatic password updates, gMSA technology greatly simplifies the management and maintenance of service accounts while ensuring service stability and security. It&rsquo;s particularly suitable for backup systems with high security requirements that need to run long-term.</p>
+<h3 id="applicable-environment">Applicable Environment</h3>
+<ul>
+<li>Must have a Windows 2012 or later Active Directory environment. All virtual machines using this technology must run Windows 2012 or later.</li>
+<li>Cannot be used with Linux operating systems, even if Linux systems are joined to an AD domain that meets the requirements.</li>
+<li>Must use Guest Interaction Proxy for application-aware processing. VIX mode doesn&rsquo;t work here.</li>
+<li>All involved systems must be able to access AD resources normally and obtain necessary accounts and permissions from AD.</li>
+</ul>
+<h3 id="environment-preparation-and-configuration-steps">Environment Preparation and Configuration Steps</h3>
+<ol>
+<li>To use this technology, you first need to prepare your AD environment. As mentioned earlier, operations must be performed in Windows 2012 or later. After accessing the AD management console, check if a key condition is met: the default <code>Managed Service Accounts</code> OU must exist normally. This OU is built-in and exists in AD by default. As shown below:</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/wIigxRL9j5vPhTJ.png"
+        data-srcset="https://s2.loli.net/2024/12/08/wIigxRL9j5vPhTJ.png, https://s2.loli.net/2024/12/08/wIigxRL9j5vPhTJ.png 1.5x, https://s2.loli.net/2024/12/08/wIigxRL9j5vPhTJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/wIigxRL9j5vPhTJ.png"
+        title="Xnip2024-12-08_22-32-43" /></p>
+<p>If this OU doesn&rsquo;t exist or was accidentally deleted, you won&rsquo;t be able to use gMSA technology. You may need to contact Microsoft technical support to restore this default OU—manually creating an OU with the same name is ineffective.</p>
+<ol start="2">
+<li>After confirming this OU exists normally, you need to configure the domain controller. Most of the following configurations will be completed through PowerShell commands. Therefore, you first need to ensure the AD PowerShell management module is correctly installed on AD. This can be verified through Windows Features and Roles. The specific location is shown below:</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/y5CnPvMz4bDR8F7.png"
+        data-srcset="https://s2.loli.net/2024/12/08/y5CnPvMz4bDR8F7.png, https://s2.loli.net/2024/12/08/y5CnPvMz4bDR8F7.png 1.5x, https://s2.loli.net/2024/12/08/y5CnPvMz4bDR8F7.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/y5CnPvMz4bDR8F7.png"
+        title="Xnip2024-12-08_22-46-07" /></p>
+<ol start="3">
+<li>Open PowerShell and first create a root key for automatic gMSA password management using the following command:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Add-KdsRootKey</span> <span class="n">-EffectiveImmediately</span></span></span></code></pre></div></div>
+<p>Note that although this command specifies immediate effectiveness, based on my experience and online comments, it actually takes effect the next day. So if you&rsquo;re following my steps, you might want to stop here and continue tomorrow.</p>
+<ol start="4">
+<li>Create a security group in AD. In the following operations, we&rsquo;ll add all relevant servers to this security group. Only servers in this group will be authorized to use gMSA accounts. Computers not in this security group will have no access to gMSA accounts. This step is very important.</li>
+</ol>
+<p>It doesn&rsquo;t matter which OU you create this security group in. In my experiment, I created it under the Users OU, as shown:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/gd3pCzl86ufk5wJ.png"
+        data-srcset="https://s2.loli.net/2024/12/08/gd3pCzl86ufk5wJ.png, https://s2.loli.net/2024/12/08/gd3pCzl86ufk5wJ.png 1.5x, https://s2.loli.net/2024/12/08/gd3pCzl86ufk5wJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/gd3pCzl86ufk5wJ.png"
+        title="Xnip2024-12-08_22-58-29" /></p>
+<ol start="5">
+<li>Add all servers involved in VBR to this Security Group&rsquo;s Members. In my experiment, I&rsquo;ll use two servers: one is the backup target V100SQL that needs to use the gMSA account, and the other is Win001, which serves as the Guest Interaction Proxy. As shown in the image, I&rsquo;ve already added them to Members:</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/GwcDWO5NlzHpgUJ.png"
+        data-srcset="https://s2.loli.net/2024/12/08/GwcDWO5NlzHpgUJ.png, https://s2.loli.net/2024/12/08/GwcDWO5NlzHpgUJ.png 1.5x, https://s2.loli.net/2024/12/08/GwcDWO5NlzHpgUJ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/GwcDWO5NlzHpgUJ.png"
+        title="Xnip2024-12-08_23-03-05" /></p>
+<p>Note that when adding Members, Computer Names won&rsquo;t appear in search results by default. You must include Computers in the object types when selecting objects to search for and add them.</p>
+<ol start="6">
+<li>Create the gMSA account. After completing the preparations above, you can create the gMSA account using the following command:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nv">$gMSAName</span> <span class="p">=</span> <span class="s1">&#39;gmsa01&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$gMSAGroupName</span> <span class="p">=</span> <span class="s1">&#39;gMSAGroup&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$gMSADNSHostName</span> <span class="p">=</span> <span class="s1">&#39;gmsa01.v100lab.local&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">New-ADServiceAccount</span> <span class="n">-Name</span> <span class="nv">$gMSAName</span> <span class="n">-DNSHostName</span> <span class="nv">$gMSADNSHostName</span> <span class="n">-PrincipalsAllowedToRetrieveManagedPassword</span> <span class="nv">$gMSAGroupName</span> <span class="n">-Enabled</span> <span class="vm">$True</span></span></span></code></pre></div></div>
+<p>After creation, the gMSA account will appear under the <code>Managed Service Accounts</code> OU:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/fmsdPyVDSknqKWo.png"
+        data-srcset="https://s2.loli.net/2024/12/08/fmsdPyVDSknqKWo.png, https://s2.loli.net/2024/12/08/fmsdPyVDSknqKWo.png 1.5x, https://s2.loli.net/2024/12/08/fmsdPyVDSknqKWo.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/fmsdPyVDSknqKWo.png"
+        title="Xnip2024-12-08_23-11-16" /></p>
+<ol start="7">
+<li>With this, the AD configuration is basically complete. The next operations need to be performed on each Windows system that will use the gMSA account. Before configuration, we need to refresh the newly created AD object information and synchronize it. This can generally be done by executing the following command:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-MS-DOS">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code class="language-MS-DOS" data-lang="MS-DOS">C:\WINDOWS\system32\klist.exe -lh 0 -li 0x3e7 purge</code></pre></div>
+<p>Alternatively, you can simply restart the corresponding systems. In my experiment, to ensure normal configuration, I restarted all my VMs after completing step 6.</p>
+<ol start="8">
+<li>Next, let&rsquo;s configure the Guest Interaction Proxy. This configuration is relatively simple—we just need to allow it to obtain and use the account. Since our Guest Interaction Proxy will initiate some backup operations through this account, it needs to obtain account usage rights. According to step 5&rsquo;s configuration, we&rsquo;ve already obtained the usage rights normally. Here, we just need to perform a simple verification. If the verification passes, no further configuration is needed:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">.</span><span class="n">V100LAB</span><span class="p">&gt;</span> <span class="nb">Test-ADServiceAccount</span> <span class="n">gmsa01</span><span class="p">$</span>
+</span></span><span class="line"><span class="cl"><span class="n">True</span></span></span></code></pre></div></div>
+<p>With this Test command, just ensure the output is True. If this output is not True, it means the account wasn&rsquo;t configured successfully, and you need to go back and check steps 1-7 to see where the configuration went wrong.</p>
+<ol start="9">
+<li>Then, move to the target server to configure relevant permissions. The first thing to do is install the gMSA account on the target server using the following commands:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-powershell">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c">#Test account</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Test-ADServiceAccount</span> <span class="n">gmsa01</span><span class="p">$</span>
+</span></span><span class="line"><span class="cl"><span class="c">#Install account</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Install-ADServiceAccount</span> <span class="s2">&#34;gmsa01$&#34;</span></span></span></code></pre></div></div>
+<p>If everything is normal, you&rsquo;ll find that the account has been installed.</p>
+<ol start="10">
+<li>Configure gMSA local permissions. Like other accounts used for VBR backup, we need to add the gMSA account to the operating system&rsquo;s local administrators group. Additionally, for machines with SQL, we need to add the gMSA account to the SQL Server&rsquo;s sysadmin group as well.</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/zSQB9o8nMbpRTGY.png"
+        data-srcset="https://s2.loli.net/2024/12/08/zSQB9o8nMbpRTGY.png, https://s2.loli.net/2024/12/08/zSQB9o8nMbpRTGY.png 1.5x, https://s2.loli.net/2024/12/08/zSQB9o8nMbpRTGY.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/zSQB9o8nMbpRTGY.png"
+        title="Xnip2024-12-08_23-25-56" /></p>
+<p>When adding SQL permissions, pay special attention to checking the Service Accounts option when searching for accounts, otherwise you won&rsquo;t find the gMSA account.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/e3TRqiLrcxzwDkf.png"
+        data-srcset="https://s2.loli.net/2024/12/08/e3TRqiLrcxzwDkf.png, https://s2.loli.net/2024/12/08/e3TRqiLrcxzwDkf.png 1.5x, https://s2.loli.net/2024/12/08/e3TRqiLrcxzwDkf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/e3TRqiLrcxzwDkf.png"
+        title="Xnip2024-12-08_23-27-29" /></p>
+<p>After completing the above additions, the gMSA account configuration is complete. Now you can return to VBR to configure and test the gMSA account.</p>
+<ol start="11">
+<li>In VBR&rsquo;s backup job, enable the application-aware option. In the Add Credentials on the right, you&rsquo;ll find <code>Managed Service Account...</code>. After clicking, a dialog box appears that only requires entering a username. This way, we only need the account without a password to use it for application-aware processing, achieving passwordless configuration of application-aware processing in VBR.</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/gyYSJMb6vFpQPZ4.png"
+        data-srcset="https://s2.loli.net/2024/12/08/gyYSJMb6vFpQPZ4.png, https://s2.loli.net/2024/12/08/gyYSJMb6vFpQPZ4.png 1.5x, https://s2.loli.net/2024/12/08/gyYSJMb6vFpQPZ4.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/gyYSJMb6vFpQPZ4.png"
+        title="Xnip2024-12-08_23-30-26" /></p>
+<ol start="12">
+<li>Click Test Now to test this gMSA and see if it works properly.</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/12/08/8VKG3TyZFAsnPoc.png"
+        data-srcset="https://s2.loli.net/2024/12/08/8VKG3TyZFAsnPoc.png, https://s2.loli.net/2024/12/08/8VKG3TyZFAsnPoc.png 1.5x, https://s2.loli.net/2024/12/08/8VKG3TyZFAsnPoc.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/12/08/8VKG3TyZFAsnPoc.png"
+        title="Xnip2024-12-08_23-33-52" /></p>
+<p>As you can see, when using gMSA, the Test doesn&rsquo;t test the VIX working method—it only verifies through RPC.</p>
+<h3 id="summary">Summary</h3>
+<p>The above is the method for configuring passwordless backup accounts in Windows. The example uses SQL Server as the backup object. For other applications, you also need to configure corresponding permissions; otherwise, application-aware processing will fail.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-12-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2024/12/vdp-v12-other-security-features-deep-dive-02/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F12%2Fvdp-v12-other-security-features-deep-dive-02%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2024%2F12%2Fvdp-v12-other-security-features-deep-dive-02%2F&amp;text=VDP&#43;Security&#43;Series&#43;Part&#43;2&#43;-&#43;Managing&#43;Windows&#43;Accounts&#43;Using&#43;gMSA&#43;Technology" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F12%252Fvdp-v12-other-security-features-deep-dive-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2024%252F12%252Fvdp-v12-other-security-features-deep-dive-02%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2024/12/vdp-v12-other-security-features-deep-dive-01/" class="prev" rel="prev" title="VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VDP Security Series (Part 1) - Account-Free Management and SSH Service Control for Linux Backup Agents</a>
+            <a href="/en/2024/12/vdp-v12-other-security-features-deep-dive-03/" class="next" rel="next" title="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations">VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

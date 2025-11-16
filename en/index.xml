@@ -1,0 +1,109 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Cloud.Virt.AI.Sec</title>
+        <link>https://blog.backupnext.cloud/en/</link>
+        <description>Welcome to Cloud.Virt.AI.Sec</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="https://blog.backupnext.cloud/en/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</title>
+    <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</link>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+    <description><![CDATA[<h1 id="ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server">AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</h1>
+<p>In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: <strong>zero-code</strong> control of your Veeam Backup &amp; Replication server through Veeam RestAPI. Don&rsquo;t be intimidated by terms like API - in today&rsquo;s content, you won&rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.</p>]]></description>
+</item>
+<item>
+    <title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch</title>
+    <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</link>
+    <pubDate>Tue, 11 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+    <description><![CDATA[<h1 id="ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch">AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch</h1>
+<p>Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.</p>]]></description>
+</item>
+<item>
+    <title>Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration</title>
+    <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</link>
+    <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</guid>
+    <description><![CDATA[<p>In our previous articles, we introduced how Veeam v13 continues to enhance its YARA malware scanning capabilities. However, the limitation of official rule sets is a very real challenge. There aren&rsquo;t many free YARA rule sources available online, and high-quality ones are even scarcer. Today, I want to introduce you to a hidden gem: Ransomware.live - a professional open-source ransomware threat intelligence platform that provides free YARA rules for 62 major ransomware gangs, making it a perfect complement to Veeam&rsquo;s YARA scanning functionality.</p>]]></description>
+</item>
+<item>
+    <title>V13 Malware Detection Comprehensive Upgrade: Practical Evolution from Passive Protection to Active Response</title>
+    <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</link>
+    <pubDate>Fri, 07 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</guid>
+    <description><![CDATA[<p>In version v13, malware detection capabilities have achieved a significant leap forward. Compared to the real-time detection capabilities already available in the v12 era, v13 has brought qualitative improvements in threat response mechanisms, platform coverage, and intelligence levels. In my previous articles, I&rsquo;ve detailed the ransomware attack detection principles and configuration methods for v12. Today, building on that foundation, let&rsquo;s explore the key upgrades that v13 brings.</p>
+<h2 id="v12-detection-capabilities-review-the-separation-of-detection-and-response">v12 Detection Capabilities Review: The Separation of Detection and Response</h2>
+<p>In the v12 era, Veeam&rsquo;s malware detection primarily relied on two mechanisms:</p>]]></description>
+</item>
+<item>
+    <title>Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</link>
+    <pubDate>Thu, 25 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
+            </div><p>In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I&rsquo;ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.</p>
+<p>Today, let&rsquo;s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization&rsquo;s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company&rsquo;s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.</p>]]></description>
+</item>
+<item>
+    <title>In-Depth Analysis: Veeam V13 Release Strategy and Deployment Options</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</link>
+    <pubDate>Tue, 23 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</guid>
+    <description><![CDATA[<p>Recently, Veeam&rsquo;s Chief Product Officer Anton Gostev published an FAQ on the <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D forums</a> that clearly explains V13&rsquo;s release schedule, deployment options, licensing, and migration strategy. For customers and partner engineers, this isn&rsquo;t just &ldquo;news&rdquo; – it&rsquo;s a practical guide that will influence decisions about &ldquo;whether to upgrade immediately and how to plan migration paths.&rdquo; This article uses that post as a starting point, combining it with official release information to analyze its actual impact on users of different scales, and provides actionable recommendations.</p>]]></description>
+</item>
+<item>
+    <title>Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</link>
+    <pubDate>Mon, 22 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</guid>
+    <description><![CDATA[<p>In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the <strong>Veeam Infrastructure Appliance</strong> specifically designed to host role services. If the Software Appliance is the &ldquo;command center,&rdquo; then the Infrastructure Appliance is more like a pre-configured, ready-to-use &ldquo;execution unit&rdquo;: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.</p>
+<h2 id="1-why-choose-infrastructure-appliance">1. Why Choose Infrastructure Appliance</h2>
+<p>The reasons for choosing Infrastructure Appliance can be summarized in three points: <strong>fast, simple, secure</strong>. Veeam&rsquo;s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you&rsquo;re essentially getting a Linux server optimized for backup roles according to best practices that&rsquo;s ready to use out of the box.</p>]]></description>
+</item>
+<item>
+    <title>Making Veeam Updates Both Secure and Fast: A Complete Guide to Building Local Update Repository Servers</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</link>
+    <pubDate>Tue, 09 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</guid>
+    <description><![CDATA[<p>In the previous articles of this series, we&rsquo;ve installed and run the Veeam Software Appliance, experiencing its &ldquo;secure by default&rdquo; management approach. Now, let&rsquo;s tackle a question many people genuinely care about: <strong>How to enable Veeam Software Appliance to automatically receive updates in an offline environment, just like it would online</strong>. The official documentation mentions specifying a local mirror repository, but it doesn&rsquo;t provide detailed instructions on how to build, sync, or configure certificates. Based on my lab testing, I&rsquo;ll walk you through the complete process step by step.</p>]]></description>
+</item>
+<item>
+    <title>Everything You Need to Know: Veeam Software Appliance&#39;s New Management Methods</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/</link>
+    <pubDate>Mon, 08 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-03/</guid>
+    <description><![CDATA[<p>In the first two parts of this series, we walked through the deployment of Veeam Software Appliance—from downloading the ISO and creating bootable media to automated installation, followed by initial TUI setup and basic management. Many of you have successfully gotten this &ldquo;backup powerhouse&rdquo; up and running.</p>
+<p>But once the system is actually running, new questions arise:</p>
+<ul>
+<li>What new features does Veeam Software Appliance actually offer?</li>
+<li>How does this Linux-based Appliance differ from the previous Windows version?</li>
+<li>Should I use the WebUI or TUI console?</li>
+<li>How do I handle user management?</li>
+<li>What about upgrades and updates?</li>
+</ul>
+<p>In this installment, we&rsquo;ll tackle these most pressing questions, guiding you through <strong>Veeam Software Appliance&rsquo;s new features</strong> and <strong>Appliance-specific management methods</strong>, while walking you through <strong>the use cases for both host console UIs</strong>. This will ensure you can use and manage your Appliance confidently after installation.</p>]]></description>
+</item>
+<item>
+    <title>Easy Installation Guide: Step-by-Step Veeam Software Appliance Deployment</title>
+    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/</link>
+    <pubDate>Fri, 05 Sep 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-02/</guid>
+    <description><![CDATA[<p>In our previous article, we introduced Veeam&rsquo;s latest product releases, particularly the brand-new <strong>Veeam Software Appliance</strong>. Many of you might have grasped the concept but are still unsure about how to actually use, install, and configure it after downloading. Don&rsquo;t worry - starting from this article, we&rsquo;ll dive into hands-on implementation, guiding you step by step through the deployment and usage of <strong>Veeam Software Appliance</strong>.</p>
+<p>Veeam officially provides two deployment methods for this Appliance: <strong>ISO image</strong> and <strong>OVA template</strong>. To avoid overwhelming you with too many options, this article will focus specifically on the <strong>ISO image</strong> method. Unlike our usual practice of &ldquo;mounting an ISO file&rdquo; within an operating system, this ISO is a complete system boot disk. You need to use it to boot your server or virtual machine, just like installing a new operating system on a fresh computer.</p>]]></description>
+</item>
+</channel>
+</rss>

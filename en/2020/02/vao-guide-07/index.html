@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO Basics (Part 7) – Plan Steps · Part 1 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/02/vao-guide-07/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VAO Basics (Part 7) – Plan Steps · Part 1">
+  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Document Template Deep Dive In Part 6 we walked through building Orchestration Plans. When designing DR, it’s best to start with a single application and scale gradually. By default, each plan includes the minimum steps required to restore or fail over a workload. VAO’s real power lies in the ability to add steps—pick what you need from the built-in library or layer on custom actions.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-02-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-02-27T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VAO Basics (Part 7) – Plan Steps · Part 1">
+  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Document Template Deep Dive In Part 6 we walked through building Orchestration Plans. When designing DR, it’s best to start with a single application and scale gradually. By default, each plan includes the minimum steps required to restore or fail over a workload. VAO’s real power lies in the ability to add steps—pick what you need from the built-in library or layer on custom actions.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-07/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-06/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-08/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO Basics (Part 7) – Plan Steps · Part 1",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-07\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  603 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/02\/vao-guide-07\/","datePublished": "2020-02-27T00:00:00+00:00","dateModified": "2020-02-27T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/02/vao-guide-07/">简体中文</option><option value="/en/2020/02/vao-guide-07/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/02/vao-guide-07/">简体中文</option><option value="/en/2020/02/vao-guide-07/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO Basics (Part 7) – Plan Steps · Part 1</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-02-27">2020-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;603 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index</a></li>
+    <li><a href="#out-of-the-box-plan-steps">Out-of-the-box Plan Steps</a></li>
+    <li><a href="#common-parameters">Common Parameters</a></li>
+    <li><a href="#taking-it-further-with-custom-scripts">Taking It Further with Custom Scripts</a>
+      <ul>
+        <li><a href="#enter-vao">Enter VAO</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Essential Configuration Notes</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step to a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<p>In Part 6 we walked through building Orchestration Plans. When designing DR, it’s best to start with a single application and scale gradually. By default, each plan includes the minimum steps required to restore or fail over a workload. VAO’s real power lies in the ability to add steps—pick what you need from the built-in library or layer on custom actions.</p>
+<h2 id="out-of-the-box-plan-steps">Out-of-the-box Plan Steps</h2>
+<p>VAO ships with 22 predefined steps that fall into the following groups:</p>
+<blockquote>
+<p><strong>Recovery operations</strong> – 2<br>
+<strong>Datalab validation</strong><br>
+   • Preparation – 1<br>
+   • Basic VM checks – 2<br>
+   • Application checks – 12<br>
+<strong>Notifications</strong> – 2<br>
+<strong>VM power control</strong> – 2<br>
+<strong>Guest services</strong> – 1</p>
+</blockquote>
+<p>Everything is already baked into the product—just follow the prompts and supply any required inputs. I won’t document every parameter here; experiment and test the ones that match your use cases.</p>
+<h2 id="common-parameters">Common Parameters</h2>
+<p>Every step exposes a <em>Common Parameter</em> block that controls how the step behaves:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>- Failback &amp; Undo Failover Action – run (or skip) the step during failback/undo.
+- Test Action – decide whether the step runs during Datalab tests.
+- Critical step – if enabled, the plan stops immediately when this step fails.
+- Timeout – maximum execution time for the step.
+- Retries – number of retry attempts on failure.</code></pre></div>
+<p>These settings can be adjusted per step in each plan.</p>
+<h2 id="taking-it-further-with-custom-scripts">Taking It Further with Custom Scripts</h2>
+<p>Beyond the built-ins, VAO lets you run custom PowerShell scripts either on the VBR server or inside the recovered workloads. That opens the door to some creative workflows.</p>
+<p>Consider a typical three-tier architecture:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/26/3a3EyF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/26/3a3EyF.png, https://s2.ax1x.com/2020/02/26/3a3EyF.png 1.5x, https://s2.ax1x.com/2020/02/26/3a3EyF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/26/3a3EyF.png"
+        title="3a3EyF.png" /></p>
+<ul>
+<li>Oracle runs on an AIX server.</li>
+<li>Middleware and application tiers run on VMware vSphere.</li>
+<li>Oracle GoldenGate keeps the database synchronized to the DR site.</li>
+</ul>
+<p>VBR protects the virtualized tiers and delivers great DR rehearsals—the restored VMs boot inside an isolated network for full hands-on testing. But without a database, the application isn’t truly usable.</p>
+<h3 id="enter-vao">Enter VAO</h3>
+<p>With VAO we can orchestrate the entire environment:</p>
+<ol>
+<li>Kick off the application Failover/Restore Plan. Before recovering the VMs, add a PowerShell step that talks to the DR-site AIX systems.</li>
+<li>That script instructs AIX to deploy a new LPAR.</li>
+<li>Another script attaches a virtual NIC to the LPAR and connects it to the same isolated sandbox network used by VAO. The sandbox can’t route to production, so everything stays contained.</li>
+<li>A third script spins up the latest Oracle copy on that LPAR.</li>
+<li>Once the database is ready, power on the replicated middleware/app VMs inside the sandbox so they can reach the DR Oracle instance.</li>
+<li>Leave the environment running for testing, development, or training.</li>
+<li>When testing wraps up, the DR admin advances the plan to the next step.</li>
+<li>VAO performs Undo Failover on the vSphere VMs, returning them to the pre-test state.</li>
+<li>A final script notifies AIX to remove the temporary LPAR and database so nothing leaks back into production.</li>
+</ol>
+<p>This approach isn’t limited to AIX—it works with HP-UX, Oracle Exadata, public-cloud resources, and anything else reachable via PowerShell or REST. With custom scripts plus scheduling, VAO becomes a Swiss Army knife for orchestrated DR.</p>
+<p>In the next installment we’ll dive into building and managing those custom scripts. Stay tuned!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-02-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/02/vao-guide-07/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-07%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F02%2Fvao-guide-07%2F&amp;text=VAO&#43;Basics&#43;%28Part&#43;7%29&#43;%E2%80%93&#43;Plan&#43;Steps&#43;%C2%B7&#43;Part&#43;1" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-07%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F02%252Fvao-guide-07%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/02/vao-guide-06/" class="prev" rel="prev" title="VAO Basics (Part 6) – The First Step to a Successful DR Plan"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO Basics (Part 6) – The First Step to a Successful DR Plan</a>
+            <a href="/en/2020/02/vao-guide-08/" class="next" rel="next" title="VAO Basics (Part 8) – Plan Steps · Part 2">VAO Basics (Part 8) – Plan Steps · Part 2<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

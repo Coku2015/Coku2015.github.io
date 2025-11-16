@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理 - 虚化人生</title><meta name="description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。"><meta property="og:url" content="https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/">
-  <meta property="og:site_name" content="虚化人生">
+        <title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理 - 云虚智安</title><meta name="description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。"><meta property="og:url" content="https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/">
+  <meta property="og:site_name" content="云虚智安">
   <meta property="og:title" content="VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理">
   <meta property="og:description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。">
   <meta property="og:locale" content="zh_CN">
@@ -21,8 +21,8 @@
   <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
   <meta name="twitter:title" content="VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理">
   <meta name="twitter:description" content="系列目录 数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。">
-<meta name="application-name" content="虚化人生">
-<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/" /><link rel="prev" href="https://blog.backupnext.cloud/2024/11/veeam-agent-for-linux-nosnap/" /><link rel="next" href="https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -37,9 +37,9 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.backupnext.cloud\/2024\/12\/vdp-v12-other-security-features-deep-dive-01\/"
         },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Backup, Security","wordcount":  1293 ,
-        "url": "https:\/\/blog.backupnext.cloud\/2024\/12\/vdp-v12-other-security-features-deep-dive-01\/","datePublished": "2024-12-02T00:00:00+00:00","dateModified": "2024-12-02T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+        "url": "https:\/\/blog.backupnext.cloud\/2024\/12\/vdp-v12-other-security-features-deep-dive-01\/","datePublished": "2024-12-02T00:00:00+00:00","dateModified": "2024-12-02T00:00:00+00:00","publisher": {
             "@type": "Organization",
-            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Lei Wei"
             },"description": ""
@@ -61,7 +61,7 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="虚化人生">虚化人生</a>
+            <a href="/" title="云虚智安">云虚智安</a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
@@ -77,6 +77,9 @@
                         </span>
                     </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2024/12/vdp-v12-other-security-features-deep-dive-01/" selected>简体中文</option><option value="/en/2024/12/vdp-v12-other-security-features-deep-dive-01/">English</option></select>
                 </a></div>
         </div>
     </div>
@@ -84,7 +87,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="虚化人生">虚化人生</a>
+                <a href="/" title="云虚智安">云虚智安</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -108,7 +111,10 @@
                     </a>
                 </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2024/12/vdp-v12-other-security-features-deep-dive-01/" selected>简体中文</option><option value="/en/2024/12/vdp-v12-other-security-features-deep-dive-01/">English</option></select>
+                </div></div>
     </div>
 </header><div class="search-dropdown desktop">
         <div id="search-dropdown-desktop"></div>

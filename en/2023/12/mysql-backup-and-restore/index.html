@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>MySQL Backup and Restore Best Practices with Veeam - Cloud.Virt.AI.Sec</title><meta name="description" content="In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="MySQL Backup and Restore Best Practices with Veeam">
+  <meta property="og:description" content="In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn’t prominently featured in the Veeam data protection platform. Today, I’ll explain what’s going on and how you should approach MySQL backup and recovery using Veeam.
+MySQL Data Storage Engines Before discussing MySQL backup, we need to talk about MySQL’s data storage engines because different engines directly determine MySQL’s data backup and recovery capabilities. In MySQL, InnoDB is the most commonly used storage engine by default. Tables created with the Create Table command without specifying an Engine parameter will use the InnoDB engine by default, and Oracle officially recommends using the InnoDB engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the official documentation.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-12-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-12-11T00:00:00+00:00">
+    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="VBR">
+    <meta property="article:tag" content="Backup">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="MySQL Backup and Restore Best Practices with Veeam">
+  <meta name="twitter:description" content="In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn’t prominently featured in the Veeam data protection platform. Today, I’ll explain what’s going on and how you should approach MySQL backup and recovery using Veeam.
+MySQL Data Storage Engines Before discussing MySQL backup, we need to talk about MySQL’s data storage engines because different engines directly determine MySQL’s data backup and recovery capabilities. In MySQL, InnoDB is the most commonly used storage engine by default. Tables created with the Create Table command without specifying an Engine parameter will use the InnoDB engine by default, and Oracle officially recommends using the InnoDB engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the official documentation.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/12/mysql-backup-and-restore/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/12/vdp23h2-update/" /><link rel="next" href="https://blog.backupnext.cloud/en/2024/02/veeam-hardened-ubuntu/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MySQL Backup and Restore Best Practices with Veeam",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/12\/mysql-backup-and-restore\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "MySQL, VBR, Backup","wordcount":  2721 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/12\/mysql-backup-and-restore\/","datePublished": "2023-12-11T00:00:00+00:00","dateModified": "2023-12-11T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/12/mysql-backup-and-restore/">简体中文</option><option value="/en/2023/12/mysql-backup-and-restore/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/12/mysql-backup-and-restore/">简体中文</option><option value="/en/2023/12/mysql-backup-and-restore/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">MySQL Backup and Restore Best Practices with Veeam</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-11">2023-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2721 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mysql-data-storage-engines">MySQL Data Storage Engines</a></li>
+    <li><a href="#veeam-data-protection-platform">Veeam Data Protection Platform</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#mysql-backup">MySQL Backup</a></li>
+            <li><a href="#application-of-veeam-cdp-technology-in-mysql-real-time-synchronization">Application of Veeam CDP Technology in MySQL Real-time Synchronization</a></li>
+            <li><a href="#mysql-data-recovery">MySQL Data Recovery</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#mysql-backup-and-recovery-in-practice-with-vbr">MySQL Backup and Recovery in Practice with VBR</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#environment-description">Environment Description</a></li>
+            <li><a href="#data-backup---innodb">Data Backup - InnoDB</a></li>
+            <li><a href="#data-recovery-scenario-1-machine-failure">Data Recovery Scenario 1: Machine Failure</a></li>
+            <li><a href="#data-recovery-scenario-2-mysql-full-database-recovery">Data Recovery Scenario 2: MySQL Full Database Recovery</a></li>
+            <li><a href="#data-recovery-scenario-3-single-table-recovery">Data Recovery Scenario 3: Single Table Recovery</a></li>
+            <li><a href="#data-recovery-scenario-4-point-in-time-recovery">Data Recovery Scenario 4: Point-in-time Recovery</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn&rsquo;t prominently featured in the Veeam data protection platform. Today, I&rsquo;ll explain what&rsquo;s going on and how you should approach MySQL backup and recovery using Veeam.</p>
+<h2 id="mysql-data-storage-engines">MySQL Data Storage Engines</h2>
+<p>Before discussing MySQL backup, we need to talk about MySQL&rsquo;s data storage engines because different engines directly determine MySQL&rsquo;s data backup and recovery capabilities. In MySQL, <code>InnoDB</code> is the most commonly used storage engine by default. Tables created with the <code>Create Table</code> command without specifying an <code>Engine</code> parameter will use the <code>InnoDB</code> engine by default, and Oracle officially recommends using the <code>InnoDB</code> engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the <a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html" target="_blank" rel="noopener noreffer ">official documentation</a>.</p>
+<p>The InnoDB engine has very strong self-recovery capabilities. Currently, all solutions for online physical hot backups of MySQL are designed around InnoDB engine&rsquo;s recovery features, and Veeam also leverages this characteristic to implement MySQL data backup.</p>
+<p>When a database using the InnoDB engine experiences an abnormal server shutdown, recovering the database only requires starting the MySQL service. At this point, InnoDB automatically checks the database&rsquo;s Redo log and undo log, entering the crash recovery process. For details about this process, you can refer to the official <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-recovery.html" target="_blank" rel="noopener noreffer ">InnoDB Recovery documentation</a>. This characteristic is very suitable for Veeam&rsquo;s snapshot backups, whether they&rsquo;re agentless virtual machine snapshots or Veeamsnap snapshots from the Linux Agent. We know that snapshot states are crash-consistent, so when MySQL Server starts from this state, it can naturally enter the self-crash recovery process smoothly and complete service startup without any manual intervention.</p>
+<p>After system recovery, this process can be verified through the <code>/var/log/mysql/error.log</code> file with the following information:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013576<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has started.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013577<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has ended.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010229<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Starting XA crash recovery...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010232<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> XA crash recovery finished.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010931<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld: ready <span class="k">for</span> connections. Version: <span class="s1">&#39;8.0.35-0ubuntu0.20.04.1&#39;</span>  socket: <span class="s1">&#39;/var/run/mysqld/mysqld.sock&#39;</span>  port: <span class="m">3306</span>  <span class="o">(</span>Ubuntu<span class="o">)</span>.</span></span></code></pre></div></div>
+<p>For the MyISAM engine, due to its storage format, it can also support backup through physical backup methods. The only difference is that MyISAM engine&rsquo;s consistency handling isn&rsquo;t as flexible as InnoDB&rsquo;s, so before copying files for physical backup, you need to perform a table locking operation to ensure database consistency.</p>
+<h2 id="veeam-data-protection-platform">Veeam Data Protection Platform</h2>
+<h4 id="mysql-backup">MySQL Backup</h4>
+<p>Therefore, in Veeam software, backing up MySQL databases needs to be discussed separately:</p>
+<ul>
+<li>
+<p><strong>InnoDB engine</strong> - The entire backup process can be done directly at the machine level. Normally perform disk or filesystem snapshots, and after backing up all files from the snapshot point, the database backup is complete simultaneously without any additional settings or steps.</p>
+</li>
+<li>
+<p><strong>MyISAM engine</strong> - It&rsquo;s usually recommended to add the <code>FLUSH TABLES tbl_list WITH READ LOCK;</code> command to perform table locking operations. After locking, MyISAM table files (*.MYD, *.MYI, *.SDI) only need to be backed up as files. When using agentless virtual machine snapshots, pre-freeze and post-unfreeze scripts are typically added to handle locking and unlocking operations. When using Veeam Agent backup, you just need to enable application-aware processing, and Veeam Agent can automatically determine the current MySQL storage engine and automatically execute the above locking and unlocking operations for MyISAM engine tables.</p>
+</li>
+</ul>
+<p>Database administrators might wonder at this point, what about incremental backups? Is the backup data compressed? You don&rsquo;t need to worry about these at all. Veeam&rsquo;s Change Block Tracking technology and deduplication compression technology are very well applied in full image backups, allowing backup administrators to easily handle data deduplication and compression.</p>
+<h4 id="application-of-veeam-cdp-technology-in-mysql-real-time-synchronization">Application of Veeam CDP Technology in MySQL Real-time Synchronization</h4>
+<p>If your MySQL runs on VMware vSphere, congratulations! Veeam CDP technology can be seamlessly applied to MySQL real-time synchronization replication disaster recovery scenarios. At this point, you don&rsquo;t need to worry about MySQL consistency when using the InnoDB engine at all - all operations are handed over to the infrastructure administrator to be managed by Veeam and VMware. After using Veeam B&amp;R 12.1, you can even roll back to any MySQL state every 2 seconds through file-level recovery, and for MySQL disaster recovery testing, SureReplica technology can also play a role in fully automated testing on CDP replicas, ensuring data recoverability.</p>
+<h4 id="mysql-data-recovery">MySQL Data Recovery</h4>
+<p>After backing up through Veeam, MySQL data recovery is also very convenient, with many available methods:</p>
+<ul>
+<li><strong>Machine failure</strong> - Instant VM Recovery</li>
+<li><strong>Data disk failure</strong> - Instant Disk Recovery</li>
+<li><strong>Database failure</strong> - Instant Disk Recovery, Disk Publishing, File-level Recovery</li>
+<li><strong>Data logical errors</strong> - Combining Data Labs and file-level recovery and other methods</li>
+</ul>
+<h2 id="mysql-backup-and-recovery-in-practice-with-vbr">MySQL Backup and Recovery in Practice with VBR</h2>
+<p>Next, let&rsquo;s look at a practical example to see exactly how MySQL database backup and recovery work.</p>
+<h4 id="environment-description">Environment Description</h4>
+<p>Virtualization platform: VMware vSphere 7.0</p>
+<p>OS: Ubuntu 20.04</p>
+<p>MySQL: 8.0.35</p>
+<p>VBR: v12.1</p>
+<h4 id="data-backup---innodb">Data Backup - InnoDB</h4>
+<p>To simulate hot database backup during continuous data writing, I prepared a Python script that inserts a row of time data every second. This table is very simple, as shown below:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; SELECT * from <span class="nb">time</span> LIMIT 5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">5</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:06:26 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">6</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:07:04 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">7</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:14 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">8</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:15 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">9</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:17:16 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>The Python script is as follows:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-python">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">MySQLdb</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="s2">&#34;lei&#34;</span><span class="p">,</span> <span class="s2">&#34;P@ssw0rd&#34;</span><span class="p">,</span> <span class="s2">&#34;leitestdb&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">curs</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curs</span><span class="o">.</span><span class="n">execute</span> <span class="p">(</span><span class="s2">&#34;&#34;&#34;INSERT INTO time
+</span></span></span><span class="line"><span class="cl"><span class="s2">                values(0, CURRENT_DATE(), NOW())&#34;&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></span></span></code></pre></div></div>
+<p>The backup job in VBR is nothing special - just a regular VMware virtual machine backup job. No need to enable application-aware processing, just backup directly.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png"
+        data-srcset="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png, https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png 1.5x, https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/OkvrqPNalm5duBZ.png"
+        title="Xnip2023-12-15_11-05-43" /></p>
+<h4 id="data-recovery-scenario-1-machine-failure">Data Recovery Scenario 1: Machine Failure</h4>
+<p>When a system-level failure occurs, you can perform full machine instant recovery through VBR. Not only can the server be recovered, but the database can also be perfectly recovered. After starting instant VM recovery in the VBR console, MySQL can be back online within 2 minutes.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png"
+        data-srcset="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png, https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png 1.5x, https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/2vVCKmZdrSxEpRP.png"
+        title="Xnip2023-12-15_11-27-59" /></p>
+<p>Let&rsquo;s look at the recovered database. The database successfully recovered through InnoDB&rsquo;s self-recovery mode using crash recovery.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lei@MySQL-01:~$ sudo cat /var/log/mysql/error.log
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> lei:
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:54.523723Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010116<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld <span class="o">(</span>mysqld 8.0.35-0ubuntu0.20.04.1<span class="o">)</span> starting as process <span class="m">936</span>
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:54.603505Z <span class="m">1</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013576<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has started.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.634428Z <span class="m">1</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013577<span class="o">]</span> <span class="o">[</span>InnoDB<span class="o">]</span> InnoDB initialization has ended.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.892988Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010229<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Starting XA crash recovery...
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.901965Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010232<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> XA crash recovery finished.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.971499Z <span class="m">0</span> <span class="o">[</span>Warning<span class="o">]</span> <span class="o">[</span>MY-010068<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> CA certificate ca.pem is self signed.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:55.971547Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-013602<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> Channel mysql_main configured to support TLS. Encrypted connections are now supported <span class="k">for</span> this channel.
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:56.039984Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-011323<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> X Plugin ready <span class="k">for</span> connections. Bind-address: <span class="s1">&#39;127.0.0.1&#39;</span> port: 33060, socket: /var/run/mysqld/mysqlx.sock
+</span></span><span class="line"><span class="cl">2023-12-15T03:35:56.040153Z <span class="m">0</span> <span class="o">[</span>System<span class="o">]</span> <span class="o">[</span>MY-010931<span class="o">]</span> <span class="o">[</span>Server<span class="o">]</span> /usr/sbin/mysqld: ready <span class="k">for</span> connections. Version: <span class="s1">&#39;8.0.35-0ubuntu0.20.04.1&#39;</span>  socket: <span class="s1">&#39;/var/run/mysqld/mysqld.sock&#39;</span>  port: <span class="m">3306</span>  <span class="o">(</span>Ubuntu<span class="o">)</span>.</span></span></code></pre></div></div>
+<p>Let&rsquo;s check at what time point the backup data is located:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; <span class="k">select</span> * from <span class="nb">time</span> order by id desc LIMIT 10<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id  <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">361</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:20:00 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">360</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:59 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">359</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:58 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">358</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:57 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">357</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:56 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">356</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:55 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">355</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:54 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">354</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:53 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">353</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:52 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">352</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:51 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">10</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>As you can see, the last record in the backup data was written at 2023-12-14 10:20:00, and the virtual machine snapshot completion time during the earlier backup was exactly 10:20:21.</p>
+<h4 id="data-recovery-scenario-2-mysql-full-database-recovery">Data Recovery Scenario 2: MySQL Full Database Recovery</h4>
+<p>This scenario mostly occurs when the host environment is normal, but the database has problems. In this case, there are many operation methods to choose from in Veeam for recovery. Let&rsquo;s first look at the most comfortable operation method from a backup administrator&rsquo;s perspective: Veeam file-level recovery.</p>
+<p>Find the MySQL archive in the VBR console, and in the right-click menu, select <code>Restore guest files -&gt; Linux and other...</code> to open the MySQL file-level restore wizard.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png"
+        data-srcset="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png, https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png 1.5x, https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/9FeNr1aqn3JsSR2.png"
+        title="Xnip2023-12-15_11-55-18" /></p>
+<p>After opening, in the graphical recovery interface, you can quickly find the /var/lib/mysql data directory and see detailed information about each file.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png"
+        data-srcset="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png, https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png 1.5x, https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/DeLOSm9yTN74r8Y.png"
+        title="Xnip2023-12-15_12-46-34" /></p>
+<p>After selecting files or directories, restore the entire /var/lib/mysql directory back to the source machine or a new server to complete data restoration. After completing data restoration on the MySQL server, check the directory permissions. If the owner and group are incorrect, adjust the permissions with the following command, then start MySQL.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ chown -R mysql:mysql /var/lib/mysql</span></span></code></pre></div></div>
+<h4 id="data-recovery-scenario-3-single-table-recovery">Data Recovery Scenario 3: Single Table Recovery</h4>
+<p>Single-table recovery in MySQL is a bit more complex, but using Veeam&rsquo;s powerful features, we can easily achieve it. The specific principle is based on the <a href="https://dev.mysql.com/doc/refman/8.2/en/innodb-table-import.html" target="_blank" rel="noopener noreffer ">MySQL official documentation for the InnoDB engine recovery</a></p>
+<p>First, we need to use the Data Lab to generate metadata for the table to be recovered. For the Data Lab configuration, you can refer to my previous posts.</p>
+<p>In the Data Lab, the MySQL machine can be started normally. We connect to the machine via SSH and then execute the MySQL command to generate metadata:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; use leitestdb<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Reading table information <span class="k">for</span> completion of table and column names
+</span></span><span class="line"><span class="cl">You can turn off this feature to get a quicker startup with -A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Database changed
+</span></span><span class="line"><span class="cl">mysql&gt; FLUSH TABLES <span class="nb">time</span> FOR EXPORT<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>At this point, it&rsquo;s important to note that you can&rsquo;t exit the MySQL console yet. We need to copy the generated time.cfg file first and save it for backup. Because after exiting the MySQL console, this file is automatically deleted.</p>
+<p>Next, we begin the formal single-table data recovery.</p>
+<p>To recover a single MySQL table, we first need to create the table structure in the database. For example, my table is as follows:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-sql">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">time</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="nb">date</span><span class="o">`</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">`</span><span class="n">time</span><span class="o">`</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">5</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span></span></span></code></pre></div></div>
+<p>Then we use the discard command to discard this table&rsquo;s tablespace:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; ALTER TABLE <span class="nb">time</span> DISCARD TABLESPACE<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>Next, we find the time.idb file in the backup data and perform a single-file file-level recovery as shown in the figure:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png"
+        data-srcset="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png, https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png 1.5x, https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/oB7DGvRSsH1tIld.png"
+        title="Xnip2023-12-15_13-18-21" /></p>
+<p>After restoring to the corresponding database directory, VBR can show recovery success information, as shown in the figure:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png"
+        data-srcset="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png, https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png 1.5x, https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/nfOeQsgo5X8w2rF.png"
+        title="Xnip2023-12-15_13-22-49" /></p>
+<p>Then we need to restore the time.cfg file we just retrieved from the Data Lab to the /var/lib/mysql/leitestdb/ directory, ensuring the directory contents are as follows after restoration:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@MySQL-01:~# ls -ahl /var/lib/mysql/leitestdb/
+</span></span><span class="line"><span class="cl">total 120K
+</span></span><span class="line"><span class="cl">drwxr-x--- <span class="m">2</span> mysql mysql   <span class="m">38</span> Dec <span class="m">15</span> 14:07 .
+</span></span><span class="line"><span class="cl">drwx------ <span class="m">8</span> mysql mysql 4.0K Dec <span class="m">15</span> 00:00 ..
+</span></span><span class="line"><span class="cl">-rw-r----- <span class="m">1</span> mysql mysql  <span class="m">772</span> Dec <span class="m">15</span> 13:55 time.cfg
+</span></span><span class="line"><span class="cl">-rw-r----- <span class="m">1</span> mysql mysql 112K Dec <span class="m">13</span> 15:00 time.ibd</span></span></code></pre></div></div>
+<p>Back in the MySQL console, we use the Import command to import the just-restored tablespace.</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; ALTER TABLE <span class="nb">time</span> IMPORT TABLESPACE<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Query OK, <span class="m">0</span> rows affected <span class="o">(</span>0.01 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>Let&rsquo;s query the data to see:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql&gt; SELECT * from <span class="nb">time</span> order by id desc LIMIT 5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id  <span class="p">|</span> date       <span class="p">|</span> <span class="nb">time</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">341</span> <span class="p">|</span> 2023-12-14 <span class="p">|</span> 10:19:40 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">320</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">319</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">318</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="m">317</span> <span class="p">|</span> 2023-12-13 <span class="p">|</span> 14:48:22 <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----+------------+----------+
+</span></span><span class="line"><span class="cl"><span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></span></span></code></pre></div></div>
+<p>As you can see, this table has been recovered, which is slightly different from the previous full machine recovery because the image-level backup table data doesn&rsquo;t include data in redo.log and undo.log, so this type of table recovery will lose some data that hasn&rsquo;t been committed yet.</p>
+<h4 id="data-recovery-scenario-4-point-in-time-recovery">Data Recovery Scenario 4: Point-in-time Recovery</h4>
+<p>When backing up with VBR, we back up the entire machine, including MySQL&rsquo;s entire data directory, so each image-level backup will also back up MySQL binlog together. Through file-level recovery or disk publishing commands, we can easily read the data in the backup.</p>
+<p>Next, let&rsquo;s try the new feature in v12.1: Virtual Disk Publishing.</p>
+<p>Find the MySQL archive in the VBR console, and in the right-click recovery menu, you can see the <code>Publish Disks</code> option.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png"
+        data-srcset="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png, https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png 1.5x, https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/tThSMQcxEGmsoqi.png"
+        title="Xnip2023-12-15_14-23-16" /></p>
+<p>Simply follow the wizard, enter some target machine information, and the disk can be published and mounted to the corresponding Linux server&rsquo;s /tmp directory.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png"
+        data-srcset="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png, https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png 1.5x, https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/hkx9fitlWgzeuBO.png"
+        title="Xnip2023-12-15_14-26-00" /></p>
+<p>Let&rsquo;s go back to the MySQL server and look at this directory:</p>
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lei@MySQL-01:~$ ls -ahl /tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/
+</span></span><span class="line"><span class="cl">total 4.0K
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">33</span> Dec <span class="m">15</span> 14:25 .
+</span></span><span class="line"><span class="cl">drwxrwxrwt <span class="m">18</span> root root 4.0K Dec <span class="m">15</span> 14:25 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">19</span> root root  <span class="m">292</span> Apr  <span class="m">4</span>  <span class="m">2022</span> ubuntu-vg-ubuntu-lv
+</span></span><span class="line"><span class="cl">lei@MySQL-01:~$ <span class="nb">cd</span> /tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df$ <span class="nb">cd</span> ubuntu-vg-ubuntu-lv/
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ ls
+</span></span><span class="line"><span class="cl">bin   cdrom  etc   lib    lib64   media  opt   root  sbin  srv       sys  usr
+</span></span><span class="line"><span class="cl">boot  dev    home  lib32  libx32  mnt    proc  run   snap  swap.img  tmp  var
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ ls -ahl /var/lib/mysql/
+</span></span><span class="line"><span class="cl">ls: cannot open directory <span class="s1">&#39;/var/lib/mysql/&#39;</span>: Permission denied
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$ sudo -i ls -ahl /var/lib/mysql/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> lei:
+</span></span><span class="line"><span class="cl">total 90M
+</span></span><span class="line"><span class="cl">drwx------  <span class="m">8</span> mysql mysql 4.0K Dec <span class="m">15</span> 00:00  .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">48</span> root  root  4.0K Dec <span class="m">15</span> 10:57  ..
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql   <span class="m">56</span> Dec <span class="m">13</span> 11:11  auto.cnf
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">180</span> Dec <span class="m">13</span> 11:12  binlog.000001
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">404</span> Dec <span class="m">13</span> 11:12  binlog.000002
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  17K Dec <span class="m">13</span> 14:26  binlog.000003
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 5.2K Dec <span class="m">13</span> 14:31  binlog.000004
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  75K Dec <span class="m">13</span> 14:48  binlog.000005
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">157</span> Dec <span class="m">13</span> 15:01  binlog.000006
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  26K Dec <span class="m">15</span> 00:00  binlog.000007
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 2.1K Dec <span class="m">15</span> 14:07  binlog.000008
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  <span class="m">128</span> Dec <span class="m">15</span> 00:00  binlog.index
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  ca-key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  ca.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  client-cert.pem
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  client-key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> root  root     <span class="m">0</span> Dec <span class="m">13</span> 11:12  debian-5.7.flag
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 192K Dec <span class="m">15</span> 14:09 <span class="s1">&#39;#ib_16384_0.dblwr&#39;</span>
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 8.2M Dec <span class="m">15</span> 14:07 <span class="s1">&#39;#ib_16384_1.dblwr&#39;</span>
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql 3.6K Dec <span class="m">13</span> 14:26  ib_buffer_pool
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  12M Dec <span class="m">15</span> 14:07  ibdata1
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  12M Dec <span class="m">13</span> 15:01  ibtmp1
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql 4.0K Dec <span class="m">13</span> 15:01 <span class="s1">&#39;#innodb_redo&#39;</span>
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql  <span class="m">187</span> Dec <span class="m">13</span> 15:01 <span class="s1">&#39;#innodb_temp&#39;</span>
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql   <span class="m">38</span> Dec <span class="m">15</span> 14:07  leitestdb
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql  <span class="m">143</span> Dec <span class="m">13</span> 11:11  mysql
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql    <span class="m">4</span> Dec <span class="m">13</span> 15:01  MySQL-01.pid
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  25M Dec <span class="m">15</span> 14:07  mysql.ibd
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql 8.0K Dec <span class="m">13</span> 11:11  performance_schema
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  private_key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql  <span class="m">452</span> Dec <span class="m">13</span> 11:11  public_key.pem
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> mysql mysql 1.1K Dec <span class="m">13</span> 11:11  server-cert.pem
+</span></span><span class="line"><span class="cl">-rw-------  <span class="m">1</span> mysql mysql 1.7K Dec <span class="m">13</span> 11:11  server-key.pem
+</span></span><span class="line"><span class="cl">drwxr-x---  <span class="m">2</span> mysql mysql   <span class="m">28</span> Dec <span class="m">13</span> 11:11  sys
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  16M Dec <span class="m">15</span> 14:09  undo_001
+</span></span><span class="line"><span class="cl">-rw-r-----  <span class="m">1</span> mysql mysql  16M Dec <span class="m">15</span> 14:09  undo_002
+</span></span><span class="line"><span class="cl">lei@MySQL-01:/tmp/Veeam.Mount.FS.54290a8a-a833-4a0e-8c43-2715b07795df/ubuntu-vg-ubuntu-lv$</span></span></code></pre></div></div>
+<p>Here, we can see that all files have been mounted. Next, we just need to use the regular Linux cp command to extract the relevant binlog files for data recovery.</p>
+<p>After recovery is complete, don&rsquo;t forget to unpublish the disk in VBR.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png"
+        data-srcset="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png, https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png 1.5x, https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2024/04/30/CfVnmJ69c3LUYo8.png"
+        title="Xnip2023-12-15_14-31-01" /></p>
+<h2 id="summary">Summary</h2>
+<p>When using Veeam for MySQL backup, if your environment only has the InnoDB engine, then you don&rsquo;t need to consider any special handling operations during the backup process at all. You can directly use image-level snapshot backups to perfectly handle various MySQL backup and recovery scenarios. When your environment has the MyISAM engine, you have two options: one is to use Veeam Agent to let Veeam Agent handle locking and unlocking operations, and the other is to manually add locking and unlocking operations before and after snapshots through the script functionality in virtual machine backup application-aware processing. When your environment has other types of storage engines, I recommend that you最好 use a script to pause the database and perform cold backup. While this will bring minute-level brief downtime, it ensures data consistency.</p>
+<p>The above are the best practices for Veeam backup and recovery of MySQL. Welcome to follow my blog to learn more about Veeam backup technologies.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/12/mysql-backup-and-restore/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F12%2Fmysql-backup-and-restore%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F12%2Fmysql-backup-and-restore%2F&amp;text=MySQL&#43;Backup&#43;and&#43;Restore&#43;Best&#43;Practices&#43;with&#43;Veeam" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F12%252Fmysql-backup-and-restore%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F12%252Fmysql-backup-and-restore%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/MySQL/">MySQL</a>,&nbsp;<a href="/en/tags/VBR/">VBR</a>,&nbsp;<a href="/en/tags/backup/">Backup</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/12/vdp23h2-update/" class="prev" rel="prev" title="Veeam&#39;s Major H2 2023 Product Line Update"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam's Major H2 2023 Product Line Update</a>
+            <a href="/en/2024/02/veeam-hardened-ubuntu/" class="next" rel="next" title="Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories">Further Security Hardening for Ubuntu Systems Used as Veeam Hardened Repositories<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

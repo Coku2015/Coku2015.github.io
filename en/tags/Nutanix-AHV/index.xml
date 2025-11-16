@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nutanix AHV on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Nutanix-AHV/</link>
+    <description>Recent content in Nutanix AHV on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 30 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Nutanix-AHV/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 2)</title>
+      <link>https://blog.backupnext.cloud/en/2018/07/van-02/</link>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/07/van-02/</guid>
+      <description>&lt;p&gt;Now that we&amp;rsquo;ve covered the installation and configuration of Veeam Availability for Nutanix AHV (VAN) in our previous article, it&amp;rsquo;s time to dive into the core operations that make this solution so valuable. Today, we&amp;rsquo;ll explore how VAN handles backup and recovery operations for your AHV virtual machines.&lt;/p&gt;&#xA;&lt;p&gt;What I find particularly interesting about VAN&amp;rsquo;s approach is how it bridges the familiar Veeam workflow with the unique requirements of Nutanix environments. While the concepts remain consistent with traditional Veeam Backup &amp;amp; Replication (VBR), the implementation details reflect thoughtful adaptation to the AHV ecosystem.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Veeam Availability for Nutanix AHV Configuration and Usage Series (Part 1)</title>
+      <link>https://blog.backupnext.cloud/en/2018/07/van-01/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2018/07/van-01/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m thrilled to share that Veeam Availability for Nutanix AHV (VAN) has finally been released! As someone who works extensively with both Nutanix and Veeam technologies, I&amp;rsquo;ve been eagerly anticipating this integration. Today, I want to walk you through everything you need to know to get started with this powerful new tool.&lt;/p&gt;&#xA;&lt;p&gt;VAN comes as a Proxy Appliance that you can download directly from the Veeam website. Once you extract the ZIP file, you&amp;rsquo;ll find a disk image in VMDK format. Just like other Veeam products, you can grab a 30-day trial license to test everything out before committing.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

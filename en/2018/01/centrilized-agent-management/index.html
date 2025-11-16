@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management - Cloud.Virt.AI.Sec</title><meta name="description" content="Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management">
+  <meta property="og:description" content="Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle physical and cloud infrastructure backups. The interface has evolved significantly, but don’t worry — Veeam maintains its familiar wizard-driven approach that we all know and love.
+Let’s dive into what’s new and explore how this centralized management works.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-01-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-01-01T00:00:00+00:00">
+    <meta property="article:tag" content="Agent">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management">
+  <meta name="twitter:description" content="Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle physical and cloud infrastructure backups. The interface has evolved significantly, but don’t worry — Veeam maintains its familiar wizard-driven approach that we all know and love.
+Let’s dive into what’s new and explore how this centralized management works.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2018/01/centrilized-agent-management/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2017/08/esxi-in-m4800/" /><link rel="next" href="https://blog.backupnext.cloud/en/2018/03/surebackup/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2018\/01\/centrilized-agent-management\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Agent","wordcount":  1272 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2018\/01\/centrilized-agent-management\/","datePublished": "2018-01-01T00:00:00+00:00","dateModified": "2018-01-01T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2018/01/centrilized-agent-management/">简体中文</option><option value="/en/2018/01/centrilized-agent-management/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2018/01/centrilized-agent-management/">简体中文</option><option value="/en/2018/01/centrilized-agent-management/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">First Post of the New Year - Detailed Guide to Veeam 9.5U3 Centralized Agent Management</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2018-01-01">2018-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1272 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-big-picture-interface-changes">The Big Picture: Interface Changes</a></li>
+    <li><a href="#exploring-the-physical--cloud-infrastructure-interface">Exploring the Physical &amp; Cloud Infrastructure Interface</a></li>
+    <li><a href="#creating-protection-groups">Creating Protection Groups</a>
+      <ul>
+        <li><a href="#method-1-individual-computers">Method 1: Individual Computers</a></li>
+        <li><a href="#method-2-microsoft-active-directory-objects">Method 2: Microsoft Active Directory Objects</a></li>
+        <li><a href="#method-3-computers-from-csv-files">Method 3: Computers from CSV Files</a></li>
+      </ul>
+    </li>
+    <li><a href="#advanced-protection-group-settings">Advanced Protection Group Settings</a></li>
+    <li><a href="#managing-windows-agents">Managing Windows Agents</a>
+      <ul>
+        <li><a href="#creating-windows-backup-jobs">Creating Windows Backup Jobs</a>
+          <ul>
+            <li><a href="#job-configuration-walkthrough">Job Configuration Walkthrough</a></li>
+          </ul>
+        </li>
+        <li><a href="#recovery-operations">Recovery Operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-linux-agents">Managing Linux Agents</a>
+      <ul>
+        <li><a href="#linux-backup-configuration">Linux Backup Configuration</a></li>
+        <li><a href="#linux-recovery-options">Linux Recovery Options</a></li>
+      </ul>
+    </li>
+    <li><a href="#looking-ahead">Looking Ahead</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Kicking off the New Year with some exciting news! Veeam 9.5U3 brings us centralized agent management, a game-changing feature that transforms how we handle physical and cloud infrastructure backups. The interface has evolved significantly, but don&rsquo;t worry — Veeam maintains its familiar wizard-driven approach that we all know and love.</p>
+<p>Let&rsquo;s dive into what&rsquo;s new and explore how this centralized management works.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17owIe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17owIe.png, https://s2.ax1x.com/2020/02/12/17owIe.png 1.5x, https://s2.ax1x.com/2020/02/12/17owIe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17owIe.png"
+        title="17owIe.png" /></p>
+<h2 id="the-big-picture-interface-changes">The Big Picture: Interface Changes</h2>
+<p>First things first — you&rsquo;ll notice some familiar faces have moved:</p>
+<ul>
+<li><strong>Backup &amp; Replication</strong> is now called <strong>Home</strong></li>
+<li><strong>Virtual Machine</strong> has become <strong>Inventory</strong></li>
+<li><strong>Agent management</strong> lives under <strong>Physical &amp; Cloud Infrastructure</strong> in the Inventory section</li>
+</ul>
+<p>Veeam&rsquo;s approach to agent management follows its proven three-step methodology:</p>
+<ol>
+<li><strong>Create Protection Groups</strong> — Define and automatically discover what needs protecting</li>
+<li><strong>Create Jobs or Policies</strong> — Set up your backup configurations</li>
+<li><strong>Execute Restores</strong> — Recover data when needed using various methods</li>
+</ol>
+<p>This consistency makes the transition smooth for anyone familiar with Veeam&rsquo;s virtualization backup workflows.</p>
+<h2 id="exploring-the-physical--cloud-infrastructure-interface">Exploring the Physical &amp; Cloud Infrastructure Interface</h2>
+<p>The Physical &amp; Cloud Infrastructure node displays folder-like icons that represent different protection groups. After upgrading, you&rsquo;ll immediately see two system-created folders:</p>
+<ul>
+<li><strong>Manually Added</strong> — For individually managed computers</li>
+<li><strong>Unmanaged</strong> — For discovered but not yet protected systems</li>
+</ul>
+<p>As you create protection groups, new folders will appear, each containing the servers or workstations you&rsquo;ve designated for backup.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oaVO.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oaVO.png, https://s2.ax1x.com/2020/02/12/17oaVO.png 1.5x, https://s2.ax1x.com/2020/02/12/17oaVO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oaVO.png"
+        title="17oaVO.png" /></p>
+<h2 id="creating-protection-groups">Creating Protection Groups</h2>
+<p>True to Veeam form, creating protection groups uses their classic wizard interface. Let&rsquo;s walk through the three different ways you can add computers to your protection groups.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17odaD.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17odaD.png, https://s2.ax1x.com/2020/02/12/17odaD.png 1.5x, https://s2.ax1x.com/2020/02/12/17odaD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17odaD.png"
+        title="17odaD.png" /></p>
+<h3 id="method-1-individual-computers">Method 1: Individual Computers</h3>
+<p>Perfect for small environments or specific servers, this method lets you add computers manually one by one.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oNqK.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oNqK.png, https://s2.ax1x.com/2020/02/12/17oNqK.png 1.5x, https://s2.ax1x.com/2020/02/12/17oNqK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oNqK.png"
+        title="17oNqK.png" /></p>
+<p>Simply enter the host name or IP address and provide appropriate credentials. It&rsquo;s straightforward and ideal for targeted protection.</p>
+<h3 id="method-2-microsoft-active-directory-objects">Method 2: Microsoft Active Directory Objects</h3>
+<p>For larger environments, AD integration is a lifesaver. You can dynamically add entire organizational units, security groups, or individual computers based on AD queries.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17otr6.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17otr6.png, https://s2.ax1x.com/2020/02/12/17otr6.png 1.5x, https://s2.ax1x.com/2020/02/12/17otr6.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17otr6.png"
+        title="17otr6.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oBPH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oBPH.png, https://s2.ax1x.com/2020/02/12/17oBPH.png 1.5x, https://s2.ax1x.com/2020/02/12/17oBPH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oBPH.png"
+        title="17oBPH.png" /></p>
+<p>Start by clicking the <strong>Change</strong> button to configure your AD connection — enter your domain details and provide domain administrator credentials. Once connected, you can browse your AD structure and select exactly what you want to protect.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oDGd.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oDGd.png, https://s2.ax1x.com/2020/02/12/17oDGd.png 1.5x, https://s2.ax1x.com/2020/02/12/17oDGd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oDGd.png"
+        title="17oDGd.png" /></p>
+<p>One smart feature: Veeam automatically excludes virtual machines from agent-based protection, since they should typically be protected through hypervisor-level backups.</p>
+<h3 id="method-3-computers-from-csv-files">Method 3: Computers from CSV Files</h3>
+<p>Sometimes you need the flexibility of custom lists. The CSV import method lets you maintain your inventory in a simple text file.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17orRA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17orRA.png, https://s2.ax1x.com/2020/02/12/17orRA.png 1.5x, https://s2.ax1x.com/2020/02/12/17orRA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17orRA.png"
+        title="17orRA.png" /></p>
+<p>Just create a CSV file with your host names or IP addresses, then point Veeam to it. This method works great for mixed environments or when you&rsquo;re migrating from another backup solution.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17osxI.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17osxI.png, https://s2.ax1x.com/2020/02/12/17osxI.png 1.5x, https://s2.ax1x.com/2020/02/12/17osxI.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17osxI.png"
+        title="17osxI.png" /></p>
+<p>You can even specify different credentials for different hosts within the same CSV file, giving you granular control over authentication.</p>
+<h2 id="advanced-protection-group-settings">Advanced Protection Group Settings</h2>
+<p>Regardless of which method you choose, you&rsquo;ll have access to some powerful automation settings:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17o6Mt.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17o6Mt.png, https://s2.ax1x.com/2020/02/12/17o6Mt.png 1.5x, https://s2.ax1x.com/2020/02/12/17o6Mt.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17o6Mt.png"
+        title="17o6Mt.png" /></p>
+<ul>
+<li><strong>Automatic discovery intervals</strong> — Set how often Veeam scans for new computers</li>
+<li><strong>Agent deployment</strong> — Automatically install Veeam agents and CBT drivers on discovered machines</li>
+<li><strong>Restart policies</strong> — Control automatic reboots when required after agent installation</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ogqf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ogqf.png, https://s2.ax1x.com/2020/02/12/17ogqf.png 1.5x, https://s2.ax1x.com/2020/02/12/17ogqf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ogqf.png"
+        title="17ogqf.png" /></p>
+<p>The wizard performs final status checks on target systems before creating your protection group, ensuring everything is ready for deployment.</p>
+<h2 id="managing-windows-agents">Managing Windows Agents</h2>
+<p>Once Veeam discovers machines in your protection groups, you&rsquo;ll see them listed in the Physical &amp; Cloud Infrastructure view.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oRZ8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oRZ8.png, https://s2.ax1x.com/2020/02/12/17oRZ8.png 1.5x, https://s2.ax1x.com/2020/02/12/17oRZ8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oRZ8.png"
+        title="17oRZ8.png" /></p>
+<p>The toolbar gives you complete control over agent lifecycle:</p>
+<ul>
+<li><strong>Install/Uninstall agents</strong> — Push agents to new systems or remove them when needed</li>
+<li><strong>Restart computers</strong> — Reboot machines remotely for maintenance</li>
+<li><strong>Create recovery media</strong> — Build bootable recovery media directly from the console</li>
+</ul>
+<p>What&rsquo;s particularly impressive is that all these operations, which previously required working directly on individual machines, are now centralized in the Veeam console.</p>
+<h3 id="creating-windows-backup-jobs">Creating Windows Backup Jobs</h3>
+<p>Setting up backups is as simple as selecting your computers and clicking <strong>Add to Backup</strong>. The familiar Veeam wizard guides you through the process:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17oWdS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17oWdS.png, https://s2.ax1x.com/2020/02/12/17oWdS.png 1.5x, https://s2.ax1x.com/2020/02/12/17oWdS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17oWdS.png"
+        title="17oWdS.png" /></p>
+<p>You&rsquo;ll notice three deployment options, each serving different scenarios:</p>
+<ul>
+<li><strong>Workstation</strong> — Ideal for desktop/laptop environments</li>
+<li><strong>Managed by Agent</strong> — Perfect for remote sites with local backup servers</li>
+<li><strong>Managed by Backup Server</strong> — Our focus for centralized management</li>
+</ul>
+<p>The <strong>Managed by backup server</strong> option gives you full control over backup scheduling, retention, and storage allocation.</p>
+<h4 id="job-configuration-walkthrough">Job Configuration Walkthrough</h4>
+<p>Let&rsquo;s walk through the key configuration steps:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17ofIg.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17ofIg.png, https://s2.ax1x.com/2020/02/12/17ofIg.png 1.5x, https://s2.ax1x.com/2020/02/12/17ofIg.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17ofIg.png"
+        title="17ofIg.png" /></p>
+<p><strong>Step 1: Name your job</strong> — Give it a descriptive name that makes sense in your environment.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/17o4iQ.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/17o4iQ.png, https://s2.ax1x.com/2020/02/12/17o4iQ.png 1.5x, https://s2.ax1x.com/2020/02/12/17o4iQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/17o4iQ.png"
+        title="17o4iQ.png" /></p>
+<p><strong>Step 2: Select servers</strong> — Choose which computers to include and set their processing order if needed.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPNUH.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPNUH.png, https://s2.ax1x.com/2020/02/12/1HPNUH.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPNUH.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPNUH.png"
+        title="1HPNUH.png" /></p>
+<p><strong>Step 3: Choose backup mode</strong> — Options mirror what you&rsquo;re used to in Veeam&rsquo;s agent client.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPdPA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPdPA.png, https://s2.ax1x.com/2020/02/12/1HPdPA.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPdPA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPdPA.png"
+        title="1HPdPA.png" /></p>
+<p><strong>Step 4: Configure storage</strong> — Select your backup repository and set retention policies. Advanced options let you configure synthetic full and active full backup schedules.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPw8I.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPw8I.png, https://s2.ax1x.com/2020/02/12/1HPw8I.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPw8I.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPw8I.png"
+        title="1HPw8I.png" /></p>
+<p><strong>Step 5: Application-aware processing</strong> — Enable consistent backups for applications like SQL Server and Exchange.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPtVe.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPtVe.png, https://s2.ax1x.com/2020/02/12/1HPtVe.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPtVe.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPtVe.png"
+        title="1HPtVe.png" /></p>
+<p><strong>Step 6: Schedule</strong> — Set your backup frequency and timing using Veeam&rsquo;s familiar scheduling interface.</p>
+<p>Once configured, your jobs run with the same reliability you expect from Veeam:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPU5d.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPU5d.png, https://s2.ax1x.com/2020/02/12/1HPU5d.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPU5d.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPU5d.png"
+        title="1HPU5d.png" /></p>
+<p>During execution, Veeam collects necessary drivers and system information, ensuring reliable recovery when you need it.</p>
+<h3 id="recovery-operations">Recovery Operations</h3>
+<p>All your backup archives appear in the <strong>Home</strong> interface, where you can perform various recovery operations:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HP02t.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HP02t.png, https://s2.ax1x.com/2020/02/12/1HP02t.png 1.5x, https://s2.ax1x.com/2020/02/12/1HP02t.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HP02t.png"
+        title="1HP02t.png" /></p>
+<p>The recovery options match what you&rsquo;re used to in virtualization backups — file-level recovery, volume recovery, and full bare-metal recovery. The consistency across platforms makes training and operations much simpler.</p>
+<p>For bare-metal recovery, Veeam now generates recovery media directly from the backup server console:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPBxP.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPBxP.png, https://s2.ax1x.com/2020/02/12/1HPBxP.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPBxP.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPBxP.png"
+        title="1HPBxP.png" /></p>
+<p>This centralization eliminates the need to manage recovery media creation on individual machines.</p>
+<h2 id="managing-linux-agents">Managing Linux Agents</h2>
+<p>Linux agent management follows a similar workflow but with some platform-specific differences:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPrKf.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPrKf.png, https://s2.ax1x.com/2020/02/12/1HPrKf.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPrKf.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPrKf.png"
+        title="1HPrKf.png" /></p>
+<p>Linux environments have fewer management options — you won&rsquo;t find recovery media creation, CBT driver installation, or reboot capabilities directly in the console, reflecting the different requirements of Linux systems.</p>
+<h3 id="linux-backup-configuration">Linux Backup Configuration</h3>
+<p>Creating Linux backup jobs uses the same wizard approach, though with some Linux-specific considerations:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPsr8.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPsr8.png, https://s2.ax1x.com/2020/02/12/1HPsr8.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPsr8.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPsr8.png"
+        title="1HPsr8.png" /></p>
+<p>Notably, Linux doesn&rsquo;t support cluster-based protection in this release, though that may change in future versions.</p>
+<p>The configuration screens will look familiar:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPyqS.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPyqS.png, https://s2.ax1x.com/2020/02/12/1HPyqS.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPyqS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPyqS.png"
+        title="1HPyqS.png" /></p>
+<p><strong>Name and describe your job</strong> — Good documentation practices help in any environment.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPcVg.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPcVg.png, https://s2.ax1x.com/2020/02/12/1HPcVg.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPcVg.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPcVg.png"
+        title="1HPcVg.png" /></p>
+<p><strong>Select servers</strong> — Choose which Linux systems to protect.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPWPs.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPWPs.png, https://s2.ax1x.com/2020/02/12/1HPWPs.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPWPs.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPWPs.png"
+        title="1HPWPs.png" /></p>
+<p><strong>Choose backup mode</strong> — Select the appropriate backup strategy for your Linux workloads.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPfGn.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPfGn.png, https://s2.ax1x.com/2020/02/12/1HPfGn.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPfGn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPfGn.png"
+        title="1HPfGn.png" /></p>
+<p><strong>Configure storage</strong> — Set your backup target and retention policies.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPh2q.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPh2q.png, https://s2.ax1x.com/2020/02/12/1HPh2q.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPh2q.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPh2q.png"
+        title="1HPh2q.png" /></p>
+<p><strong>Application-aware processing</strong> — Linux uses pre-freeze and post-thaw scripts for application consistency, with filesystem indexing handled during backup.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPIMV.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPIMV.png, https://s2.ax1x.com/2020/02/12/1HPIMV.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPIMV.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPIMV.png"
+        title="1HPIMV.png" /></p>
+<p><strong>Schedule</strong> — Set your backup timing using the familiar scheduling interface.</p>
+<h3 id="linux-recovery-options">Linux Recovery Options</h3>
+<p>Linux recovery operations in VBR are more limited compared to Windows:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPorT.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPorT.png, https://s2.ax1x.com/2020/02/12/1HPorT.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPorT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPorT.png"
+        title="1HPorT.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1HPHZF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1HPHZF.png, https://s2.ax1x.com/2020/02/12/1HPHZF.png 1.5x, https://s2.ax1x.com/2020/02/12/1HPHZF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1HPHZF.png"
+        title="1HPHZF.png" /></p>
+<p>From the Veeam console, you can perform:</p>
+<ul>
+<li><strong>File-level recovery</strong> — Restore individual files and folders</li>
+<li><strong>Restore to Azure</strong> — Migrate workloads to Azure</li>
+<li><strong>Export to virtual disk</strong> — Create VMDK/VHD files for virtualization</li>
+</ul>
+<p>For bare-metal recovery of Linux systems, you&rsquo;ll need to download the dedicated Linux recovery media from Veeam&rsquo;s website:</p>
+<p><strong>Direct download link:</strong> <a href="https://download2.veeam.com/veeam-recovery-media-2.0.0.400_x86_64.iso" target="_blank" rel="noopener noreffer ">https://download2.veeam.com/veeam-recovery-media-2.0.0.400_x86_64.iso</a></p>
+<h2 id="looking-ahead">Looking Ahead</h2>
+<p>The 9.5U3 update marks a significant step forward in Veeam&rsquo;s physical and cloud infrastructure protection capabilities. By centralizing agent management alongside virtualization workloads, Veeam creates a unified protection platform that simplifies administration while maintaining the flexibility and power that administrators expect.</p>
+<p>For the complete release notes and to download the update, check out the official Veeam documentation. This New Year&rsquo;s update sets the stage for even more exciting developments in the months to come.</p>
+<p>Whether you&rsquo;re managing a handful of servers or thousands of distributed endpoints, centralized agent management in Veeam 9.5U3 provides the tools you need to protect your physical and cloud infrastructure effectively. The familiar interface, combined with powerful automation capabilities, makes this a welcome addition to any Veeam administrator&rsquo;s toolkit.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2018-01-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2018/01/centrilized-agent-management/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F01%2Fcentrilized-agent-management%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2018%2F01%2Fcentrilized-agent-management%2F&amp;text=First&#43;Post&#43;of&#43;the&#43;New&#43;Year&#43;-&#43;Detailed&#43;Guide&#43;to&#43;Veeam&#43;9.5U3&#43;Centralized&#43;Agent&#43;Management" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F01%252Fcentrilized-agent-management%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2018%252F01%252Fcentrilized-agent-management%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Agent/">Agent</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2017/08/esxi-in-m4800/" class="prev" rel="prev" title="Transforming HOME LAB: Installing ESXi on M6400"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Transforming HOME LAB: Installing ESXi on M6400</a>
+            <a href="/en/2018/03/surebackup/" class="next" rel="next" title="You Only Know if Backup Archives Can Be Restored When You&#39;ve Actually Done It">You Only Know if Backup Archives Can Be Restored When You've Actually Done It<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

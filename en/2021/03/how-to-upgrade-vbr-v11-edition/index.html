@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Veeam Backup Server Upgrade Guide (v11 Edition) - Cloud.Virt.AI.Sec</title><meta name="description" content="Introduction On February 25, Veeam released the all-new v11 version. Last year, I published a post about upgrading to v10. Actually, this v11 upgrade process …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2021/03/how-to-upgrade-vbr-v11-edition/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Veeam Backup Server Upgrade Guide (v11 Edition)">
+  <meta property="og:description" content="Introduction On February 25, Veeam released the all-new v11 version. Last year, I published a post about upgrading to v10. Actually, this v11 upgrade process isn’t much different from the previous v10 upgrade. Today’s content will make some v11-specific adjustments to the previous post I mentioned—consider it a small update.
+Before You Upgrade Please follow the flowchart below to check your current environment and ensure all other components are properly upgraded before upgrading VBR.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-03-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-03-03T00:00:00+00:00">
+    <meta property="article:tag" content="VBR">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="Veeam Backup Server Upgrade Guide (v11 Edition)">
+  <meta name="twitter:description" content="Introduction On February 25, Veeam released the all-new v11 version. Last year, I published a post about upgrading to v10. Actually, this v11 upgrade process isn’t much different from the previous v10 upgrade. Today’s content will make some v11-specific adjustments to the previous post I mentioned—consider it a small update.
+Before You Upgrade Please follow the flowchart below to check your current environment and ensure all other components are properly upgraded before upgrading VBR.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2021/03/how-to-upgrade-vbr-v11-edition/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2021/02/vmware-vaio-overview/" /><link rel="next" href="https://blog.backupnext.cloud/en/2021/03/gift-from-veeam-free-community-edition/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Veeam Backup Server Upgrade Guide (v11 Edition)",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2021\/03\/how-to-upgrade-vbr-v11-edition\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VBR","wordcount":  578 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2021\/03\/how-to-upgrade-vbr-v11-edition\/","datePublished": "2021-03-03T00:00:00+00:00","dateModified": "2021-03-03T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2021/03/how-to-upgrade-vbr-v11-edition/">简体中文</option><option value="/en/2021/03/how-to-upgrade-vbr-v11-edition/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2021/03/how-to-upgrade-vbr-v11-edition/">简体中文</option><option value="/en/2021/03/how-to-upgrade-vbr-v11-edition/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Veeam Backup Server Upgrade Guide (v11 Edition)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-03-03">2021-03-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;578 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#before-you-upgrade">Before You Upgrade</a></li>
+        <li><a href="#upgrade-methods">Upgrade Methods</a></li>
+        <li><a href="#upgrade-preparation">Upgrade Preparation</a></li>
+        <li><a href="#upgrade-process">Upgrade Process</a></li>
+        <li><a href="#possible-issues-you-might-encounter">Possible Issues You Might Encounter</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="introduction">Introduction</h2>
+<p>On February 25, Veeam released the all-new v11 version. Last year, I published a post about upgrading to v10. Actually, this v11 upgrade process isn&rsquo;t much different from the previous v10 upgrade. Today&rsquo;s content will make some v11-specific adjustments to the previous post I mentioned—consider it a small update.</p>
+<h3 id="before-you-upgrade">Before You Upgrade</h3>
+<p>Please follow the flowchart below to check your current environment and ensure all other components are properly upgraded before upgrading VBR.</p>
+<p><a href="https://imgtu.com/i/6EuJ78" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s3.ax1x.com/2021/03/03/6EuJ78.png"
+        data-srcset="https://s3.ax1x.com/2021/03/03/6EuJ78.png, https://s3.ax1x.com/2021/03/03/6EuJ78.png 1.5x, https://s3.ax1x.com/2021/03/03/6EuJ78.png 2x"
+        data-sizes="auto"
+        alt="https://s3.ax1x.com/2021/03/03/6EuJ78.png"
+        title="6EuJ78.png" /></a></p>
+<p>v11 is fully compatible with the previous v10 VUL licenses, so if you&rsquo;re already using VUL licenses, you don&rsquo;t need to prepare or import any license files at all.</p>
+<h3 id="upgrade-methods">Upgrade Methods</h3>
+<p>There are two upgrade methods available, not much difference between them.</p>
+<ol>
+<li>In-place upgrade on the original VBR server</li>
+<li>Fresh install a new VBR server, then restore the Configuration Backup File to this newly installed VBR</li>
+</ol>
+<p>Since the second method is almost identical to a fresh installation, this article won&rsquo;t elaborate on it in detail and will only discuss the first in-place upgrade method.</p>
+<h3 id="upgrade-preparation">Upgrade Preparation</h3>
+<p>Prepare the Veeam upgrade media. Veeam products are very simple—the upgrade media and fresh installation use the same media package. Just mount the product package on the VBR server. Before executing the Upgrade, you need to do a series of preparation work:</p>
+<ol>
+<li><strong>Carefully read the Release Notes</strong> and check your environment to see if there are any unsupported systems:</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>   - VMware vSphere 5.1 and earlier versions
+   - Windows 2003 and XP
+   - Microsoft SQL Server 2005</code></pre></div>
+<ol start="2">
+<li>
+<p><strong>Use Veeam Configuration Backup functionality</strong> to create a backup of the VBR configuration. Make sure this backup is done in Encrypted mode, so all usernames and passwords used in VBR will be properly saved in the .bco file.</p>
+</li>
+<li>
+<p><strong>Check all backup jobs on VBR</strong> to ensure no jobs are currently running. Pay special attention to the following jobs, which need to be manually stopped by clicking Disable:</p>
+</li>
+</ol>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>    - Backup Copy Jobs
+    - SQL and Oracle log backup jobs</code></pre></div>
+<ul>
+<li>Check if any Instant VM Recovery sessions are running</li>
+<li>Check if any Veeam Explorers are open and performing recovery operations</li>
+<li>Check if any SureBackup/Virtual Lab jobs are running</li>
+</ul>
+<p>Ultimately, when all tasks are stopped, the console should look like this:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/13/1L7jrd.png"
+        data-srcset="https://s2.ax1x.com/2020/02/13/1L7jrd.png, https://s2.ax1x.com/2020/02/13/1L7jrd.png 1.5x, https://s2.ax1x.com/2020/02/13/1L7jrd.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/13/1L7jrd.png"
+        title="1L7jrd.png" /></p>
+<h3 id="upgrade-process">Upgrade Process</h3>
+<p>The entire upgrade process is very simple. Just click through the wizard with a few mouse clicks, then wait quietly for about 30 minutes, and the software upgrade will be complete. Therefore, I won&rsquo;t go through this process step-by-step in detail here.</p>
+<h3 id="possible-issues-you-might-encounter">Possible Issues You Might Encounter</h3>
+<ol>
+<li>
+<p>During the upgrade process, the upgrade package will first stop all VBR services. You might encounter service stop timeouts or failures, causing the upgrade process to be interrupted. If you encounter failures, it&rsquo;s recommended to first check whether all services starting with &ldquo;veeam&rdquo; in Services.msc have been properly stopped.</p>
+</li>
+<li>
+<p>After all services are properly stopped, if the in-place upgrade still reports errors, it&rsquo;s recommended to restart the VBR server and then try the upgrade again. Pay special attention here: after the VBR restarts, you need to re-check all VBR jobs to ensure no jobs are running automatically.</p>
+</li>
+<li>
+<p>If you try multiple times and still cannot perform a normal upgrade, it&rsquo;s recommended to use method 2 mentioned above: fresh install a new VBR server, then import the Configuration backup file.</p>
+</li>
+<li>
+<p>If all the above methods fail, please contact the Veeam Support team in a timely manner. Our engineers will promptly provide you with upgrade support.</p>
+</li>
+</ol>
+<p>The above are some tips for the upgrade. Thanks for reading!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-03-03</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2021/03/how-to-upgrade-vbr-v11-edition/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F03%2Fhow-to-upgrade-vbr-v11-edition%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2021%2F03%2Fhow-to-upgrade-vbr-v11-edition%2F&amp;text=Veeam&#43;Backup&#43;Server&#43;Upgrade&#43;Guide&#43;%28v11&#43;Edition%29" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F03%252Fhow-to-upgrade-vbr-v11-edition%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2021%252F03%252Fhow-to-upgrade-vbr-v11-edition%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2021/02/vmware-vaio-overview/" class="prev" rel="prev" title="VMware VAIO Overview"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VMware VAIO Overview</a>
+            <a href="/en/2021/03/gift-from-veeam-free-community-edition/" class="next" rel="next" title="Free Tools Done Right">Free Tools Done Right<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VAO Basics (Part 9) – Report Template Guide - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/03/vao-guide-09/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VAO Basics (Part 9) – Report Template Guide">
+  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-03-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2020-03-02T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VAO Basics (Part 9) – Report Template Guide">
+  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2020/03/vao-guide-09/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2020/02/vao-guide-08/" /><link rel="next" href="https://blog.backupnext.cloud/en/2020/03/localized-web-ui/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VAO Basics (Part 9) – Report Template Guide",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2020\/03\/vao-guide-09\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO","wordcount":  724 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2020\/03\/vao-guide-09\/","datePublished": "2020-03-02T00:00:00+00:00","dateModified": "2020-03-02T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/03/vao-guide-09/">简体中文</option><option value="/en/2020/03/vao-guide-09/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/03/vao-guide-09/">简体中文</option><option value="/en/2020/03/vao-guide-09/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VAO Basics (Part 9) – Report Template Guide</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-03-02">2020-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;724 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-index">Series Index</a></li>
+    <li><a href="#report-types">Report Types</a></li>
+    <li><a href="#report-templates">Report Templates</a></li>
+    <li><a href="#editing-dynamic-templates-in-word">Editing Dynamic Templates in Word</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Essential Configuration Notes</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step to a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Report Template Guide</a></li>
+</ul>
+<p>For the final chapter of this series, let’s look at VAO’s documentation system.</p>
+<p>VAO automatically generates the disaster-recovery documents you need, based on the configuration and execution of each Orchestration Plan. That means you can focus on running DR while VAO handles the tedious documentation work in the background.</p>
+<p>Every report contains two parts: an administrator-defined <strong>Report Template</strong> and the dynamic content that VAO injects according to the <strong>Report Type</strong>. The template always occupies the beginning of the file; the second section is auto-filled with plan-specific data.</p>
+<p>Here’s an example:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg, https://s2.ax1x.com/2020/03/03/3fvwlT.jpg 1.5x, https://s2.ax1x.com/2020/03/03/3fvwlT.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3fvwlT.jpg"
+        title="3fvwlT.jpg" /></p>
+<p>The left side shows a generated Readiness Check report; the right side is the template opened in Word. The red boxes highlight the pieces provided by the template. Everything that follows is injected dynamically for that report type.</p>
+<h2 id="report-types">Report Types</h2>
+<p>When you right-click a plan (or use the toolbar) you’ll see the supported report types:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Report Type</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Plan Definition Report</td>
+          <td>Documents every configuration detail in the plan</td>
+      </tr>
+      <tr>
+          <td>Readiness Check Report</td>
+          <td>Verifies resource availability at the recovery site</td>
+      </tr>
+      <tr>
+          <td>Datalab Test Report</td>
+          <td>Summarizes Datalab test runs</td>
+      </tr>
+      <tr>
+          <td>Execution Report</td>
+          <td>Captures the outcome of an actual restore/failover</td>
+      </tr>
+  </tbody>
+</table>
+<p>Each type ships with built-in system content. You can’t edit that portion; VAO fills it according to the plan settings and execution data. (At the moment this built-in section is English-only, though any Chinese text you include in the plan still flows through.)</p>
+<h2 id="report-templates">Report Templates</h2>
+<p>Templates control the front half of each report. VAO includes default templates in eight languages. They’re read-only but you can <strong>Clone</strong> them to create editable copies. Editing requires Microsoft Word 2010 SP2 or newer installed on the machine running your browser. When you click <strong>Edit</strong>, VAO launches Word locally and connects it to the template.</p>
+<p>Unlike a standard Word document, these templates support dynamic fields (variables) that VAO populates later.</p>
+<h2 id="editing-dynamic-templates-in-word">Editing Dynamic Templates in Word</h2>
+<ol>
+<li>
+<p>Choose a built-in template and click <strong>Clone</strong>. I’ll start from “Veeam Default Template (ZH)”.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hiViQ.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hiViQ.png, https://s2.ax1x.com/2020/03/03/3hiViQ.png 1.5x, https://s2.ax1x.com/2020/03/03/3hiViQ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hiViQ.png"
+        title="3hiViQ.png" /></p>
+</li>
+<li>
+<p>In the Clone dialog, pick which scope owns the template, provide a name/description, and click <strong>OK</strong>.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hi5TS.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hi5TS.png, https://s2.ax1x.com/2020/03/03/3hi5TS.png 1.5x, https://s2.ax1x.com/2020/03/03/3hi5TS.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hi5TS.png"
+        title="3hi5TS.png" /></p>
+</li>
+<li>
+<p>The new template appears in the list and the toolbar buttons become active. Select it and click <strong>Edit</strong>—this launches Microsoft Word on your workstation.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hFmkD.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hFmkD.png, https://s2.ax1x.com/2020/03/03/3hFmkD.png 1.5x, https://s2.ax1x.com/2020/03/03/3hFmkD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hFmkD.png"
+        title="3hFmkD.png" /></p>
+</li>
+<li>
+<p>Word requests credentials before opening the document. You must use the same account currently logged into VAO, otherwise the file won’t open.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hkOaT.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hkOaT.png, https://s2.ax1x.com/2020/03/03/3hkOaT.png 1.5x, https://s2.ax1x.com/2020/03/03/3hkOaT.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hkOaT.png"
+        title="3hkOaT.png" /></p>
+</li>
+<li>
+<p>Once open, you’ll notice yellow-highlighted regions: those are the editable sections. Titles, headers, and footers remain locked; everything else is fair game for your text and images.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hEw1H.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hEw1H.png, https://s2.ax1x.com/2020/03/03/3hEw1H.png 1.5x, https://s2.ax1x.com/2020/03/03/3hEw1H.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hEw1H.png"
+        title="3hEw1H.png" /></p>
+</li>
+<li>
+<p>To insert variables, follow VAO’s convention of wrapping the placeholder in brackets, e.g., <code>[Hi, I’m a variable]</code>. In Word, enable the <strong>Developer</strong> tab and click <strong>Design Mode</strong>.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3heF6H.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3heF6H.png, https://s2.ax1x.com/2020/03/03/3heF6H.png 1.5x, https://s2.ax1x.com/2020/03/03/3heF6H.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3heF6H.png"
+        title="3heF6H.png" /></p>
+</li>
+<li>
+<p>Design Mode reveals the hidden control boundaries. Select your placeholder text, click the first <strong>Aa</strong> icon on the Developer tab to convert it into a content control, then click <strong>Properties</strong> to assign a tag/name.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/03/03/3hmKV1.png"
+        data-srcset="https://s2.ax1x.com/2020/03/03/3hmKV1.png, https://s2.ax1x.com/2020/03/03/3hmKV1.png 1.5x, https://s2.ax1x.com/2020/03/03/3hmKV1.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/03/03/3hmKV1.png"
+        title="3hmKV1.png" /></p>
+</li>
+<li>
+<p>Fill in the <strong>Title</strong> and <strong>Tag</strong> fields (I usually make them identical). VAO recognizes the following tags, each beginning with <code>~</code>:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Tag</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>~Created</td>
+          <td>Report generation timestamp</td>
+      </tr>
+      <tr>
+          <td>~TimeZone</td>
+          <td>Time zone of the report</td>
+      </tr>
+      <tr>
+          <td>~PlanType</td>
+          <td>Plan type</td>
+      </tr>
+      <tr>
+          <td>~PlanName</td>
+          <td>Plan name</td>
+      </tr>
+      <tr>
+          <td>~PlanDescription</td>
+          <td>Plan description</td>
+      </tr>
+      <tr>
+          <td>~PlanContactName</td>
+          <td>DR contact name</td>
+      </tr>
+      <tr>
+          <td>~PlanContactEmail</td>
+          <td>DR contact email</td>
+      </tr>
+      <tr>
+          <td>~PlanContactTel</td>
+          <td>DR contact phone</td>
+      </tr>
+      <tr>
+          <td>~Site</td>
+          <td>Site name</td>
+      </tr>
+      <tr>
+          <td>~SiteScopeName</td>
+          <td>Site scope name</td>
+      </tr>
+      <tr>
+          <td>~SiteDescription</td>
+          <td>Site description</td>
+      </tr>
+      <tr>
+          <td>~SiteContactName</td>
+          <td>Site contact name</td>
+      </tr>
+      <tr>
+          <td>~SiteContactEmail</td>
+          <td>Site contact email</td>
+      </tr>
+      <tr>
+          <td>~SiteContactTel</td>
+          <td>Site contact phone</td>
+      </tr>
+      <tr>
+          <td>~ServerName</td>
+          <td>Server name</td>
+      </tr>
+      <tr>
+          <td>~VmsInPlan</td>
+          <td>VMs included in the plan</td>
+      </tr>
+      <tr>
+          <td>~GroupsInPlan</td>
+          <td>VM groups in the plan</td>
+      </tr>
+      <tr>
+          <td>~ReportType</td>
+          <td>Report type</td>
+      </tr>
+      <tr>
+          <td>~TargetRTO</td>
+          <td>Target RTO</td>
+      </tr>
+      <tr>
+          <td>~TargetRPO</td>
+          <td>Target RPO</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+<li>
+<p>After editing, simply save or close the document—Word pushes the changes back to the VAO server automatically. Don’t use “Save As”, or the file won’t update in VAO.</p>
+</li>
+</ol>
+<p>Back in the VAO UI you can assign your custom template to any plan (per scope). From then on every generated report uses your branded front matter plus VAO’s dynamic data.</p>
+<p>That wraps up the VAO Basics series. Thanks for reading, and I hope it helps you get the most from VAO!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-03-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2020/03/vao-guide-09/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F03%2Fvao-guide-09%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2020%2F03%2Fvao-guide-09%2F&amp;text=VAO&#43;Basics&#43;%28Part&#43;9%29&#43;%E2%80%93&#43;Report&#43;Template&#43;Guide" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F03%252Fvao-guide-09%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2020%252F03%252Fvao-guide-09%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2020/02/vao-guide-08/" class="prev" rel="prev" title="VAO Basics (Part 8) – Plan Steps · Part 2"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VAO Basics (Part 8) – Plan Steps · Part 2</a>
+            <a href="/en/2020/03/localized-web-ui/" class="next" rel="next" title="DIY Chrome Extension – Enterprise Manager UI in Chinese (Beta)">DIY Chrome Extension – Enterprise Manager UI in Chinese (Beta)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

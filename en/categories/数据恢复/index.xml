@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据恢复 on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/</link>
+    <description>Recent content in 数据恢复 on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Thu, 18 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Secure Restore | Making Malware Detection Truly Comprehensive</title>
+      <link>https://blog.backupnext.cloud/en/2019/07/secure-restore/</link>
+      <pubDate>Thu, 18 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2019/07/secure-restore/</guid>
+      <description>&lt;p&gt;Here&amp;rsquo;s a fundamental truth about IT infrastructure: security and backup are your two essential pillars. Whether you&amp;rsquo;re running a home setup or enterprise systems, you need both. But here&amp;rsquo;s where things get interesting—antivirus software faces an impossible battle. It&amp;rsquo;s constantly chasing new malware variants, dealing with sophisticated evasion techniques, and sometimes even fighting back against viruses designed to disable the antivirus itself.&lt;/p&gt;&#xA;&lt;p&gt;The traditional approach of installing antivirus on every individual OS has serious limitations. It&amp;rsquo;s resource-intensive, easily compromised, and frankly, not enough in today&amp;rsquo;s threat landscape. Virtualization helped by moving antivirus engines into the hypervisor layer, avoiding many of the problems with agent-based installations.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

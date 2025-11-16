@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>加速！加速！加速！（一） - 虚化人生</title><meta name="description" content="一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论 Veeam 的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引 …"><meta property="og:url" content="https://blog.backupnext.cloud/2017/08/speed-up-01/">
-  <meta property="og:site_name" content="虚化人生">
+        <title>加速！加速！加速！（一） - 云虚智安</title><meta name="description" content="一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论 Veeam 的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引 …"><meta property="og:url" content="https://blog.backupnext.cloud/2017/08/speed-up-01/">
+  <meta property="og:site_name" content="云虚智安">
   <meta property="og:title" content="加速！加速！加速！（一）">
   <meta property="og:description" content="一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论 Veeam 的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引擎在备份软件中不仅仅是帮助了实现备份功能，更是 Veeam 去帮助客户实现 IT 可用性的重要保障">
   <meta property="og:locale" content="zh_CN">
@@ -20,8 +20,8 @@
   <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
   <meta name="twitter:title" content="加速！加速！加速！（一）">
   <meta name="twitter:description" content="一直很少去谈论速度和性能，就像一辆好车，我认为这个是基本配置，然而这个基本配置对于任何一辆车来说都是极其重要的。对于备份领域来说，驱动备份和还原速度的引擎就像汽车的发动机，是一个备份软件真正展现其价值的重要部分。我想就这个问题，来详细讨论 Veeam 的加速技术。今天的内容是加速系列的第一部分 – 备份加速引擎。这一引擎在备份软件中不仅仅是帮助了实现备份功能，更是 Veeam 去帮助客户实现 IT 可用性的重要保障">
-<meta name="application-name" content="虚化人生">
-<meta name="apple-mobile-web-app-title" content="虚化人生">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2017/08/speed-up-01/" /><link rel="prev" href="https://blog.backupnext.cloud/2017/07/agentless-backup/" /><link rel="next" href="https://blog.backupnext.cloud/2017/08/speed-up-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -36,9 +36,9 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.backupnext.cloud\/2017\/08\/speed-up-01\/"
         },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VMware","wordcount":  1071 ,
-        "url": "https:\/\/blog.backupnext.cloud\/2017\/08\/speed-up-01\/","datePublished": "2017-08-01T00:00:00+00:00","dateModified": "2017-08-01T00:00:00+00:00","license": "© Backup Next Cloud","publisher": {
+        "url": "https:\/\/blog.backupnext.cloud\/2017\/08\/speed-up-01\/","datePublished": "2017-08-01T00:00:00+00:00","dateModified": "2017-08-01T00:00:00+00:00","publisher": {
             "@type": "Organization",
-            "name": "Backup Next Cloud","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Lei Wei"
             },"description": ""
@@ -60,7 +60,7 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="虚化人生">虚化人生</a>
+            <a href="/" title="云虚智安">云虚智安</a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
@@ -76,6 +76,9 @@
                         </span>
                     </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2017/08/speed-up-01/" selected>简体中文</option><option value="/en/2017/08/speed-up-01/">English</option></select>
                 </a></div>
         </div>
     </div>
@@ -83,7 +86,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="虚化人生">虚化人生</a>
+                <a href="/" title="云虚智安">云虚智安</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -107,7 +110,10 @@
                     </a>
                 </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a></div>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2017/08/speed-up-01/" selected>简体中文</option><option value="/en/2017/08/speed-up-01/">English</option></select>
+                </div></div>
     </div>
 </header><div class="search-dropdown desktop">
         <div id="search-dropdown-desktop"></div>

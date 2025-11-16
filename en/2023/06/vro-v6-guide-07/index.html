@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VRO Basic Tutorial (Part 7) - Plan Step · Part 1 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-07/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
+  <meta property="og:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-06-14T00:00:00+00:00">
+    <meta property="article:tag" content="VAO">
+    <meta property="article:tag" content="VRO">
+    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+  <meta name="twitter:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
+  <meta name="twitter:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-07/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-06/" /><link rel="next" href="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-08/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VRO Basic Tutorial (Part 7) - Plan Step · Part 1",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2023\/06\/vro-v6-guide-07\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "VAO, VRO","wordcount":  1349 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2023\/06\/vro-v6-guide-07\/","datePublished": "2023-06-14T00:00:00+00:00","dateModified": "2023-06-14T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2023/06/vro-v6-guide-07/">简体中文</option><option value="/en/2023/06/vro-v6-guide-07/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2023/06/vro-v6-guide-07/">简体中文</option><option value="/en/2023/06/vro-v6-guide-07/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VRO Basic Tutorial (Part 7) - Plan Step · Part 1</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-14">2023-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1349 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#series-table-of-contents">Series Table of Contents:</a></li>
+    <li><a href="#detailed-management-and-usage-of-orchestration-plans">Detailed Management and Usage of Orchestration Plans</a></li>
+    <li><a href="#plan-step-common-parameters">Plan Step Common Parameters</a></li>
+    <li><a href="#custom-scripts">Custom Scripts</a></li>
+    <li><a href="#vro-to-the-rescue">VRO to the Rescue</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 2) - Installation and Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 3) - Basic Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 4) - Basic Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 6) - Data Lab</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 7) - Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 8) - Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 9) - Document Template Analysis</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR</a></li>
+</ul>
+<p>In previous posts, we&rsquo;ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO&rsquo;s Orchestration Plans.</p>
+<p>Each Orchestration Plan, when created, includes several default Plan Steps that essentially cover the power-on and power-off operations involved in every disaster recovery scenario. Administrators can edit Orchestration Plans and add additional Steps as needed.</p>
+<h2 id="detailed-management-and-usage-of-orchestration-plans">Detailed Management and Usage of Orchestration Plans</h2>
+<p>In the VRO main interface, find Orchestration Plans on the left side and click to enter the Orchestration Plans dashboard. Select a Plan you want to edit and click on the Plan name to enter that Plan.</p>
+<p><a href="https://imgse.com/i/pCm6f56" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCm6f56.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCm6f56.png, https://s1.ax1x.com/2023/06/13/pCm6f56.png 1.5x, https://s1.ax1x.com/2023/06/13/pCm6f56.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCm6f56.png"
+        title="pCm6f56.png" /></a></p>
+<p>In Plan Details, you can see five buttons from left to right: Run, Halt, Check, Undo, and Edit. These include three classic buttons: Run is the execute button, Halt is the pause button, and Undo is the cancel button. Besides these three, Check is the button to verify the Plan&rsquo;s ready status—if the ready status fails, this plan will most likely fail during execution. Edit is the button we&rsquo;ll详细介绍 today, which is our main button for adding automation workflows. After clicking Edit, you can enter the Plan&rsquo;s editing interface.</p>
+<p><a href="https://imgse.com/i/pCm6cr9" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCm6cr9.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCm6cr9.png, https://s1.ax1x.com/2023/06/13/pCm6cr9.png 1.5x, https://s1.ax1x.com/2023/06/13/pCm6cr9.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCm6cr9.png"
+        title="pCm6cr9.png" /></a></p>
+<p>In the Plan Edit interface, the entire layout is arranged from left to right. The leftmost frame contains plan groupings. After clicking content in the left frame, the frames to the right will sequentially display the contained objects and available operations under that object.</p>
+<p><a href="https://imgse.com/i/pCm6gbR" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCm6gbR.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCm6gbR.png, https://s1.ax1x.com/2023/06/13/pCm6gbR.png 1.5x, https://s1.ax1x.com/2023/06/13/pCm6gbR.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCm6gbR.png"
+        title="pCm6gbR.png" /></a></p>
+<p>In the leftmost frame, there are two default groups: Pre-Plan Steps and Post-Plan Steps, along with user-defined groups. The user-defined groups located between the two default groups contain the most adjustable content. You can open the configuration wizard through Add or Properties to make some configurations. These configurations are basically the same as some content mentioned during the creation of Orchestration Plans. In other words, after creating a Plan, if you need to adjust some parameters from the creation process, you can come here to make those adjustments.</p>
+<p><a href="https://imgse.com/i/pCm6WUx" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCm6WUx.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCm6WUx.png, https://s1.ax1x.com/2023/06/13/pCm6WUx.png 1.5x, https://s1.ax1x.com/2023/06/13/pCm6WUx.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCm6WUx.png"
+        title="pCm6WUx.png" /></a></p>
+<p>For the Pre-Plan Steps and Post-Plan Steps groups, these two Steps don&rsquo;t contain any actual machines, so users cannot adjust any properties of these Plans. However, VRO allows us to add some Steps to these two Plan Steps groups, which enables us to execute some custom processes before or after VRO officially executes the Plan. After clicking Pre-Plan Step, the right frame will show specific Step options. By default, there are no entries inside, but you can add them using the Add button, as shown below.</p>
+<p><a href="https://imgse.com/i/pCm6RV1" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCm6RV1.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCm6RV1.png, https://s1.ax1x.com/2023/06/13/pCm6RV1.png 1.5x, https://s1.ax1x.com/2023/06/13/pCm6RV1.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCm6RV1.png"
+        title="pCm6RV1.png" /></a></p>
+<p>Here are the VRO system-built Steps that can be added:</p>
+<ul>
+<li>Generate Event - Generate a Windows event, recorded in the Windows event viewer.</li>
+<li>Send Email - Send email notifications.</li>
+<li>Veeam Job Actions - Manipulate backup or replication jobs on VBR, with 4 operations: Enable, Disable, Start, and Stop.</li>
+<li>VM Power Actions - Control VM power operations on vCenter, which is very useful for shutting down non-critical machines before DR site switchover to free up resources.</li>
+<li>Any other user-defined PowerShell scripts.</li>
+</ul>
+<p>For user-defined groups, they contain the actual machines that need to perform restore or failover. When I select a specific machine, VRO will allow me to define the Steps that need to be added when this machine performs restore or failover. For already added Steps, you can also modify their execution order and define detailed parameters.</p>
+<p><a href="https://imgse.com/i/pCmgf1O" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCmgf1O.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCmgf1O.png, https://s1.ax1x.com/2023/06/13/pCmgf1O.png 1.5x, https://s1.ax1x.com/2023/06/13/pCmgf1O.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCmgf1O.png"
+        title="pCmgf1O.png" /></a></p>
+<p>Here are the factory-built Steps available, which I&rsquo;ve categorized simply:</p>
+<ul>
+<li>Application verification: 12 (AD, Exchange, SharePoint, SQL, and IIS)</li>
+<li>Virtual machine verification: 2 (heartbeat and ping)</li>
+<li>Event notification: 2 (Windows Event and email)</li>
+<li>Resource operations: 3 (VM power operations, Windows service startup, source VM shutdown)</li>
+</ul>
+<h2 id="plan-step-common-parameters">Plan Step Common Parameters</h2>
+<p>Each Plan Step includes a basic <code>Common Parameter</code> that controls the basic execution conditions of this Plan Step, containing the following:</p>
+<ul>
+<li>During Failback &amp; Undo: Determines whether to execute the script during Failback and Undo Failover operations</li>
+<li>During Lab Test: Determines whether to use the script during Datalab testing</li>
+<li>Critical step: Defines whether this Step is important for the entire Plan—if yes, stop the plan immediately upon failure</li>
+<li>Timeout: Defines the execution timeout for the entire Step</li>
+<li>Retries: Defines the number of failure retries</li>
+</ul>
+<p>These parameters can be adjusted individually for each step in every Orchestration Plan.</p>
+<p><a href="https://imgse.com/i/pCmgW9K" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2023/06/13/pCmgW9K.png"
+        data-srcset="https://s1.ax1x.com/2023/06/13/pCmgW9K.png, https://s1.ax1x.com/2023/06/13/pCmgW9K.png 1.5x, https://s1.ax1x.com/2023/06/13/pCmgW9K.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2023/06/13/pCmgW9K.png"
+        title="pCmgW9K.png" /></a></p>
+<h2 id="custom-scripts">Custom Scripts</h2>
+<p>VRO also provides custom script functionality, allowing administrators to directly call and use PowerShell scripts on the VBR server or recovered systems to accomplish various advanced operations.</p>
+<p>For example, consider an application architecture in a data center as follows:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/26/3a3EyF.png"
+        data-srcset="https://s2.ax1x.com/2020/02/26/3a3EyF.png, https://s2.ax1x.com/2020/02/26/3a3EyF.png 1.5x, https://s2.ax1x.com/2020/02/26/3a3EyF.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/26/3a3EyF.png"
+        title="3a3EyF.png" /></p>
+<p>A typical three-tier architecture with Oracle database on AIX servers, and middleware and application servers running on VMware vSphere. During initial DR system design, the Oracle database was replicated using OGG, achieving data-level synchronization.</p>
+<p>For such an architecture, when using VBR, Veeam typically recommends users to also protect the virtualization platform to ensure that when the primary data center fails, both application systems and databases can switch to the DR site. After using Veeam&rsquo;s solution, users typically discover that VBR not only excellently completes virtualization platform DR replication tasks, but its DR testing capabilities are also extremely powerful. The system genuinely restores systems and provides post-recovery testing access, completing the entire drill process with real operations, and it&rsquo;s fully automated.</p>
+<p>However, administrators quickly discover an awkward point: the application system doesn&rsquo;t have database data support. Even if restored, it cannot work normally. Such testing still cannot ultimately be equivalent to actual DR scenarios.</p>
+<h2 id="vro-to-the-rescue">VRO to the Rescue</h2>
+<p>With VRO&rsquo;s help, this can be perfectly solved. The entire process would be:</p>
+<ol>
+<li>Start the application system&rsquo;s Failover/Restore Plan. In the Step before the actual recovery process, add PowerShell scripts to communicate with the AIX at the DR site.</li>
+<li>After the script executes on AIX, a new LPAR is deployed.</li>
+<li>Another script attaches a virtual network card to the newly deployed LPAR and connects it to the isolated sandbox network we created in the virtualization environment. This isolated network cannot directly route to production, making it a relatively isolated environment.</li>
+<li>The third script starts the latest copy of the Oracle database running on this new LPAR.</li>
+<li>Once everything is prepared, start the application and middleware replicas on the virtualized DR platform. In this isolated environment, the running applications and middleware can access the AIX database.</li>
+<li>We&rsquo;re not done yet. The systems are running—let them fly for a while. You can perform a series of tests, development, and other operations on them.</li>
+<li>After extensive testing, the systems are no longer needed, and the DR administrator is notified that they can be reclaimed. The DR administrator operates VRO to proceed to the next step.</li>
+<li>VMs on vSphere are Undo Failed Over to their pre-test state. This is very simple, almost identical to VBR.</li>
+<li>A new script is triggered, notifying AIX to delete this LPAR and its database, ensuring test data is not replicated back to production.</li>
+</ol>
+<p>Isn&rsquo;t this process excellent? Such a process can not only involve coordination with AIX but also integrate with various systems, whether HPUX or Oracle Exadata. Oh, and public cloud—let&rsquo;s join this DR party together. With VRO, none of this is a problem.</p>
+<p>Therefore, with custom scripts and scheduled task orchestration, VRO is incredibly powerful and can do almost anything that PowerShell can achieve. In the next post, I&rsquo;ll详细介绍 in detail how to make the most of these custom scripts.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-06-14</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2023/06/vro-v6-guide-07/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F06%2Fvro-v6-guide-07%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2023%2F06%2Fvro-v6-guide-07%2F&amp;text=VRO&#43;Basic&#43;Tutorial&#43;%28Part&#43;7%29&#43;-&#43;Plan&#43;Step&#43;%C2%B7&#43;Part&#43;1" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F06%252Fvro-v6-guide-07%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2023%252F06%252Fvro-v6-guide-07%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2023/06/vro-v6-guide-06/" class="prev" rel="prev" title="VRO v6 Getting Started Guide (Part 6) - Data Lab"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>VRO v6 Getting Started Guide (Part 6) - Data Lab</a>
+            <a href="/en/2023/06/vro-v6-guide-08/" class="next" rel="next" title="VRO Getting Started Guide (8) - Plan Step · Part 2">VRO Getting Started Guide (8) - Plan Step · Part 2<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>
