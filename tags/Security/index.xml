@@ -8,8 +8,15 @@
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Mon, 10 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/Security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</title>
+      <link>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</link>
+      <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</guid>
+      <description>&lt;h1 id=&#34;成本为零用-veeam-实现物理-air-gap让昂贵的避风港方案黯然失色&#34;&gt;成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色&lt;/h1&gt;&#xA;&lt;p&gt;首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
       <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>

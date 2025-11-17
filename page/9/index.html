@@ -120,6 +120,16 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">云虚智安</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问云虚智安</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2021/05/k10-configuration/">Kasten K10 入门系列 03 - K10 备份和恢复</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-05-18">2021-05-18</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h2 id="kasten-k10-入门系列目录">Kasten K10 入门系列目录</h2>
+<p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</a></p>
+<p><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 02 - K10 安装</a></p>
+<h2 id="正文">正文</h2>
+<p>之前我介绍了 K10 的安装，整个安装过程其实就是一行<code>helm install</code>命令，在安装完成后，后续的使用可以通过浏览器打开 K10 的仪表盘，进行 K10 备份系统的配置、K10 备份策略管理和数据恢复。</p></div><div class="post-footer">
+        <a href="/2021/05/k10-configuration/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2021/05/k10-setup/">Kasten K10 入门系列 02 - K10 安装</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-05-12">2021-05-12</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h2 id="kasten-k10-入门系列目录">Kasten K10 入门系列目录</h2>
 <p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 入门系列 01 - 快速搭建 K8S 单节点测试环境</a></p>
@@ -151,13 +161,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-22">2021-03-22</time></span></div><div class="content"><p>勒索病毒自从 2017 年 5 月 12 日大规模爆发以来，在过去的 4 年里，也不断的自我进化，产生各种变种病毒，并且学会了各种弱点攻击，甚至是买通了门卫大叔。..</p></div><div class="post-footer">
         <a href="/2021/03/hardened-linux-repository/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">VBR V11 实用技巧</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2021/03/gift-from-veeam-free-community-edition/">免费好工具，绝不套路</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-09">2021-03-09</time></span></div><div class="content"><p>IT 管理员的绝佳搭档，完全免费！</p>
-<p>今天来给大家介绍 Veeam Software 的免费好工具，推荐给每一位 IT 管理员，Veeam 作为备份解决方案领域的领军者，除了有强大的旗舰产品 Veeam Availability Suite 之外，还为每一位 IT 管理员配备了全套的免费工具。这些工具完全没有任何广告、没有任何限制、可以随意使用，但是这又和开源软件有所不同，Veeam 称它们为社区版软件。</p></div><div class="post-footer">
-        <a href="/2021/03/gift-from-veeam-free-community-edition/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

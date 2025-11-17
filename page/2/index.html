@@ -120,6 +120,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">云虚智安</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问云虚智安</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/09/veeam-software-appliance-06/">深度解读：Veeam V13 的发布策略与部署选择</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-23">2025-09-23</time></span></div><div class="content"><p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p></div><div class="post-footer">
+        <a href="/2025/09/veeam-software-appliance-06/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2025/09/veeam-software-appliance-05/">把复杂留给 Veeam：Infrastructure Appliance 上手指南</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-09-22">2025-09-22</time></span></div><div class="content"><p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p></div><div class="post-footer">
         <a href="/2025/09/veeam-software-appliance-05/">阅读全文</a><div class="post-tags">
@@ -149,12 +155,6 @@
 <p>昨天 Veeam 官网悄悄上线了一个新产品：<a href="https://www.veeam.com/blog/veeam-software-appliance.html" target="_blank" rel="noopener noreffer ">Veeam Software Appliance</a>。对很多朋友来说，Veeam 过去一直都是 Windows 安装包 + 手动配置的传统模式，而这个 Software Appliance 明显走的是另一条路：安装和安全都做了预设，大大简化了上手流程。比如：它基于预加固的 Rocky Linux 平台，自带不可变存储、零信任访问控制和自动补丁，无需再单独采购 Windows 授权或自己做安全加固；用 ISO 或 OVA 就能直接部署，无论在虚拟机、物理机还是云上都可以跑。</p></div><div class="post-footer">
         <a href="/2025/09/veeam-software-appliance-01/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VBR/">VBR</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2025/05/kasten-and-azure-entraid-integration/">使用 Azure EntraID 为 Kasten 控制台提供多因子验证</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-05-26">2025-05-26</time></span></div><div class="content"><p>Kasten 在安全方面提供全面的管理能力，其中很重要的一部分是用户的账号访问管理，使用 Kasten 的用户可以灵活的借助 OIDC 的协议完成身份认证。本文以 Azure EntraID 为例，通过为 Kasten 配置 Azure EntraID 的集成，实现 Kasten 控制台的多因子验证。</p></div><div class="post-footer">
-        <a href="/2025/05/kasten-and-azure-entraid-integration/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

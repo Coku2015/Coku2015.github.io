@@ -8,8 +8,15 @@
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/Veeam/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</title>
+      <link>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</link>
+      <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</guid>
+      <description>&lt;h1 id=&#34;成本为零用-veeam-实现物理-air-gap让昂贵的避风港方案黯然失色&#34;&gt;成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色&lt;/h1&gt;&#xA;&lt;p&gt;首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
       <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>

@@ -120,6 +120,14 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">Exploring Tanzu Community Edition in the Homelab</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-19">2022-03-19</time></span></div><div class="content"><p>I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp; Replication to really put it through its paces.</p>
+<h2 id="hardware-setup">Hardware Setup</h2>
+<p>My environment consists of two machines - a Dell Precision M4800 that&rsquo;s been serving me faithfully for over six years, and a newly added NUC11 Panther Canyon. The Dell laptop is really just playing a supporting role in this setup, while the Panther Canyon is the star of the show with these specifications:</p></div><div class="post-footer">
+        <a href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">vCenter Converter Retired – How to Handle P2V Now</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-28">2022-02-28</time></span></div><div class="content"><p>Earlier this month VMware <a href="https://blogs.vmware.com/vsphere/2022/02/vcenter-converter-unavailable-for-download.html" target="_blank" rel="noopener noreffer ">announced</a> that they&rsquo;re removing vCenter Converter from their product download list. That means we&rsquo;ll no longer be able to download this product from VMware&rsquo;s official website. VMware&rsquo;s official stance is that vCenter Converter hasn&rsquo;t been updated for years, has some security vulnerabilities, and isn&rsquo;t very stable. In my view, VMware has taken down their most powerful weapon.</p>
 <h2 id="what-could-this-tool-do">What Could This Tool Do?</h2>
@@ -186,16 +194,6 @@ veeamsnap-&lt;version&gt;.rpm</code></pre></div>
 <h2 id="why-this-script-exists">Why This Script Exists</h2>
 <p>Downloading K10 can be painful—especially if you’re used to Veeam’s tidy installers. Kasten’s docs describe deployment, but there’s no simple download link. Everything lives under <code>gcr.io</code>, which is unreachable from many regions. Kasten suggests the JFrog Artifactory mirror for online installs, but it doesn’t integrate with the official offline script.</p></div><div class="post-footer">
         <a href="/en/2021/06/k10offline-script/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2021/05/k10-configuration/">Kasten K10 Getting Started Series 03 - K10 Backup and Restore</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-05-18">2021-05-18</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h2 id="kasten-k10-getting-started-series-table-of-contents">Kasten K10 Getting Started Series Table of Contents</h2>
-<p><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Kasten K10 Getting Started Series 01 - Quickly Build K8S Single-Node Test Environment</a></p>
-<p><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Kasten K10 Getting Started Series 02 - K10 Installation</a></p>
-<h2 id="main-content">Main Content</h2>
-<p>Previously I introduced the installation of K10. The entire installation process is actually just one <code>helm install</code> command. After installation is complete, subsequent operations can be performed by opening K10&rsquo;s dashboard in a browser to configure the K10 backup system, manage K10 backup policies, and perform data recovery.</p></div><div class="post-footer">
-        <a href="/en/2021/05/k10-configuration/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

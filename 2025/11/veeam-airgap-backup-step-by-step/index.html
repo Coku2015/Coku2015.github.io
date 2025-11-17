@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色 - 云虚智安</title><meta name="description" content="成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色 首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。"><meta property="og:url" content="https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/">
+  <meta property="og:site_name" content="云虚智安">
+  <meta property="og:title" content="成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色">
+  <meta property="og:description" content="成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色 首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-17T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-17T00:00:00+00:00">
+    <meta property="article:tag" content="Veeam">
+    <meta property="article:tag" content="Security">
+    <meta property="article:tag" content="Air Gap">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/featured-image.png">
+  <meta name="twitter:title" content="成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色">
+  <meta name="twitter:description" content="成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色 首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/" /><link rel="prev" href="https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam-airgap-backup-step-by-step\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2025\/11\/veeam-airgap-backup-step-by-step\/featured-image.png"],"genre": "posts","keywords": "Veeam, Security, Air Gap","wordcount":  3010 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2025\/11\/veeam-airgap-backup-step-by-step\/","datePublished": "2025-11-17T00:00:00+00:00","dateModified": "2025-11-17T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="云虚智安">云虚智安</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2025/11/veeam-airgap-backup-step-by-step/" selected>简体中文</option><option value="/en/2025/11/veeam-airgap-backup-step-by-step/">English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="云虚智安">云虚智安</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2025/11/veeam-airgap-backup-step-by-step/" selected>简体中文</option><option value="/en/2025/11/veeam-airgap-backup-step-by-step/">English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-11-17">2025-11-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3010 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2025/11/veeam-airgap-backup-step-by-step/featured-image.png"
+        data-srcset="/2025/11/veeam-airgap-backup-step-by-step/featured-image.png, /2025/11/veeam-airgap-backup-step-by-step/featured-image.png 1.5x, /2025/11/veeam-airgap-backup-step-by-step/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2025/11/veeam-airgap-backup-step-by-step/featured-image.png"
+        title="/2025/11/veeam-airgap-backup-step-by-step/featured-image.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么要真正的-air-gap">为什么要真正的 Air Gap</a>
+      <ul>
+        <li><a href="#勒索病毒的进化威胁">勒索病毒的进化威胁</a></li>
+        <li><a href="#传统方案的局限">传统方案的局限</a></li>
+      </ul>
+    </li>
+    <li><a href="#veeam-air-gap-关键技术">Veeam Air Gap 关键技术</a>
+      <ul>
+        <li><a href="#网络控制的核心逻辑时间维度的访问控制">网络控制的核心逻辑：时间维度的访问控制</a></li>
+        <li><a href="#关键设计脚本启动时机的精准控制">关键设计：脚本启动时机的精准控制</a></li>
+        <li><a href="#防火墙openwrt--控制脚本powershell技术架构">防火墙（Openwrt） + 控制脚本（Powershell）技术架构</a></li>
+        <li><a href="#准备条件">准备条件，</a></li>
+      </ul>
+    </li>
+    <li><a href="#两种业务场景实现">两种业务场景实现</a>
+      <ul>
+        <li><a href="#场景一隔离区作为一级备份存储备份数据直接进入隔离状态">场景一：隔离区作为一级备份存储，备份数据直接进入隔离状态</a></li>
+        <li><a href="#场景二第二份备份数据进入隔离区的-backup-copy-隔离方案">场景二：第二份备份数据进入隔离区的 Backup Copy 隔离方案</a></li>
+      </ul>
+    </li>
+    <li><a href="#验证与总结">验证与总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="成本为零用-veeam-实现物理-air-gap让昂贵的避风港方案黯然失色">成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</h1>
+<p>首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。</p>
+<p>还记得 2019 年那篇关于勒索病毒攻击的文章吗？</p>
+<p>当时我就强调过数据隔离的重要性。勒索病毒越来越智能，它们不再只是加密生产数据，还会破坏备份服务器、删除备份 catalog，甚至连专用存储设备都不放过。</p>
+<p>很多管理员都遇到过这样的对话：</p>
+<p>&ldquo;老板，我们中招了，数据全被锁了！&rdquo;</p>
+<p>&ldquo;备份了没？&rdquo;</p>
+<p>&ldquo;备了，但备份服务器也被感染了，catalog 没了，再安全的存储也恢复不了&hellip;&rdquo;</p>
+<p>这种情况下，就算花几百万买的&quot;避风港&quot;设备，如果还连着网，理论上还是有机会被攻击的，不说攻击是否得手，被黑客惦记着的几率还是不小的。</p>
+<h2 id="为什么要真正的-air-gap">为什么要真正的 Air Gap</h2>
+<h3 id="勒索病毒的进化威胁">勒索病毒的进化威胁</h3>
+<p>2017 年我刚写勒索病毒文章时，它们还比较简单，只会加密生产数据。但现在情况完全不同了。</p>
+<p>现代勒索病毒具备多重攻击能力：</p>
+<ul>
+<li>破坏备份服务器</li>
+<li>删除备份 catalog 数据库</li>
+<li>禁用备份软件服务</li>
+<li>甚至攻击专用备份存储设备</li>
+</ul>
+<p>也就是说，就算你做了备份，如果备份服务器和存储设备还在网上，就有被攻击的风险。</p>
+<h3 id="传统方案的局限">传统方案的局限</h3>
+<p>很多厂商的&quot;隔离&quot;方案本质上还是逻辑隔离，依赖复杂的软件规则和配置。但软件总有漏洞，配置可能出错，而且网络连接本身就是一个攻击面。</p>
+<p>真正的 Air Gap 应该是：<strong>备份完成后，数据在网络层面彻底消失</strong>。</p>
+<p>物理上还在，逻辑上消失了。连 VBR 服务器自己都找不到备份存储。这才是真正的物理隔离。</p>
+<p>今天，我带大家来看看结合现代的一些技术，Veeam 如何实现这样的真正物理隔离。</p>
+<h2 id="veeam-air-gap-关键技术">Veeam Air Gap 关键技术</h2>
+<h3 id="网络控制的核心逻辑时间维度的访问控制">网络控制的核心逻辑：时间维度的访问控制</h3>
+<p>实现 Air Gap 的核心思路其实很简单：<strong>时间维度的网络访问控制</strong></p>
+<ul>
+<li>备份时：网络可达</li>
+<li>备份后：网络不可达</li>
+<li>恢复时：重新可达</li>
+</ul>
+<p>这不需要什么高深技术，只需要两个组件：</p>
+<ol>
+<li><strong>一台支持 API 的网络设备</strong>（本文以零成本的 OpenWRT 路由器为例）</li>
+<li><strong>一个自动化脚本</strong>（本文例子中是用 Powershell，当然也可以是 shell 脚本）</li>
+</ol>
+<h3 id="关键设计脚本启动时机的精准控制">关键设计：脚本启动时机的精准控制</h3>
+<p>这是整个方案最关键的技术点，设计原则如下：</p>
+<ul>
+<li><strong>开启时机</strong>：必须在<strong>跨墙</strong>数据传输作业之外启动（独立作业）
+<ul>
+<li>因为网络必须在数据传输开始前就打通。</li>
+<li>数据传输作业紧跟着开墙策略，利用 Veeam 作业计划任务重的 After this Job 特性。</li>
+<li>不能依赖传输作业本身，因为作业启动前会检查存储可用性，发现不可用，作业就失败了。</li>
+</ul>
+</li>
+<li><strong>关闭时机</strong>：可以在数据传输作业之内关闭（后处理脚本）
+<ul>
+<li>因为关闭操作是数据传输完成后的清理工作。</li>
+<li>后续没有影响任务成功失败的因素，可以安全在任务内关闭。</li>
+</ul>
+</li>
+</ul>
+<h3 id="防火墙openwrt--控制脚本powershell技术架构">防火墙（Openwrt） + 控制脚本（Powershell）技术架构</h3>
+<p><strong>架构描述</strong>：</p>
+<p>我的本次实验，有两个子网，分别是生产子网 10.10.1.0/24，隔离室子网 10.10.2.0/24。这两个子网正常情况下路由不可达，在 OpenWRT 中控制了这两个子网的路由表。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/8257pC9NLSGlrYD.png"
+        data-srcset="https://s2.loli.net/2025/11/17/8257pC9NLSGlrYD.png, https://s2.loli.net/2025/11/17/8257pC9NLSGlrYD.png 1.5x, https://s2.loli.net/2025/11/17/8257pC9NLSGlrYD.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/8257pC9NLSGlrYD.png"
+        title="Xnip2025-11-15_14-39-04" /></p>
+<p>OpenWRT 路由器负责控制两个网段之间的访问：</p>
+<ul>
+<li>默认情况下，10.10.1.0/24 和 10.10.2.0/24 网段完全断开</li>
+<li>脚本控制两个网络的路由规则</li>
+<li>通过 Luci RPC API 实现自动化控制</li>
+</ul>
+<h3 id="准备条件">准备条件，</h3>
+<ul>
+<li>
+<p>OpenWRT 我选用 24.10 版本，vSphere 上安装软路由的方法比较多，我就不在这里说明了，唯一需要提的是，要执行远程命令，需要为 OpenWRT 安装上 luci-mod-rpc 组件，安装命令为：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">opkg install luci-mod-rpc</span></span></code></pre></div></div>
+</li>
+<li>
+<p>两个脚本，一个 open_the_door.ps1 添加路由表，另外一个 close_the_door.ps1 删除路由表。我的实验脚本已经上传到我的 Github 仓库中，有需要试玩可以参考我的方法，自取脚本试验。</p>
+</li>
+<li>
+<p>仓库地址：https://github.com/Coku2015/Veeam_Scripts/tree/main/Vee_blog_airgap</p>
+</li>
+</ul>
+<h2 id="两种业务场景实现">两种业务场景实现</h2>
+<h3 id="场景一隔离区作为一级备份存储备份数据直接进入隔离状态">场景一：隔离区作为一级备份存储，备份数据直接进入隔离状态</h3>
+<p>这种方式适用于对安全有极致追求的用户，数据直接备份到隔离区域，需要两个 Veeam 作业配合，其中一个为假的伪作业。这个操作其实选择还是比较多的，可以用 VMware 虚拟机的备份来做，也可以用物理机的备份作业来做，核心思想是，用一个动态的对象容器作为备份对象，欺骗备份作业，导致备份作业无实际备份对象可以处理。这样一来，备份作业就变成了一个单纯的脚本启动引擎。我们用这个引擎去激活路由表添加的脚本，开启网络的访问。而真正的备份作业则是使用 After this Job，跟着这个伪作业进行串联，实现无缝开墙传数据。</p>
+<p><strong>配置步骤</strong>：</p>
+<p>在开通路由的情况下，配置完 Veeam 的 Hardened Repository，然后用 close_the_door.ps1 脚本删除路由表。</p>
+<ol>
+<li>创建一个脚本启动专用备份作业，本例中以 vSphere 空 Tag 组方式创建。在对象选择界面选一个名为 open_the_door 的 Tag，其中不包含任何对象，此时对象选择完成后如下图：</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/lU3xEm8iej5yZ7s.png"
+        data-srcset="https://s2.loli.net/2025/11/17/lU3xEm8iej5yZ7s.png, https://s2.loli.net/2025/11/17/lU3xEm8iej5yZ7s.png 1.5x, https://s2.loli.net/2025/11/17/lU3xEm8iej5yZ7s.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/lU3xEm8iej5yZ7s.png"
+        title="Xnip2025-11-16_23-18-23" /></p>
+<ol start="2">
+<li>在 Storage 配置的 Advanced 选项卡中，我们需要配置 Job 的 Pre 或 Post script，选择 Open_the_door.ps1 脚本，此处其实这两个配哪一个都可以，问题不大。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/xf9rNQgRqwcPSUO.png"
+        data-srcset="https://s2.loli.net/2025/11/17/xf9rNQgRqwcPSUO.png, https://s2.loli.net/2025/11/17/xf9rNQgRqwcPSUO.png 1.5x, https://s2.loli.net/2025/11/17/xf9rNQgRqwcPSUO.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/xf9rNQgRqwcPSUO.png"
+        title="Xnip2025-11-16_23-21-06" /></p>
+<ol start="3">
+<li>设置计划任务，这个是我们开墙做备份的起点，比如每天晚上 10 点开工。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/hyuSn5MGgP1FqtK.png"
+        data-srcset="https://s2.loli.net/2025/11/17/hyuSn5MGgP1FqtK.png, https://s2.loli.net/2025/11/17/hyuSn5MGgP1FqtK.png 1.5x, https://s2.loli.net/2025/11/17/hyuSn5MGgP1FqtK.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/hyuSn5MGgP1FqtK.png"
+        title="Xnip2025-11-16_23-21-57" /></p>
+<ol start="4">
+<li>创建第二个作业，真正执行备份任务的实际作业。在这个作业的 Storage 配置中，还是 Advanced 的选项卡中，配置 Post Script，选择 close_the_door.ps1 脚本，这里必须配置为 Post Script，用来关闭防火墙。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/1NxUr8d65ulVWYz.png"
+        data-srcset="https://s2.loli.net/2025/11/17/1NxUr8d65ulVWYz.png, https://s2.loli.net/2025/11/17/1NxUr8d65ulVWYz.png 1.5x, https://s2.loli.net/2025/11/17/1NxUr8d65ulVWYz.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/1NxUr8d65ulVWYz.png"
+        title="Xnip2025-11-16_23-25-45" /></p>
+<ol start="5">
+<li>设置这个作业的计划任务，指定为 After this Job，选择 Open_the_door_job 这个作业，表示紧跟着开墙作业启动任务。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/83Arb5fwExehmRZ.png"
+        data-srcset="https://s2.loli.net/2025/11/17/83Arb5fwExehmRZ.png, https://s2.loli.net/2025/11/17/83Arb5fwExehmRZ.png 1.5x, https://s2.loli.net/2025/11/17/83Arb5fwExehmRZ.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/83Arb5fwExehmRZ.png"
+        title="Xnip2025-11-16_23-26-33" /></p>
+<p>通过这样的设置，实现了数据备份开始前开墙，备份后立刻关墙的全自动操作，日常使用无需人工干预。</p>
+<h3 id="场景二第二份备份数据进入隔离区的-backup-copy-隔离方案">场景二：第二份备份数据进入隔离区的 Backup Copy 隔离方案</h3>
+<p>这种方式适用于对安全有较高要求，但是又不想失去恢复验证能力和还原便捷度的客户，通过 Backup Copy 作业将一级存储的数据复制到二级隔离存储。这个方式，对于用户来说，不需要额外的任务来辅助，只需要在主备份任务结束时，开启防火墙，然后让 Backup Copy 作业紧跟着 Backup job 去执行，一样也是 After Job 模式，执行完成之后 Backup Copy 作业执行关闭防火墙操作。</p>
+<p><strong>配置步骤</strong>：</p>
+<ol>
+<li>
+<p>创建主备份作业，在 Storage 配置的 Advanced 选项卡中，配置 Post Script，选择 Open_the_door.ps1 脚本，这里建议配置 Post Script，尽量让开墙时间缩短，避免在主备份任务长时间的传输数据过程中隔离区提早进入打开状态。这个配置和场景一的第二步完全一样。</p>
+</li>
+<li>
+<p>创建 Backup Copy 作业，在 Copy 模式上，这里必须选择 Periodic 模式，只有这个模式，才能给我们 Schedule 中能够设定 After this Job 的方式。</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/rDA9eOZmW7CbTRn.png"
+        data-srcset="https://s2.loli.net/2025/11/17/rDA9eOZmW7CbTRn.png, https://s2.loli.net/2025/11/17/rDA9eOZmW7CbTRn.png 1.5x, https://s2.loli.net/2025/11/17/rDA9eOZmW7CbTRn.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/rDA9eOZmW7CbTRn.png"
+        title="Xnip2025-11-16_23-29-00" /></p>
+<ol start="3">
+<li>在 Target 配置中的 Advanced 选项卡中，还是配置 Post Script，选择 close_the_door.ps1 脚本，这里必须配置为 Post Script，用来关闭防火墙。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/Szfmxvb9RcFyQTj.png"
+        data-srcset="https://s2.loli.net/2025/11/17/Szfmxvb9RcFyQTj.png, https://s2.loli.net/2025/11/17/Szfmxvb9RcFyQTj.png 1.5x, https://s2.loli.net/2025/11/17/Szfmxvb9RcFyQTj.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/Szfmxvb9RcFyQTj.png"
+        title="Xnip2025-11-16_23-30-50" /></p>
+<ol start="4">
+<li>设置这个作业的计划任务，指定为 After First backup job。这个作业并不是在某个时间起，而是在开墙之后起。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/fdXUCwISs8OjqZR.png"
+        data-srcset="https://s2.loli.net/2025/11/17/fdXUCwISs8OjqZR.png, https://s2.loli.net/2025/11/17/fdXUCwISs8OjqZR.png 1.5x, https://s2.loli.net/2025/11/17/fdXUCwISs8OjqZR.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/fdXUCwISs8OjqZR.png"
+        title="Xnip2025-11-16_23-31-26" /></p>
+<p>通过这样的设置，实现了拷贝数据备份前开墙，数据拷贝完成后立刻关墙的全自动操作，日常使用无人干预。</p>
+<blockquote>
+<p>Backup Copy 必须使用 Periodic 模式，不能用 Mirrorring 模式。</p>
+</blockquote>
+<h2 id="验证与总结">验证与总结</h2>
+<p>当作业运行之后，会看到所有作业都成功执行了，并且作业中，会有相关的 Post Script 执行成功的提示。让我们来看实际数据的情况。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/5VkYLdhvwsFmjEg.png"
+        data-srcset="https://s2.loli.net/2025/11/17/5VkYLdhvwsFmjEg.png, https://s2.loli.net/2025/11/17/5VkYLdhvwsFmjEg.png 1.5x, https://s2.loli.net/2025/11/17/5VkYLdhvwsFmjEg.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/5VkYLdhvwsFmjEg.png"
+        title="Xnip2025-11-16_23-32-42" /></p>
+<p>备份完成后，我们来到备份服务器的 Backup Infrastructure 下面，通常就会看到我们的 Backup Repository 是处于 Unavailable 状态，这是我们期望的状态，说明这个 repository 是无法访问的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/lKut7x8BvS2rbAz.png"
+        data-srcset="https://s2.loli.net/2025/11/17/lKut7x8BvS2rbAz.png, https://s2.loli.net/2025/11/17/lKut7x8BvS2rbAz.png 1.5x, https://s2.loli.net/2025/11/17/lKut7x8BvS2rbAz.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/lKut7x8BvS2rbAz.png"
+        title="Xnip2025-11-16_23-33-56" /></p>
+<p>当我们去找到 Backups 中的数据时，我们选择删除操作的时候，系统会提示数据无法访问。这时候需要注意的是，这和我们联机状态下 Immutable repository 不一样，不是提示数据在 xx 之前不可删除，而是直接无法访问到数据，连接被拒绝，无法进行操作。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/bkHRLGICOsVfoc5.png"
+        data-srcset="https://s2.loli.net/2025/11/17/bkHRLGICOsVfoc5.png, https://s2.loli.net/2025/11/17/bkHRLGICOsVfoc5.png 1.5x, https://s2.loli.net/2025/11/17/bkHRLGICOsVfoc5.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/bkHRLGICOsVfoc5.png"
+        title="Xnip2025-11-16_22-58-13" /></p>
+<p>选择恢复操作时，在 Restore point 界面中，直接会显示还原点访问被拒绝。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/gnbYHKsuOxwC6Zj.png"
+        data-srcset="https://s2.loli.net/2025/11/17/gnbYHKsuOxwC6Zj.png, https://s2.loli.net/2025/11/17/gnbYHKsuOxwC6Zj.png 1.5x, https://s2.loli.net/2025/11/17/gnbYHKsuOxwC6Zj.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/gnbYHKsuOxwC6Zj.png"
+        title="Xnip2025-11-14_21-42-29" /></p>
+<p>当然，这个方案还是稍微有一点点不完美，在每 4 小时的 Host Discovery 事件中，必然会有一次这个 repository 的扫描，会出现报错，如果 Veeam R&amp;D 能将这种 Repository 设置为 Host Discovery 的排除，会更加漂亮！</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2025/11/17/UraVAHPnyjBN6S5.png"
+        data-srcset="https://s2.loli.net/2025/11/17/UraVAHPnyjBN6S5.png, https://s2.loli.net/2025/11/17/UraVAHPnyjBN6S5.png 1.5x, https://s2.loli.net/2025/11/17/UraVAHPnyjBN6S5.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2025/11/17/UraVAHPnyjBN6S5.png"
+        title="Xnip2025-11-16_23-36-24" /></p>
+<p>如上，通过这样的设置，是不是觉得安全进一步得到了保障？</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-11-17</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2025/11/veeam-airgap-backup-step-by-step/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam-airgap-backup-step-by-step%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2025%2F11%2Fveeam-airgap-backup-step-by-step%2F&amp;text=%E6%88%90%E6%9C%AC%E4%B8%BA%E9%9B%B6%EF%BC%81%E7%94%A8&#43;Veeam&#43;%E5%AE%9E%E7%8E%B0%E7%89%A9%E7%90%86&#43;Air&#43;Gap%EF%BC%8C%E8%AE%A9%E6%98%82%E8%B4%B5%E7%9A%84%E9%81%BF%E9%A3%8E%E6%B8%AF%E6%96%B9%E6%A1%88%E9%BB%AF%E7%84%B6%E5%A4%B1%E8%89%B2" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam-airgap-backup-step-by-step%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2025%252F11%252Fveeam-airgap-backup-step-by-step%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Veeam/">Veeam</a>,&nbsp;<a href="/tags/Security/">Security</a>,&nbsp;<a href="/tags/Air-Gap/">Air Gap</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/11/AI-Reshapes-Data-Protection-02/" class="prev" rel="prev" title="AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://backupnextcloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

@@ -172,7 +172,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 试试拷贝完成后的效果, 正常还是会提示输入密码。</span>
 </span></span><span class="line"><span class="cl">$ ssh ubuntu@ubuntu_template_vm</span></span></code></pre></div></div>
 <p>接下去，ssh远程进入这台Ubuntu后<code>sudo -i</code>到root直接运行以下命令，进行进一步调整：</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -353,7 +353,7 @@
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ bash deploy_k3s_with_vspherecsi.sh</span></span></code></pre></div></div>
 <p>这时候会提示输入一些本次自动部署的配置，一共三个，第一个为部署的虚拟机名称，只需要输入一个前缀，脚本会自动为虚拟机名称加上4个随机数字作为唯一标识；第二个为虚拟机的IP地址，根据自己环境的空闲IP地址情况按实际情况输入即可；第三个为k3s的版本，可以到k3s官网查询相关需要的版本，理论上任何stable版本都能支持:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>

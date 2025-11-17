@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Air Gap on Cloud.Virt.AI.Sec</title>
+    <link>https://blog.backupnext.cloud/en/tags/Air-Gap/</link>
+    <description>Recent content in Air Gap on Cloud.Virt.AI.Sec</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+    <lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/en/tags/Air-Gap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zero-Cost Physical Air Gap: How Veeam Outperforms Million-Dollar Sheltered Harbor Solutions</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/veeam-airgap-backup-step-by-step/</link>
+      <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/veeam-airgap-backup-step-by-step/</guid>
+      <description>&lt;h1 id=&#34;zero-cost-physical-air-gap-how-veeam-outperforms-million-dollar-sheltered-harbor-solutions&#34;&gt;Zero-Cost Physical Air Gap: How Veeam Outperforms Million-Dollar Sheltered Harbor Solutions&lt;/h1&gt;&#xA;&lt;p&gt;First, I must thank my colleague Zhang Yuan. The design concept for this solution actually originated from his idea of automatically controlling network firewalls through Palo Alto devices, which he shared internally several years ago. This article simply reproduces his excellent design using zero-cost OpenWRT.&lt;/p&gt;&#xA;&lt;p&gt;Remember that 2019 article about ransomware attacks?&lt;/p&gt;&#xA;&lt;p&gt;At that time, I emphasized the importance of data isolation. Ransomware is becoming increasingly intelligent—they no longer just encrypt production data, but also destroy backup servers, delete backup catalogs, and even attack dedicated storage devices.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

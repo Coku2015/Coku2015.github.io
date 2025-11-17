@@ -7,6 +7,15 @@
             <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 17 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</title>
+    <link>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</link>
+    <pubDate>Mon, 17 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</guid>
+    <description><![CDATA[<h1 id="成本为零用-veeam-实现物理-air-gap让昂贵的避风港方案黯然失色">成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</h1>
+<p>首先要感谢我的同事张远，这个方案的设计思路其实源于他几年前在内部分享的通过 Palo Alto 设备自动控制网络防火墙的想法。本文只是用零成本的 OpenWRT 复现了他的优秀设计。</p>]]></description>
+</item>
+<item>
     <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
     <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
     <pubDate>Wed, 12 Nov 2025 00:00:00 &#43;0000</pubDate>
@@ -82,14 +91,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/</guid>
     <description><![CDATA[<p>在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。</p>]]></description>
-</item>
-<item>
-    <title>有手就能装！Veeam Software Appliance 一步一步带你部署</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/</link>
-    <pubDate>Fri, 05 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-02/</guid>
-    <description><![CDATA[<p>在上一篇文章里，我们和大家一起认识了 Veeam 最新发布的几款产品，尤其是 <strong>Veeam Software Appliance</strong> 这个全新的备份软件“本体”。很多朋友可能看完之后觉得概念上有点明白了，但还是不清楚真正下载回来以后应该怎么用、怎么装、怎么配置。别急，从这篇开始，我们就动手实战，带大家一步步搞定 <strong>Veeam Software Appliance</strong> 的部署和使用。</p>]]></description>
 </item>
 </channel>
 </rss>
