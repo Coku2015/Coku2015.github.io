@@ -4,9 +4,20 @@
         <link>https://blog.backupnext.cloud/</link>
         <description>欢迎访问云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 26 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
+    <link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
+    <pubDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</guid>
+    <description><![CDATA[<p>**📖 阅读提示：**本文内容较长（4600 字 + 长截图），建议收藏后慢慢阅读。</p>
+<h2 id="智能化数据保护新体验揭秘-veeam-intelligence-的强大能力">智能化数据保护新体验——揭秘 Veeam Intelligence 的强大能力</h2>
+<p>凌晨 2 点，备份作业又失败了。</p>
+<p>屏幕上显示着错误代码&quot;Failed to create snapshot&quot;，你的脑子里一片空白。这种场景，相信每个 Veeam 管理员都经历过。</p>]]></description>
+</item>
+<item>
     <title>成本为零！用 Veeam 实现物理 Air Gap，让昂贵的避风港方案黯然失色</title>
     <link>https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/</link>
     <pubDate>Mon, 17 Nov 2025 00:00:00 &#43;0000</pubDate>
@@ -83,14 +94,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-04/</guid>
     <description><![CDATA[<p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p>]]></description>
-</item>
-<item>
-    <title>你必须知道的：Veeam Software Appliance 全新的管理使用方法</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/</link>
-    <pubDate>Mon, 08 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/</guid>
-    <description><![CDATA[<p>在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。</p>]]></description>
 </item>
 </channel>
 </rss>

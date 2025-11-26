@@ -8,8 +8,15 @@
     <language>en-US</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Wed, 12 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/en/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Your 24/7 Veeam AI Expert: How Veeam Intelligence Revolutionizes Backup Management Support</title>
+      <link>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</link>
+      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</guid>
+      <description>&lt;h2 id=&#34;a-new-era-of-intelligent-data-protectionunveiling-the-powerful-capabilities-of-veeam-intelligence&#34;&gt;A New Era of Intelligent Data Protection—Unveiling the Powerful Capabilities of Veeam Intelligence&lt;/h2&gt;&#xA;&lt;h3 id=&#34;introduction-the-painful-experience-of-late-night-documentation-searches&#34;&gt;Introduction: The Painful Experience of Late-Night Documentation Searches&lt;/h3&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2 AM. Your backup job has failed again.&lt;/p&gt;&#xA;&lt;p&gt;The screen displays the error &amp;ldquo;Failed to create snapshot&amp;rdquo; and your mind goes blank. If you&amp;rsquo;re a Veeam administrator, you&amp;rsquo;ve been here before.&lt;/p&gt;&#xA;&lt;p&gt;The familiar troubleshooting marathon begins:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Google the error code → 30 minutes gone&lt;/li&gt;&#xA;&lt;li&gt;Search through Veeam documentation → Another 45 minutes wasted&lt;/li&gt;&#xA;&lt;li&gt;Ask for help in WeChat groups → Wait for responses&lt;/li&gt;&#xA;&lt;li&gt;Open a technical support ticket → Queue for hours&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Six hours later, you finally solve it. A simple permission configuration issue.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</title>
       <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</link>

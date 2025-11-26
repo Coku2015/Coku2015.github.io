@@ -120,6 +120,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">云虚智安</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问云虚智安</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/">一键部署脚本：K3S+vSphere CSI</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-02-21">2024-02-21</time></span></div><div class="content"><p>之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。</p></div><div class="post-footer">
+        <a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2024/02/veeam-hardened-ubuntu/">Ubuntu系统用于Veeam加固存储库的进一步安全加固</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-02-02">2024-02-02</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Repository/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Repository</a></span></div><div class="content"><p>Veeam v12版本发布后，官方手册给出了基于Ubuntu20.04系统构建Veeam加固存储库后<a href="https://helpcenter.veeam.com/docs/backup/vsphere/hardened_repository_ubuntu_configuring_stig.html?ver=120" target="_blank" rel="noopener noreffer ">进一步系统安全加固的方法</a>，并且提供了全自动配置的脚本，因此在使用我的<a href="https://github.com/Coku2015/Veeam_Repo_Configurator" target="_blank" rel="noopener noreffer ">Configurator</a>构建完Ubuntu存储库后，可以用这个自动化配置脚本进行更安全的加固。</p></div><div class="post-footer">
         <a href="/2024/02/veeam-hardened-ubuntu/">阅读全文</a><div class="post-tags">
@@ -162,12 +168,6 @@
 <h2 id="k10-安装和配置">K10 安装和配置</h2>
 <p>首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：</p></div><div class="post-footer">
         <a href="/2023/11/kubernetes-pvc-instant-recovery-02/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/11/kubernetes-pvc-instant-recovery-01/">极速恢复：Kubernetes 容器即时恢复技术详解（上）- 基础环境搭建</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-02">2023-11-02</time></span></div><div class="content"><p>还记不记得去年我曾经介绍过 VMware 的 FCD 磁盘，并且通过 VBR 的 Instant Disk Recovery 试玩过 K8S 上的即时数据恢复？今年这个功能终于在最新的 K10 中联合 VBR 正式推出了，今天就跟我一起通过一个 Demo 来看看它是如何工作的吧。我的这个 Demo 会分成两部分，第一部分会先带大家来搭建一个可以使用 vSphere Cloud Native Storage 的 K3S 集群，然后第二部分我们再来看 K10 的备份和恢复。</p></div><div class="post-footer">
-        <a href="/2023/11/kubernetes-pvc-instant-recovery-01/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

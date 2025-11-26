@@ -120,6 +120,21 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2022/03/pvc-and-fcd/">First Class Disks (FCD) Explained</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-23">2022-03-23</time></span></div><div class="content"><p>After Veeam released version 11, observant readers might have noticed this option when performing Instant Disk Recovery:</p>
+<p><a href="https://imgtu.com/i/q3e6I0" target="_blank" rel="noopener noreffer "><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        data-srcset="https://s1.ax1x.com/2022/03/23/q3e6I0.png, https://s1.ax1x.com/2022/03/23/q3e6I0.png 1.5x, https://s1.ax1x.com/2022/03/23/q3e6I0.png 2x"
+        data-sizes="auto"
+        alt="https://s1.ax1x.com/2022/03/23/q3e6I0.png"
+        title="q3e6I0.png" /></a></p>
+<p>Starting with vSphere 6.5, VMware introduced a completely new disk format called &ldquo;First Class Disks&rdquo; (FCD). The name is certainly bold, and in fact, these virtual disks do have their own unique &ldquo;privileges.&rdquo; Today, I&rsquo;d like to explain these FCDs in detail.</p></div><div class="post-footer">
+        <a href="/en/2022/03/pvc-and-fcd/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2022/03/vmware-tanzu-community-edition-%E8%AF%95%E7%8E%A9/">Exploring Tanzu Community Edition in the Homelab</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-19">2022-03-19</time></span></div><div class="content"><p>I recently refreshed my homelab setup and decided it was time to dive into Tanzu. When VMware open-sourced Tanzu Community Edition last year, I knew this was the perfect opportunity to set up a complete environment with Kasten K10 and Veeam Backup &amp; Replication to really put it through its paces.</p>
 <h2 id="hardware-setup">Hardware Setup</h2>
@@ -181,19 +196,6 @@ veeamsnap-&lt;version&gt;.rpm</code></pre></div>
 <h2 id="main-content">Main Content</h2>
 <p>In the previous article, we introduced downloading and pushing K10 installation images to a private image repository through scripts. Today, I want to share some offline image packages, which may be the most convenient method in completely offline environments without external network access.</p></div><div class="post-footer">
         <a href="/en/2021/07/k10offline-script-2/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2021/06/k10offline-script/">Kasten K10 Starter Series 04 – Offline Image Download Script</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-06-04">2021-06-04</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h2 id="series-index">Series Index</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/2020/12/Setting-up-quick-demo-for-K10-01/" target="_blank" rel="noopener noreffer ">Part 1 – Single-Node Lab</a></li>
-<li><a href="https://blog.backupnext.cloud/2021/05/K10-setup/" target="_blank" rel="noopener noreffer ">Part 2 – Install K10</a></li>
-<li><a href="https://blog.backupnext.cloud/2021/05/K10-configuration/" target="_blank" rel="noopener noreffer ">Part 3 – Backup &amp; Restore</a></li>
-</ul>
-<h2 id="why-this-script-exists">Why This Script Exists</h2>
-<p>Downloading K10 can be painful—especially if you’re used to Veeam’s tidy installers. Kasten’s docs describe deployment, but there’s no simple download link. Everything lives under <code>gcr.io</code>, which is unreachable from many regions. Kasten suggests the JFrog Artifactory mirror for online installs, but it doesn’t integrate with the official offline script.</p></div><div class="post-footer">
-        <a href="/en/2021/06/k10offline-script/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
