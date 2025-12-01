@@ -120,6 +120,14 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2019/07/snapshot-hunter/">黑科技 | 激活隐藏在 VBR 中的快照猎手</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-07-24">2019-07-24</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div><div class="content"><p>It&rsquo;s been ages since I last shared something from my &ldquo;Black Technology&rdquo; series, but today I&rsquo;m excited to introduce a feature I&rsquo;ve been dying to write about.</p>
+<p>This is quite possibly one of Veeam&rsquo;s most powerful yet underappreciated capabilities. I&rsquo;d rank it in the top three for sheer utility, yet I&rsquo;m willing to bet most Veeam users have no idea it even exists.</p>
+<p>It&rsquo;s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.</p></div><div class="post-footer">
+        <a href="/en/2019/07/snapshot-hunter/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2019/07/secure-restore/">Secure Restore | Making Malware Detection Truly Comprehensive</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-07-18">2019-07-18</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据恢复</a></span></div><div class="content"><p>Here&rsquo;s a fundamental truth about IT infrastructure: security and backup are your two essential pillars. Whether you&rsquo;re running a home setup or enterprise systems, you need both. But here&rsquo;s where things get interesting—antivirus software faces an impossible battle. It&rsquo;s constantly chasing new malware variants, dealing with sophisticated evasion techniques, and sometimes even fighting back against viruses designed to disable the antivirus itself.</p>
 <p>The traditional approach of installing antivirus on every individual OS has serious limitations. It&rsquo;s resource-intensive, easily compromised, and frankly, not enough in today&rsquo;s threat landscape. Virtualization helped by moving antivirus engines into the hypervisor layer, avoiding many of the problems with agent-based installations.</p></div><div class="post-footer">
@@ -163,14 +171,6 @@ For now, please refer to the original Chinese article.</p></div><div class="post
         <a href="/en/2019/03/veeam-faq/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Veeam/">Veeam</a></div></div>
 </article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2019/03/cloud-tier-02/">Veeam Cloud Tier – Understanding Cloud Object Storage Architecture (Part 2)</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-03-04">2019-03-04</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div><div class="content"><p>Last time, we covered the fundamentals of Veeam&rsquo;s Cloud Tier functionality. I noticed a few technical details in that post that needed clarification, so if you&rsquo;re looking for the updated version, just drop me a message with &ldquo;Cloud&rdquo; and I&rsquo;ll share the corrected version.</p>
-<p>Today, we&rsquo;re diving deeper for those of you who want to understand the sophisticated architecture behind Veeam&rsquo;s cloud storage optimization.</p>
-<p>One of the first things you&rsquo;ll notice when using Cloud Tier is that Veeam maintains full recovery capabilities regardless of where your backup archives live—whether in your local data center or in cloud object storage. This includes Veeam&rsquo;s groundbreaking Instant VM Recovery technology, which we pioneered back in 2010. If you want to explore that technology in detail, I covered it thoroughly in <a href="http://mp.weixin.qq.com/s?__biz=MzU4NzA1MTk2Mg==&amp;mid=2247483838&amp;idx=1&amp;sn=d5ba99c0f7c8d649a5efe247159d4ebf&amp;chksm=fdf0a76bca872e7d0161cbb7fcd9e1a5c4e6426d17fef21b24876d9222c8772aba3c710e6411&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">this earlier post about vPower NFS</a>.</p></div><div class="post-footer">
-        <a href="/en/2019/03/cloud-tier-02/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
-</article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/en/">1</a>
@@ -198,8 +198,10 @@ For now, please refer to the original Chinese article.</p></div><div class="post
                         <a href="/en/page/16/">16</a>
                     </span>
                 </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
+                </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/en/page/17/">17</a>
+                        <a href="/en/page/18/">18</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">

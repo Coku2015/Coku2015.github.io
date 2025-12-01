@@ -120,6 +120,24 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2020/02/vao-guide-05/">VAO Basics (Part 5) – Essential Configuration Notes</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-21">2020-02-21</time></span></div><div class="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Essential Configuration Notes</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step of a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<p>In the previous articles, we&rsquo;ve covered the basic architecture and components of VAO, all of which involve settings in the Administration section—operations that can only be performed by accounts with VAO administrator privileges. VAO administrators can set different Scopes for each application group here and assign these Scopes to relevant personnel for use. This feature enables effective grouping and isolation—isn&rsquo;t this somewhat similar to multi-tenancy or multi-user systems? But there are significant differences.</p></div><div class="post-footer">
+        <a href="/en/2020/02/vao-guide-05/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2020/02/vao-guide-04/">VAO Basics (Part 4) – Core Components · Part 2</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-20">2020-02-20</time></span></div><div class="content"><h2 id="series-index">Series Index</h2>
 <ul>
@@ -199,14 +217,6 @@
         <a href="/en/2020/02/how-to-upgrade-vbr/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></div></div>
 </article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2019/07/snapshot-hunter/">黑科技 | 激活隐藏在 VBR 中的快照猎手</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2019-07-24">2019-07-24</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div><div class="content"><p>It&rsquo;s been ages since I last shared something from my &ldquo;Black Technology&rdquo; series, but today I&rsquo;m excited to introduce a feature I&rsquo;ve been dying to write about.</p>
-<p>This is quite possibly one of Veeam&rsquo;s most powerful yet underappreciated capabilities. I&rsquo;d rank it in the top three for sheer utility, yet I&rsquo;m willing to bet most Veeam users have no idea it even exists.</p>
-<p>It&rsquo;s like having a silent guardian working behind the scenes in every single backup and replication job, quietly protecting your virtual machines without anyone noticing.</p></div><div class="post-footer">
-        <a href="/en/2019/07/snapshot-hunter/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
-</article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/en/">1</a>
@@ -237,7 +247,7 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/en/page/17/">17</a>
+                        <a href="/en/page/18/">18</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">

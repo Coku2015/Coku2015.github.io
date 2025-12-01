@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.backupnext.cloud/en/tags/AI/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/AI/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/AI/"
@@ -11,7 +11,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/AI/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/backup/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/backup/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/backup/"
@@ -20,7 +20,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/backup/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/"
@@ -29,7 +29,16 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/posts/"
@@ -38,7 +47,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/posts/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/"
@@ -47,7 +56,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Veeam/</loc><lastmod>2025-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/Veeam/</loc><lastmod>2025-12-01T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/Veeam/"
@@ -65,7 +74,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Air-Gap/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/Air-Gap/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/Air-Gap/"
@@ -74,7 +83,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/Air-Gap/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Security/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/Security/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/Security/"
@@ -83,7 +92,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/Security/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/2025/11/veeam-airgap-backup-step-by-step/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/2025/11/veeam-airgap-backup-step-by-step/</loc><lastmod>2025-11-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/2025/11/veeam-airgap-backup-step-by-step/"
@@ -119,7 +128,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</loc><lastmod>2025-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</loc><lastmod>2025-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/"
@@ -128,7 +137,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</loc><lastmod>2025-11-07T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</loc><lastmod>2025-11-07T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/"
@@ -137,7 +146,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/about/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/about/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/about/"
@@ -146,7 +155,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/about/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/about/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/about/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/about/"
@@ -155,9 +164,9 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/about/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Cloud/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Data-Protection/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Lei-Wei/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/Cloud/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://blog.backupnext.cloud/en/tags/Data-Protection/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://blog.backupnext.cloud/en/tags/Lei-Wei/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/Lei-Wei/"
@@ -166,7 +175,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/Lei-Wei/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/profile/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/profile/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/profile/"

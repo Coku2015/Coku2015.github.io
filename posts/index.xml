@@ -4,7 +4,18 @@
         <link>https://blog.backupnext.cloud/posts/</link>
         <description>所有文章 | 云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
+    <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
+    <pubDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+    <description><![CDATA[<h2 id="回想那些数据中心的不眠夜">回想那些数据中心的不眠夜</h2>
+<p>凌晨 3 点，又是一个数据中心的不眠之夜。</p>
+<p>屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。</p>
+<p>&ldquo;财务系统什么时候能恢复？&ldquo;&ldquo;这个月 KPI 要完蛋了！&ldquo;&ldquo;IT 部门怎么又出问题？&rdquo;</p>]]></description>
+</item>
+<item>
     <title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
     <link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
     <pubDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</pubDate>
@@ -84,14 +95,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-05/</guid>
     <description><![CDATA[<p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p>]]></description>
-</item>
-<item>
-    <title>让 Veeam 更新既安全又快速：本地更新镜像服务器搭建全攻略</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-04/</link>
-    <pubDate>Tue, 09 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-04/</guid>
-    <description><![CDATA[<p>在前几篇文章里，我们把 Veeam Software Appliance 装了起来、跑了起来，也体验了它“安全默认”的管理方式。这次我们要解决很多人真正关心的问题：<strong>在没有互联网的环境里，如何让 Veeam Software Appliance 也能像在线环境一样自动获取更新</strong>。官方手册提到可以指定本地镜像仓库，但具体怎么搭建、怎么同步、怎么配证书，却没有细说。这篇就基于我自己实验室的操作，完整复刻一遍，大家可以直接照着做。</p>]]></description>
 </item>
 </channel>
 </rss>

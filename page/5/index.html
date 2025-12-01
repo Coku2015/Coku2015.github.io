@@ -120,6 +120,12 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">云虚智安</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问云虚智安</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/">VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-04-28">2024-04-28</time></span></div><div class="content"><p>去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。</p></div><div class="post-footer">
+        <a href="/2024/04/vdp-v12-1-security-feature-deep-dive-01/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/Security/">Security</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/">一键部署脚本：K3S+vSphere CSI</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-02-21">2024-02-21</time></span></div><div class="content"><p>之前分享过两篇关于使用K10即时恢复Kubernetes上应用的方法，这个功能对于Kubernetes环境还是有一些要求的。当时给大家详细分享了手工部署的过程，今天我为大家带来一个一键部署的脚本，只要有VMware基础环境，能够正常连接Github/k8s.io网络，那么这个脚本会非常方便，启动脚本后只需要等待10分钟左右，你就可以直接使用这个单节点的k3s环境了。</p></div><div class="post-footer">
         <a href="/2024/02/automate-deploy-k3s-with-vsphere-csi/">阅读全文</a><div class="post-tags">
@@ -162,14 +168,6 @@
         <a href="/2023/11/vro-v6-guide-10/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VAO/">VAO</a>,&nbsp;<a href="/tags/VRO/">VRO</a></div></div>
 </article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/11/kubernetes-pvc-instant-recovery-02/">极速恢复：Kubernetes 容器即时恢复技术详解（下）- 备份与恢复</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-05">2023-11-05</time></span></div><div class="content"><p>上一期我们把基础 Kubernetes 环境搭建好了，这期我们来详细说说备份和恢复。</p>
-<h2 id="k10-安装和配置">K10 安装和配置</h2>
-<p>首先是 K10 安装，没啥特别之处，用官网标准的安装手册去进行 Helm 安装即可，唯一需要注意的是，支持即时恢复的 K10 需要 6.0.8 以上的版本，而VBR需要用到v12版本以上。我这里放一下我用的K10安装参数，供大家参考：</p></div><div class="post-footer">
-        <a href="/2023/11/kubernetes-pvc-instant-recovery-02/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a>,&nbsp;<a href="/tags/Kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/Instant-Recovery/">Instant Recovery</a></div></div>
-</article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -200,7 +198,7 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/17/">17</a>
+                        <a href="/page/18/">18</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">

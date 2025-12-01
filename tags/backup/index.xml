@@ -8,8 +8,15 @@
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Tue, 25 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
+      <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+      <description>&lt;h2 id=&#34;回想那些数据中心的不眠夜&#34;&gt;回想那些数据中心的不眠夜&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 3 点，又是一个数据中心的不眠之夜。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;财务系统什么时候能恢复？&amp;ldquo;&amp;ldquo;这个月 KPI 要完蛋了！&amp;ldquo;&amp;ldquo;IT 部门怎么又出问题？&amp;rdquo;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
       <link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>

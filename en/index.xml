@@ -4,9 +4,21 @@
         <link>https://blog.backupnext.cloud/en/</link>
         <description>Welcome to Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>From Tech Support to Decision Maker: How Veeam Intelligence Powers IT Strategy</title>
+    <link>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</link>
+    <pubDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+    <description><![CDATA[<h2 id="those-sleepless-nights-in-the-data-center">Those Sleepless Nights in the Data Center</h2>
+<p>3 AM. Another sleepless night in the data center.</p>
+<p>Alerts flash across the screen while your phone buzzes with messages from business teams. It&rsquo;s been three hours of constant bombardment.</p>
+<p>&ldquo;When will the financial system be back online?&rdquo; &ldquo;We&rsquo;re going to miss this month&rsquo;s KPIs!&rdquo; &ldquo;Why is IT always having problems?&rdquo;</p>
+<p>As you type commands, you&rsquo;re searching for needles in haystacks of system logs. This is the third time this month you&rsquo;ve been fighting fires in the dead of night.</p>]]></description>
+</item>
+<item>
     <title>Your 24/7 Veeam AI Expert: How Veeam Intelligence Revolutionizes Backup Management Support</title>
     <link>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</link>
     <pubDate>Tue, 25 Nov 2025 00:00:00 &#43;0000</pubDate>
@@ -100,14 +112,6 @@
     <description><![CDATA[<p>In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the <strong>Veeam Infrastructure Appliance</strong> specifically designed to host role services. If the Software Appliance is the &ldquo;command center,&rdquo; then the Infrastructure Appliance is more like a pre-configured, ready-to-use &ldquo;execution unit&rdquo;: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.</p>
 <h2 id="1-why-choose-infrastructure-appliance">1. Why Choose Infrastructure Appliance</h2>
 <p>The reasons for choosing Infrastructure Appliance can be summarized in three points: <strong>fast, simple, secure</strong>. Veeam&rsquo;s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you&rsquo;re essentially getting a Linux server optimized for backup roles according to best practices that&rsquo;s ready to use out of the box.</p>]]></description>
-</item>
-<item>
-    <title>Making Veeam Updates Both Secure and Fast: A Complete Guide to Building Local Update Repository Servers</title>
-    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</link>
-    <pubDate>Tue, 09 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-04/</guid>
-    <description><![CDATA[<p>In the previous articles of this series, we&rsquo;ve installed and run the Veeam Software Appliance, experiencing its &ldquo;secure by default&rdquo; management approach. Now, let&rsquo;s tackle a question many people genuinely care about: <strong>How to enable Veeam Software Appliance to automatically receive updates in an offline environment, just like it would online</strong>. The official documentation mentions specifying a local mirror repository, but it doesn&rsquo;t provide detailed instructions on how to build, sync, or configure certificates. Based on my lab testing, I&rsquo;ll walk you through the complete process step by step.</p>]]></description>
 </item>
 </channel>
 </rss>

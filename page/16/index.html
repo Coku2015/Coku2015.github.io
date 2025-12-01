@@ -120,6 +120,21 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">云虚智安</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">欢迎访问云虚智安</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/2018/03/surebackup/">备份存档能不能被恢复，这件事情上只有真正做过才知道。</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-03-05">2018-03-05</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><p>Veeam 有一个非常特别的功能，它能够全自动的在线验证备份存档的可用性，确保备份下来的内容是能够被正常恢复的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        data-srcset="https://s2.ax1x.com/2020/02/12/1blqUA.png, https://s2.ax1x.com/2020/02/12/1blqUA.png 1.5x, https://s2.ax1x.com/2020/02/12/1blqUA.png 2x"
+        data-sizes="auto"
+        alt="https://s2.ax1x.com/2020/02/12/1blqUA.png"
+        title="1blqUA.png" /></p>
+<p>该功能之所以能够确保恢复，是因为它会将备份存档在一个隔离的环境中以一个正常的虚拟机的形态启动起来，然后通过一系列的仿真测试去全自动的测试这个虚拟机的状态，包括了虚拟机的心跳、虚拟机网络的连通性甚至是虚拟机内应用程序和服务的运行状况，在测试完成之后，它还会生成一份验证报告，给出该备份存档可恢复性的相关结论。</p></div><div class="post-footer">
+        <a href="/2018/03/surebackup/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/2018/01/centrilized-agent-management/">新年第一篇 - Veeam 9.5U3 集中管理 Agent 详解</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-01-01">2018-01-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据保护</a></span></div><div class="content"><h1 id="vbr-中的-agent-集中管理">VBR 中的 Agent 集中管理</h1>
 <p>本次更新加入了 Agent 的集中管理，界面上发生了很大变化，原有的 Backup &amp; Replication 更名成为 Home，而原有的 Virtual Machine 更名为 Inventory。Agent 的管理功能都会搬到 Inventory 下面的 Physical &amp; Cloud Infrastructure 下。</p></div><div class="post-footer">
@@ -150,12 +165,6 @@
         <a href="/2017/07/agentless-backup/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
 </article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/2017/07/direct-nfs-access/">Veeam 黑科技之 Direct NFS Access</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2017-07-04">2017-07-04</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E9%BB%91%E7%A7%91%E6%8A%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>黑科技</a></span></div><div class="content"><p>最近这些天，碰到不少在 VMware 环境中使用 NFS 作为 datastore 的用户，发现 NFS 的场景是越来越多了。在以前，可能仅仅会是部分 NetApp 的用户去使用 NFS 作为 VMware 的 datastore，而现在，随着各种超融合技术的兴起，市场上几个主流的超融合平台，比如 Nutanix 和 Cisco HyperFlex 在为 VMware 提供存储服务的时候都采用了 NFS 的方式去提供 datastore。</p></div><div class="post-footer">
-        <a href="/2017/07/direct-nfs-access/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/VMware/">VMware</a></div></div>
-</article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -177,6 +186,10 @@
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/17/">17</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/18/">18</a>
                     </span>
                 </li></ul><section class="home-credly" id="credly-badges">
         <div class="home-credly__inner">
