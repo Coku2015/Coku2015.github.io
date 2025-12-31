@@ -120,6 +120,24 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2020/02/vao-guide-06/">VAO Basics (Part 6) – The First Step to a Successful DR Plan</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-25">2020-02-25</time></span></div><div class="content"><h2 id="series-index">Series Index</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-17-VAO-Guide-01/" target="_blank" rel="noopener noreffer ">VAO Basics (1) – Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-18-VAO-Guide-02/" target="_blank" rel="noopener noreffer ">VAO Basics (2) – Installation &amp; Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-19-VAO-Guide-03/" target="_blank" rel="noopener noreffer ">VAO Basics (3) – Core Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-20-VAO-Guide-04/" target="_blank" rel="noopener noreffer ">VAO Basics (4) – Core Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-21-VAO-Guide-05/" target="_blank" rel="noopener noreffer ">VAO Basics (5) – Essential Configuration Notes</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-25-VAO-Guide-06/" target="_blank" rel="noopener noreffer ">VAO Basics (6) – The First Step to a Successful DR Plan</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-27-VAO-Guide-07/" target="_blank" rel="noopener noreffer ">VAO Basics (7) – Plan Step · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-02-28-VAO-Guide-08/" target="_blank" rel="noopener noreffer ">VAO Basics (8) – Plan Step · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/_posts/2020-03-02-VAO-Guide-09/" target="_blank" rel="noopener noreffer ">VAO Basics (9) – Document Template Deep Dive</a></li>
+</ul>
+<p>With the earlier configuration work completed, VAO is ready for day-to-day use. Plan Authors can sign in, see only the scopes they’re allowed to touch, and work with the objects inside those scopes—Orchestration Plans, DataLabs, and Reports.</p></div><div class="post-footer">
+        <a href="/en/2020/02/vao-guide-06/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2020/02/vao-guide-05/">VAO Basics (Part 5) – Essential Configuration Notes</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-21">2020-02-21</time></span></div><div class="content"><h2 id="series-index">Series Index</h2>
 <ul>
@@ -199,23 +217,6 @@
 <p>Many Veeam users I talk to find VAO intriguing but mysterious. It looks sophisticated and powerful, yet they&rsquo;re unsure how to leverage it in their environment. That&rsquo;s exactly why I&rsquo;m starting this introductory series—to share what I&rsquo;ve learned and help demystify VAO for the community.</p></div><div class="post-footer">
         <a href="/en/2020/02/vao-guide-01/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2020/02/how-to-upgrade-vbr/">Veeam Backup Server Upgrade Guide</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-02-13">2020-02-13</time></span></div><div class="content"><h2 id="introduction">Introduction</h2>
-<p>Veeam is about to launch the new v10 version. In this version, Veeam supports upgrading from previous VBR to v10. The smooth upgrade process is not complicated and is similar to previous VBR upgrades, though there are some details to pay attention to.</p>
-<h3 id="before-upgrade">Before Upgrade</h3>
-<p>Please check your current environment according to the flowchart below. Ensure other components are properly upgraded before upgrading VBR.</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://s2.ax1x.com/2020/02/13/1L4P8H.png"
-        data-srcset="https://s2.ax1x.com/2020/02/13/1L4P8H.png, https://s2.ax1x.com/2020/02/13/1L4P8H.png 1.5x, https://s2.ax1x.com/2020/02/13/1L4P8H.png 2x"
-        data-sizes="auto"
-        alt="https://s2.ax1x.com/2020/02/13/1L4P8H.png"
-        title="1L4P8H.png" /></p></div><div class="post-footer">
-        <a href="/en/2020/02/how-to-upgrade-vbr/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

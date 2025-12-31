@@ -120,6 +120,27 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2021/04/rotated-driver/">“Wildcard” Strategy – Rotating External Drives for Ransomware Defense</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-04-02">2021-04-02</time></span></div><div class="content"><p>You’ve seen all the v11 ransomware-hardening tips—but attackers keep innovating, so we can’t stop. Here’s an unconventional approach: rotate offline external drives. It’s basically a DIY air gap. Not bulletproof, but a handy “wildcard” for environments that can’t invest in tape or immutable storage yet.</p>
+<h2 id="requirements--scenario">Requirements &amp; Scenario</h2>
+<ul>
+<li>A hot-swap external enclosure (USB 3.0/USB-C or eSATA) for quick drive swaps.</li>
+<li>Multiple high-capacity SATA disks (7200 RPM).</li>
+<li>A rotation schedule: write backups to one drive, then eject and store it offline while another drive comes online.</li>
+</ul>
+<h2 id="expected-outcome">Expected Outcome</h2>
+<ul>
+<li>As long as the data isn’t encrypted before ejection, it’s safe once offline.</li>
+<li>Each drive’s backup chain is self-contained; no dependency on other drives.</li>
+<li>VBR writes its own metadata alongside the backups, so restores are easy when you plug the drive back in.</li>
+<li>Compared to tape, recovery is straightforward—just mount the drive and start restoring.</li>
+</ul>
+<h2 id="how-to-use-it">How to Use It</h2>
+<p>Watch the demo video below for the workflow.</p></div><div class="post-footer">
+        <a href="/en/2021/04/rotated-driver/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2021/03/world-backup-day/">Save Your Precious Memories—Right Here, Right Now!</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-03-31">2021-03-31</time></span></div><div class="content"><p>Today&rsquo;s content is refreshingly simple—nothing too technical, just a friendly reminder that&rsquo;s particularly important on this special day of the year. I want to encourage everyone to make a backup, whether for personal or company data. On this annual occasion, taking a moment to back up your data feels especially meaningful.</p>
 <p>Because today, March 31st, is World Backup Day.</p>
@@ -165,17 +186,6 @@
 <p>What makes this CDP implementation particularly fascinating from a technical perspective is how fundamentally different it is from traditional backup and replication approaches. Since Veeam CDP leverages VMware-related technologies in ways we haven&rsquo;t seen before, I wanted to give you a comprehensive primer on the underlying VMware technologies and APIs that power this feature. Understanding these foundations will help you appreciate the technical sophistication and be better prepared for deployment.</p></div><div class="post-footer">
         <a href="/en/2021/02/vmware-vaio-overview/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Veeam-CDP/">Veeam CDP</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2020/12/setting-up-quick-demo-for-k10-01/">Kasten K10 Starter Series 01 – Build a Single-Node K8s Lab Quickly</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-12-07">2020-12-07</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h4 id="release-notes-v12">Release Notes: v1.2</h4>
-<p><em>2021/06/04 - Added a local registry with built-in K10 v4.0.3 images. You can use <code>--set global.airgapped.repository=localhost:5000</code> during K10 installation to directly call the local docker image repository.</em></p>
-<p><em>Virtual appliance updated to v1.2, corresponding file in cloud drive:
-UbuntuK10-v1.2.ova</em></p>
-<h4 id="release-notes-v11">Release Notes: v1.1</h4>
-<p><em>2021/05/03 - Tested Stateful MySQL deployment, changed the built-in Demo application in the appliance to Helm-installed MySQL. This allows quick demo and testing of backup and restore for stateful applications through this vApp.</em></p></div><div class="post-footer">
-        <a href="/en/2020/12/setting-up-quick-demo-for-k10-01/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

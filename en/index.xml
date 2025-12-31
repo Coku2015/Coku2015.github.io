@@ -4,9 +4,25 @@
         <link>https://blog.backupnext.cloud/en/</link>
         <description>Welcome to Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Which Veeam V13 ISO Should You Download? 90% Get It Wrong from Step One</title>
+    <link>https://blog.backupnext.cloud/en/2025/12/veeam-v13-iso-download/</link>
+    <pubDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2025/12/veeam-v13-iso-download/</guid>
+    <description><![CDATA[<p>Last week, a friend in the group chat shouted out: Downloaded the Veeam V13 ISO, but the upgrade failed.</p>
+<p>I asked him: Which one did you download?</p>
+<p>He said: The Veeam Data Platform Premium ISO, the 20 GB one.</p>
+<p>I sighed.</p>
+<p>You fell into the trap.</p>
+<hr>
+<h2 id="-core-change-vdp-premium-iso-no-longer-works">⚠️ Core Change: VDP Premium ISO No Longer Works</h2>
+<p>The changes in V13 caught many people off guard.</p>
+<p>Before, when upgrading Veeam, you could use any ISO to upgrade the VBR server.</p>]]></description>
+</item>
+<item>
     <title>From Tech Support to Decision Maker: How Veeam Intelligence Powers IT Strategy</title>
     <link>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</link>
     <pubDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</pubDate>
@@ -102,16 +118,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</guid>
     <description><![CDATA[<p>Recently, Veeam&rsquo;s Chief Product Officer Anton Gostev published an FAQ on the <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D forums</a> that clearly explains V13&rsquo;s release schedule, deployment options, licensing, and migration strategy. For customers and partner engineers, this isn&rsquo;t just &ldquo;news&rdquo; – it&rsquo;s a practical guide that will influence decisions about &ldquo;whether to upgrade immediately and how to plan migration paths.&rdquo; This article uses that post as a starting point, combining it with official release information to analyze its actual impact on users of different scales, and provides actionable recommendations.</p>]]></description>
-</item>
-<item>
-    <title>Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance</title>
-    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</link>
-    <pubDate>Mon, 22 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/</guid>
-    <description><![CDATA[<p>In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the <strong>Veeam Infrastructure Appliance</strong> specifically designed to host role services. If the Software Appliance is the &ldquo;command center,&rdquo; then the Infrastructure Appliance is more like a pre-configured, ready-to-use &ldquo;execution unit&rdquo;: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.</p>
-<h2 id="1-why-choose-infrastructure-appliance">1. Why Choose Infrastructure Appliance</h2>
-<p>The reasons for choosing Infrastructure Appliance can be summarized in three points: <strong>fast, simple, secure</strong>. Veeam&rsquo;s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you&rsquo;re essentially getting a Linux server optimized for backup roles according to best practices that&rsquo;s ready to use out of the box.</p>]]></description>
 </item>
 </channel>
 </rss>

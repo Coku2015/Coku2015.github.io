@@ -120,6 +120,25 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2023/11/vro-v6-guide-10/">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-11-10">2023-11-10</time></span></div><div class="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
+<ul>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 1) - Introduction</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 2) - Installation and Deployment</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 3) - Basic Components · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 4) - Basic Components · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 5) - First Steps to Successful Disaster Recovery Planning</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 6) - Data Labs</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 7) - Plan Steps · Part 1</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 8) - Plan Steps · Part 2</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 9) - Document Template Analysis</a></li>
+<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</a></li>
+</ul>
+<p>For this final article in the series, I&rsquo;ll walk you through a practical implementation of using VRO to achieve fully automated container disaster recovery with K10, step by step.</p></div><div class="post-footer">
+        <a href="/en/2023/11/vro-v6-guide-10/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2023/11/kubernetes-pvc-instant-recovery-02/">Instant Recovery: Deep Dive into Kubernetes Container Instant Recovery Technology (Part 2) - Backup and Restore</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-11-05">2023-11-05</time></span></div><div class="content"><p>In our previous article, we set up the basic Kubernetes environment. Now let&rsquo;s dive deep into the backup and restore process.</p>
 <h2 id="k10-installation-and-configuration">K10 Installation and Configuration</h2>
@@ -188,25 +207,6 @@
 </ul>
 <p>In previous posts, we&rsquo;ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO&rsquo;s Orchestration Plans.</p></div><div class="post-footer">
         <a href="/en/2023/06/vro-v6-guide-07/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2023/06/vro-v6-guide-06/">VRO v6 Getting Started Guide (Part 6) - Data Lab</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-06-07">2023-06-07</time></span></div><div class="content"><h2 id="series-contents">Series Contents:</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 1) - Introduction</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 2) - Installation and Deployment</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 3) - Basic Components · Part 1</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 4) - Basic Components · Part 2</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 5) - First Steps Toward Successful Disaster Recovery Planning</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 6) - Data Lab</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 7) - Plan Steps · Part 1</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 8) - Plan Steps · Part 2</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 9) - Document Template Analysis</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO v6 Getting Started Guide (Part 10) - Using VRO with K10 for Fully Automated Container Disaster Recovery</a></li>
-</ul>
-<p>What would Veeam products be without a Data Lab? In VRO, the enhanced version of the Data Lab offers even more powerful functionality than its counterpart in VBR. Today, let&rsquo;s dive into this enhanced data lab feature.</p></div><div class="post-footer">
-        <a href="/en/2023/06/vro-v6-guide-06/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">

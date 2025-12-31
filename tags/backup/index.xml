@@ -8,8 +8,15 @@
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
+      <link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>
+      <pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</guid>
+      <description>&lt;p&gt;上周，一位朋友在群里喊：下载了 Veeam V13 的 ISO，结果升级失败。&lt;/p&gt;&#xA;&lt;p&gt;我问他下的哪个？&lt;/p&gt;&#xA;&lt;p&gt;他说：Veeam Data Platform Premium ISO 啊，20 GB 那个。&lt;/p&gt;&#xA;&lt;p&gt;我叹了口气。&lt;/p&gt;&#xA;&lt;p&gt;你踩坑了。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-核心变化vdp-premium-iso-不能用了&#34;&gt;⚠️ 核心变化：VDP Premium ISO 不能用了&lt;/h2&gt;&#xA;&lt;p&gt;这次 V13 的变化，很多人第一反应是懵的。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
       <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>

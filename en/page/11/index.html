@@ -120,6 +120,17 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2020/12/setting-up-quick-demo-for-k10-01/">Kasten K10 Starter Series 01 – Build a Single-Node K8s Lab Quickly</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-12-07">2020-12-07</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Kubernetes/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Kubernetes</a></span></div><div class="content"><h4 id="release-notes-v12">Release Notes: v1.2</h4>
+<p><em>2021/06/04 - Added a local registry with built-in K10 v4.0.3 images. You can use <code>--set global.airgapped.repository=localhost:5000</code> during K10 installation to directly call the local docker image repository.</em></p>
+<p><em>Virtual appliance updated to v1.2, corresponding file in cloud drive:
+UbuntuK10-v1.2.ova</em></p>
+<h4 id="release-notes-v11">Release Notes: v1.1</h4>
+<p><em>2021/05/03 - Tested Stateful MySQL deployment, changed the built-in Demo application in the appliance to Helm-installed MySQL. This allows quick demo and testing of backup and restore for stateful applications through this vApp.</em></p></div><div class="post-footer">
+        <a href="/en/2020/12/setting-up-quick-demo-for-k10-01/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2020/09/veeam-linux-agent-101/">Veeam Agent for Linux 101</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-09-22">2020-09-22</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div><div class="content"><p>Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there&rsquo;s always a use case for VAL. However, we&rsquo;ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the &ldquo;It just works!&rdquo; slogan difficult to confidently claim.</p></div><div class="post-footer">
         <a href="/en/2020/09/veeam-linux-agent-101/">Read More</a><div class="post-tags">
@@ -209,14 +220,6 @@
 <p>Install <a href="https://github.com/PowerShell/PowerShell" target="_blank" rel="noopener noreffer ">PowerShell Core 7</a>. It’s required for PowerCLI and works on Windows, macOS, and Linux. On Windows, just run the MSI installer.</p></div><div class="post-footer">
         <a href="/en/2020/06/powercli-vsphere-permission/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Automation/">Automation</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2020/06/new-backup-copy/">New Backup Copy Modes Bring 3-2-1 to More Workloads</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-06-02">2020-06-02</time></span></div><div class="content"><h2 id="backup-copy-fundamentals">Backup Copy Fundamentals</h2>
-<p>Veeam’s Backup Copy feature is the backbone of the 3-2-1 rule and has been part of VBR since day one. Conceptually it’s simple: take an existing restore point and duplicate it as a fully functional restore point in another repository. A restore point might be a single <code>.vbk</code> full or a chain of <code>.vbk + .vib</code> files—Backup Copy preserves whatever structure the source job created.</p>
-<p>Backup Copy typically uses a forever-incremental chain. The first run produces a <code>.vbk</code> full; every subsequent run writes <code>.vib</code> increments on top of that base. Synthetic fulls are created via the GFS schedule—for example:</p></div><div class="post-footer">
-        <a href="/en/2020/06/new-backup-copy/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VBR/">VBR</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">

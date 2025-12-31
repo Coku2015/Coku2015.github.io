@@ -4,9 +4,24 @@
         <link>https://blog.backupnext.cloud/</link>
         <description>欢迎访问云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
+    <link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>
+    <pubDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</guid>
+    <description><![CDATA[<p>上周，一位朋友在群里喊：下载了 Veeam V13 的 ISO，结果升级失败。</p>
+<p>我问他下的哪个？</p>
+<p>他说：Veeam Data Platform Premium ISO 啊，20 GB 那个。</p>
+<p>我叹了口气。</p>
+<p>你踩坑了。</p>
+<hr>
+<h2 id="-核心变化vdp-premium-iso-不能用了">⚠️ 核心变化：VDP Premium ISO 不能用了</h2>
+<p>这次 V13 的变化，很多人第一反应是懵的。</p>]]></description>
+</item>
+<item>
     <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
     <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
     <pubDate>Mon, 01 Dec 2025 00:00:00 &#43;0000</pubDate>
@@ -89,14 +104,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-06/</guid>
     <description><![CDATA[<p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p>]]></description>
-</item>
-<item>
-    <title>把复杂留给 Veeam：Infrastructure Appliance 上手指南</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-05/</link>
-    <pubDate>Mon, 22 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-05/</guid>
-    <description><![CDATA[<p>Veeam 在 v13 中不仅把备份主服务器做成了预加固的 Software Appliance，同时也推出了专门用于承载角色服务的 <strong>Veeam Infrastructure Appliance</strong>。如果把 Software Appliance 看作“指挥中心”，那么 Infrastructure Appliance 更像是一台预配置、上手即用的“任务执行单位”：它为 Proxy、Mount Server、Hardened Repository 等角色提供了一个统一、受控并且合规的运行环境。</p>]]></description>
 </item>
 </channel>
 </rss>
