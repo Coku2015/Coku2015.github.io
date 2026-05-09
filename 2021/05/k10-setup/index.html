@@ -196,7 +196,7 @@
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 更新 helm 库，将 k10 的 chart 抓到本地来</span>
 </span></span><span class="line"><span class="cl">$ helm repo update <span class="o">&amp;&amp;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    helm fetch kasten/k10
+</span></span></span><span class="line"><span class="cl">    helm fetch kasten/k10
 </span></span><span class="line"><span class="cl"><span class="c1"># 上面命令中，kasten 就是 repo 名字，而 k10 就是 chart 名字</span></span></span></code></pre></div></div>
 <ol start="2">
 <li>在 Kubernetes 群集中创建 kasten-io 的 namespace。</li>
@@ -218,7 +218,7 @@
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 使用 helm 安装 kasten k10</span>
 </span></span><span class="line"><span class="cl">$ helm install k10 k10-4.0.2.tgz --namespace kasten-io <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --set global.airgapped.repository<span class="o">=</span>ccr.ccs.tencentyun.com/kasten
+</span></span></span><span class="line"><span class="cl">    --set global.airgapped.repository<span class="o">=</span>ccr.ccs.tencentyun.com/kasten
 </span></span><span class="line"><span class="cl"><span class="c1"># 上面命令中，k10 就是 chart 名字，而 repo 就没有指定，直接使用了下载下来的 tgz 压缩包中的内容，不需要再去 repo 中找相关 chart 了。</span></span></span></code></pre></div></div>
 <ol start="4">
 <li>由于整个安装过程，会自动去指定的容器镜像库中抓取容器镜像，比如我们这个例子就是去腾讯国内镜像 ccr.ccs.tencentyun.com/kasten/ 中抓 k10 镜像，因此会需要等待一段时间，在这段等待的过程中，可以用以下命令来查询 k10 的所有 pod 的状态。</li>
@@ -275,8 +275,8 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

@@ -4,9 +4,18 @@
         <link>https://blog.backupnext.cloud/</link>
         <description>欢迎访问云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sat, 09 May 2026 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Holo VTL 正式发布</title>
+    <link>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</link>
+    <pubDate>Sat, 09 May 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</guid>
+    <description><![CDATA[<p>我在备份圈做了好多年，经常遇到同一个问题：想测试磁带备份功能，但手头没有真实磁带库。</p>
+<p>真实磁带库不便宜，随便一台入门级的要几万起步，调试也麻烦。测试环境里这东西更是稀缺。不少人只能跳过磁带相关的功能验证，或者直接用生产环境的磁带库做测试，风险不小。</p>]]></description>
+</item>
+<item>
     <title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
     <link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>
     <pubDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</pubDate>
@@ -96,14 +105,6 @@
                 <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
             </div><p>v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。</p>
 <p>今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。</p>]]></description>
-</item>
-<item>
-    <title>深度解读：Veeam V13 的发布策略与部署选择</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-06/</link>
-    <pubDate>Tue, 23 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam-software-appliance-06/</guid>
-    <description><![CDATA[<p>最近，Veeam 在 <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D 论坛上</a>由首席产品官 Anton Gostev 发布了一篇 FAQ，把 V13 的发布节奏、部署选项、许可与迁移策略讲得非常清楚。对于客户和合作伙伴工程师来说，这不是一条“新闻”，而是一份足以影响“是否立即升级、如何规划迁移路径”的实战指南。本文以该帖为切入点，结合官方发布信息，解读它对不同规模用户的实际影响，并提出可操作的建议。</p>]]></description>
 </item>
 </channel>
 </rss>

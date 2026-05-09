@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-	<meta name="generator" content="Hugo 0.152.2">
+	<meta name="generator" content="Hugo 0.161.1">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -120,6 +120,13 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2023/05/vro-v6-guide-01/">VRO Basics (Part 1) – Overview</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-24">2023-05-24</time></span></div><div class="content"><p>There&rsquo;s something exciting happening in the Veeam ecosystem. With the launch of Veeam Data Platform v12, we&rsquo;re seeing a significant evolution in disaster recovery orchestration. The platform&rsquo;s Platinum edition now includes <strong>Veeam Recovery Orchestrator (VRO)</strong> v6—the successor to Veeam Availability Orchestrator (VAO).</p>
+<p>What makes this particularly noteworthy is the massive leap forward from the previous VAO v2. VRO v6 works seamlessly alongside VBR v12 and Veeam ONE v12, delivering comprehensive enhancements that transform how we approach disaster recovery. The improvements are so substantial that I&rsquo;ve completely refreshed my foundational &ldquo;VRO Basics&rdquo; series to share everything that&rsquo;s new and powerful in this release.</p></div><div class="post-footer">
+        <a href="/en/2023/05/vro-v6-guide-01/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2023/03/v12update-hidden-key/">Hidden Shortcuts in Veeam Backup & Replication v12</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-03-28">2023-03-28</time></span></div><div class="content"><p>There&rsquo;s something special about discovering hidden features in software—the kind that aren&rsquo;t in the release notes but make your daily work so much better. Veeam Backup &amp; Replication v10 introduced some fantastic hidden features, and with the recent v12 release, there are even more gems waiting to be found.</p>
 <p>Let me share the hidden shortcuts and features I&rsquo;ve uncovered in v12 that could save you hours of frustration.</p>
@@ -166,25 +173,6 @@
 <p>Many readers may never have encountered this tool, but for VMware administrators, it was essentially their best partner. The installation rate of this tool was incredibly high - among VMware&rsquo;s entire product lineup, it was second only to vCenter. In most environments, administrators would install vCenter Converter immediately after installing vCenter.</p></div><div class="post-footer">
         <a href="/en/2022/02/vmware-vcenter-converter%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VMware/">VMware</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2022/02/veeam-hardened-linux-repository-configurator/">Veeam Hardened Linux Repository Configurator</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-25">2022-02-25</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Repository/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Repository</a></span></div><div class="content"><h2 id="script-purpose">Script Purpose</h2>
-<p>According to Veeam best practices, this one-click script configures a Linux system. After the operating system configuration is complete, you can return to the VBR console to complete the repository addition.</p>
-<p>For manual configuration and principle introduction, please refer to the following posts:</p>
-<p><a href="https://community.veeam.com/vug-china-85/veeam-v11-hardened-linux-repository-%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-centos8-1188" target="_blank" rel="noopener noreffer ">veeam-v11-hardened-linux-repository-配置指南-centos8</a></p>
-<p><a href="https://community.veeam.com/vug-china-85/%e5%8a%a0%e5%9b%ba%e7%9a%84%e5%a4%87%e4%bb%bd%e5%ad%98%e5%82%a8%e5%ba%93hardened-repository%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-ubuntu-1093" target="_blank" rel="noopener noreffer ">加固的备份存储库hardened-repository配置指南-ubuntu</a></p>
-<p><a href="https://community.veeam.com/vug-china-85/veeam-hardened-repository-quick-starter-1410" target="_blank" rel="noopener noreffer ">veeam-hardened-repository-quick-starter</a></p>
-<h2 id="prerequisites-for-use">Prerequisites for Use</h2>
-<ol>
-<li>Ensure the system meets the minimum requirements for using Veeam Hardened Linux Repository.</li>
-<li>The server has unformatted disks such as /dev/sdb, /dev/sdc, etc.</li>
-<li>This script must be run using the root account.</li>
-</ol>
-<h2 id="system-requirements">System Requirements</h2>
-<p>This script has been tested on Redhat 8.2/CentOS 8.2/Ubuntu 20.04 and above versions. Other system versions are not currently supported.</p></div><div class="post-footer">
-        <a href="/en/2022/02/veeam-hardened-linux-repository-configurator/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
@@ -300,8 +288,8 @@
         </div>
     </section></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

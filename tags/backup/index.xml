@@ -2,14 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Backup on 云虚智安</title>
-    <link>https://blog.backupnext.cloud/tags/backup/</link>
+    <link>https://blog.backupnext.cloud/tags/Backup/</link>
     <description>Recent content in Backup on 云虚智安</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Wed, 31 Dec 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.backupnext.cloud/tags/Backup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Holo VTL 正式发布</title>
+      <link>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</link>
+      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <guid>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</guid>
+      <description>&lt;p&gt;我在备份圈做了好多年，经常遇到同一个问题：想测试磁带备份功能，但手头没有真实磁带库。&lt;/p&gt;&#xA;&lt;p&gt;真实磁带库不便宜，随便一台入门级的要几万起步，调试也麻烦。测试环境里这东西更是稀缺。不少人只能跳过磁带相关的功能验证，或者直接用生产环境的磁带库做测试，风险不小。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
       <link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>

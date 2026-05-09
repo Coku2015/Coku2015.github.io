@@ -4,7 +4,16 @@
         <link>https://blog.backupnext.cloud/en/posts/</link>
         <description>All Posts | Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sat, 09 May 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Holo VTL Is Now Live</title>
+    <link>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</link>
+    <pubDate>Sat, 09 May 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</guid>
+    <description><![CDATA[<p>I&rsquo;ve been in the backup industry for years, and I keep running into the same problem: you want to test tape backup functionality, but you don&rsquo;t have a real tape library on hand.</p>
+<p>Real tape libraries aren&rsquo;t cheap — even an entry-level unit starts at tens of thousands of dollars, and getting one configured is a headache. In lab and test environments, they&rsquo;re practically nonexistent. Most people end up skipping tape-related validation altogether, or worse, running tests against a production tape library — which carries real risk.</p>]]></description>
+</item>
+<item>
     <title>Which Veeam V13 ISO Should You Download? 90% Get It Wrong from Step One</title>
     <link>https://blog.backupnext.cloud/en/2025/12/veeam-v13-iso-download/</link>
     <pubDate>Wed, 31 Dec 2025 00:00:00 &#43;0000</pubDate>
@@ -108,14 +117,6 @@
                 <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
             </div><p>In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I&rsquo;ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.</p>
 <p>Today, let&rsquo;s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization&rsquo;s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company&rsquo;s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.</p>]]></description>
-</item>
-<item>
-    <title>In-Depth Analysis: Veeam V13 Release Strategy and Deployment Options</title>
-    <link>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</link>
-    <pubDate>Tue, 23 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-06/</guid>
-    <description><![CDATA[<p>Recently, Veeam&rsquo;s Chief Product Officer Anton Gostev published an FAQ on the <a href="https://forums.veeam.com/veeam-backup-replication-f2/frequently-asked-questions-release-schedule-and-deployment-options-t99995.html" target="_blank" rel="noopener noreffer ">R&amp;D forums</a> that clearly explains V13&rsquo;s release schedule, deployment options, licensing, and migration strategy. For customers and partner engineers, this isn&rsquo;t just &ldquo;news&rdquo; – it&rsquo;s a practical guide that will influence decisions about &ldquo;whether to upgrade immediately and how to plan migration paths.&rdquo; This article uses that post as a starting point, combining it with official release information to analyze its actual impact on users of different scales, and provides actionable recommendations.</p>]]></description>
 </item>
 </channel>
 </rss>

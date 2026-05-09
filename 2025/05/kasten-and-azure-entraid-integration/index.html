@@ -325,13 +325,13 @@
         <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#创建clusterrolebinding</span>
 </span></span><span class="line"><span class="cl">kubectl create clusterrolebinding k10-admin <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --clusterrole<span class="o">=</span>k10-admin <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c
+</span></span></span><span class="line"><span class="cl">  --clusterrole<span class="o">=</span>k10-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c
 </span></span><span class="line"><span class="cl"><span class="c1">#创建rolebinding</span>
 </span></span><span class="line"><span class="cl">kubectl create rolebinding k10-admin <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --role<span class="o">=</span>k10-ns-admin <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --namespace<span class="o">=</span>kasten-io</span></span></code></pre></div></div>
+</span></span></span><span class="line"><span class="cl">  --role<span class="o">=</span>k10-ns-admin <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --group<span class="o">=</span>kasten_azure_d228b7e7-c10c-488b-9b13-8714682dbb0c <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --namespace<span class="o">=</span>kasten-io</span></span></code></pre></div></div>
 <p>创建完成后，再刷新网页，会发现访问就正常了。到此所有配置完成。</p>
 <h2 id="使用-azure-entraid-认证">使用 Azure EntraID 认证</h2>
 <p>重新打开 Kasten 网页，会立刻重定向到 Azure EntraID 的认证界面。</p>
@@ -393,8 +393,8 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

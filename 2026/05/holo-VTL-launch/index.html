@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Holo VTL 正式发布 - 云虚智安</title><meta name="description" content="我做了个开源虚拟磁带库：Holo VTL 正式发布."><meta property="og:url" content="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/">
+  <meta property="og:site_name" content="云虚智安">
+  <meta property="og:title" content="Holo VTL 正式发布">
+  <meta property="og:description" content="我做了个开源虚拟磁带库：Holo VTL 正式发布.">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-09T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Holo">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/featured-image.png">
+  <meta name="twitter:title" content="Holo VTL 正式发布">
+  <meta name="twitter:description" content="我做了个开源虚拟磁带库：Holo VTL 正式发布.">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/" /><link rel="prev" href="https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Holo VTL 正式发布",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/2026\/05\/holo-VTL-launch\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2026\/05\/holo-VTL-launch\/featured-image.png"],"genre": "posts","keywords": "backup, holo","wordcount":  2503 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2026\/05\/holo-VTL-launch\/","datePublished": "2026-05-09T00:00:00+00:00","dateModified": "2026-05-09T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "我做了个开源虚拟磁带库：Holo VTL 正式发布."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="云虚智安">云虚智安</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/05/holo-VTL-launch/" selected>简体中文</option><option value="/en/2026/05/holo-vtl-launch/">English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="云虚智安">云虚智安</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/05/holo-VTL-launch/" selected>简体中文</option><option value="/en/2026/05/holo-vtl-launch/">English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Holo VTL 正式发布</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-09">2026-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2503 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2026/05/holo-VTL-launch/featured-image.png"
+        data-srcset="/2026/05/holo-VTL-launch/featured-image.png, /2026/05/holo-VTL-launch/featured-image.png 1.5x, /2026/05/holo-VTL-launch/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2026/05/holo-VTL-launch/featured-image.png"
+        title="我做了个开源虚拟磁带库：Holo VTL 正式发布." /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#holo-vtl-是什么">Holo VTL 是什么？</a></li>
+        <li><a href="#它长什么样">它长什么样？</a></li>
+        <li><a href="#安装只需要一行命令">安装只需要一行命令</a></li>
+        <li><a href="#从零到配合-veeam-使用的完整流程">从零到配合 Veeam 使用的完整流程</a>
+          <ul>
+            <li><a href="#第一步在-holo-vtl-中创建虚拟磁带库">第一步：在 Holo VTL 中创建虚拟磁带库</a></li>
+            <li><a href="#第二步在-veeam-服务器上连接-iscsi-target">第二步：在 Veeam 服务器上连接 iSCSI Target</a></li>
+            <li><a href="#第三步在-veeam-中添加-tape-infrastructure">第三步：在 Veeam 中添加 Tape Infrastructure</a></li>
+            <li><a href="#第四步执行-inventory">第四步：执行 Inventory</a></li>
+            <li><a href="#第五步创建-tape-backup-job">第五步：创建 Tape Backup Job</a></li>
+            <li><a href="#第六步查看结果">第六步：查看结果</a></li>
+          </ul>
+        </li>
+        <li><a href="#适合哪些场景">适合哪些场景？</a></li>
+        <li><a href="#它不是什么">它不是什么</a></li>
+        <li><a href="#遇到报错怎么排查">遇到报错怎么排查？</a></li>
+        <li><a href="#开源信息">开源信息</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>我在备份圈做了好多年，经常遇到同一个问题：想测试磁带备份功能，但手头没有真实磁带库。</p>
+<p>真实磁带库不便宜，随便一台入门级的要几万起步，调试也麻烦。测试环境里这东西更是稀缺。不少人只能跳过磁带相关的功能验证，或者直接用生产环境的磁带库做测试，风险不小。</p>
+<p>今天，我正式发布了 <strong>Holo VTL</strong>，这是我自己开发的一个开源虚拟磁带库项目。</p>
+<p>项目地址：<a href="https://github.com/Holo-VTL/Holo" target="_blank" rel="noopener noreffer ">https://github.com/Holo-VTL/Holo</a></p>
+<hr>
+<h3 id="holo-vtl-是什么">Holo VTL 是什么？</h3>
+<p>简单说，Holo VTL 是一个运行在普通 Linux 服务器上的虚拟磁带库。</p>
+<p>安装完之后，它会在你的服务器上模拟出一套完整的磁带库设备，包括磁带驱动器、槽位和磁带介质，然后通过标准 iSCSI 协议暴露出去。备份软件连接之后，看到的是一台真实的磁带库，识别、Inventory、写数据，全都能做。</p>
+<p>Holo VTL 的名字来自&quot;全息&quot;（Hologram）——名字的意思是，哪怕是一个碎片，也能反映整体的图像。</p>
+<p>目前第一个正式版本已经发布：<strong><a href="mailto:Holo@v1.0.0" rel="">Holo@v1.0.0</a></strong>，MIT License 开源。</p>
+<hr>
+<h3 id="它长什么样">它长什么样？</h3>
+<p>安装完成之后，可以通过浏览器打开 Web 控制台：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>http://&lt;服务器IP&gt;/ui/</code></pre></div>
+<p><strong>系统概览页</strong></p>
+<p>首页是一个 Dashboard，显示当前系统状态，包括已配置的虚拟磁带库、驱动器数量、磁带数量、存储占用等基本信息。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/rq3E/Xnip2026-05-09_13-50-13.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/rq3E/Xnip2026-05-09_13-50-13.png, https://files.seeusercontent.com/2026/05/09/rq3E/Xnip2026-05-09_13-50-13.png 1.5x, https://files.seeusercontent.com/2026/05/09/rq3E/Xnip2026-05-09_13-50-13.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/rq3E/Xnip2026-05-09_13-50-13.png"
+        title="Xnip2026-05-09_13-50-13" /></p>
+<p><strong>存储管理页</strong></p>
+<p>在存储管理页面，可以查看和管理虚拟磁带的存储状态，包括每盘磁带的容量信息、压缩比、使用情况。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Zpj8/Xnip2026-05-09_13-50-29.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Zpj8/Xnip2026-05-09_13-50-29.png, https://files.seeusercontent.com/2026/05/09/Zpj8/Xnip2026-05-09_13-50-29.png 1.5x, https://files.seeusercontent.com/2026/05/09/Zpj8/Xnip2026-05-09_13-50-29.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Zpj8/Xnip2026-05-09_13-50-29.png"
+        title="Xnip2026-05-09_13-50-29" /></p>
+<p><strong>VTL 机架视图</strong></p>
+<p>这是我个人比较喜欢的一个页面——用可视化的机架形式展示虚拟磁带库的当前状态，能直观看到哪些槽位有磁带、哪些驱动器处于加载状态。在这个视图上还能模拟磁带出库，让进入离线的保管库中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/h8Vs/Xnip2026-05-09_13-52-29.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/h8Vs/Xnip2026-05-09_13-52-29.png, https://files.seeusercontent.com/2026/05/09/h8Vs/Xnip2026-05-09_13-52-29.png 1.5x, https://files.seeusercontent.com/2026/05/09/h8Vs/Xnip2026-05-09_13-52-29.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/h8Vs/Xnip2026-05-09_13-52-29.png"
+        title="Xnip2026-05-09_13-52-29" /></p>
+<p>整体 UI 不复杂，目标就是让管理员能快速看清状态，做日常管理，不需要全靠命令行。</p>
+<hr>
+<h3 id="安装只需要一行命令">安装只需要一行命令</h3>
+<p>Holo VTL 目前支持主流 Linux 发行版，包括 RHEL 8/9/10、Rocky Linux、Alma Linux、Ubuntu 20.04/24.04/25.04、Debian 12/13，以及 openSUSE Leap 15.6。</p>
+<p>在线安装，需要root权限：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://raw.githubusercontent.com/Holo-VTL/Holo/main/scripts/install.sh <span class="p">|</span> bash</span></span></code></pre></div></div>
+<p>如果是离线环境，从 Releases 页下载安装包之后：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="复制到剪贴板"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bash install.sh --offline</span></span></code></pre></div></div>
+<p>安装脚本会自动处理所有依赖，包括 iSCSI target 组件、TCMU 驱动、systemd 服务配置。装完之后，打开浏览器就可以用了。</p>
+<hr>
+<h3 id="从零到配合-veeam-使用的完整流程">从零到配合 Veeam 使用的完整流程</h3>
+<p>下面以 Veeam Backup &amp; Replication 为例，走一遍完整的使用流程。</p>
+<h4 id="第一步在-holo-vtl-中创建虚拟磁带库">第一步：在 Holo VTL 中创建虚拟磁带库</h4>
+<p>打开 Web 控制台，创建一个新的虚拟磁带库。可以选择磁带库型号，Holo VTL 内置了 48 种磁带驱动器配置，包括 IBM LTO 系列（LTO-3 到 LTO-9）、HP Ultrium、Quantum、Dell PowerVault 等主流型号，以及 50+ 种磁带库配置。推荐如果 Tape Server 使用 Windows 的用户选择 IBM 或者 HP 系列的虚拟带库，因为它自带这两个品牌的驱动，而使用 Linux 作为 Tape Server 则没有任何驱动限制。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png, https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png 1.5x, https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png"
+        title="Xnip2026-05-09_13-54-01" /></p>
+<p>配置项包括：驱动器数量、槽位数量、初始磁带数量和 IE 口数量。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png, https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png 1.5x, https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png"
+        title="Xnip2026-05-09_13-54-17" /></p>
+<p>完成创建后，Holo VTL 会通过 iSCSI 将这套虚拟设备暴露出来，等待备份服务器连接，网页上能够查看当前发布的目标。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/iUb9/Xnip2026-05-09_13-56-44.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/iUb9/Xnip2026-05-09_13-56-44.png, https://files.seeusercontent.com/2026/05/09/iUb9/Xnip2026-05-09_13-56-44.png 1.5x, https://files.seeusercontent.com/2026/05/09/iUb9/Xnip2026-05-09_13-56-44.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/iUb9/Xnip2026-05-09_13-56-44.png"
+        title="Xnip2026-05-09_13-56-44" /></p>
+<h4 id="第二步在-veeam-服务器上连接-iscsi-target">第二步：在 Veeam 服务器上连接 iSCSI Target</h4>
+<p>在 Veeam 的 Tape Server 上，打开 iSCSI Initiator，添加 Holo VTL 服务器的 IP 地址，连接对应的 iSCSI Target。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png, https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png 1.5x, https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png"
+        title="Xnip2026-05-09_14-04-08" /></p>
+<p>连接成功之后，在 Windows 设备管理器中应该能看到新增的磁带设备：Tape Drive 和 Medium Changer。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png, https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png 1.5x, https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png"
+        title="Xnip2026-05-09_14-07-55" /></p>
+<h4 id="第三步在-veeam-中添加-tape-infrastructure">第三步：在 Veeam 中添加 Tape Infrastructure</h4>
+<p>打开 Veeam 控制台，进入 <strong>Tape Infrastructure</strong> 视图，扫描已添加的服务器。</p>
+<p>如果 一切正常，Veeam 会识别到 Holo VTL 提供的虚拟磁带库。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png, https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png 1.5x, https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png"
+        title="Xnip2026-05-09_14-10-51" /></p>
+<h4 id="第四步执行-inventory">第四步：执行 Inventory</h4>
+<p>在 Veeam 的 Tape 视图中，对磁带库执行 Inventory 操作。Veeam 会扫描所有槽位，识别每盘虚拟磁带的条码和状态。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png, https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png 1.5x, https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png"
+        title="Xnip2026-05-09_14-13-56" /></p>
+<h4 id="第五步创建-tape-backup-job">第五步：创建 Tape Backup Job</h4>
+<p>Inventory 完成之后，就可以在 Veeam 中创建 Tape Backup Job 了，把已有的备份数据写入虚拟磁带，流程和使用真实磁带库完全一样。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png, https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png 1.5x, https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png"
+        title="Xnip2026-05-09_14-15-09" /></p>
+<h4 id="第六步查看结果">第六步：查看结果</h4>
+<p>Job 运行完成后，可以在 Veeam 中查看任务状态，也可以回到 Holo VTL 的 Web 控制台，查看虚拟磁带的实际使用情况——容量变化、数据写入量都能看到。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/cUt1/Xnip2026-05-09_14-16-45.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/cUt1/Xnip2026-05-09_14-16-45.png, https://files.seeusercontent.com/2026/05/09/cUt1/Xnip2026-05-09_14-16-45.png 1.5x, https://files.seeusercontent.com/2026/05/09/cUt1/Xnip2026-05-09_14-16-45.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/cUt1/Xnip2026-05-09_14-16-45.png"
+        title="Xnip2026-05-09_14-16-45" /></p>
+<p>整个流程走下来，Veeam 实际上是在对一套虚拟磁带库做完整的备份操作，从发现设备、Inventory、写入数据，到任务完成，和真实硬件没有本质区别。</p>
+<hr>
+<h3 id="适合哪些场景">适合哪些场景？</h3>
+<p><strong>备份软件测试。</strong> 想验证备份软件的磁带功能，但没有真实设备——这是 Holo VTL 最直接的用途。</p>
+<p><strong>学习和实验环境。</strong> 想搞清楚 VTL、iSCSI、磁带库、Media Pool、Tape Job 这些概念，有一个可以动手操作的环境比只看文档有效得多。</p>
+<p><strong>备份流程验证。</strong> 测试磁带轮换策略、介质保留策略、归档流程，先在虚拟环境里跑通再上生产。</p>
+<p><strong>开发和兼容性测试。</strong> 如果你在开发和备份、归档、存储相关的系统，可以用 Holo VTL 模拟磁带库设备做集成测试。</p>
+<hr>
+<h3 id="它不是什么">它不是什么</h3>
+<p>说清楚这个同样重要。</p>
+<p>Holo VTL 不是一个完整的备份平台，也不是文件同步工具。它的定位是&quot;虚拟磁带库设备&quot;，更像是备份体系中的虚拟硬件层——为备份软件提供标准的磁带库设备接口，本身不负责管理备份策略、调度任务或存储数据的业务逻辑，这些都交给备份软件来做。</p>
+<hr>
+<h3 id="遇到报错怎么排查">遇到报错怎么排查？</h3>
+<p>作为第一个版本，碰到问题是正常的，尤其是不同备份软件、不同 SCSI 命令序列之间的兼容性，很难一次性覆盖完。</p>
+<p>如果你在使用过程中遇到备份软件报错，建议按下面这个流程收集信息再来找我：</p>
+<p><strong>第一步：打开详细日志。</strong> 在 Holo VTL Web 控制台的**关于（About）**页面，找到日志级别设置，切换到打开详细日志模式。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/9gpH/Xnip2026-05-09_15-01-09.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/9gpH/Xnip2026-05-09_15-01-09.png, https://files.seeusercontent.com/2026/05/09/9gpH/Xnip2026-05-09_15-01-09.png 1.5x, https://files.seeusercontent.com/2026/05/09/9gpH/Xnip2026-05-09_15-01-09.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/9gpH/Xnip2026-05-09_15-01-09.png"
+        title="Xnip2026-05-09_15-01-09" /></p>
+<p><strong>第二步：重现问题。</strong> 日志开启后，在备份软件里重新执行出错的操作（备份或恢复），让错误再发生一次。</p>
+<p><strong>第三步：下载日志包。</strong> 同样在 About 页面，点击&quot;下载日志包&quot;按钮，会生成一个包含完整诊断信息的压缩包。</p>
+<p><strong>第四步：发给我。</strong> 把日志包发到 <strong><a href="mailto:coku2015@gmail.com" rel="">coku2015@gmail.com</a></strong>，邮件里简单描述一下：用的是什么备份软件、做了什么操作、报了什么错。我会尽快看。</p>
+<hr>
+<h3 id="开源信息">开源信息</h3>
+<p>Holo VTL 使用 MIT License 开源，项目地址：</p>
+<p><strong><a href="https://github.com/Holo-VTL/Holo" target="_blank" rel="noopener noreffer ">https://github.com/Holo-VTL/Holo</a></strong></p>
+<p>如果你对这个项目感兴趣，欢迎：</p>
+<ul>
+<li>⭐ Star 项目</li>
+<li>提交 Issue 反馈使用问题</li>
+<li>测试你用的备份软件的兼容性，把结果告诉我</li>
+<li>提交 Pull Request</li>
+</ul>
+<p>接下去我会继续完善 Web UI 体验、补充更多的详细配置文档、测试更多备份软件的兼容性。如果你用的是 Veeam 或者其他任何备份软件，有任何问题都可以在 GitHub Issues 里找我，或者直接在博客留言。</p>
+<hr>
+<p><em>这是我用 Codex 和 Claude Code 制作的小项目， Holo VTL 的第一个公开版本，也是一个起点。希望它能帮到需要测试和学习磁带备份的朋友。</em></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-05-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/05/holo-VTL-launch/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2026%2F05%2Fholo-VTL-launch%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2026%2F05%2Fholo-VTL-launch%2F&amp;text=Holo&#43;VTL&#43;%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2026%252F05%252Fholo-VTL-launch%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2026%252F05%252Fholo-VTL-launch%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/Backup/">Backup</a>,&nbsp;<a href="/tags/holo/">Holo</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2025/12/veeam-v13-iso-download/" class="prev" rel="prev" title="Veeam V13 下载哪个 ISO？90% 的人第一步就错了"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://blog-backupnext-cloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script><script>
+            var doNotTrack = false;
+            if ( false ) {
+                var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+                var doNotTrack = (dnt == "1" || dnt == "yes");
+            }
+            if (!doNotTrack) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-JS3EGTT92G');
+            }
+        </script><script src="https://www.googletagmanager.com/gtag/js?id=G-JS3EGTT92G" async></script></body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-	<meta name="generator" content="Hugo 0.152.2">
+	<meta name="generator" content="Hugo 0.161.1">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -120,6 +120,25 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2022/02/veeam-hardened-linux-repository-configurator/">Veeam Hardened Linux Repository Configurator</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-02-25">2022-02-25</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Repository/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Repository</a></span></div><div class="content"><h2 id="script-purpose">Script Purpose</h2>
+<p>According to Veeam best practices, this one-click script configures a Linux system. After the operating system configuration is complete, you can return to the VBR console to complete the repository addition.</p>
+<p>For manual configuration and principle introduction, please refer to the following posts:</p>
+<p><a href="https://community.veeam.com/vug-china-85/veeam-v11-hardened-linux-repository-%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-centos8-1188" target="_blank" rel="noopener noreffer ">veeam-v11-hardened-linux-repository-配置指南-centos8</a></p>
+<p><a href="https://community.veeam.com/vug-china-85/%e5%8a%a0%e5%9b%ba%e7%9a%84%e5%a4%87%e4%bb%bd%e5%ad%98%e5%82%a8%e5%ba%93hardened-repository%e9%85%8d%e7%bd%ae%e6%8c%87%e5%8d%97-ubuntu-1093" target="_blank" rel="noopener noreffer ">加固的备份存储库hardened-repository配置指南-ubuntu</a></p>
+<p><a href="https://community.veeam.com/vug-china-85/veeam-hardened-repository-quick-starter-1410" target="_blank" rel="noopener noreffer ">veeam-hardened-repository-quick-starter</a></p>
+<h2 id="prerequisites-for-use">Prerequisites for Use</h2>
+<ol>
+<li>Ensure the system meets the minimum requirements for using Veeam Hardened Linux Repository.</li>
+<li>The server has unformatted disks such as /dev/sdb, /dev/sdc, etc.</li>
+<li>This script must be run using the root account.</li>
+</ol>
+<h2 id="system-requirements">System Requirements</h2>
+<p>This script has been tested on Redhat 8.2/CentOS 8.2/Ubuntu 20.04 and above versions. Other system versions are not currently supported.</p></div><div class="post-footer">
+        <a href="/en/2022/02/veeam-hardened-linux-repository-configurator/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2021/10/veeam-agent-for-linux-installation-deep-dive/">Veeam Agent for Linux Installation Deep Dive</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-10-12">2021-10-12</time></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Linux-Agent/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux Agent</a></span></div><div class="content"><h2 id="1-components--roles">1. Components &amp; Roles</h2>
 <p>Veeam Agent for Linux (VAL) has two parts: the <strong>Veeam binaries</strong> and the <strong>VeeamSnap kernel module</strong>. On CentOS/Red Hat, you typically install:</p>
@@ -179,14 +198,6 @@ veeamsnap-&lt;version&gt;.rpm</code></pre></div>
 <p>Kasten K10 installation uses the Kubernetes package management tool Helm. If you&rsquo;re not familiar with Kubernetes, you might not know what Helm is. Simply put, Helm on Kubernetes is like yum on CentOS - when you need to install software on CentOS, you just run <code>yum install</code>, and on Kubernetes, it&rsquo;s <code>helm install</code>.</p></div><div class="post-footer">
         <a href="/en/2021/05/k10-setup/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Kubernetes/">Kubernetes</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2021/04/mac-agent/">Veeam Agent for Mac Standalone Guide</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2021-04-04">2021-04-04</time></span></div><div class="content"><p>Veeam Agent for Mac arrived with v11. I assumed it required central management by VBR, but the User Guide reveals a standalone mode. Here’s how to install, configure, and back up without a VBR server.</p>
-<p>You can grab the installer by running <strong>Create Protection Group</strong> in VBR—or download the extracted <code>.pkg</code> from my mirror: <a href="https://cloud.189.cn/t/eEZVvifyqIrm" target="_blank" rel="noopener noreffer ">https://cloud.189.cn/t/eEZVvifyqIrm</a></p>
-<p>Install the package like any macOS app (double-click, Next, Next). Afterward, enable full disk access via <strong>System Preferences → Security &amp; Privacy → Privacy</strong> so the agent can read files:</p></div><div class="post-footer">
-        <a href="/en/2021/04/mac-agent/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
@@ -302,8 +313,8 @@ veeamsnap-&lt;version&gt;.rpm</code></pre></div>
         </div>
     </section></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.152.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

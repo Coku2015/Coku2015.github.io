@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Holo VTL Is Now Live - Cloud.Virt.AI.Sec</title><meta name="description" content="I built an open-source virtual tape library: Holo VTL is officially released."><meta property="og:url" content="https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/">
+  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+  <meta property="og:title" content="Holo VTL Is Now Live">
+  <meta property="og:description" content="I built an open-source virtual tape library: Holo VTL is officially released.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-09T00:00:00+00:00">
+    <meta property="article:tag" content="Backup">
+    <meta property="article:tag" content="Holo">
+    <meta property="og:image" content="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/featured-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/featured-image.png">
+  <meta name="twitter:title" content="Holo VTL Is Now Live">
+  <meta name="twitter:description" content="I built an open-source virtual tape library: Holo VTL is officially released.">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2025/12/veeam-v13-iso-download/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Holo VTL Is Now Live",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2026\/05\/holo-vtl-launch\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2026\/05\/holo-VTL-launch\/featured-image.png"],"genre": "posts","keywords": "backup, holo","wordcount":  1310 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2026\/05\/holo-vtl-launch\/","datePublished": "2026-05-09T00:00:00+00:00","dateModified": "2026-05-09T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "I built an open-source virtual tape library: Holo VTL is officially released."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/05/holo-VTL-launch/">简体中文</option><option value="/en/2026/05/holo-vtl-launch/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/05/holo-VTL-launch/">简体中文</option><option value="/en/2026/05/holo-vtl-launch/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Holo VTL Is Now Live</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-09">2026-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1310 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2026/05/holo-VTL-launch/featured-image.png"
+        data-srcset="/2026/05/holo-VTL-launch/featured-image.png, /2026/05/holo-VTL-launch/featured-image.png 1.5x, /2026/05/holo-VTL-launch/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2026/05/holo-VTL-launch/featured-image.png"
+        title="I built an open-source virtual tape library: Holo VTL is officially released." /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#what-is-holo-vtl">What Is Holo VTL?</a></li>
+        <li><a href="#what-does-it-look-like">What Does It Look Like?</a></li>
+        <li><a href="#one-command-to-install">One Command to Install</a></li>
+        <li><a href="#end-to-end-workflow-with-veeam">End-to-End Workflow with Veeam</a>
+          <ul>
+            <li><a href="#step-1-create-a-virtual-tape-library-in-holo-vtl">Step 1: Create a Virtual Tape Library in Holo VTL</a></li>
+            <li><a href="#step-2-connect-the-iscsi-target-on-the-veeam-server">Step 2: Connect the iSCSI Target on the Veeam Server</a></li>
+            <li><a href="#step-3-add-tape-infrastructure-in-veeam">Step 3: Add Tape Infrastructure in Veeam</a></li>
+            <li><a href="#step-4-run-inventory">Step 4: Run Inventory</a></li>
+            <li><a href="#step-5-create-a-tape-backup-job">Step 5: Create a Tape Backup Job</a></li>
+            <li><a href="#step-6-review-the-results">Step 6: Review the Results</a></li>
+          </ul>
+        </li>
+        <li><a href="#use-cases">Use Cases</a></li>
+        <li><a href="#what-it-isnt">What It Isn&rsquo;t</a></li>
+        <li><a href="#troubleshooting-errors">Troubleshooting Errors</a></li>
+        <li><a href="#open-source">Open Source</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>I&rsquo;ve been in the backup industry for years, and I keep running into the same problem: you want to test tape backup functionality, but you don&rsquo;t have a real tape library on hand.</p>
+<p>Real tape libraries aren&rsquo;t cheap — even an entry-level unit starts at tens of thousands of dollars, and getting one configured is a headache. In lab and test environments, they&rsquo;re practically nonexistent. Most people end up skipping tape-related validation altogether, or worse, running tests against a production tape library — which carries real risk.</p>
+<p>Today, I&rsquo;m officially releasing <strong>Holo VTL</strong> — an open-source virtual tape library that came out of a vibe coding session.</p>
+<p>Project repository: <a href="https://github.com/Holo-VTL/Holo" target="_blank" rel="noopener noreffer ">https://github.com/Holo-VTL/Holo</a></p>
+<hr>
+<h3 id="what-is-holo-vtl">What Is Holo VTL?</h3>
+<p>Simply put, Holo VTL is a virtual tape library that runs on an ordinary Linux server.</p>
+<p>Once installed, it emulates a complete tape library device on your server — including tape drives, slots, and tape media — and exposes it over the standard iSCSI protocol. When your backup software connects, it sees a real tape library. Discovery, inventory, and data writes all work exactly as expected.</p>
+<p>The name Holo comes from &ldquo;hologram&rdquo; — the idea that even a fragment can reflect the whole picture.</p>
+<p>The first official release is now available: <strong><a href="mailto:Holo@v1.0.0" rel="">Holo@v1.0.0</a></strong>, open-sourced under the MIT License.</p>
+<hr>
+<h3 id="what-does-it-look-like">What Does It Look Like?</h3>
+<p>After installation, you can open the web console in your browser:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><pre tabindex="0"><code>http://&lt;server-ip&gt;/ui/</code></pre></div>
+<p><strong>System Overview</strong></p>
+<p>The home screen is a dashboard showing the current system state — configured virtual tape libraries, number of drives, tape count, storage utilization, and other basic information.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/uX4c/Xnip2026-05-09_12-58-01.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/uX4c/Xnip2026-05-09_12-58-01.png, https://files.seeusercontent.com/2026/05/09/uX4c/Xnip2026-05-09_12-58-01.png 1.5x, https://files.seeusercontent.com/2026/05/09/uX4c/Xnip2026-05-09_12-58-01.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/uX4c/Xnip2026-05-09_12-58-01.png"
+        title="Xnip2026-05-09_12-58-01" /></p>
+<p><strong>Storage Management</strong></p>
+<p>The storage management page lets you view and manage virtual tape storage status, including per-tape capacity, compression ratio, and usage.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/9Qtj/Xnip2026-05-09_13-49-28.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/9Qtj/Xnip2026-05-09_13-49-28.png, https://files.seeusercontent.com/2026/05/09/9Qtj/Xnip2026-05-09_13-49-28.png 1.5x, https://files.seeusercontent.com/2026/05/09/9Qtj/Xnip2026-05-09_13-49-28.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/9Qtj/Xnip2026-05-09_13-49-28.png"
+        title="Xnip2026-05-09_13-49-28" /></p>
+<p><strong>VTL Rack View</strong></p>
+<p>This is personally my favorite page — it displays the current state of the virtual tape library in a visual rack layout, so you can see at a glance which slots have tapes loaded and which drives are active. From this view, you can also simulate exporting tapes to an offline vault.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Hwu7/Xnip2026-05-09_14-51-55.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Hwu7/Xnip2026-05-09_14-51-55.png, https://files.seeusercontent.com/2026/05/09/Hwu7/Xnip2026-05-09_14-51-55.png 1.5x, https://files.seeusercontent.com/2026/05/09/Hwu7/Xnip2026-05-09_14-51-55.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Hwu7/Xnip2026-05-09_14-51-55.png"
+        title="Xnip2026-05-09_14-51-55" /></p>
+<p>The UI is intentionally straightforward. The goal is to let administrators quickly assess system state and handle day-to-day management without living in the command line.</p>
+<hr>
+<h3 id="one-command-to-install">One Command to Install</h3>
+<p>Holo VTL currently supports major Linux distributions, including RHEL 8/9/10, Rocky Linux, Alma Linux, Ubuntu 20.04/24.04/25.04, Debian 12/13, and openSUSE Leap 15.6.</p>
+<p>Online installation (root privileges required):</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://raw.githubusercontent.com/Holo-VTL/Holo/main/scripts/install.sh <span class="p">|</span> bash</span></span></code></pre></div></div>
+<p>For air-gapped environments, download the installer from the Releases page and run:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bash install.sh --offline</span></span></code></pre></div></div>
+<p>The installation script handles all dependencies automatically — iSCSI target components, TCMU drivers, and systemd service configuration. Once it&rsquo;s done, just open a browser and you&rsquo;re ready to go.</p>
+<hr>
+<h3 id="end-to-end-workflow-with-veeam">End-to-End Workflow with Veeam</h3>
+<p>Here&rsquo;s a complete walkthrough using Veeam Backup &amp; Replication as the example.</p>
+<h4 id="step-1-create-a-virtual-tape-library-in-holo-vtl">Step 1: Create a Virtual Tape Library in Holo VTL</h4>
+<p>Open the web console and create a new virtual tape library. You can select the tape library model — Holo VTL ships with 48 built-in tape drive configurations, including IBM LTO series (LTO-3 through LTO-9), HP Ultrium, Quantum, Dell PowerVault, and other major brands, along with 50+ tape library configurations.</p>
+<p>If your Tape Server runs Windows, I&rsquo;d recommend choosing IBM or HP series virtual libraries, since Windows includes native drivers for both brands. Linux-based Tape Servers have no such driver restrictions.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png, https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png 1.5x, https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png"
+        title="Xnip2026-05-09_14-52-42" /></p>
+<p>Configuration options include: number of drives, number of slots, initial tape count, and number of I/E ports.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/s2xN/Xnip2026-05-09_14-54-13.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/s2xN/Xnip2026-05-09_14-54-13.png, https://files.seeusercontent.com/2026/05/09/s2xN/Xnip2026-05-09_14-54-13.png 1.5x, https://files.seeusercontent.com/2026/05/09/s2xN/Xnip2026-05-09_14-54-13.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/s2xN/Xnip2026-05-09_14-54-13.png"
+        title="Xnip2026-05-09_14-54-13" /></p>
+<p>Once created, Holo VTL exposes the virtual device over iSCSI, ready for your backup server to connect. The current published targets are visible directly in the web interface.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Hu5j/Xnip2026-05-09_14-54-48.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Hu5j/Xnip2026-05-09_14-54-48.png, https://files.seeusercontent.com/2026/05/09/Hu5j/Xnip2026-05-09_14-54-48.png 1.5x, https://files.seeusercontent.com/2026/05/09/Hu5j/Xnip2026-05-09_14-54-48.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Hu5j/Xnip2026-05-09_14-54-48.png"
+        title="Xnip2026-05-09_14-54-48" /></p>
+<h4 id="step-2-connect-the-iscsi-target-on-the-veeam-server">Step 2: Connect the iSCSI Target on the Veeam Server</h4>
+<p>On the Veeam Tape Server, open iSCSI Initiator, add the Holo VTL server&rsquo;s IP address, and connect to the corresponding iSCSI target.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png, https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png 1.5x, https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/9lbH/Xnip2026-05-09_14-04-08.png"
+        title="Xnip2026-05-09_14-04-08" /></p>
+<p>Once connected, you should see the newly added tape devices in Windows Device Manager: a Tape Drive and a Medium Changer.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png, https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png 1.5x, https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/g7Pe/Xnip2026-05-09_14-07-55.png"
+        title="Xnip2026-05-09_14-07-55" /></p>
+<h4 id="step-3-add-tape-infrastructure-in-veeam">Step 3: Add Tape Infrastructure in Veeam</h4>
+<p>Open the Veeam console, navigate to the <strong>Tape Infrastructure</strong> view, and scan the server you added.</p>
+<p>If everything is configured correctly, Veeam will detect the virtual tape library provided by Holo VTL.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png, https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png 1.5x, https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/fHm3/Xnip2026-05-09_14-10-51.png"
+        title="Xnip2026-05-09_14-10-51" /></p>
+<h4 id="step-4-run-inventory">Step 4: Run Inventory</h4>
+<p>In Veeam&rsquo;s Tape view, run an Inventory operation against the tape library. Veeam will scan all slots and identify the barcode and status of each virtual tape.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png, https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png 1.5x, https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/nz8X/Xnip2026-05-09_14-13-56.png"
+        title="Xnip2026-05-09_14-13-56" /></p>
+<h4 id="step-5-create-a-tape-backup-job">Step 5: Create a Tape Backup Job</h4>
+<p>Once Inventory completes, you can create a Tape Backup Job in Veeam to write existing backup data to virtual tape. The workflow is identical to working with a real tape library.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png, https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png 1.5x, https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Enq3/Xnip2026-05-09_14-15-09.png"
+        title="Xnip2026-05-09_14-15-09" /></p>
+<h4 id="step-6-review-the-results">Step 6: Review the Results</h4>
+<p>After the job completes, check the task status in Veeam. You can also return to the Holo VTL web console to see actual tape utilization — capacity changes and data write volumes are both visible there.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/Iyb8/Xnip2026-05-09_14-55-46.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/Iyb8/Xnip2026-05-09_14-55-46.png, https://files.seeusercontent.com/2026/05/09/Iyb8/Xnip2026-05-09_14-55-46.png 1.5x, https://files.seeusercontent.com/2026/05/09/Iyb8/Xnip2026-05-09_14-55-46.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/Iyb8/Xnip2026-05-09_14-55-46.png"
+        title="Xnip2026-05-09_14-55-46" /></p>
+<p>Walking through this entire flow, Veeam is performing a complete backup operation against a virtual tape library — device discovery, inventory, data write, job completion — with no meaningful difference from real hardware.</p>
+<hr>
+<h3 id="use-cases">Use Cases</h3>
+<p><strong>Backup software testing.</strong> Want to validate tape functionality in your backup software but don&rsquo;t have physical hardware? That&rsquo;s exactly what Holo VTL is for.</p>
+<p><strong>Learning and lab environments.</strong> If you want to actually understand VTL, iSCSI, tape libraries, Media Pools, and Tape Jobs, a hands-on environment beats reading documentation every time.</p>
+<p><strong>Backup workflow validation.</strong> Test tape rotation strategies, media retention policies, and archival workflows in a virtual environment before rolling them out in production.</p>
+<p><strong>Development and compatibility testing.</strong> If you&rsquo;re building systems that interact with backup, archival, or storage infrastructure, Holo VTL lets you simulate a tape library device for integration testing.</p>
+<hr>
+<h3 id="what-it-isnt">What It Isn&rsquo;t</h3>
+<p>This is just as important to say clearly.</p>
+<p>Holo VTL is not a full backup platform, and it&rsquo;s not a file sync tool. It&rsquo;s a &ldquo;virtual tape library device&rdquo; — think of it as the virtual hardware layer in a backup architecture. It provides backup software with a standard tape library device interface. Managing backup policies, scheduling jobs, and handling the business logic of data storage — that&rsquo;s all still your backup software&rsquo;s job.</p>
+<hr>
+<h3 id="troubleshooting-errors">Troubleshooting Errors</h3>
+<p>For a first release, running into issues is expected — especially around compatibility between different backup software products and their varying SCSI command sequences. That&rsquo;s hard to cover completely in one go.</p>
+<p>If you hit an error in your backup software, here&rsquo;s the recommended process for gathering information before reaching out:</p>
+<p><strong>Step 1: Enable CDB trace.</strong> In the Holo VTL web console, go to the <strong>About</strong> page, find the log setting, and switch to Enable CDB trace mode.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/05/09/r9Cb/Xnip2026-05-09_15-04-20.png"
+        data-srcset="https://files.seeusercontent.com/2026/05/09/r9Cb/Xnip2026-05-09_15-04-20.png, https://files.seeusercontent.com/2026/05/09/r9Cb/Xnip2026-05-09_15-04-20.png 1.5x, https://files.seeusercontent.com/2026/05/09/r9Cb/Xnip2026-05-09_15-04-20.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/05/09/r9Cb/Xnip2026-05-09_15-04-20.png"
+        title="Xnip2026-05-09_15-04-20" /></p>
+<p><strong>Step 2: Reproduce the issue.</strong> With logging enabled, go back to your backup software and re-run the operation that failed — backup or restore — so the error occurs again.</p>
+<p><strong>Step 3: Download the log bundle.</strong> Still on the About page, click the &ldquo;Download Log Bundle&rdquo; button. This generates a compressed archive containing complete diagnostic information.</p>
+<p><strong>Step 4: Send it to me.</strong> Email the log bundle to <strong><a href="mailto:coku2015@gmail.com" rel="">coku2015@gmail.com</a></strong> with a brief description: which backup software you&rsquo;re using, what operation you performed, and what error you got. I&rsquo;ll take a look as soon as I can.</p>
+<hr>
+<h3 id="open-source">Open Source</h3>
+<p>Holo VTL is open-sourced under the MIT License. Project repository:</p>
+<p><strong><a href="https://github.com/Holo-VTL/Holo" target="_blank" rel="noopener noreffer ">https://github.com/Holo-VTL/Holo</a></strong></p>
+<p>If this project interests you, you&rsquo;re welcome to:</p>
+<ul>
+<li>⭐ Star the repository</li>
+<li>Submit Issues to report problems</li>
+<li>Test compatibility with your backup software and share the results</li>
+<li>Submit Pull Requests</li>
+</ul>
+<p>Going forward, I&rsquo;ll continue refining the web UI experience, adding more detailed configuration documentation, and testing compatibility with additional backup software. Whether you&rsquo;re using Veeam or any other backup solution — if you run into issues, feel free to open a GitHub Issue or leave a comment on the blog.</p>
+<hr>
+<p><em>This is a small project I built with Codex and Claude Code. Holo VTL&rsquo;s first public release — and a starting point. I hope it helps anyone who needs to test and learn tape backup.</em></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2026-05-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2026/05/holo-vtl-launch/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F05%2Fholo-vtl-launch%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F05%2Fholo-vtl-launch%2F&amp;text=Holo&#43;VTL&#43;Is&#43;Now&#43;Live" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F05%252Fholo-vtl-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F05%252Fholo-vtl-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a>,&nbsp;<a href="/en/tags/holo/">Holo</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2025/12/veeam-v13-iso-download/" class="prev" rel="prev" title="Which Veeam V13 ISO Should You Download? 90% Get It Wrong from Step One"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Which Veeam V13 ISO Should You Download? 90% Get It Wrong from Step One</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://blog-backupnext-cloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.en.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.stub.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script><script>
+            var doNotTrack = false;
+            if ( false ) {
+                var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+                var doNotTrack = (dnt == "1" || dnt == "yes");
+            }
+            if (!doNotTrack) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-JS3EGTT92G');
+            }
+        </script><script src="https://www.googletagmanager.com/gtag/js?id=G-JS3EGTT92G" async></script></body>
+</html>
