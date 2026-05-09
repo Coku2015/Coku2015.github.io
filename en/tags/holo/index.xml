@@ -8,12 +8,12 @@
     <language>en-US</language>
     <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
     <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 May 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.backupnext.cloud/en/tags/holo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Holo VTL Is Now Live</title>
       <link>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</link>
-      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
       <guid>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been in the backup industry for years, and I keep running into the same problem: you want to test tape backup functionality, but you don&amp;rsquo;t have a real tape library on hand.&lt;/p&gt;&#xA;&lt;p&gt;Real tape libraries aren&amp;rsquo;t cheap — even an entry-level unit starts at tens of thousands of dollars, and getting one configured is a headache. In lab and test environments, they&amp;rsquo;re practically nonexistent. Most people end up skipping tape-related validation altogether, or worse, running tests against a production tape library — which carries real risk.&lt;/p&gt;</description>
     </item>
