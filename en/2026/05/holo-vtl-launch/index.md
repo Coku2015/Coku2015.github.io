@@ -85,7 +85,7 @@ If your Tape Server runs Windows, I'd recommend choosing IBM or HP series virtua
 
 ![Xnip2026-05-09_14-52-42](https://files.seeusercontent.com/2026/05/09/gW0z/Xnip2026-05-09_14-52-42.png)
 
-> **Note:** To successfully publish the iSCSI Target, you must complete all virtual tape library configurations first — including the robot arm, drives, and tape initialization. Otherwise, the backup server won't be able to properly recognize the virtual devices.
+> **Note:** To successfully publish the iSCSI Target, you must complete all virtual tape library configurations first — including the libraries, drives, and tape initialization. Otherwise, the backup server won't be able to properly recognize the virtual devices.
 
 Configuration options include: number of drives, number of slots, initial tape count, and number of I/E ports.
 
