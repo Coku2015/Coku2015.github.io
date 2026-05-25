@@ -83,6 +83,8 @@ bash install.sh --offline
 
 ![Xnip2026-05-09_13-54-01](https://files.seeusercontent.com/2026/05/09/6vRn/Xnip2026-05-09_13-54-01.png)
 
+> **注意：** 要成功发布 iSCSI Target，必须先完成虚拟带库的全部配置，包括机械臂、驱动器和初始化磁带。否则备份服务器将无法正确识别虚拟设备。
+
 配置项包括：驱动器数量、槽位数量、初始磁带数量和 IE 口数量。
 
 ![Xnip2026-05-09_13-54-17](https://files.seeusercontent.com/2026/05/09/Yti6/Xnip2026-05-09_13-54-17.png)

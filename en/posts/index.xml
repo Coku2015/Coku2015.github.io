@@ -4,10 +4,10 @@
         <link>https://blog.backupnext.cloud/en/posts/</link>
         <description>All Posts | Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Fri, 08 May 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sat, 09 May 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Holo VTL Is Now Live</title>
     <link>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</link>
-    <pubDate>Fri, 08 May 2026 00:00:00 &#43;0000</pubDate>
+    <pubDate>Sat, 09 May 2026 00:00:00 &#43;0000</pubDate>
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</guid>
     <description><![CDATA[<p>I&rsquo;ve been in the backup industry for years, and I keep running into the same problem: you want to test tape backup functionality, but you don&rsquo;t have a real tape library on hand.</p>
