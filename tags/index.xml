@@ -1,259 +1,273 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Tags on 云虚智安</title>
-    <link>https://blog.backupnext.cloud/tags/</link>
-    <description>Recent content in Tags on 云虚智安</description>
-    <generator>Hugo</generator>
-    <language>zh-CN</language>
-    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Backup</title>
-      <link>https://blog.backupnext.cloud/tags/Backup/</link>
-      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Backup/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Holo</title>
-      <link>https://blog.backupnext.cloud/tags/holo/</link>
-      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/holo/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Veeam</title>
-      <link>https://blog.backupnext.cloud/tags/Veeam/</link>
-      <pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Veeam/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>AI</title>
-      <link>https://blog.backupnext.cloud/tags/AI/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/AI/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Air Gap</title>
-      <link>https://blog.backupnext.cloud/tags/Air-Gap/</link>
-      <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Air-Gap/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Security</title>
-      <link>https://blog.backupnext.cloud/tags/Security/</link>
-      <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Security/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Vibe Coding</title>
-      <link>https://blog.backupnext.cloud/tags/Vibe-Coding/</link>
-      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Vibe-Coding/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>About</title>
-      <link>https://blog.backupnext.cloud/tags/about/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/about/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Lei Wei</title>
-      <link>https://blog.backupnext.cloud/tags/Lei-Wei/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Lei-Wei/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Profile</title>
-      <link>https://blog.backupnext.cloud/tags/profile/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/profile/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>数据保护</title>
-      <link>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>虚拟化</title>
-      <link>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VBR</title>
-      <link>https://blog.backupnext.cloud/tags/VBR/</link>
-      <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VBR/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Kubernetes</title>
-      <link>https://blog.backupnext.cloud/tags/Kubernetes/</link>
-      <pubDate>Mon, 26 May 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>备份</title>
-      <link>https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/</link>
-      <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VMware</title>
-      <link>https://blog.backupnext.cloud/tags/VMware/</link>
-      <pubDate>Thu, 04 Jul 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VMware/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Instant Recovery</title>
-      <link>https://blog.backupnext.cloud/tags/Instant-Recovery/</link>
-      <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Instant-Recovery/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MySQL</title>
-      <link>https://blog.backupnext.cloud/tags/MySQL/</link>
-      <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/MySQL/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VDP</title>
-      <link>https://blog.backupnext.cloud/tags/VDP/</link>
-      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VDP/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VAO</title>
-      <link>https://blog.backupnext.cloud/tags/VAO/</link>
-      <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VAO/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VRO</title>
-      <link>https://blog.backupnext.cloud/tags/VRO/</link>
-      <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VRO/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tanzu</title>
-      <link>https://blog.backupnext.cloud/tags/Tanzu/</link>
-      <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Tanzu/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VBR V11 实用技巧</title>
-      <link>https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
-      <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Veeam CDP</title>
-      <link>https://blog.backupnext.cloud/tags/Veeam-CDP/</link>
-      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Veeam-CDP/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>GIF</title>
-      <link>https://blog.backupnext.cloud/tags/GIF/</link>
-      <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/GIF/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Automation Powershell</title>
-      <link>https://blog.backupnext.cloud/tags/Automation-Powershell/</link>
-      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Automation-Powershell/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Automation</title>
-      <link>https://blog.backupnext.cloud/tags/Automation/</link>
-      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Automation/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Enterprise Manager</title>
-      <link>https://blog.backupnext.cloud/tags/Enterprise-Manager/</link>
-      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Enterprise-Manager/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Agent</title>
-      <link>https://blog.backupnext.cloud/tags/Agent/</link>
-      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Agent/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>对象存储</title>
-      <link>https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</link>
-      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Nutanix AHV</title>
-      <link>https://blog.backupnext.cloud/tags/Nutanix-AHV/</link>
-      <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/Nutanix-AHV/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VMware 黑科技</title>
-      <link>https://blog.backupnext.cloud/tags/VMware-%E9%BB%91%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VMware-%E9%BB%91%E7%A7%91%E6%8A%80/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VeeamON</title>
-      <link>https://blog.backupnext.cloud/tags/VeeamON/</link>
-      <pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/VeeamON/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>迁移</title>
-      <link>https://blog.backupnext.cloud/tags/%E8%BF%81%E7%A7%BB/</link>
-      <pubDate>Fri, 21 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E8%BF%81%E7%A7%BB/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>恢复</title>
-      <link>https://blog.backupnext.cloud/tags/%E6%81%A2%E5%A4%8D/</link>
-      <pubDate>Thu, 20 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/tags/%E6%81%A2%E5%A4%8D/</guid>
-      <description></description>
-    </item>
-  </channel>
+	<channel>
+		<title>Tags on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/tags/</link>
+		<description>Recent content in Tags on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/tags/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Backup</title>
+				<link>https://blog.backupnext.cloud/tags/backup/</link>
+				<pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/backup/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Cloud</title>
+				<link>https://blog.backupnext.cloud/tags/cloud/</link>
+				<pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/cloud/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Holo</title>
+				<link>https://blog.backupnext.cloud/tags/holo/</link>
+				<pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/holo/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Veeam</title>
+				<link>https://blog.backupnext.cloud/tags/Veeam/</link>
+				<pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Veeam/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>AI</title>
+				<link>https://blog.backupnext.cloud/tags/AI/</link>
+				<pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/AI/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Air Gap</title>
+				<link>https://blog.backupnext.cloud/tags/Air-Gap/</link>
+				<pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Air-Gap/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Security</title>
+				<link>https://blog.backupnext.cloud/tags/Security/</link>
+				<pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Security/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Vibe Coding</title>
+				<link>https://blog.backupnext.cloud/tags/Vibe-Coding/</link>
+				<pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Vibe-Coding/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>About</title>
+				<link>https://blog.backupnext.cloud/tags/about/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/about/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Lei Wei</title>
+				<link>https://blog.backupnext.cloud/tags/Lei-Wei/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Lei-Wei/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Profile</title>
+				<link>https://blog.backupnext.cloud/tags/profile/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/profile/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>数据保护</title>
+				<link>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>虚拟化</title>
+				<link>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VBR</title>
+				<link>https://blog.backupnext.cloud/tags/VBR/</link>
+				<pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VBR/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Kubernetes</title>
+				<link>https://blog.backupnext.cloud/tags/Kubernetes/</link>
+				<pubDate>Mon, 26 May 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Kubernetes/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>备份</title>
+				<link>https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/</link>
+				<pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E5%A4%87%E4%BB%BD/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VMware</title>
+				<link>https://blog.backupnext.cloud/tags/VMware/</link>
+				<pubDate>Thu, 04 Jul 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VMware/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Instant Recovery</title>
+				<link>https://blog.backupnext.cloud/tags/Instant-Recovery/</link>
+				<pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Instant-Recovery/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>MySQL</title>
+				<link>https://blog.backupnext.cloud/tags/MySQL/</link>
+				<pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/MySQL/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VDP</title>
+				<link>https://blog.backupnext.cloud/tags/VDP/</link>
+				<pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VDP/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VAO</title>
+				<link>https://blog.backupnext.cloud/tags/VAO/</link>
+				<pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VAO/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VRO</title>
+				<link>https://blog.backupnext.cloud/tags/VRO/</link>
+				<pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VRO/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Tanzu</title>
+				<link>https://blog.backupnext.cloud/tags/Tanzu/</link>
+				<pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Tanzu/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VBR V11 实用技巧</title>
+				<link>https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+				<pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VBR-v11-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Veeam CDP</title>
+				<link>https://blog.backupnext.cloud/tags/Veeam-CDP/</link>
+				<pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Veeam-CDP/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>GIF</title>
+				<link>https://blog.backupnext.cloud/tags/GIF/</link>
+				<pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/GIF/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Automation Powershell</title>
+				<link>https://blog.backupnext.cloud/tags/Automation-Powershell/</link>
+				<pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Automation-Powershell/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Automation</title>
+				<link>https://blog.backupnext.cloud/tags/Automation/</link>
+				<pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Automation/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Enterprise Manager</title>
+				<link>https://blog.backupnext.cloud/tags/Enterprise-Manager/</link>
+				<pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Enterprise-Manager/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Agent</title>
+				<link>https://blog.backupnext.cloud/tags/Agent/</link>
+				<pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Agent/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>对象存储</title>
+				<link>https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</link>
+				<pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Nutanix AHV</title>
+				<link>https://blog.backupnext.cloud/tags/Nutanix-AHV/</link>
+				<pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/Nutanix-AHV/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VMware 黑科技</title>
+				<link>https://blog.backupnext.cloud/tags/VMware-%E9%BB%91%E7%A7%91%E6%8A%80/</link>
+				<pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VMware-%E9%BB%91%E7%A7%91%E6%8A%80/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>VeeamON</title>
+				<link>https://blog.backupnext.cloud/tags/VeeamON/</link>
+				<pubDate>Fri, 16 Jun 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/VeeamON/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>迁移</title>
+				<link>https://blog.backupnext.cloud/tags/%E8%BF%81%E7%A7%BB/</link>
+				<pubDate>Fri, 21 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E8%BF%81%E7%A7%BB/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>恢复</title>
+				<link>https://blog.backupnext.cloud/tags/%E6%81%A2%E5%A4%8D/</link>
+				<pubDate>Thu, 20 Apr 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/tags/%E6%81%A2%E5%A4%8D/</guid>
+				<description></description>
+			</item>
+	</channel>
 </rss>

@@ -5,21 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广 - 云虚智安</title><meta name="description" content="Backup Copy 理论基础 Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 …"><meta property="og:url" content="https://blog.backupnext.cloud/2020/06/new-backup-copy/">
-  <meta property="og:site_name" content="云虚智安">
-  <meta property="og:title" content="Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广">
-  <meta property="og:description" content="Backup Copy 理论基础 Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。">
-  <meta property="og:locale" content="zh_CN">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2020-06-02T00:00:00+00:00">
-    <meta property="article:modified_time" content="2020-06-02T00:00:00+00:00">
-    <meta property="article:tag" content="VBR">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="云虚智安">
+	<meta property="og:title" content="Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广">
+	<meta property="og:description" content="Backup Copy 理论基础 Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2020-06-02T00:00:00+00:00">
+		<meta property="article:modified_time" content="2020-06-02T00:00:00+00:00">
+		<meta property="article:tag" content="VBR">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广">
-  <meta name="twitter:description" content="Backup Copy 理论基础 Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="Backup Copy 新模式，让 3-2-1 的黄金法则覆盖更广">
+	<meta name="twitter:description" content="Backup Copy 理论基础 Veeam 的 Backup Copy 是实现数据保护 3-2-1 黄金法则的基础，也是 VBR 的基础功能之一。它的功能非常简单，实现的效果就是将一个还原点（Restore Point）完完整整的拷贝一份，变成一个新的可以使用的还原点。什么是还原点？在 VBR 中它是某个 VM 或者 Server 某个时间点的记录，利用还原点，可以从 VBR 的存储库中将数据还原回该时间点的那份内容。对于还原点来说，它可能包含了一个文件，比如 vbk 全备份存档，也有可能包含了一组文件，一个 vbk 和一系列的 vib，这取决于备份作业或者备份拷贝作业如何创建他们。">
 <meta name="application-name" content="云虚智安">
 <meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -181,55 +181,55 @@
 <h2 id="v10-的新变化">V10 的新变化</h2>
 <p>在 V10 版本中，Veeam 的 Backup Copy 发生了一些变化，原来的 Backup Copy 模式继续保留，但是新增了一种全新的模式，因此这两种模式有了各自的名字：Immediate Copy 和 Periodic Copy。新增的模式叫做 Immediate Copy，老的模式赋予了新的名字 Periodic Copy。两种模式有一些区别，他们支持的内容会不一样，如下表所示。</p>
 <table>
-  <thead>
-      <tr>
-          <th>支持的备份存档</th>
-          <th>Immediate Copy</th>
-          <th>Periodic Copy</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>vSphere 和 Hyper-V 虚拟机备份</td>
-          <td>支持</td>
-          <td>支持</td>
-      </tr>
-      <tr>
-          <td>VBR 集中管理的 Veeam Agent</td>
-          <td>支持</td>
-          <td>支持</td>
-      </tr>
-      <tr>
-          <td>SQL 和 Oracle 的日志备份</td>
-          <td>支持</td>
-          <td>不支持</td>
-      </tr>
-      <tr>
-          <td>非集中管理的 Veeam Agent</td>
-          <td>不支持</td>
-          <td>支持</td>
-      </tr>
-      <tr>
-          <td>Oracle RMAN 和 SAP HANA</td>
-          <td>支持</td>
-          <td>不支持</td>
-      </tr>
-      <tr>
-          <td>Nutanix AHV</td>
-          <td>不支持</td>
-          <td>支持</td>
-      </tr>
-      <tr>
-          <td>AWS EC2</td>
-          <td>不支持</td>
-          <td>支持</td>
-      </tr>
-      <tr>
-          <td>Microsoft Azure 虚拟机</td>
-          <td>不支持</td>
-          <td>支持</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>支持的备份存档</th>
+					<th>Immediate Copy</th>
+					<th>Periodic Copy</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>vSphere 和 Hyper-V 虚拟机备份</td>
+					<td>支持</td>
+					<td>支持</td>
+			</tr>
+			<tr>
+					<td>VBR 集中管理的 Veeam Agent</td>
+					<td>支持</td>
+					<td>支持</td>
+			</tr>
+			<tr>
+					<td>SQL 和 Oracle 的日志备份</td>
+					<td>支持</td>
+					<td>不支持</td>
+			</tr>
+			<tr>
+					<td>非集中管理的 Veeam Agent</td>
+					<td>不支持</td>
+					<td>支持</td>
+			</tr>
+			<tr>
+					<td>Oracle RMAN 和 SAP HANA</td>
+					<td>支持</td>
+					<td>不支持</td>
+			</tr>
+			<tr>
+					<td>Nutanix AHV</td>
+					<td>不支持</td>
+					<td>支持</td>
+			</tr>
+			<tr>
+					<td>AWS EC2</td>
+					<td>不支持</td>
+					<td>支持</td>
+			</tr>
+			<tr>
+					<td>Microsoft Azure 虚拟机</td>
+					<td>不支持</td>
+					<td>支持</td>
+			</tr>
+	</tbody>
 </table>
 <p>除此之外，这两种 Copy 模式，在备份存档的生成上，有一些区别，对于 Immediate Copy 而言，他会根据主备份任务的设定，当主备份任务执行完成后，立刻生成一份备份拷贝存档。Immediate Copy 是主备份任务的 1：1 的完全还原点镜像。但是需要特别注意的，它不是简单的备份文件的镜像，并不是 vbk、vib 的文件拷贝。举个例子来说，在主备份任务中如果设置了每个周六创建 Synthetic Full 的备份作业，会在周六生成全备份存档，而在这个备份存档生成后，Immediate Copy 作业会运行并创建对应的 Copy 存档，这个创建出来的存档和主备份任务创建出来的 vbk 全备份不一样，它创建出来的是一份 vib 的增量备份。由于 Immediate Copy 的特点，它适用于所有需要进行应用程序日志复制的备份作业，因此在异地容灾时，对于关键的数据库系统，通过 Immediate Copy 能提升 RPO 级别。</p>
 <p>两种备份模式正常情况下无法切换，假如要使用全新的 Immediate Copy 功能，可以禁用老的 Backup Copy 任务，只需要简单的创建新的 Immediate Copy 勾选 Include database transaction log backups 即可。</p>
@@ -264,7 +264,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

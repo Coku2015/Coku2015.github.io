@@ -2,16 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Backup/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/backup/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
-                        href="https://blog.backupnext.cloud/tags/Backup/"
+                        href="https://blog.backupnext.cloud/tags/backup/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
-                    href="https://blog.backupnext.cloud/en/tags/Backup/"
+                    href="https://blog.backupnext.cloud/en/tags/backup/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/categories/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/categories/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/categories/"
@@ -20,7 +20,16 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/categories/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/cloud/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/tags/cloud/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/tags/cloud/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/"
@@ -29,7 +38,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/categories/Data-Protection/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/categories/Data-Protection/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/categories/Data-Protection/"
@@ -38,25 +47,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/categories/Data-Protection/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/holo/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://blog.backupnext.cloud/tags/holo/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://blog.backupnext.cloud/en/tags/holo/"
-                    /></url><url>
-            <loc>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/"
-                    /></url><url>
-            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/posts/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/posts/"
@@ -65,7 +56,7 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/posts/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><xhtml:link
+            <loc>https://blog.backupnext.cloud/en/tags/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.backupnext.cloud/tags/"
@@ -73,6 +64,33 @@
                     rel="alternate"
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/tags/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/</loc><lastmod>2026-07-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/tags/holo/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/tags/holo/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/tags/holo/"
+                    /></url><url>
+            <loc>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</loc><lastmod>2026-05-09T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/"
                     /></url><url>
             <loc>https://blog.backupnext.cloud/en/tags/Veeam/</loc><lastmod>2025-12-31T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
@@ -209,7 +227,6 @@
                     hreflang="en"
                     href="https://blog.backupnext.cloud/en/about/"
                     /></url><url>
-            <loc>https://blog.backupnext.cloud/en/tags/Cloud/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.backupnext.cloud/en/tags/Data-Protection/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.backupnext.cloud/en/tags/Lei-Wei/</loc><lastmod>2025-10-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"

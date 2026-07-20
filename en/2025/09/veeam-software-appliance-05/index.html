@@ -5,22 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance - Cloud.Virt.AI.Sec</title><meta name="description" content="In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the Veeam Infrastructure Appliance …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/09/veeam-software-appliance-05/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance">
-  <meta property="og:description" content="In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the Veeam Infrastructure Appliance specifically designed to host role services. If the Software Appliance is the “command center,” then the Infrastructure Appliance is more like a pre-configured, ready-to-use “execution unit”: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance">
+	<meta property="og:description" content="In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the Veeam Infrastructure Appliance specifically designed to host role services. If the Software Appliance is the “command center,” then the Infrastructure Appliance is more like a pre-configured, ready-to-use “execution unit”: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.
 1. Why Choose Infrastructure Appliance The reasons for choosing Infrastructure Appliance can be summarized in three points: fast, simple, secure. Veeam’s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you’re essentially getting a Linux server optimized for backup roles according to best practices that’s ready to use out of the box.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-09-22T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-09-22T00:00:00+00:00">
-    <meta property="article:tag" content="VBR">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-09-22T00:00:00+00:00">
+		<meta property="article:modified_time" content="2025-09-22T00:00:00+00:00">
+		<meta property="article:tag" content="VBR">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance">
-  <meta name="twitter:description" content="In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the Veeam Infrastructure Appliance specifically designed to host role services. If the Software Appliance is the “command center,” then the Infrastructure Appliance is more like a pre-configured, ready-to-use “execution unit”: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="Let Veeam Handle the Complexity: A Hands-On Guide to Infrastructure Appliance">
+	<meta name="twitter:description" content="In Veeam v13, not only did they make the backup server into a pre-hardened Software Appliance, but they also introduced the Veeam Infrastructure Appliance specifically designed to host role services. If the Software Appliance is the “command center,” then the Infrastructure Appliance is more like a pre-configured, ready-to-use “execution unit”: it provides a unified, controlled, and compliant operating environment for roles like Proxy, Mount Server, and Hardened Repository.
 1. Why Choose Infrastructure Appliance The reasons for choosing Infrastructure Appliance can be summarized in three points: fast, simple, secure. Veeam’s JeOS (Just enough OS) image built on Rocky 9 packages the operating system and runtime dependencies into a controlled, minimal distribution unit. When you deploy an Infrastructure Appliance, you’re essentially getting a Linux server optimized for backup roles according to best practices that’s ready to use out of the box.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
@@ -263,7 +263,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

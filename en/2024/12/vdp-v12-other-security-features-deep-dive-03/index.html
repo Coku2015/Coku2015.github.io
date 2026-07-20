@@ -5,23 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index Data protection is more than just backup—it’s about securing your organization’s final line of defense. Veeam integrates security into every …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/12/vdp-v12-other-security-features-deep-dive-03/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations">
-  <meta property="og:description" content="Series Index Data protection is more than just backup—it’s about securing your organization’s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations">
+	<meta property="og:description" content="Series Index Data protection is more than just backup—it’s about securing your organization’s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.
 Part 1: Account-less and SSH service management for Linux backup agents Part 2: Using gMSA technology to manage Windows accounts Part 3: Four-Eyes Authorization: Dual control for backup system operations Part 4: Enabling Multi-Factor Authentication (MFA): Strengthening backup system account protection Part 5: Reducing network ports involved in backup operations Part 6: Using Syslog to manage logs in SIEM systems Four-Eyes Authorization: Securing Veeam Backup Operations In the digital age, data is the lifeblood of enterprises, making the security of backup and recovery operations particularly critical. A single misoperation or malicious act could lead to business interruption or data breaches. For this reason, Four-Eyes Authorization has gradually become an important strategy for organizations to protect their backup processes, building a solid security barrier for critical tasks through a dual-review mechanism.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-12-16T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-12-16T00:00:00+00:00">
-    <meta property="article:tag" content="Backup">
-    <meta property="article:tag" content="Security">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2024-12-16T00:00:00+00:00">
+		<meta property="article:modified_time" content="2024-12-16T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Security">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations">
-  <meta name="twitter:description" content="Series Index Data protection is more than just backup—it’s about securing your organization’s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="VDP Security Series (Part 3) - Four-Eyes Authorization: Dual Control for Backup System Operations">
+	<meta name="twitter:description" content="Series Index Data protection is more than just backup—it’s about securing your organization’s final line of defense. Veeam integrates security into every product detail through a zero-trust design philosophy. From the beginning of backup to the final step of recovery, Veeam continuously refines every feature to meet modern security requirements. This series covers new security features introduced in VDP v12, simple yet powerful capabilities that safeguard your data security.
 Part 1: Account-less and SSH service management for Linux backup agents Part 2: Using gMSA technology to manage Windows accounts Part 3: Four-Eyes Authorization: Dual control for backup system operations Part 4: Enabling Multi-Factor Authentication (MFA): Strengthening backup system account protection Part 5: Reducing network ports involved in backup operations Part 6: Using Syslog to manage logs in SIEM systems Four-Eyes Authorization: Securing Veeam Backup Operations In the digital age, data is the lifeblood of enterprises, making the security of backup and recovery operations particularly critical. A single misoperation or malicious act could lead to business interruption or data breaches. For this reason, Four-Eyes Authorization has gradually become an important strategy for organizations to protect their backup processes, building a solid security barrier for critical tasks through a dual-review mechanism.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
@@ -303,7 +303,7 @@ Part 1: Account-less and SSH service management for Linux backup agents Part 2: 
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
         <section>
             <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
         </section>
@@ -316,7 +316,7 @@ Part 1: Account-less and SSH service management for Linux backup agents Part 2: 
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

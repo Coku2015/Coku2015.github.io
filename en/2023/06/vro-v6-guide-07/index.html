@@ -5,22 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>VRO Basic Tutorial (Part 7) - Plan Step · Part 1 - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2023/06/vro-v6-guide-07/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
-  <meta property="og:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2023-06-14T00:00:00+00:00">
-    <meta property="article:modified_time" content="2023-06-14T00:00:00+00:00">
-    <meta property="article:tag" content="VAO">
-    <meta property="article:tag" content="VRO">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
+	<meta property="og:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2023-06-14T00:00:00+00:00">
+		<meta property="article:modified_time" content="2023-06-14T00:00:00+00:00">
+		<meta property="article:tag" content="VAO">
+		<meta property="article:tag" content="VRO">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
-  <meta name="twitter:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="VRO Basic Tutorial (Part 7) - Plan Step · Part 1">
+	<meta name="twitter:description" content="Series Table of Contents: VRO Basic Tutorial (Part 1) - Introduction VRO Basic Tutorial (Part 2) - Installation and Deployment VRO Basic Tutorial (Part 3) - Basic Components · Part 1 VRO Basic Tutorial (Part 4) - Basic Components · Part 2 VRO Basic Tutorial (Part 5) - First Steps to a Successful DR Plan VRO Basic Tutorial (Part 6) - Data Lab VRO Basic Tutorial (Part 7) - Plan Step · Part 1 VRO Basic Tutorial (Part 8) - Plan Step · Part 2 VRO Basic Tutorial (Part 9) - Document Template Analysis VRO Basic Tutorial (Part 10) - Using VRO with K10 for Fully Automated Container DR In previous posts, we’ve discussed in detail the creation process of Orchestration Plans. Beyond these basic creation steps within each Orchestration Plan, the most important aspect of this system is its automated workflow. This automation is implemented through PowerShell scripts. In VRO, these PowerShell automation scripts are encapsulated within Plan Steps, which are scheduled, executed, and parameter-passed by VRO’s Orchestration Plans.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -305,7 +305,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

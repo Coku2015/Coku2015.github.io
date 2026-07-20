@@ -4,7 +4,17 @@
         <link>https://blog.backupnext.cloud/en/posts/</link>
         <description>All Posts | Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sat, 09 May 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</title>
+    <link>https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
+    <pubDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/</guid>
+    <description><![CDATA[<h1 id="vbr-software-appliance-on-alibaba-cloud-finally-a-working-installation-path">VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</h1>
+<p>Veeam Software Appliance is extremely simple to install on a physical server or a local virtualized environment — the Veeam team has delivered an experience that balances ultimate security with ultimate simplicity.</p>
+<p>But if you want to deploy it to a public cloud like Alibaba Cloud, things look completely different. An OVA cannot be used directly to create an ECS instance, and OVA handling, ISO installation, networking, instance configuration, and boot-time initialization are all hurdles you cannot bypass. Without some special approach, this is nearly an impossible task.</p>]]></description>
+</item>
+<item>
     <title>Holo VTL Is Now Live</title>
     <link>https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/</link>
     <pubDate>Sat, 09 May 2026 00:00:00 &#43;0000</pubDate>
@@ -106,17 +116,6 @@
     <description><![CDATA[<p>In version v13, malware detection capabilities have achieved a significant leap forward. Compared to the real-time detection capabilities already available in the v12 era, v13 has brought qualitative improvements in threat response mechanisms, platform coverage, and intelligence levels. In my previous articles, I&rsquo;ve detailed the ransomware attack detection principles and configuration methods for v12. Today, building on that foundation, let&rsquo;s explore the key upgrades that v13 brings.</p>
 <h2 id="v12-detection-capabilities-review-the-separation-of-detection-and-response">v12 Detection Capabilities Review: The Separation of Detection and Response</h2>
 <p>In the v12 era, Veeam&rsquo;s malware detection primarily relied on two mechanisms:</p>]]></description>
-</item>
-<item>
-    <title>Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration</title>
-    <link>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</link>
-    <pubDate>Thu, 25 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
-            </div><p>In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I&rsquo;ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.</p>
-<p>Today, let&rsquo;s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization&rsquo;s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company&rsquo;s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.</p>]]></description>
 </item>
 </channel>
 </rss>

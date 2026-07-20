@@ -5,25 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Setting Up Multi-Factor Authentication for Kasten with Azure EntraID - Cloud.Virt.AI.Sec</title><meta name="description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/05/kasten-and-azure-entraid-integration/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
-  <meta property="og:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
+	<meta property="og:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
 Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn’t just about adding another security layer; it’s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-05-26T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-05-26T00:00:00+00:00">
-    <meta property="article:tag" content="Kubernetes">
-    <meta property="article:tag" content="Kasten">
-    <meta property="article:tag" content="Azure">
-    <meta property="article:tag" content="Security">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-05-26T00:00:00+00:00">
+		<meta property="article:modified_time" content="2025-05-26T00:00:00+00:00">
+		<meta property="article:tag" content="Kubernetes">
+		<meta property="article:tag" content="Kasten">
+		<meta property="article:tag" content="Azure">
+		<meta property="article:tag" content="Security">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
-  <meta name="twitter:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="Setting Up Multi-Factor Authentication for Kasten with Azure EntraID">
+	<meta name="twitter:description" content="In the world of Kubernetes backup and recovery, security isn’t just a feature—it’s a foundation. Kasten K10 provides comprehensive security management capabilities, and one of its most powerful features is flexible user access management through OIDC (OpenID Connect) protocol integration. This means you can leverage your existing enterprise identity infrastructure rather than managing separate credentials.
 Today, I want to walk you through integrating Kasten with Azure EntraID to enable multi-factor authentication (MFA) for the Kasten console. This isn’t just about adding another security layer; it’s about providing a seamless, enterprise-grade authentication experience that your Azure AD users are already familiar with.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
@@ -251,7 +251,7 @@ Today, I want to walk you through integrating Kasten with Azure EntraID to enabl
         title="image-20250525140636856" /></p>
 <h3 id="step-3-collect-configuration-information-for-kasten">Step 3: Collect Configuration Information for Kasten</h3>
 <p>Alright, the Azure side is set up—now we need to gather the pieces of information that Kasten will need to talk to Azure. Let&rsquo;s walk through the Helm values configuration we&rsquo;ll be using:</p>
-<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-yaml">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -303,7 +303,7 @@ Today, I want to walk you through integrating Kasten with Azure EntraID to enabl
         <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">helm get values k10 -n kasten-io &gt; k10_values.yaml</span></span></code></pre></div></div>
 <p>Now edit the <code>k10_values.yaml</code> file and add the OIDC authentication section with the information we gathered from Azure:</p>
-<div class="code-block code-line-numbers" style="counter-reset: code-block 0">
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-yaml">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
@@ -430,7 +430,7 @@ Today, I want to walk you through integrating Kasten with Azure EntraID to enabl
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

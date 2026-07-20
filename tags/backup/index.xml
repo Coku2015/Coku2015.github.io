@@ -1,161 +1,175 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Backup on 云虚智安</title>
-    <link>https://blog.backupnext.cloud/tags/Backup/</link>
-    <description>Recent content in Backup on 云虚智安</description>
-    <generator>Hugo</generator>
-    <language>zh-CN</language>
-    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/tags/Backup/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Holo VTL 正式发布</title>
-      <link>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</link>
-      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</guid>
-      <description>&lt;p&gt;我在备份圈做了好多年，经常遇到同一个问题：想测试磁带备份功能，但手头没有真实磁带库。&lt;/p&gt;&#xA;&lt;p&gt;真实磁带库不便宜，随便一台入门级的要几万起步，调试也麻烦。测试环境里这东西更是稀缺。不少人只能跳过磁带相关的功能验证，或者直接用生产环境的磁带库做测试，风险不小。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
-      <link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>
-      <pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</guid>
-      <description>&lt;p&gt;上周，一位朋友在群里喊：下载了 Veeam V13 的 ISO，结果升级失败。&lt;/p&gt;&#xA;&lt;p&gt;我问他下的哪个？&lt;/p&gt;&#xA;&lt;p&gt;他说：Veeam Data Platform Premium ISO 啊，20 GB 那个。&lt;/p&gt;&#xA;&lt;p&gt;我叹了口气。&lt;/p&gt;&#xA;&lt;p&gt;你踩坑了。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-核心变化vdp-premium-iso-不能用了&#34;&gt;⚠️ 核心变化：VDP Premium ISO 不能用了&lt;/h2&gt;&#xA;&lt;p&gt;这次 V13 的变化，很多人第一反应是懵的。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
-      <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
-      <description>&lt;h2 id=&#34;回想那些数据中心的不眠夜&#34;&gt;回想那些数据中心的不眠夜&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 3 点，又是一个数据中心的不眠之夜。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;财务系统什么时候能恢复？&amp;ldquo;&amp;ldquo;这个月 KPI 要完蛋了！&amp;ldquo;&amp;ldquo;IT 部门怎么又出问题？&amp;rdquo;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
-      <link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</guid>
-      <description>&lt;p&gt;**📖 阅读提示：**本文内容较长（4600 字 + 长截图），建议收藏后慢慢阅读。&lt;/p&gt;&#xA;&lt;h2 id=&#34;智能化数据保护新体验揭秘-veeam-intelligence-的强大能力&#34;&gt;智能化数据保护新体验——揭秘 Veeam Intelligence 的强大能力&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 2 点，备份作业又失败了。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上显示着错误代码&amp;quot;Failed to create snapshot&amp;quot;，你的脑子里一片空白。这种场景，相信每个 Veeam 管理员都经历过。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
-      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
-      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
-      <description>&lt;h1 id=&#34;ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器&#34;&gt;AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器&lt;/h1&gt;&#xA;&lt;p&gt;在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：&lt;strong&gt;零代码&lt;/strong&gt;、通过 Veeam RestAPI 控制 Veeam Backup &amp;amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
-      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
-      <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
-      <description>&lt;h1 id=&#34;ai-重塑数据保护-一claude-code--glm-46-实战从零搭建-ai-cli-工具&#34;&gt;AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
-      <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>
-      <pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
-      <description>&lt;p&gt;我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
-      <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>
-      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</guid>
-      <description>&lt;p&gt;v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
-      <link>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</link>
-      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</guid>
-      <description>&lt;p&gt;v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。&lt;/p&gt;&#xA;&lt;p&gt;今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp;amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</title>
-      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
-      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
-      <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号</title>
-      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
-      <pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
-      <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理</title>
-      <link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
-      <pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
-      <description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控</title>
-      <link>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
-      <pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
-      <description>&lt;p&gt;在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp;amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</title>
-      <link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
-      <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
-      <description>&lt;p&gt;接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。&lt;/p&gt;&#xA;&lt;p&gt;VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</title>
-      <link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
-      <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
-      <description>&lt;p&gt;去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>VBR备份和恢复MySQL最佳实践</title>
-      <link>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</link>
-      <pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</guid>
-      <description>&lt;p&gt;在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Veeam全线产品2023年下半年度重磅更新</title>
-      <link>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</link>
-      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</guid>
-      <description>&lt;p&gt;就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Veeam Agent for MAC 单机版使用全攻略</title>
-      <link>https://blog.backupnext.cloud/2021/04/mac-agent/</link>
-      <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2021/04/mac-agent/</guid>
-      <description>&lt;p&gt;Veeam Agent for MAC 随着 Veeam v11 版本推出，原本这个产品是集成在 VBR 之中，我也一直以为这个只能是被 VBR 统一管理才能使用，然而当我仔细阅读官网的 UserGuide 之后，发现在 Veeam Agent for MAC 竟然可以工作在 Standalone 模式下。惊喜之下，赶紧动手来玩了一把。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>野路子 - 用 Veeam 抵御勒索攻击的另类方法</title>
-      <link>https://blog.backupnext.cloud/2021/04/rotated-driver/</link>
-      <pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2021/04/rotated-driver/</guid>
-      <description>&lt;p&gt;我觉得这几天朋友们看了不少关于 Veeam 在 v11 中如何抵御勒索软件的方法，但是应该还是没有看够。方法是不是有点太单一？黑客们都在不断研究，我们 IT 管理员们怎么可以停下来。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>保存美好回忆，就在此时此刻！</title>
-      <link>https://blog.backupnext.cloud/2021/03/world-backup-day/</link>
-      <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2021/03/world-backup-day/</guid>
-      <description>&lt;p&gt;今天的内容非常简单，没太多技术含量，纯粹水一把。提醒大家做个备份，不管是个人的还是公司的，对于今天来说，一年一度的这个日子，做一个备份显得尤为重要。今天是世界备份日（World Backup Day）。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>数据中心备份容量和带宽的计算方法</title>
-      <link>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</link>
-      <pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</guid>
-      <description>&lt;p&gt;常常在工作中被问及，你们备份软件，重删效果如何？备份数据占多少空间？其实，就效果而言，这往往会和数据类型以及存放方式直接相关，不同的方式以及不同的设备类型，产生的实际效果差异非常大，因此这个问题说实话是非常难用一句话来回答。但是，无论如何，备份数据是需要磁盘空间进行存储的，在备份项目的设计过程中，必然会有备份存储库的容量设计。通常这个设计会直接关系到用户的存储成本、存储效率以及备份的可用性，因此这个设计在备份项目中非常关键，尽可能准确的设计存储容量和带宽，直接关系到项目的成败。&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>Backup on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/tags/backup/</link>
+		<description>Recent content in Backup on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</title>
+				<link>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
+				<pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</guid>
+				<description>&lt;h1 id=&#34;vbr-software-appliance-上阿里云终于有了一条可用的安装路径&#34;&gt;VBR Software Appliance 上阿里云：终于有了一条可用的安装路径&lt;/h1&gt;&#xA;&lt;p&gt;Veeam Software Appliance 在物理服务器或本地虚拟化环境中安装非常简单，Veeam 团队把极致安全和极致简单的体验带给了我们。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Holo VTL 正式发布</title>
+				<link>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</link>
+				<pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</guid>
+				<description>&lt;p&gt;我在备份圈做了好多年，经常遇到同一个问题：想测试磁带备份功能，但手头没有真实磁带库。&lt;/p&gt;&#xA;&lt;p&gt;真实磁带库不便宜，随便一台入门级的要几万起步，调试也麻烦。测试环境里这东西更是稀缺。不少人只能跳过磁带相关的功能验证，或者直接用生产环境的磁带库做测试，风险不小。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Veeam V13 下载哪个 ISO？90% 的人第一步就错了</title>
+				<link>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</link>
+				<pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/12/veeam-v13-iso-download/</guid>
+				<description>&lt;p&gt;上周，一位朋友在群里喊：下载了 Veeam V13 的 ISO，结果升级失败。&lt;/p&gt;&#xA;&lt;p&gt;我问他下的哪个？&lt;/p&gt;&#xA;&lt;p&gt;他说：Veeam Data Platform Premium ISO 啊，20 GB 那个。&lt;/p&gt;&#xA;&lt;p&gt;我叹了口气。&lt;/p&gt;&#xA;&lt;p&gt;你踩坑了。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-核心变化vdp-premium-iso-不能用了&#34;&gt;⚠️ 核心变化：VDP Premium ISO 不能用了&lt;/h2&gt;&#xA;&lt;p&gt;这次 V13 的变化，很多人第一反应是懵的。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
+				<link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
+				<pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+				<description>&lt;h2 id=&#34;回想那些数据中心的不眠夜&#34;&gt;回想那些数据中心的不眠夜&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 3 点，又是一个数据中心的不眠之夜。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;财务系统什么时候能恢复？&amp;ldquo;&amp;ldquo;这个月 KPI 要完蛋了！&amp;ldquo;&amp;ldquo;IT 部门怎么又出问题？&amp;rdquo;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
+				<link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
+				<pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</guid>
+				<description>&lt;p&gt;**📖 阅读提示：**本文内容较长（4600 字 + 长截图），建议收藏后慢慢阅读。&lt;/p&gt;&#xA;&lt;h2 id=&#34;智能化数据保护新体验揭秘-veeam-intelligence-的强大能力&#34;&gt;智能化数据保护新体验——揭秘 Veeam Intelligence 的强大能力&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 2 点，备份作业又失败了。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上显示着错误代码&amp;quot;Failed to create snapshot&amp;quot;，你的脑子里一片空白。这种场景，相信每个 Veeam 管理员都经历过。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
+				<link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
+				<pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+				<description>&lt;h1 id=&#34;ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器&#34;&gt;AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器&lt;/h1&gt;&#xA;&lt;p&gt;在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：&lt;strong&gt;零代码&lt;/strong&gt;、通过 Veeam RestAPI 控制 Veeam Backup &amp;amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
+				<link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
+				<pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+				<description>&lt;h1 id=&#34;ai-重塑数据保护-一claude-code--glm-46-实战从零搭建-ai-cli-工具&#34;&gt;AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
+				<link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>
+				<pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
+				<description>&lt;p&gt;我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
+				<link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>
+				<pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</guid>
+				<description>&lt;p&gt;v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
+				<link>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</link>
+				<pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</guid>
+				<description>&lt;p&gt;v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。&lt;/p&gt;&#xA;&lt;p&gt;今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp;amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP 安全技术系列（三） - 四眼认证模式：双人控制管理备份系统操作</title>
+				<link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</link>
+				<pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-03/</guid>
+				<description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP 安全技术系列（二） - 使用 gMSA 技术托管 Windows 账号</title>
+				<link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</link>
+				<pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-02/</guid>
+				<description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP 安全技术系列（一） - 免账户和 SSH 服务管理 Linux 备份代理</title>
+				<link>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</link>
+				<pubDate>Mon, 02 Dec 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/12/vdp-v12-other-security-features-deep-dive-01/</guid>
+				<description>&lt;h2 id=&#34;系列目录&#34;&gt;系列目录&lt;/h2&gt;&#xA;&lt;p&gt;数据保护不只是备份，它关乎企业的安全的最后一道防线。Veeam 通过零信任设计理念，将安全性融入到产品的每一处细节。从备份的开始到恢复的最后一步，Veeam 不断打磨每一个功能，以满足现代安全需求。本系列汇聚了 VDP v12 版本后新增的安全小技巧，简单易用，却能为数据安全保驾护航。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP v12.1 安全功能深度分析系列（三）- 全面威胁监控</title>
+				<link>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</link>
+				<pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/05/vdp-v12-1-security-feature-deep-dive-03/</guid>
+				<description>&lt;p&gt;在 VDP v12.1 中，不仅在备份过程中和备份结束后，加入了安全扫描功能，在管理上，对于监控和合规性方面都有全新的能力提升。为了更好的帮助管理员提升备份系统的安全性，VBR 对于自身的安全合规方面，加入了全自动的安全合规检测能力 Security &amp;amp; Compliance Analyzer；同时在高级版中，推出了全新的 Threat Center 仪表盘。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP v12.1 安全功能深度分析系列（二）- 恶意软件扫描</title>
+				<link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</link>
+				<pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-02/</guid>
+				<description>&lt;p&gt;接着昨天的，来说说第二大重磅更新功能，YARA Scan 和 Antivirus Scan。&lt;/p&gt;&#xA;&lt;p&gt;VBR 除了能对备份数据流进行在线扫描之外，现在还支持对备份下来的备份数据进行二次扫描。v12.1 中具备两大扫描引擎，一个是使用 Mount Server 上的杀毒软件作为扫描引擎，另外一个是使用 YARA 作为扫描引擎。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VDP v12.1 安全功能深度分析系列（一）- 勒索攻击侦测</title>
+				<link>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</link>
+				<pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2024/04/vdp-v12-1-security-feature-deep-dive-01/</guid>
+				<description>&lt;p&gt;去年年底，Veeam 发布了 v12.1 的重要更新，其中包含了大量安全方面的新功能，从今天开始，我将会深入每一个具体功能，来为大家介绍它们的原理和使用方法。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>VBR备份和恢复MySQL最佳实践</title>
+				<link>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</link>
+				<pubDate>Mon, 11 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2023/12/mysql-backup-and-restore/</guid>
+				<description>&lt;p&gt;在Veeam数据保护平台中，对各种应用程序支持非常完善，从镜像级备份的自动应用感知到特殊的应用Plugins备份，Veeam几乎覆盖了市场上所有的主流数据的支持。然而大家经常有疑问，MySQL的备份为什么在Veeam数据保护平台中找不到身影？今天我就来说说这是怎么一回事，对于MySQL，使用Veeam应该如何做备份和恢复。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Veeam全线产品2023年下半年度重磅更新</title>
+				<link>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</link>
+				<pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2023/12/vdp23h2-update/</guid>
+				<description>&lt;p&gt;就在昨天，Veeam正式GA了今年下半年度的数据保护平台全线产品的重要更新。几乎所有的产品都更新了一个版本，如果是Veeam深度用户，进入我的Veeam主页https://my.veeam.com，会看到满满的一屏所有产品全是New的状态，这些都是在本周全新上架可供下载的新版本。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Veeam Agent for MAC 单机版使用全攻略</title>
+				<link>https://blog.backupnext.cloud/2021/04/mac-agent/</link>
+				<pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2021/04/mac-agent/</guid>
+				<description>&lt;p&gt;Veeam Agent for MAC 随着 Veeam v11 版本推出，原本这个产品是集成在 VBR 之中，我也一直以为这个只能是被 VBR 统一管理才能使用，然而当我仔细阅读官网的 UserGuide 之后，发现在 Veeam Agent for MAC 竟然可以工作在 Standalone 模式下。惊喜之下，赶紧动手来玩了一把。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>野路子 - 用 Veeam 抵御勒索攻击的另类方法</title>
+				<link>https://blog.backupnext.cloud/2021/04/rotated-driver/</link>
+				<pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2021/04/rotated-driver/</guid>
+				<description>&lt;p&gt;我觉得这几天朋友们看了不少关于 Veeam 在 v11 中如何抵御勒索软件的方法，但是应该还是没有看够。方法是不是有点太单一？黑客们都在不断研究，我们 IT 管理员们怎么可以停下来。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>保存美好回忆，就在此时此刻！</title>
+				<link>https://blog.backupnext.cloud/2021/03/world-backup-day/</link>
+				<pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2021/03/world-backup-day/</guid>
+				<description>&lt;p&gt;今天的内容非常简单，没太多技术含量，纯粹水一把。提醒大家做个备份，不管是个人的还是公司的，对于今天来说，一年一度的这个日子，做一个备份显得尤为重要。今天是世界备份日（World Backup Day）。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>数据中心备份容量和带宽的计算方法</title>
+				<link>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</link>
+				<pubDate>Fri, 05 May 2017 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2017/05/how-to-calculate-backup-size/</guid>
+				<description>&lt;p&gt;常常在工作中被问及，你们备份软件，重删效果如何？备份数据占多少空间？其实，就效果而言，这往往会和数据类型以及存放方式直接相关，不同的方式以及不同的设备类型，产生的实际效果差异非常大，因此这个问题说实话是非常难用一句话来回答。但是，无论如何，备份数据是需要磁盘空间进行存储的，在备份项目的设计过程中，必然会有备份存储库的容量设计。通常这个设计会直接关系到用户的存储成本、存储效率以及备份的可用性，因此这个设计在备份项目中非常关键，尽可能准确的设计存储容量和带宽，直接关系到项目的成败。&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>

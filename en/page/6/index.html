@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-	<meta name="generator" content="Hugo 0.161.1">
+	<meta name="generator" content="Hugo 0.164.0">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Cloud.Virt.AI.Sec</title><meta name="description" content="Welcome to Cloud.Virt.AI.Sec"><meta property="og:url" content="https://blog.backupnext.cloud/en/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="Cloud.Virt.AI.Sec">
-  <meta property="og:description" content="Welcome to Cloud.Virt.AI.Sec">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="website">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Cloud.Virt.AI.Sec">
+	<meta property="og:description" content="Welcome to Cloud.Virt.AI.Sec">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="website">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="Cloud.Virt.AI.Sec">
-  <meta name="twitter:description" content="Welcome to Cloud.Virt.AI.Sec">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="Cloud.Virt.AI.Sec">
+	<meta name="twitter:description" content="Welcome to Cloud.Virt.AI.Sec">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -120,10 +120,18 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">Cloud.Virt.AI.Sec</h1><div class="home-subtitle">Cloud · Virt · AI · Sec</div><div class="links"><a href="https://github.com/Coku2015" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:mailto:Coku2015@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/en/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">Welcome to Cloud.Virt.AI.Sec</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/en/2023/12/mysql-backup-and-restore/">MySQL Backup and Restore Best Practices with Veeam</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-11">2023-12-11</time></span></div><div class="content"><p>In the Veeam data protection platform, application support is extremely comprehensive, ranging from automatic application-aware processing for image-level backups to specialized application plugin backups. Veeam covers almost all mainstream data sources in the market. However, many people often wonder why MySQL backup isn&rsquo;t prominently featured in the Veeam data protection platform. Today, I&rsquo;ll explain what&rsquo;s going on and how you should approach MySQL backup and recovery using Veeam.</p>
+<h2 id="mysql-data-storage-engines">MySQL Data Storage Engines</h2>
+<p>Before discussing MySQL backup, we need to talk about MySQL&rsquo;s data storage engines because different engines directly determine MySQL&rsquo;s data backup and recovery capabilities. In MySQL, <code>InnoDB</code> is the most commonly used storage engine by default. Tables created with the <code>Create Table</code> command without specifying an <code>Engine</code> parameter will use the <code>InnoDB</code> engine by default, and Oracle officially recommends using the <code>InnoDB</code> engine for typical MySQL usage unless there are special requirements. Of course, besides this engine, MySQL also supports other engines for special cases, such as MyISAM, MEMORY, CSV, BLACKHOLE, and others. For more information about storage engines, you can refer to the <a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html" target="_blank" rel="noopener noreffer ">official documentation</a>.</p></div><div class="post-footer">
+        <a href="/en/2023/12/mysql-backup-and-restore/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/MySQL/">MySQL</a>,&nbsp;<a href="/en/tags/VBR/">VBR</a>,&nbsp;<a href="/en/tags/backup/">Backup</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2023/12/vdp23h2-update/">Veeam's Major H2 2023 Product Line Update</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-07">2023-12-07</time></span></div><div class="content"><p>Just yesterday, Veeam officially GA&rsquo;d the important updates for their entire data protection platform product line in the second half of this year. Almost every product has been updated with a new version. If you&rsquo;re a Veeam power user, when you visit your Veeam homepage at <a href="https://my.veeam.com" target="_blank" rel="noopener noreffer ">https://my.veeam.com</a>, you&rsquo;ll see a full screen where all products show &ldquo;New&rdquo; status - these are all newly available versions released this week for download.</p></div><div class="post-footer">
         <a href="/en/2023/12/vdp23h2-update/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VDP/">VDP</a>,&nbsp;<a href="/en/tags/VBR/">VBR</a>,&nbsp;<a href="/en/tags/Backup/">Backup</a></div></div>
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VDP/">VDP</a>,&nbsp;<a href="/en/tags/VBR/">VBR</a>,&nbsp;<a href="/en/tags/backup/">Backup</a></div></div>
 </article>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/en/2023/11/vro-v6-guide-10/">VRO Fundamentals (Part 10) - Implementing Fully Automated Container Disaster Recovery with VRO and K10</a>
@@ -176,25 +184,6 @@
 <p>In this final part of the series, I&rsquo;ll introduce VRO&rsquo;s documentation system.</p></div><div class="post-footer">
         <a href="/en/2023/10/vro-v6-guide-09/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/en/2023/06/vro-v6-guide-08/">VRO Getting Started Guide (8) - Plan Step · Part 2</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-06-16">2023-06-16</time></span></div><div class="content"><h2 id="series-table-of-contents">Series Table of Contents:</h2>
-<ul>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-01/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (1) - Introduction</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-02/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (2) - Installation and Deployment</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-03/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (3) - Basic Components · Part 1</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/05/VRO-v6-Guide-04/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (4) - Basic Components · Part 2</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-05/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (5) - First Steps to a Successful Disaster Recovery Plan</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-06/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (6) - Data Lab</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-07/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (7) - Plan Step · Part 1</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/06/VRO-v6-Guide-08/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (8) - Plan Step · Part 2</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/10/VRO-v6-Guide-09/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (9) - Document Template Analysis</a></li>
-<li><a href="https://blog.backupnext.cloud/2023/11/VRO-v6-Guide-10/" target="_blank" rel="noopener noreffer ">VRO Getting Started Guide (10) - Using VRO with K10 for Fully Automated Container Disaster Recovery</a></li>
-</ul>
-<p>In the previous article, I introduced the basic configuration and usage of Plan Steps. Today, I&rsquo;ll provide a detailed breakdown of custom scripts within Plan Steps. I&rsquo;ll walk you through using custom scripts through a practical example.</p></div><div class="post-footer">
-        <a href="/en/2023/06/vro-v6-guide-08/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/VAO/">VAO</a>,&nbsp;<a href="/en/tags/VRO/">VRO</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item ">
                     <span class="page-link">
@@ -310,7 +299,7 @@
         </div>
     </section></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

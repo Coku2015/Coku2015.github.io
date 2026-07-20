@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VBR Software Appliance 上阿里云：终于有了一条可用的安装路径 - 云虚智安</title><meta name="description" content="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径"><meta property="og:url" content="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/">
+	<meta property="og:site_name" content="云虚智安">
+	<meta property="og:title" content="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径">
+	<meta property="og:description" content="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-07-19T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-07-19T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Cloud">
+		<meta property="og:image" content="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png">
+	<meta name="twitter:title" content="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径">
+	<meta name="twitter:description" content="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径">
+<meta name="application-name" content="云虚智安">
+<meta name="apple-mobile-web-app-title" content="云虚智安">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/" /><link rel="prev" href="https://blog.backupnext.cloud/2026/05/holo-VTL-launch/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VBR Software Appliance 上阿里云：终于有了一条可用的安装路径",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/featured-image.png"],"genre": "posts","keywords": "backup, cloud","wordcount":  1836 ,
+        "url": "https:\/\/blog.backupnext.cloud\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/","datePublished": "2026-07-19T00:00:00+00:00","dateModified": "2026-07-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "VBR Software Appliance 上阿里云：终于有了一条可用的安装路径"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="云虚智安">云虚智安</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/archive/"> 归档 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/07/Veeam-Installer-for-Aliyun-launch/" selected>简体中文</option><option value="/en/2026/07/Veeam-Installer-for-Aliyun-launch/">English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="云虚智安">云虚智安</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/archive/" title="">归档</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于我</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/07/Veeam-Installer-for-Aliyun-launch/" selected>简体中文</option><option value="/en/2026/07/Veeam-Installer-for-Aliyun-launch/">English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-07-19">2026-07-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1836 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png"
+        data-srcset="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png, /2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png 1.5x, /2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png"
+        title="VBR Software Appliance 上阿里云：终于有了一条可用的安装路径" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#它长什么样">它长什么样？</a></li>
+        <li><a href="#开始前需要准备什么">开始前需要准备什么？</a></li>
+        <li><a href="#第一步选择-veeam-software-appliance-ova">第一步：选择 Veeam Software Appliance OVA</a></li>
+        <li><a href="#第二步验证-appliance">第二步：验证 Appliance</a></li>
+        <li><a href="#第三步连接阿里云">第三步：连接阿里云</a></li>
+        <li><a href="#第四步选择阿里云资源">第四步：选择阿里云资源</a></li>
+        <li><a href="#第五步审阅部署计划">第五步：审阅部署计划</a></li>
+        <li><a href="#第六步确认并开始部署">第六步：确认并开始部署</a></li>
+        <li><a href="#部署完成后还需要做什么">部署完成后，还需要做什么？</a></li>
+        <li><a href="#写在最后">写在最后</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="vbr-software-appliance-上阿里云终于有了一条可用的安装路径">VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</h1>
+<p>Veeam Software Appliance 在物理服务器或本地虚拟化环境中安装非常简单，Veeam 团队把极致安全和极致简单的体验带给了我们。</p>
+<p>但如果你希望把它部署到阿里云这样的公有云，事情就完全不一样了。OVA 不能直接拿来创建 ECS，OVA、ISO安装、网络、实例配置、启动初始化这些都是不可绕过的门槛，没有一些特殊的方法，几乎是一件无法完成的任务。</p>
+<p>不过，现在 AI 实在太强大，我又 vibe coding 了一个工具，方便大家一键安装：<strong>VBR Installer for Aliyun</strong>。</p>
+<p>它是一个运行在本地电脑上的 Python 安装器。启动后会自动打开浏览器，通过图形化向导，引导你将符合条件的 Veeam Software Appliance OVA 部署到自己的阿里云账号中。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/Coku2015/VBR_Installer_for_Aliyun" target="_blank" rel="noopener noreffer ">Github</a></p>
+<p>它把阿里云上安装 VSA 这个不可能完成的任务变成简单可见的向导式安装配置，仅需点击配置，你的 VSA 就可以立刻在阿里云上运行起来。</p>
+<h3 id="它长什么样">它长什么样？</h3>
+<p>克隆项目后，运行安装器后，浏览器会自动打开本地 Web 页面。整个过程都在本机和用户自己的阿里云账号中完成，不需要把 OVA 文件或阿里云凭据交给第三方平台。</p>
+<h3 id="开始前需要准备什么">开始前需要准备什么？</h3>
+<p>使用前，需要准备以下条件：</p>
+<ul>
+<li>已获授权的 Veeam Software Appliance OVA；</li>
+<li>Windows 11 或 macOS 13+ 的图形化桌面环境；</li>
+<li>Python、QEMU <code>qemu-img</code> 和 Alibaba Cloud CLI；</li>
+<li>至少建议预留 50 GiB 以上本地临时空间；</li>
+<li>有足够权限和配额的阿里云账号或 RAM 身份；</li>
+<li>对 ECS、OSS、VPC、vSwitch、安全组、镜像和云盘有基本管理权限。</li>
+</ul>
+<p>完整的安装命令、环境准备、权限配置和常见报错处理，都已经写在 GitHub README 中。</p>
+<h3 id="第一步选择-veeam-software-appliance-ova">第一步：选择 Veeam Software Appliance OVA</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/4kvO/Step_1_Select_OVA.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/4kvO/Step_1_Select_OVA.jpg, https://files.seeusercontent.com/2026/07/19/4kvO/Step_1_Select_OVA.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/4kvO/Step_1_Select_OVA.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/4kvO/Step_1_Select_OVA.jpg"
+        title="Step_1_Select_OVA" /></p>
+<p>第一步，选择原始的 Veeam Software Appliance OVA 文件，以及一个本地临时目录。</p>
+<p>这个临时目录用于磁盘处理和上传准备，需要保留足够空间。原始 OVA 不会被修改，工具只会在指定的临时目录中创建本次部署需要的工作文件。</p>
+<h3 id="第二步验证-appliance">第二步：验证 Appliance</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/0Rjs/Step_2_Validate_OVA.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/0Rjs/Step_2_Validate_OVA.jpg, https://files.seeusercontent.com/2026/07/19/0Rjs/Step_2_Validate_OVA.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/0Rjs/Step_2_Validate_OVA.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/0Rjs/Step_2_Validate_OVA.jpg"
+        title="Step_2_Validate_OVA" /></p>
+<p>选好 OVA 后，安装器会检查文件内容，确认它是否是当前支持的 Veeam Software Appliance 格式，并识别其中的系统盘和数据盘。</p>
+<p>如果 OVA 不符合要求，应该在这里停下来，而不是等到上传、导入镜像之后才发现问题。只有验证结果为“支持”时，才建议继续下一步。</p>
+<h3 id="第三步连接阿里云">第三步：连接阿里云</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/me2B/Step_3_Authorization.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/me2B/Step_3_Authorization.jpg, https://files.seeusercontent.com/2026/07/19/me2B/Step_3_Authorization.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/me2B/Step_3_Authorization.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/me2B/Step_3_Authorization.jpg"
+        title="Step_3_Authorization" /></p>
+<p>接下来，在向导中选择阿里云中国站或国际站，并使用用于部署的 RAM 用户或 RAM 角色完成登录。</p>
+<p>安装器优先使用浏览器授权方式，不需要把长期 AccessKey 明文写进配置文件。首次使用时，还可以按照页面提示准备镜像导入所需的 RAM 权限和 ECS 服务角色。具体权限配置可以直接参考项目 README。</p>
+<h3 id="第四步选择阿里云资源">第四步：选择阿里云资源</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/8cWb/Step_4_Select_Aliyun_Resource.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/8cWb/Step_4_Select_Aliyun_Resource.jpg, https://files.seeusercontent.com/2026/07/19/8cWb/Step_4_Select_Aliyun_Resource.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/8cWb/Step_4_Select_Aliyun_Resource.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/8cWb/Step_4_Select_Aliyun_Resource.jpg"
+        title="Step_4_Select_Aliyun_Resource" /></p>
+<p>在这一步选择部署需要的阿里云资源，包括地域、VPC、vSwitch、安全组、实例规格和云盘等。在这一步，实例规格的选择安装器为VSA配置了默认 4vCPU 16GiB 起步的规格，默认已经过滤了小规格无法启动 VBR 的配置。</p>
+<h3 id="第五步审阅部署计划">第五步：审阅部署计划</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/lXw2/Step_5_Review.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/lXw2/Step_5_Review.jpg, https://files.seeusercontent.com/2026/07/19/lXw2/Step_5_Review.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/lXw2/Step_5_Review.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/lXw2/Step_5_Review.jpg"
+        title="Step_5_Review" /></p>
+<p>安装器会先生成 Dry Run 部署计划，列出将要处理的磁盘、准备使用的云资源、可能的告警和费用类别。此时不会上传 OVA，也不会创建任何收费资源。</p>
+<p>先看计划，再做部署。确认资源选择和成本预期都没有问题后，才进入最后一步。点击开始部署后，安装器会验证资源，最后由用户输入OK确认费用后，才会正式进入部署阶段。</p>
+<h3 id="第六步确认并开始部署">第六步：确认并开始部署</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg, https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg"
+        title="Step_6_Deploy" /></p>
+<p>确认部署后，安装器会依次处理磁盘转换、OSS 上传、ECS 自定义镜像导入、镜像修复和实例创建，并在页面中显示进度。</p>
+<p>这个过程可能需要45~90分钟，尤其是本地网络带宽有限或镜像导入排队时。部署期间请保持最初自动打开的浏览器页面开启，不要在无痕窗口或其他浏览器配置文件中重复打开本地地址。</p>
+<h3 id="部署完成后还需要做什么">部署完成后，还需要做什么？</h3>
+<p>当安装器提示 ECS 已创建后，其实还没完成 VSA 的部署，还需要进入控制台进行 VSA 的初始化设置。</p>
+<p>请回到阿里云控制台，进入 ECS，找到本次部署创建的实例，然后打开实例详情页中的 <strong>VNC 控制台</strong>。通过 VNC 完成 Veeam Software Appliance 的首次初始化。</p>
+<p>接下去就可以正式进入 VBR 的首次启动、网络设置、NTP 设置、Veeam 管理员初始化、系统服务启动等一系列常规 VBR 的配置操作了。</p>
+<h3 id="写在最后">写在最后</h3>
+<p>这个工具是我用 AI 辅助开发的一个开源项目。它为 Veeam Software Appliance 提供了一条从本地 OVA 到阿里云 ECS 的完整部署路径，让原本复杂、缺少标准做法的任务，变得可以按流程执行。</p>
+<p>但也必须明确说明：这不是 Veeam 或阿里云官方提供的安装或配置方法。</p>
+<p>我不保证部署后的 VBR 在所有环境中、所有功能都可以正常工作，也不提供备份服务器安装、配置、运维、备份设计或恢复验证等支持服务。ECS 显示运行中，也不代表 VBR 已完成初始化，更不代表备份和恢复已经验证成功。</p>
+<p>请务必先在测试环境中验证 Appliance、网络、备份和恢复流程，再决定是否用于生产环境。</p>
+<p>如果你实际尝试过这个工具，欢迎在 GitHub 提交 Issue，分享你的使用效果、兼容性结果和遇到的问题。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-07-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/07/Veeam-Installer-for-Aliyun-launch/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2F2026%2F07%2FVeeam-Installer-for-Aliyun-launch%2F" target="_blank" rel="noopener noreferrer" title="分享到 微信" aria-label="分享到 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2F2026%2F07%2FVeeam-Installer-for-Aliyun-launch%2F&amp;text=VBR&#43;Software&#43;Appliance&#43;%E4%B8%8A%E9%98%BF%E9%87%8C%E4%BA%91%EF%BC%9A%E7%BB%88%E4%BA%8E%E6%9C%89%E4%BA%86%E4%B8%80%E6%9D%A1%E5%8F%AF%E7%94%A8%E7%9A%84%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84" target="_blank" rel="noopener noreferrer" title="分享到 X" aria-label="分享到 X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252F2026%252F07%252FVeeam-Installer-for-Aliyun-launch%252F" target="_blank" rel="noopener noreferrer" title="分享到 Linkedin" aria-label="分享到 Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252F2026%252F07%252FVeeam-Installer-for-Aliyun-launch%252F" target="_blank" rel="noopener noreferrer" title="分享到 Facebook" aria-label="分享到 Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/backup/">Backup</a>,&nbsp;<a href="/tags/cloud/">Cloud</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2026/05/holo-VTL-launch/" class="prev" rel="prev" title="Holo VTL 正式发布"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Holo VTL 正式发布</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://blog-backupnext-cloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script><script>
+            var doNotTrack = false;
+            if ( false ) {
+                var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+                var doNotTrack = (dnt == "1" || dnt == "yes");
+            }
+            if (!doNotTrack) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-JS3EGTT92G');
+            }
+        </script><script src="https://www.googletagmanager.com/gtag/js?id=G-JS3EGTT92G" async></script></body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path - Cloud.Virt.AI.Sec</title><meta name="description" content="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path"><meta property="og:url" content="https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path">
+	<meta property="og:description" content="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-07-19T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-07-19T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Cloud">
+		<meta property="og:image" content="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png">
+	<meta name="twitter:title" content="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path">
+	<meta name="twitter:description" content="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2026/05/holo-vtl-launch/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/featured-image.png"],"genre": "posts","keywords": "backup, cloud","wordcount":  1110 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2026\/07\/Veeam-Installer-for-Aliyun-launch\/","datePublished": "2026-07-19T00:00:00+00:00","dateModified": "2026-07-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/07/Veeam-Installer-for-Aliyun-launch/">简体中文</option><option value="/en/2026/07/Veeam-Installer-for-Aliyun-launch/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/07/Veeam-Installer-for-Aliyun-launch/">简体中文</option><option value="/en/2026/07/Veeam-Installer-for-Aliyun-launch/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/Data-Protection/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Protection</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-07-19">2026-07-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1110 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png"
+        data-srcset="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png, /2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png 1.5x, /2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2026/07/Veeam-Installer-for-Aliyun-launch/featured-image.png"
+        title="VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#what-does-it-look-like">What does it look like?</a></li>
+        <li><a href="#what-do-you-need-before-you-start">What do you need before you start?</a></li>
+        <li><a href="#step-1-select-the-veeam-software-appliance-ova">Step 1: Select the Veeam Software Appliance OVA</a></li>
+        <li><a href="#step-2-validate-the-appliance">Step 2: Validate the Appliance</a></li>
+        <li><a href="#step-3-connect-to-alibaba-cloud">Step 3: Connect to Alibaba Cloud</a></li>
+        <li><a href="#step-4-select-alibaba-cloud-resources">Step 4: Select Alibaba Cloud Resources</a></li>
+        <li><a href="#step-5-review-the-deployment-plan">Step 5: Review the Deployment Plan</a></li>
+        <li><a href="#step-6-confirm-and-start-deployment">Step 6: Confirm and Start Deployment</a></li>
+        <li><a href="#whats-left-to-do-after-deployment">What&rsquo;s left to do after deployment?</a></li>
+        <li><a href="#final-notes">Final notes</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="vbr-software-appliance-on-alibaba-cloud-finally-a-working-installation-path">VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</h1>
+<p>Veeam Software Appliance is extremely simple to install on a physical server or a local virtualized environment — the Veeam team has delivered an experience that balances ultimate security with ultimate simplicity.</p>
+<p>But if you want to deploy it to a public cloud like Alibaba Cloud, things look completely different. An OVA cannot be used directly to create an ECS instance, and OVA handling, ISO installation, networking, instance configuration, and boot-time initialization are all hurdles you cannot bypass. Without some special approach, this is nearly an impossible task.</p>
+<p>However, AI is so powerful these days that I went and vibe-coded another tool to make one-click installation easy for everyone: <strong>VBR Installer for Aliyun</strong>.</p>
+<p>It is a Python installer that runs on your local computer. Once launched, it automatically opens a browser and walks you through a graphical wizard to deploy a qualifying Veeam Software Appliance OVA into your own Alibaba Cloud account.</p>
+<p>Project repository:</p>
+<p><a href="https://github.com/Coku2015/VBR_Installer_for_Aliyun" target="_blank" rel="noopener noreffer ">Github</a></p>
+<p>It turns the impossible task of installing VSA on Alibaba Cloud into a simple, visible, wizard-driven installation and configuration flow — just a few clicks and your VSA will be up and running on Alibaba Cloud in no time.</p>
+<h3 id="what-does-it-look-like">What does it look like?</h3>
+<p>After cloning the project and launching the installer, the browser opens the local web page automatically. The entire process runs on your local machine and inside your own Alibaba Cloud account — you never have to hand the OVA file or your Alibaba Cloud credentials over to a third-party platform.</p>
+<h3 id="what-do-you-need-before-you-start">What do you need before you start?</h3>
+<p>Before using the installer, make sure you have the following ready:</p>
+<ul>
+<li>An authorized Veeam Software Appliance OVA;</li>
+<li>A graphical desktop environment on Windows 11 or macOS 13+;</li>
+<li>Python, QEMU <code>qemu-img</code>, and the Alibaba Cloud CLI;</li>
+<li>At least 50 GiB of local temporary space (recommended);</li>
+<li>An Alibaba Cloud account or RAM identity with sufficient permissions and quota;</li>
+<li>Basic management permissions for ECS, OSS, VPC, vSwitch, security groups, images, and cloud disks.</li>
+</ul>
+<p>The full installation commands, environment setup, permission configuration, and common error handling are all documented in the GitHub README.</p>
+<h3 id="step-1-select-the-veeam-software-appliance-ova">Step 1: Select the Veeam Software Appliance OVA</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/Mf5v/Step_1_Select_OVA.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/Mf5v/Step_1_Select_OVA.jpg, https://files.seeusercontent.com/2026/07/19/Mf5v/Step_1_Select_OVA.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/Mf5v/Step_1_Select_OVA.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/Mf5v/Step_1_Select_OVA.jpg"
+        title="Step_1_Select_OVA" /></p>
+<p>In the first step, select the original Veeam Software Appliance OVA file and a local temporary directory.</p>
+<p>This temporary directory is used for disk processing and upload preparation, so make sure it has enough free space. The original OVA is never modified — the tool only creates the working files needed for this deployment in the temporary directory you specify.</p>
+<h3 id="step-2-validate-the-appliance">Step 2: Validate the Appliance</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/9Tvq/Step_2_Validate_OVA.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/9Tvq/Step_2_Validate_OVA.jpg, https://files.seeusercontent.com/2026/07/19/9Tvq/Step_2_Validate_OVA.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/9Tvq/Step_2_Validate_OVA.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/9Tvq/Step_2_Validate_OVA.jpg"
+        title="Step_2_Validate_OVA" /></p>
+<p>Once the OVA is selected, the installer inspects the file contents to confirm whether it matches a currently supported Veeam Software Appliance format, and identifies the system disk and data disks inside.</p>
+<p>If the OVA does not meet the requirements, the process should stop here rather than waiting until after upload or image import to discover the problem. Only when the validation result is &ldquo;Supported&rdquo; should you proceed to the next step.</p>
+<h3 id="step-3-connect-to-alibaba-cloud">Step 3: Connect to Alibaba Cloud</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/wtH1/Step_3_Authorization.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/wtH1/Step_3_Authorization.jpg, https://files.seeusercontent.com/2026/07/19/wtH1/Step_3_Authorization.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/wtH1/Step_3_Authorization.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/wtH1/Step_3_Authorization.jpg"
+        title="Step_3_Authorization" /></p>
+<p>Next, choose Alibaba Cloud China site or International site in the wizard, and sign in with the RAM user or RAM role that will be used for deployment.</p>
+<p>The installer prioritizes a browser-based authorization flow, so you do not need to write a long-lived AccessKey in plaintext into a configuration file. On first use, you can also follow the on-page instructions to prepare the RAM permissions and ECS service role required for image import. See the project README for the exact permission configuration.</p>
+<h3 id="step-4-select-alibaba-cloud-resources">Step 4: Select Alibaba Cloud Resources</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/B4ov/Step_4_Select_Aliyun_Resource.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/B4ov/Step_4_Select_Aliyun_Resource.jpg, https://files.seeusercontent.com/2026/07/19/B4ov/Step_4_Select_Aliyun_Resource.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/B4ov/Step_4_Select_Aliyun_Resource.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/B4ov/Step_4_Select_Aliyun_Resource.jpg"
+        title="Step_4_Select_Aliyun_Resource" /></p>
+<p>In this step, choose the Alibaba Cloud resources required for deployment, including region, VPC, vSwitch, security group, instance type, and cloud disks. Here, the installer preconfigures a default instance type for VSA starting at 4 vCPU / 16 GiB, and small instance types that cannot boot VBR are filtered out by default.</p>
+<h3 id="step-5-review-the-deployment-plan">Step 5: Review the Deployment Plan</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/Udl0/Step_5_Review.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/Udl0/Step_5_Review.jpg, https://files.seeusercontent.com/2026/07/19/Udl0/Step_5_Review.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/Udl0/Step_5_Review.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/Udl0/Step_5_Review.jpg"
+        title="Step_5_Review" /></p>
+<p>The installer first generates a Dry Run deployment plan that lists the disks to be processed, the cloud resources to be used, possible warnings, and cost categories. At this point the OVA is not uploaded, and no billable resources are created.</p>
+<p>Review the plan first, then deploy. You only move on to the final step once the resource selections and cost expectations look right. After you click start deployment, the installer validates the resources, and only enters the actual deployment phase after you type OK to confirm the costs.</p>
+<h3 id="step-6-confirm-and-start-deployment">Step 6: Confirm and Start Deployment</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg"
+        data-srcset="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg, https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg 1.5x, https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/07/19/iYl6/Step_6_Deploy.jpg"
+        title="Step_6_Deploy" /></p>
+<p>Once deployment is confirmed, the installer processes disk conversion, OSS upload, ECS custom image import, image repair, and instance creation in sequence, with progress displayed on the page.</p>
+<p>This process can take 45–90 minutes, especially when local network bandwidth is limited or image imports are queued. During deployment, keep the originally auto-opened browser page open — do not reopen the local address in an incognito window or another browser profile.</p>
+<h3 id="whats-left-to-do-after-deployment">What&rsquo;s left to do after deployment?</h3>
+<p>When the installer reports that the ECS instance has been created, the VSA deployment is not actually finished — you still need to go to the console to perform the initial VSA setup.</p>
+<p>Return to the Alibaba Cloud console, navigate to ECS, locate the instance created by this deployment, and then open the <strong>VNC console</strong> from the instance details page. Use VNC to complete the first-time initialization of the Veeam Software Appliance.</p>
+<p>From there, you can proceed with the standard VBR configuration workflow: first boot, network settings, NTP settings, Veeam administrator initialization, system service startup, and so on.</p>
+<h3 id="final-notes">Final notes</h3>
+<p>This tool is an open-source project I developed with the help of AI. It provides Veeam Software Appliance with a complete deployment path from a local OVA to Alibaba Cloud ECS, turning what was previously a complex task with no standard approach into something that can be executed step by step.</p>
+<p>But I must also be clear: this is not an official installation or configuration method provided by Veeam or Alibaba Cloud.</p>
+<p>I do not guarantee that the deployed VBR will work fully across all features in every environment, and I do not provide support services for backup server installation, configuration, operations, backup design, or recovery validation. An ECS instance showing &ldquo;Running&rdquo; does not mean VBR initialization is complete, and it certainly does not mean that backup and recovery have been verified.</p>
+<p>Always validate the Appliance, networking, backup, and recovery workflows in a test environment first before deciding whether to use it in production.</p>
+<p>If you have actually tried this tool, you are welcome to submit an Issue on GitHub to share how it worked for you, your compatibility results, and any problems you encountered.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2026-07-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2026/07/Veeam-Installer-for-Aliyun-launch/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F07%2FVeeam-Installer-for-Aliyun-launch%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F07%2FVeeam-Installer-for-Aliyun-launch%2F&amp;text=VBR&#43;Software&#43;Appliance&#43;on&#43;Alibaba&#43;Cloud%3A&#43;Finally%2C&#43;a&#43;Working&#43;Installation&#43;Path" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F07%252FVeeam-Installer-for-Aliyun-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F07%252FVeeam-Installer-for-Aliyun-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/cloud/">Cloud</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2026/05/holo-vtl-launch/" class="prev" rel="prev" title="Holo VTL Is Now Live"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Holo VTL Is Now Live</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://blog-backupnext-cloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.en.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.stub.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script><script>
+            var doNotTrack = false;
+            if ( false ) {
+                var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+                var doNotTrack = (dnt == "1" || dnt == "yes");
+            }
+            if (!doNotTrack) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-JS3EGTT92G');
+            }
+        </script><script src="https://www.googletagmanager.com/gtag/js?id=G-JS3EGTT92G" async></script></body>
+</html>

@@ -6,24 +6,24 @@
         <meta name="robots" content="noodp" />
         <title>VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning - Cloud.Virt.AI.Sec</title><meta name="description" content="Following up on yesterday’s post, let’s dive into the second major update: YARA Scan and Antivirus Scan.
 Beyond its ability to perform online scanning of backup …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2024/04/vdp-v12-1-security-feature-deep-dive-02/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning">
-  <meta property="og:description" content="Following up on yesterday’s post, let’s dive into the second major update: YARA Scan and Antivirus Scan.
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning">
+	<meta property="og:description" content="Following up on yesterday’s post, let’s dive into the second major update: YARA Scan and Antivirus Scan.
 Beyond its ability to perform online scanning of backup data streams, Veeam Backup &amp; Replication (VBR) now supports secondary scanning of already backed-up data. Version 12.1 introduces two powerful scanning engines: one that leverages antivirus software installed on the Mount Server, and another that utilizes YARA as the scanning engine.
 Understanding YARA YARA (which stands for Yet Another Recursive Acronym) is a tool primarily used by security experts and researchers to identify and classify malware. You can find the official documentation at https://yara.readthedocs.io/en/latest/ and the GitHub repository at https://github.com/virustotal/yara.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-04-29T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-04-29T00:00:00+00:00">
-    <meta property="article:tag" content="Backup">
-    <meta property="article:tag" content="Security">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2024-04-29T00:00:00+00:00">
+		<meta property="article:modified_time" content="2024-04-29T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Security">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning">
-  <meta name="twitter:description" content="Following up on yesterday’s post, let’s dive into the second major update: YARA Scan and Antivirus Scan.
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="VDP v12.1 Security Feature Deep Dive Series (Part 2) - Malware Scanning">
+	<meta name="twitter:description" content="Following up on yesterday’s post, let’s dive into the second major update: YARA Scan and Antivirus Scan.
 Beyond its ability to perform online scanning of backup data streams, Veeam Backup &amp; Replication (VBR) now supports secondary scanning of already backed-up data. Version 12.1 introduces two powerful scanning engines: one that leverages antivirus software installed on the Mount Server, and another that utilizes YARA as the scanning engine.
 Understanding YARA YARA (which stands for Yet Another Recursive Acronym) is a tool primarily used by security experts and researchers to identify and classify malware. You can find the official documentation at https://yara.readthedocs.io/en/latest/ and the GitHub repository at https://github.com/virustotal/yara.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
@@ -274,7 +274,7 @@ Understanding YARA YARA (which stands for Yet Another Recursive Acronym) is a to
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
         <section>
             <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
         </section>
@@ -287,7 +287,7 @@ Understanding YARA YARA (which stands for Yet Another Recursive Acronym) is a to
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

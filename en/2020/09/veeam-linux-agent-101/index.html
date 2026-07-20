@@ -5,21 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Veeam Agent for Linux 101 - Cloud.Virt.AI.Sec</title><meta name="description" content="Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/09/veeam-linux-agent-101/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="Veeam Agent for Linux 101">
-  <meta property="og:description" content="Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there’s always a use case for VAL. However, we’ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the “It just works!” slogan difficult to confidently claim.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2020-09-22T00:00:00+00:00">
-    <meta property="article:modified_time" content="2020-09-22T00:00:00+00:00">
-    <meta property="article:tag" content="VBR">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Veeam Agent for Linux 101">
+	<meta property="og:description" content="Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there’s always a use case for VAL. However, we’ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the “It just works!” slogan difficult to confidently claim.">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2020-09-22T00:00:00+00:00">
+		<meta property="article:modified_time" content="2020-09-22T00:00:00+00:00">
+		<meta property="article:tag" content="VBR">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="Veeam Agent for Linux 101">
-  <meta name="twitter:description" content="Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there’s always a use case for VAL. However, we’ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the “It just works!” slogan difficult to confidently claim.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="Veeam Agent for Linux 101">
+	<meta name="twitter:description" content="Since Veeam Agent for Linux 4.0 (VAL) launched alongside VBR v10 earlier this year, this increasingly powerful backup agent has seen widespread adoption across various scenarios—cloud and on-premises, virtual and physical—there’s always a use case for VAL. However, we’ve found that newcomers to VAL often struggle with the agent installation process. Even with fully automated push installations, many users encounter various installation issues. This has created an awkward situation for Veeam backup software, which is renowned for its excellent user experience, making the “It just works!” slogan difficult to confidently claim.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -140,26 +140,26 @@
 <p>To put it simply, it&rsquo;s similar to your phone&rsquo;s app store. Every Linux system comes with such a Package Manager built-in, and different distributions of Linux might use different Package Managers. Package Managers are very intelligent. In most mainstream Linux distributions, the simplest way to install software is typically through a single command from the Package Manager. The Package Manager automatically completes the installation of all dependency components and ultimately delivers the corresponding software for the administrator to use.</p>
 <p>Among the various operating systems supported by VAL, different systems use different Package Managers. Below is the list of Package Managers corresponding to these systems.</p>
 <table>
-  <thead>
-      <tr>
-          <th>Linux Distribution</th>
-          <th>Default Common Package Manager</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>CentOS/Redhat/Oracle Linux/Fedora</td>
-          <td>yum</td>
-      </tr>
-      <tr>
-          <td>Debian/Ubuntu</td>
-          <td>Apt</td>
-      </tr>
-      <tr>
-          <td>SLES/openSUSE</td>
-          <td>zypper</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Linux Distribution</th>
+					<th>Default Common Package Manager</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>CentOS/Redhat/Oracle Linux/Fedora</td>
+					<td>yum</td>
+			</tr>
+			<tr>
+					<td>Debian/Ubuntu</td>
+					<td>Apt</td>
+			</tr>
+			<tr>
+					<td>SLES/openSUSE</td>
+					<td>zypper</td>
+			</tr>
+	</tbody>
 </table>
 <p>Obviously, regardless of the installation method used, the first prerequisite for properly installing VAL is that the Package Manager can function normally. In Linux systems with internet connectivity, this is completely fine—in the vast majority of cases, appropriate software installation sources are included after system installation. However, in server data centers without internet access, if internal sources aren&rsquo;t properly configured, various errors will occur. The solution is also very simple—just go to the corresponding Linux distribution&rsquo;s official website, download the latest ISO for the current version, and create a local source. For example, download CentOS 6.10 for CentOS 6.x, download CentOS 7.8.2003 for CentOS 7.x, then mount it in CentOS. This article uses the common CentOS 7.6 as an example to explain the complete configuration process.</p>
 <ol>
@@ -260,7 +260,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

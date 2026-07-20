@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>AI on Cloud.Virt.AI.Sec</title>
-    <link>https://blog.backupnext.cloud/en/tags/AI/</link>
-    <description>Recent content in AI on Cloud.Virt.AI.Sec</description>
-    <generator>Hugo</generator>
-    <language>en-US</language>
-    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/en/tags/AI/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>From Tech Support to Decision Maker: How Veeam Intelligence Powers IT Strategy</title>
-      <link>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</guid>
-      <description>&lt;h2 id=&#34;those-sleepless-nights-in-the-data-center&#34;&gt;Those Sleepless Nights in the Data Center&lt;/h2&gt;&#xA;&lt;p&gt;3 AM. Another sleepless night in the data center.&lt;/p&gt;&#xA;&lt;p&gt;Alerts flash across the screen while your phone buzzes with messages from business teams. It&amp;rsquo;s been three hours of constant bombardment.&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;When will the financial system be back online?&amp;rdquo; &amp;ldquo;We&amp;rsquo;re going to miss this month&amp;rsquo;s KPIs!&amp;rdquo; &amp;ldquo;Why is IT always having problems?&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;As you type commands, you&amp;rsquo;re searching for needles in haystacks of system logs. This is the third time this month you&amp;rsquo;ve been fighting fires in the dead of night.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Your 24/7 Veeam AI Expert: How Veeam Intelligence Revolutionizes Backup Management Support</title>
-      <link>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</guid>
-      <description>&lt;h2 id=&#34;a-new-era-of-intelligent-data-protectionunveiling-the-powerful-capabilities-of-veeam-intelligence&#34;&gt;A New Era of Intelligent Data Protection—Unveiling the Powerful Capabilities of Veeam Intelligence&lt;/h2&gt;&#xA;&lt;h3 id=&#34;introduction-the-painful-experience-of-late-night-documentation-searches&#34;&gt;Introduction: The Painful Experience of Late-Night Documentation Searches&lt;/h3&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2 AM. Your backup job has failed again.&lt;/p&gt;&#xA;&lt;p&gt;The screen displays the error &amp;ldquo;Failed to create snapshot&amp;rdquo; and your mind goes blank. If you&amp;rsquo;re a Veeam administrator, you&amp;rsquo;ve been here before.&lt;/p&gt;&#xA;&lt;p&gt;The familiar troubleshooting marathon begins:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Google the error code → 30 minutes gone&lt;/li&gt;&#xA;&lt;li&gt;Search through Veeam documentation → Another 45 minutes wasted&lt;/li&gt;&#xA;&lt;li&gt;Ask for help in WeChat groups → Wait for responses&lt;/li&gt;&#xA;&lt;li&gt;Open a technical support ticket → Queue for hours&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Six hours later, you finally solve it. A simple permission configuration issue.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</title>
-      <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</link>
-      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</guid>
-      <description>&lt;h1 id=&#34;ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server&#34;&gt;AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server&lt;/h1&gt;&#xA;&lt;p&gt;In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: &lt;strong&gt;zero-code&lt;/strong&gt; control of your Veeam Backup &amp;amp; Replication server through Veeam RestAPI. Don&amp;rsquo;t be intimidated by terms like API - in today&amp;rsquo;s content, you won&amp;rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch</title>
-      <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</link>
-      <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</guid>
-      <description>&lt;h1 id=&#34;ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch&#34;&gt;AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&amp;rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>About Me</title>
-      <link>https://blog.backupnext.cloud/en/about/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/en/about/</guid>
-      <description>&lt;h1 id=&#34;-about-me&#34;&gt;🧠 About Me&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“Technology is not the goal. Mastering complex systems — that’s the true art.”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-lei-wei--data-protection--cloud-native-specialist&#34;&gt;⚡️ Lei Wei — Data Protection &amp;amp; Cloud-Native Specialist&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;15+ Years in Data Protection &amp;amp; Cloud Infrastructure&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;Advisory Systems Engineer, China @ Veeam Software&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;Location: China | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;Blogging for 8+ years&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Hi, I’m &lt;strong&gt;Lei Wei&lt;/strong&gt;, a &lt;strong&gt;Advisory Systems Engineer at Veeam Software&lt;/strong&gt;, with over &lt;strong&gt;15 years of experience&lt;/strong&gt; in &lt;strong&gt;data protection, cloud infrastructure, and virtualization&lt;/strong&gt;.&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>AI on Cloud.Virt.AI.Sec</title>
+		<link>https://blog.backupnext.cloud/en/tags/AI/</link>
+		<description>Recent content in AI on Cloud.Virt.AI.Sec</description>
+		<generator>Hugo</generator>
+		<language>en-US</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/en/tags/AI/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>From Tech Support to Decision Maker: How Veeam Intelligence Powers IT Strategy</title>
+				<link>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</link>
+				<pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+				<description>&lt;h2 id=&#34;those-sleepless-nights-in-the-data-center&#34;&gt;Those Sleepless Nights in the Data Center&lt;/h2&gt;&#xA;&lt;p&gt;3 AM. Another sleepless night in the data center.&lt;/p&gt;&#xA;&lt;p&gt;Alerts flash across the screen while your phone buzzes with messages from business teams. It&amp;rsquo;s been three hours of constant bombardment.&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;When will the financial system be back online?&amp;rdquo; &amp;ldquo;We&amp;rsquo;re going to miss this month&amp;rsquo;s KPIs!&amp;rdquo; &amp;ldquo;Why is IT always having problems?&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;As you type commands, you&amp;rsquo;re searching for needles in haystacks of system logs. This is the third time this month you&amp;rsquo;ve been fighting fires in the dead of night.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Your 24/7 Veeam AI Expert: How Veeam Intelligence Revolutionizes Backup Management Support</title>
+				<link>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</link>
+				<pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2025/11/your-24-7-veeam-ai-expert/</guid>
+				<description>&lt;h2 id=&#34;a-new-era-of-intelligent-data-protectionunveiling-the-powerful-capabilities-of-veeam-intelligence&#34;&gt;A New Era of Intelligent Data Protection—Unveiling the Powerful Capabilities of Veeam Intelligence&lt;/h2&gt;&#xA;&lt;h3 id=&#34;introduction-the-painful-experience-of-late-night-documentation-searches&#34;&gt;Introduction: The Painful Experience of Late-Night Documentation Searches&lt;/h3&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2 AM. Your backup job has failed again.&lt;/p&gt;&#xA;&lt;p&gt;The screen displays the error &amp;ldquo;Failed to create snapshot&amp;rdquo; and your mind goes blank. If you&amp;rsquo;re a Veeam administrator, you&amp;rsquo;ve been here before.&lt;/p&gt;&#xA;&lt;p&gt;The familiar troubleshooting marathon begins:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Google the error code → 30 minutes gone&lt;/li&gt;&#xA;&lt;li&gt;Search through Veeam documentation → Another 45 minutes wasted&lt;/li&gt;&#xA;&lt;li&gt;Ask for help in WeChat groups → Wait for responses&lt;/li&gt;&#xA;&lt;li&gt;Open a technical support ticket → Queue for hours&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Six hours later, you finally solve it. A simple permission configuration issue.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</title>
+				<link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</link>
+				<pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+				<description>&lt;h1 id=&#34;ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server&#34;&gt;AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server&lt;/h1&gt;&#xA;&lt;p&gt;In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: &lt;strong&gt;zero-code&lt;/strong&gt; control of your Veeam Backup &amp;amp; Replication server through Veeam RestAPI. Don&amp;rsquo;t be intimidated by terms like API - in today&amp;rsquo;s content, you won&amp;rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch</title>
+				<link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</link>
+				<pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+				<description>&lt;h1 id=&#34;ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch&#34;&gt;AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&amp;rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>About Me</title>
+				<link>https://blog.backupnext.cloud/en/about/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/about/</guid>
+				<description>&lt;h1 id=&#34;-about-me&#34;&gt;🧠 About Me&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“Technology is not the goal. Mastering complex systems — that’s the true art.”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-lei-wei--data-protection--cloud-native-specialist&#34;&gt;⚡️ Lei Wei — Data Protection &amp;amp; Cloud-Native Specialist&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;15+ Years in Data Protection &amp;amp; Cloud Infrastructure&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;Advisory Systems Engineer, China @ Veeam Software&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;Location: China | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;Blogging for 8+ years&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Hi, I’m &lt;strong&gt;Lei Wei&lt;/strong&gt;, a &lt;strong&gt;Advisory Systems Engineer at Veeam Software&lt;/strong&gt;, with over &lt;strong&gt;15 years of experience&lt;/strong&gt; in &lt;strong&gt;data protection, cloud infrastructure, and virtualization&lt;/strong&gt;.&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>

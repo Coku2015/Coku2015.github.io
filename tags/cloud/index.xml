@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Cloud on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/tags/cloud/</link>
+		<description>Recent content in Cloud on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</title>
+				<link>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
+				<pubDate>Sun, 19 Jul 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</guid>
+				<description>&lt;h1 id=&#34;vbr-software-appliance-上阿里云终于有了一条可用的安装路径&#34;&gt;VBR Software Appliance 上阿里云：终于有了一条可用的安装路径&lt;/h1&gt;&#xA;&lt;p&gt;Veeam Software Appliance 在物理服务器或本地虚拟化环境中安装非常简单，Veeam 团队把极致安全和极致简单的体验带给了我们。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

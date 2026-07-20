@@ -5,21 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>VAO Basics (Part 9) – Report Template Guide - Cloud.Virt.AI.Sec</title><meta name="description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2020/03/vao-guide-09/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="VAO Basics (Part 9) – Report Template Guide">
-  <meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2020-03-02T00:00:00+00:00">
-    <meta property="article:modified_time" content="2020-03-02T00:00:00+00:00">
-    <meta property="article:tag" content="VAO">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="VAO Basics (Part 9) – Report Template Guide">
+	<meta property="og:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2020-03-02T00:00:00+00:00">
+		<meta property="article:modified_time" content="2020-03-02T00:00:00+00:00">
+		<meta property="article:tag" content="VAO">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="VAO Basics (Part 9) – Report Template Guide">
-  <meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="VAO Basics (Part 9) – Report Template Guide">
+	<meta name="twitter:description" content="Series Index VAO Basics (1) – Introduction VAO Basics (2) – Installation &amp; Deployment VAO Basics (3) – Core Components · Part 1 VAO Basics (4) – Core Components · Part 2 VAO Basics (5) – Essential Configuration Notes VAO Basics (6) – The First Step to a Successful DR Plan VAO Basics (7) – Plan Steps · Part 1 VAO Basics (8) – Plan Steps · Part 2 VAO Basics (9) – Report Template Guide For the final chapter of this series, let’s look at VAO’s documentation system.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -169,30 +169,30 @@
 <h2 id="report-types">Report Types</h2>
 <p>When you right-click a plan (or use the toolbar) you’ll see the supported report types:</p>
 <table>
-  <thead>
-      <tr>
-          <th>Report Type</th>
-          <th>Purpose</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Plan Definition Report</td>
-          <td>Documents every configuration detail in the plan</td>
-      </tr>
-      <tr>
-          <td>Readiness Check Report</td>
-          <td>Verifies resource availability at the recovery site</td>
-      </tr>
-      <tr>
-          <td>Datalab Test Report</td>
-          <td>Summarizes Datalab test runs</td>
-      </tr>
-      <tr>
-          <td>Execution Report</td>
-          <td>Captures the outcome of an actual restore/failover</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Report Type</th>
+					<th>Purpose</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Plan Definition Report</td>
+					<td>Documents every configuration detail in the plan</td>
+			</tr>
+			<tr>
+					<td>Readiness Check Report</td>
+					<td>Verifies resource availability at the recovery site</td>
+			</tr>
+			<tr>
+					<td>Datalab Test Report</td>
+					<td>Summarizes Datalab test runs</td>
+			</tr>
+			<tr>
+					<td>Execution Report</td>
+					<td>Captures the outcome of an actual restore/failover</td>
+			</tr>
+	</tbody>
 </table>
 <p>Each type ships with built-in system content. You can’t edit that portion; VAO fills it according to the plan settings and execution data. (At the moment this built-in section is English-only, though any Chinese text you include in the plan still flows through.)</p>
 <h2 id="report-templates">Report Templates</h2>
@@ -280,94 +280,94 @@
 <li>
 <p>Fill in the <strong>Title</strong> and <strong>Tag</strong> fields (I usually make them identical). VAO recognizes the following tags, each beginning with <code>~</code>:</p>
 <table>
-  <thead>
-      <tr>
-          <th>Tag</th>
-          <th>Description</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>~Created</td>
-          <td>Report generation timestamp</td>
-      </tr>
-      <tr>
-          <td>~TimeZone</td>
-          <td>Time zone of the report</td>
-      </tr>
-      <tr>
-          <td>~PlanType</td>
-          <td>Plan type</td>
-      </tr>
-      <tr>
-          <td>~PlanName</td>
-          <td>Plan name</td>
-      </tr>
-      <tr>
-          <td>~PlanDescription</td>
-          <td>Plan description</td>
-      </tr>
-      <tr>
-          <td>~PlanContactName</td>
-          <td>DR contact name</td>
-      </tr>
-      <tr>
-          <td>~PlanContactEmail</td>
-          <td>DR contact email</td>
-      </tr>
-      <tr>
-          <td>~PlanContactTel</td>
-          <td>DR contact phone</td>
-      </tr>
-      <tr>
-          <td>~Site</td>
-          <td>Site name</td>
-      </tr>
-      <tr>
-          <td>~SiteScopeName</td>
-          <td>Site scope name</td>
-      </tr>
-      <tr>
-          <td>~SiteDescription</td>
-          <td>Site description</td>
-      </tr>
-      <tr>
-          <td>~SiteContactName</td>
-          <td>Site contact name</td>
-      </tr>
-      <tr>
-          <td>~SiteContactEmail</td>
-          <td>Site contact email</td>
-      </tr>
-      <tr>
-          <td>~SiteContactTel</td>
-          <td>Site contact phone</td>
-      </tr>
-      <tr>
-          <td>~ServerName</td>
-          <td>Server name</td>
-      </tr>
-      <tr>
-          <td>~VmsInPlan</td>
-          <td>VMs included in the plan</td>
-      </tr>
-      <tr>
-          <td>~GroupsInPlan</td>
-          <td>VM groups in the plan</td>
-      </tr>
-      <tr>
-          <td>~ReportType</td>
-          <td>Report type</td>
-      </tr>
-      <tr>
-          <td>~TargetRTO</td>
-          <td>Target RTO</td>
-      </tr>
-      <tr>
-          <td>~TargetRPO</td>
-          <td>Target RPO</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Tag</th>
+					<th>Description</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>~Created</td>
+					<td>Report generation timestamp</td>
+			</tr>
+			<tr>
+					<td>~TimeZone</td>
+					<td>Time zone of the report</td>
+			</tr>
+			<tr>
+					<td>~PlanType</td>
+					<td>Plan type</td>
+			</tr>
+			<tr>
+					<td>~PlanName</td>
+					<td>Plan name</td>
+			</tr>
+			<tr>
+					<td>~PlanDescription</td>
+					<td>Plan description</td>
+			</tr>
+			<tr>
+					<td>~PlanContactName</td>
+					<td>DR contact name</td>
+			</tr>
+			<tr>
+					<td>~PlanContactEmail</td>
+					<td>DR contact email</td>
+			</tr>
+			<tr>
+					<td>~PlanContactTel</td>
+					<td>DR contact phone</td>
+			</tr>
+			<tr>
+					<td>~Site</td>
+					<td>Site name</td>
+			</tr>
+			<tr>
+					<td>~SiteScopeName</td>
+					<td>Site scope name</td>
+			</tr>
+			<tr>
+					<td>~SiteDescription</td>
+					<td>Site description</td>
+			</tr>
+			<tr>
+					<td>~SiteContactName</td>
+					<td>Site contact name</td>
+			</tr>
+			<tr>
+					<td>~SiteContactEmail</td>
+					<td>Site contact email</td>
+			</tr>
+			<tr>
+					<td>~SiteContactTel</td>
+					<td>Site contact phone</td>
+			</tr>
+			<tr>
+					<td>~ServerName</td>
+					<td>Server name</td>
+			</tr>
+			<tr>
+					<td>~VmsInPlan</td>
+					<td>VMs included in the plan</td>
+			</tr>
+			<tr>
+					<td>~GroupsInPlan</td>
+					<td>VM groups in the plan</td>
+			</tr>
+			<tr>
+					<td>~ReportType</td>
+					<td>Report type</td>
+			</tr>
+			<tr>
+					<td>~TargetRTO</td>
+					<td>Target RTO</td>
+			</tr>
+			<tr>
+					<td>~TargetRPO</td>
+					<td>Target RPO</td>
+			</tr>
+	</tbody>
 </table>
 </li>
 <li>
@@ -406,7 +406,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

@@ -4,7 +4,16 @@
         <link>https://blog.backupnext.cloud/posts/</link>
         <description>所有文章 | 云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sat, 09 May 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</title>
+    <link>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
+    <pubDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</guid>
+    <description><![CDATA[<h1 id="vbr-software-appliance-上阿里云终于有了一条可用的安装路径">VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</h1>
+<p>Veeam Software Appliance 在物理服务器或本地虚拟化环境中安装非常简单，Veeam 团队把极致安全和极致简单的体验带给了我们。</p>]]></description>
+</item>
+<item>
     <title>Holo VTL 正式发布</title>
     <link>https://blog.backupnext.cloud/2026/05/holo-VTL-launch/</link>
     <pubDate>Sat, 09 May 2026 00:00:00 &#43;0000</pubDate>
@@ -92,17 +101,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</guid>
     <description><![CDATA[<p>v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。</p>]]></description>
-</item>
-<item>
-    <title>让 VBR 登陆更安全：v13 版本 SAML &#43; Azure EntraID 集成全攻略</title>
-    <link>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</link>
-    <pubDate>Thu, 25 Sep 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/2025/09/veeam13-security-features-01/featured-image.png" referrerpolicy="no-referrer">
-            </div><p>v13 版本，新增的功能中，最重要的是安全特性的加强。从本期开始，我会为大家通过实战应用的方式，详细介绍 v13 中推出的全新安全功能。</p>
-<p>今天先来说说身份认证。在企业级备份架构中，管理控制台的账户安全与访问治理至关重要。Veeam Backup &amp; Replication（VBR）在 v13 中支持基于 SAML 的单点登录（SSO），这意味着可以把身份认证集中到组织现有的身份提供者（IdP）——例如 Azure EntraID。通过 SAML 集成，你可以把 VBR 的登录与公司的账号生命周期、组策略、MFA 和审计统一管理：运维更加清晰，权限回收更及时，实现更高的合规性。本文以 Azure EntraID 为例，为大家详细展示这个集成的具体方法。其他类似方案，比如国内的 Authing 或者国外的 Okta 和 Auth0 大家可以自己按照 Azure 的方法试试看。</p>]]></description>
 </item>
 </channel>
 </rss>

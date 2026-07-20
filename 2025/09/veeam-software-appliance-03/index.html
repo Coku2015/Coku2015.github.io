@@ -5,21 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>你必须知道的：Veeam Software Appliance 全新的管理使用方法 - 云虚智安</title><meta name="description" content="在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。"><meta property="og:url" content="https://blog.backupnext.cloud/2025/09/veeam-software-appliance-03/">
-  <meta property="og:site_name" content="云虚智安">
-  <meta property="og:title" content="你必须知道的：Veeam Software Appliance 全新的管理使用方法">
-  <meta property="og:description" content="在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。">
-  <meta property="og:locale" content="zh_CN">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-09-08T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-09-08T00:00:00+00:00">
-    <meta property="article:tag" content="VBR">
-    <meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta property="og:site_name" content="云虚智安">
+	<meta property="og:title" content="你必须知道的：Veeam Software Appliance 全新的管理使用方法">
+	<meta property="og:description" content="在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-09-08T00:00:00+00:00">
+		<meta property="article:modified_time" content="2025-09-08T00:00:00+00:00">
+		<meta property="article:tag" content="VBR">
+		<meta property="og:image" content="https://blog.backupnext.cloud/logo.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
-  <meta name="twitter:title" content="你必须知道的：Veeam Software Appliance 全新的管理使用方法">
-  <meta name="twitter:description" content="在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/logo.png">
+	<meta name="twitter:title" content="你必须知道的：Veeam Software Appliance 全新的管理使用方法">
+	<meta name="twitter:description" content="在前两期里，我们一起完成了 Veeam Software Appliance 的“落地”——从下载 ISO、制作启动盘到自动化安装，再到最初的 TUI 初始化和基本管理，很多小伙伴已经顺利把这台“备份小钢炮”跑了起来。">
 <meta name="application-name" content="云虚智安">
 <meta name="apple-mobile-web-app-title" content="云虚智安">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -200,177 +200,177 @@
 <h3 id="host-managementwebui-与-tui-功能对比表">Host Management：WebUI 与 TUI 功能对比表</h3>
 <p>Appliance 有着独特的管理方式，两个 UI 需要交替使用，功能一览表如下：</p>
 <table>
-  <thead>
-      <tr>
-          <th>功能类别</th>
-          <th>操作项</th>
-          <th>WebUI 支持</th>
-          <th>TUI 支持</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>网络配置</strong></td>
-          <td>修改主机名</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>管理域设置</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>配置网络接口</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>配置 HTTP/HTTPS 代理</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td><strong>时间设置</strong></td>
-          <td>修改时区、配置 NTP 时间服务器</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td><strong>远程访问</strong></td>
-          <td>禁用 WebUI</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>启用 WebUI</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>启用/禁用 SSH</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>打开 root shell</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td><strong>用户与权限</strong></td>
-          <td>添加用户、编辑用户、重置用户密码</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>修改 Host Admin 密码</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>解锁用户、启用/禁用 MFA、重置 MFA</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>重置 Security Officer 密码恢复令牌</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td><strong>备份基础设施</strong></td>
-          <td>启用远程数据收集、启用/禁用基础设施锁定、启用托管服务器配对</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td><strong>更新管理</strong></td>
-          <td>配置更新策略、检查更新、安装更新、查看更新历史</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td><strong>系统维护</strong></td>
-          <td>启动/停止/重启 Veeam 服务</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>重启 Veeam Appliance</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>查看/导出事件日志、导入/导出配置文件、下载日志包</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>查看证书指纹</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>生成新 WebUI 证书</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td><strong>安全控制</strong></td>
-          <td>审批授权请求、管理配置备份口令</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>功能类别</th>
+					<th>操作项</th>
+					<th>WebUI 支持</th>
+					<th>TUI 支持</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>网络配置</strong></td>
+					<td>修改主机名</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>管理域设置</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>配置网络接口</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>配置 HTTP/HTTPS 代理</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td><strong>时间设置</strong></td>
+					<td>修改时区、配置 NTP 时间服务器</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td><strong>远程访问</strong></td>
+					<td>禁用 WebUI</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>启用 WebUI</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>启用/禁用 SSH</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>打开 root shell</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td><strong>用户与权限</strong></td>
+					<td>添加用户、编辑用户、重置用户密码</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>修改 Host Admin 密码</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>解锁用户、启用/禁用 MFA、重置 MFA</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>重置 Security Officer 密码恢复令牌</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td><strong>备份基础设施</strong></td>
+					<td>启用远程数据收集、启用/禁用基础设施锁定、启用托管服务器配对</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td><strong>更新管理</strong></td>
+					<td>配置更新策略、检查更新、安装更新、查看更新历史</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td><strong>系统维护</strong></td>
+					<td>启动/停止/重启 Veeam 服务</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>重启 Veeam Appliance</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>查看/导出事件日志、导入/导出配置文件、下载日志包</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>查看证书指纹</td>
+					<td>✅</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td>生成新 WebUI 证书</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td><strong>安全控制</strong></td>
+					<td>审批授权请求、管理配置备份口令</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+	</tbody>
 </table>
 <h2 id="重构的用户体系">重构的用户体系</h2>
 <p>在传统的 Veeam Backup &amp; Replication（以下简称 VBR）中，用户权限管理主要依赖于 Windows 本地或域账户，并通过 VBR 控制台进行角色分配。而在 Veeam Software Appliance 中，用户体系被重新设计，<strong>Host Management 层引入了独立的用户角色模型</strong>，实现了更细致的安全隔离与运维控制。</p>
 <h3 id="一host-management-用户角色体系概览">一、Host Management 用户角色体系概览</h3>
 <p>Veeam Software Appliance  的 Host Management 控制台（WebUI）内置了四类用户角色，每类角色对应不同的管理职责：</p>
 <table>
-  <thead>
-      <tr>
-          <th>角色名称</th>
-          <th>描述</th>
-          <th>使用场景</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>Host Administrator（veeamadmin）</strong></td>
-          <td>拥有完整主机管理权限，可访问 WebUI 与 TUI，执行网络配置、用户管理、更新维护等操作。</td>
-          <td>适用于负责 Appliance 运维的系统管理员</td>
-      </tr>
-      <tr>
-          <td><strong>Security Officer（veeamso）</strong></td>
-          <td>专注于安全控制，仅可访问 WebUI，负责审批敏感操作、管理密码恢复令牌、配置备份口令等。</td>
-          <td>适用于安全审计、合规管理人员</td>
-      </tr>
-      <tr>
-          <td><strong>User</strong></td>
-          <td>权限受限，无法访问 Host Management 控制台，仅用于标识普通用户身份。</td>
-          <td>适用于需要登录但无主机管理权限的用户</td>
-      </tr>
-      <tr>
-          <td><strong>Service Account</strong></td>
-          <td>用于系统服务或自动化任务，权限受限，不支持 MFA。</td>
-          <td>适用于脚本、API 调用或集成服务账号</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>角色名称</th>
+					<th>描述</th>
+					<th>使用场景</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Host Administrator（veeamadmin）</strong></td>
+					<td>拥有完整主机管理权限，可访问 WebUI 与 TUI，执行网络配置、用户管理、更新维护等操作。</td>
+					<td>适用于负责 Appliance 运维的系统管理员</td>
+			</tr>
+			<tr>
+					<td><strong>Security Officer（veeamso）</strong></td>
+					<td>专注于安全控制，仅可访问 WebUI，负责审批敏感操作、管理密码恢复令牌、配置备份口令等。</td>
+					<td>适用于安全审计、合规管理人员</td>
+			</tr>
+			<tr>
+					<td><strong>User</strong></td>
+					<td>权限受限，无法访问 Host Management 控制台，仅用于标识普通用户身份。</td>
+					<td>适用于需要登录但无主机管理权限的用户</td>
+			</tr>
+			<tr>
+					<td><strong>Service Account</strong></td>
+					<td>用于系统服务或自动化任务，权限受限，不支持 MFA。</td>
+					<td>适用于脚本、API 调用或集成服务账号</td>
+			</tr>
+	</tbody>
 </table>
 <blockquote>
 <p>⚠️ 默认账户 <code>veeamadmin</code> 与 <code>veeamso</code> 不可删除，建议在部署完成后立即修改密码并启用 MFA。</p>
@@ -401,45 +401,45 @@
 </blockquote>
 <h3 id="四用户管理操作能力">四、用户管理操作能力</h3>
 <table>
-  <thead>
-      <tr>
-          <th>操作项</th>
-          <th>Host Administrator</th>
-          <th>Security Officer</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>添加/编辑/删除用户</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td>重置密码</td>
-          <td>✅</td>
-          <td>✅（需审批）</td>
-      </tr>
-      <tr>
-          <td>解锁用户</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td>启用/禁用 MFA</td>
-          <td>✅</td>
-          <td>❌</td>
-      </tr>
-      <tr>
-          <td>审批敏感操作（如 SSH、root shell）</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td>管理配置备份口令</td>
-          <td>❌</td>
-          <td>✅</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>操作项</th>
+					<th>Host Administrator</th>
+					<th>Security Officer</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>添加/编辑/删除用户</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td>重置密码</td>
+					<td>✅</td>
+					<td>✅（需审批）</td>
+			</tr>
+			<tr>
+					<td>解锁用户</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td>启用/禁用 MFA</td>
+					<td>✅</td>
+					<td>❌</td>
+			</tr>
+			<tr>
+					<td>审批敏感操作（如 SSH、root shell）</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+			<tr>
+					<td>管理配置备份口令</td>
+					<td>❌</td>
+					<td>✅</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="五mfa-与安全官机制">五、MFA 与安全官机制</h3>
 <ul>
@@ -514,7 +514,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

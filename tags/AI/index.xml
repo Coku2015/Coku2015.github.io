@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>AI on 云虚智安</title>
-    <link>https://blog.backupnext.cloud/tags/AI/</link>
-    <description>Recent content in AI on 云虚智安</description>
-    <generator>Hugo</generator>
-    <language>zh-CN</language>
-    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/tags/AI/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
-      <link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
-      <description>&lt;h2 id=&#34;回想那些数据中心的不眠夜&#34;&gt;回想那些数据中心的不眠夜&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 3 点，又是一个数据中心的不眠之夜。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;财务系统什么时候能恢复？&amp;ldquo;&amp;ldquo;这个月 KPI 要完蛋了！&amp;ldquo;&amp;ldquo;IT 部门怎么又出问题？&amp;rdquo;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
-      <link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</guid>
-      <description>&lt;p&gt;**📖 阅读提示：**本文内容较长（4600 字 + 长截图），建议收藏后慢慢阅读。&lt;/p&gt;&#xA;&lt;h2 id=&#34;智能化数据保护新体验揭秘-veeam-intelligence-的强大能力&#34;&gt;智能化数据保护新体验——揭秘 Veeam Intelligence 的强大能力&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 2 点，备份作业又失败了。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上显示着错误代码&amp;quot;Failed to create snapshot&amp;quot;，你的脑子里一片空白。这种场景，相信每个 Veeam 管理员都经历过。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
-      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
-      <pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
-      <description>&lt;h1 id=&#34;ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器&#34;&gt;AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器&lt;/h1&gt;&#xA;&lt;p&gt;在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：&lt;strong&gt;零代码&lt;/strong&gt;、通过 Veeam RestAPI 控制 Veeam Backup &amp;amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
-      <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
-      <pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
-      <description>&lt;h1 id=&#34;ai-重塑数据保护-一claude-code--glm-46-实战从零搭建-ai-cli-工具&#34;&gt;AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>关于我</title>
-      <link>https://blog.backupnext.cloud/about/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/about/</guid>
-      <description>&lt;h1 id=&#34;关于我&#34;&gt;关于我&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“技术不是目的，理解与掌控复杂系统的能力，才是终极浪漫。”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;lei-wei--数据保护与云原生专家&#34;&gt;Lei Wei — 数据保护与云原生专家&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;深耕数据保护与云计算行业超过 15 年&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;现任 Veeam Software 中国区资深顾问级专家&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;坐标：上海 | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;本博客已连续更新 8+ 年&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>AI on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/tags/AI/</link>
+		<description>Recent content in AI on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/tags/AI/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>从救火员到战略家：Veeam Intelligence 如何重塑 IT 运维决策</title>
+				<link>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</link>
+				<pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/12/your-24-7-veeam-ai-expert-02/</guid>
+				<description>&lt;h2 id=&#34;回想那些数据中心的不眠夜&#34;&gt;回想那些数据中心的不眠夜&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 3 点，又是一个数据中心的不眠之夜。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上密密麻麻的告警在跳动，手机已经被业务方的消息轰炸了整整 3 小时。&lt;/p&gt;&#xA;&lt;p&gt;&amp;ldquo;财务系统什么时候能恢复？&amp;ldquo;&amp;ldquo;这个月 KPI 要完蛋了！&amp;ldquo;&amp;ldquo;IT 部门怎么又出问题？&amp;rdquo;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>你的 24/7 Veeam 专家：告别翻文档时代的智能助手革命</title>
+				<link>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</link>
+				<pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/your-24-7-veeam-ai-expert/</guid>
+				<description>&lt;p&gt;**📖 阅读提示：**本文内容较长（4600 字 + 长截图），建议收藏后慢慢阅读。&lt;/p&gt;&#xA;&lt;h2 id=&#34;智能化数据保护新体验揭秘-veeam-intelligence-的强大能力&#34;&gt;智能化数据保护新体验——揭秘 Veeam Intelligence 的强大能力&lt;/h2&gt;&#xA;&lt;p&gt;凌晨 2 点，备份作业又失败了。&lt;/p&gt;&#xA;&lt;p&gt;屏幕上显示着错误代码&amp;quot;Failed to create snapshot&amp;quot;，你的脑子里一片空白。这种场景，相信每个 Veeam 管理员都经历过。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI 重塑数据保护 (二)：使用 Claude Code 控制您的 VBR 服务器</title>
+				<link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</link>
+				<pubDate>Wed, 12 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
+				<description>&lt;h1 id=&#34;ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器&#34;&gt;AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器&lt;/h1&gt;&#xA;&lt;p&gt;在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：&lt;strong&gt;零代码&lt;/strong&gt;、通过 Veeam RestAPI 控制 Veeam Backup &amp;amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
+				<link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
+				<pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
+				<description>&lt;h1 id=&#34;ai-重塑数据保护-一claude-code--glm-46-实战从零搭建-ai-cli-工具&#34;&gt;AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具&lt;/h1&gt;&#xA;&lt;p&gt;Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>关于我</title>
+				<link>https://blog.backupnext.cloud/about/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/about/</guid>
+				<description>&lt;h1 id=&#34;关于我&#34;&gt;关于我&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“技术不是目的，理解与掌控复杂系统的能力，才是终极浪漫。”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;lei-wei--数据保护与云原生专家&#34;&gt;Lei Wei — 数据保护与云原生专家&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;深耕数据保护与云计算行业超过 15 年&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;现任 Veeam Software 中国区资深顾问级专家&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;坐标：上海 | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;本博客已连续更新 8+ 年&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>

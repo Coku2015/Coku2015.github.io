@@ -5,23 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration - Cloud.Virt.AI.Sec</title><meta name="description" content="In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I’ll provide a detailed walkthrough of …"><meta property="og:url" content="https://blog.backupnext.cloud/en/2025/09/veeam13-security-features-01/">
-  <meta property="og:site_name" content="Cloud.Virt.AI.Sec">
-  <meta property="og:title" content="Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration">
-  <meta property="og:description" content="In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I’ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration">
+	<meta property="og:description" content="In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I’ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.
 Today, let’s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization’s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company’s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-09-25T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-09-25T00:00:00+00:00">
-    <meta property="article:tag" content="Backup">
-    <meta property="article:tag" content="Security">
-    <meta property="og:image" content="https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/featured-image.png">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-09-25T00:00:00+00:00">
+		<meta property="article:modified_time" content="2025-09-25T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Security">
+		<meta property="og:image" content="https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/featured-image.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/featured-image.png">
-  <meta name="twitter:title" content="Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration">
-  <meta name="twitter:description" content="In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I’ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/2025/09/veeam13-security-features-01/featured-image.png">
+	<meta name="twitter:title" content="Making VBR Login More Secure: A Complete Guide to v13 SAML &#43; Azure EntraID Integration">
+	<meta name="twitter:description" content="In version v13, the most significant new features focus on enhanced security capabilities. Starting with this article, I’ll provide a detailed walkthrough of the new security features introduced in v13 through practical applications.
 Today, let’s start with authentication. In enterprise-level backup architectures, the security of management console accounts and access governance is critically important. Veeam Backup &amp; Replication (VBR) now supports SAML-based Single Sign-On (SSO) in v13, which means you can centralize authentication to your organization’s existing Identity Provider (IdP) — such as Azure EntraID. Through SAML integration, you can unify the management of VBR login with your company’s account lifecycle, group policies, MFA, and auditing: operations become clearer, permission revocation is more timely, and you achieve higher compliance. This article uses Azure EntraID as an example to demonstrate this integration in detail. For other similar solutions like Authing in China or international options like Okta and Auth0, you can follow the Azure methods to try them out.">
 <meta name="application-name" content="Cloud.Virt.AI.Sec">
 <meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
@@ -406,7 +406,7 @@ Today, let’s start with authentication. In enterprise-level backup architectur
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/backup/">Backup</a>,&nbsp;<a href="/en/tags/Security/">Security</a></section>
         <section>
             <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
         </section>
@@ -419,7 +419,7 @@ Today, let’s start with authentication. In enterprise-level backup architectur
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.161.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-4.6+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

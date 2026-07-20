@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>数据保护 on 云虚智安</title>
-    <link>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
-    <description>Recent content in 数据保护 on 云虚智安</description>
-    <generator>Hugo</generator>
-    <language>zh-CN</language>
-    <managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-    <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
-    <lastBuildDate>Thu, 30 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>关于我</title>
-      <link>https://blog.backupnext.cloud/about/</link>
-      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
-      <guid>https://blog.backupnext.cloud/about/</guid>
-      <description>&lt;h1 id=&#34;关于我&#34;&gt;关于我&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“技术不是目的，理解与掌控复杂系统的能力，才是终极浪漫。”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;lei-wei--数据保护与云原生专家&#34;&gt;Lei Wei — 数据保护与云原生专家&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;深耕数据保护与云计算行业超过 15 年&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;现任 Veeam Software 中国区资深顾问级专家&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;坐标：上海 | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;本博客已连续更新 8+ 年&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>数据保护 on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/</link>
+		<description>Recent content in 数据保护 on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Thu, 30 Oct 2025 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/tags/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>关于我</title>
+				<link>https://blog.backupnext.cloud/about/</link>
+				<pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/about/</guid>
+				<description>&lt;h1 id=&#34;关于我&#34;&gt;关于我&lt;/h1&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;“技术不是目的，理解与掌控复杂系统的能力，才是终极浪漫。”&lt;/em&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;lei-wei--数据保护与云原生专家&#34;&gt;Lei Wei — 数据保护与云原生专家&lt;/h2&gt;&#xA;&lt;p&gt;🚀 &lt;strong&gt;深耕数据保护与云计算行业超过 15 年&lt;/strong&gt;&lt;br&gt;&#xA;🎯 &lt;strong&gt;现任 Veeam Software 中国区资深顾问级专家&lt;/strong&gt;&lt;br&gt;&#xA;📍 &lt;strong&gt;坐标：上海 | Global View · Engineering Mindset&lt;/strong&gt;&lt;br&gt;&#xA;🧩 &lt;strong&gt;本博客已连续更新 8+ 年&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>
