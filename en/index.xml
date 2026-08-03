@@ -4,9 +4,19 @@
         <link>https://blog.backupnext.cloud/en/</link>
         <description>Welcome to Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://blog.backupnext.cloud/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Veeam Backup &amp; Replication v13.1 Web UI Simplified Chinese Package Released: Making the New-Gen VBR WebUI Truly Usable</title>
+    <link>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</link>
+    <pubDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</guid>
+    <description><![CDATA[<p>About 7 years ago, I built a Chrome extension that localized Veeam Enterprise Manager&rsquo;s web interface into Chinese.</p>
+<p>Back then, getting a Chinese interface as a Chinese user was genuinely hard. I shipped the extension and didn&rsquo;t think much of it, and to my surprise, Veeam R&amp;D later picked it up and officially folded it into the Chinese release of EM.</p>
+<p>Fast forward 7 years, Veeam&rsquo;s next-gen Web UI arrived, and Chinese is missing again.</p>]]></description>
+</item>
+<item>
     <title>VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</title>
     <link>https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
     <pubDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</pubDate>
@@ -108,16 +118,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</guid>
     <description><![CDATA[<p>In our previous articles, we introduced how Veeam v13 continues to enhance its YARA malware scanning capabilities. However, the limitation of official rule sets is a very real challenge. There aren&rsquo;t many free YARA rule sources available online, and high-quality ones are even scarcer. Today, I want to introduce you to a hidden gem: Ransomware.live - a professional open-source ransomware threat intelligence platform that provides free YARA rules for 62 major ransomware gangs, making it a perfect complement to Veeam&rsquo;s YARA scanning functionality.</p>]]></description>
-</item>
-<item>
-    <title>V13 Malware Detection Comprehensive Upgrade: Practical Evolution from Passive Protection to Active Response</title>
-    <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</link>
-    <pubDate>Fri, 07 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-02/</guid>
-    <description><![CDATA[<p>In version v13, malware detection capabilities have achieved a significant leap forward. Compared to the real-time detection capabilities already available in the v12 era, v13 has brought qualitative improvements in threat response mechanisms, platform coverage, and intelligence levels. In my previous articles, I&rsquo;ve detailed the ransomware attack detection principles and configuration methods for v12. Today, building on that foundation, let&rsquo;s explore the key upgrades that v13 brings.</p>
-<h2 id="v12-detection-capabilities-review-the-separation-of-detection-and-response">v12 Detection Capabilities Review: The Separation of Detection and Response</h2>
-<p>In the v12 era, Veeam&rsquo;s malware detection primarily relied on two mechanisms:</p>]]></description>
 </item>
 </channel>
 </rss>

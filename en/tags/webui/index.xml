@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Webui on Cloud.Virt.AI.Sec</title>
+		<link>https://blog.backupnext.cloud/en/tags/webui/</link>
+		<description>Recent content in Webui on Cloud.Virt.AI.Sec</description>
+		<generator>Hugo</generator>
+		<language>en-US</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/en/tags/webui/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Veeam Backup &amp; Replication v13.1 Web UI Simplified Chinese Package Released: Making the New-Gen VBR WebUI Truly Usable</title>
+				<link>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</link>
+				<pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</guid>
+				<description>&lt;p&gt;About 7 years ago, I built a Chrome extension that localized Veeam Enterprise Manager&amp;rsquo;s web interface into Chinese.&lt;/p&gt;&#xA;&lt;p&gt;Back then, getting a Chinese interface as a Chinese user was genuinely hard. I shipped the extension and didn&amp;rsquo;t think much of it, and to my surprise, Veeam R&amp;amp;D later picked it up and officially folded it into the Chinese release of EM.&lt;/p&gt;&#xA;&lt;p&gt;Fast forward 7 years, Veeam&amp;rsquo;s next-gen Web UI arrived, and Chinese is missing again.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

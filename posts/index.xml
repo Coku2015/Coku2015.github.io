@@ -4,7 +4,16 @@
         <link>https://blog.backupnext.cloud/posts/</link>
         <description>所有文章 | 云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Veeam Backup &amp; Replication v13.1 Web UI 简体中文包发布：让新一代 VBR WebUI 真正好用起来</title>
+    <link>https://blog.backupnext.cloud/2026/08/Veeam-WebUI-localization/</link>
+    <pubDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2026/08/Veeam-WebUI-localization/</guid>
+    <description><![CDATA[<p>差不多 7 年前，我做过一个 Chrome 插件，把 Veeam Enterprise Manager 的 Web 界面汉化成了中文。</p>
+<p>那时候中文用户想要个中文界面，是真的难。插件做完扔出去，没想到后来被 Veeam R&amp;D 采纳，正式做进了 EM 的中文版。</p>]]></description>
+</item>
+<item>
     <title>VBR Software Appliance 上阿里云：终于有了一条可用的安装路径</title>
     <link>https://blog.backupnext.cloud/2026/07/Veeam-Installer-for-Aliyun-launch/</link>
     <pubDate>Sun, 19 Jul 2026 00:00:00 &#43;0000</pubDate>
@@ -93,14 +102,6 @@
     <author>Coku2015@gmail.com (Lei Wei)</author>
     <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
     <description><![CDATA[<p>我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。</p>]]></description>
-</item>
-<item>
-    <title>V13 恶意软件检测全面升级：从被动防护到主动响应的实战进阶</title>
-    <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</link>
-    <pubDate>Fri, 07 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-02/</guid>
-    <description><![CDATA[<p>v13 版本，恶意软件检测功能实现了重要的能力跃升。相比 v12 时代已经具备的实时检测能力，v13 在威胁响应机制、平台覆盖范围和智能化程度上都有了质的改进。在我之前的文章中，已经详细介绍了 v12 的勒索攻击侦测原理和配置方法，今天我们在此基础上，看看 v13 带来了哪些关键的升级。</p>]]></description>
 </item>
 </channel>
 </rss>
