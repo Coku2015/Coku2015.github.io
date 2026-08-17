@@ -4,7 +4,29 @@
         <link>https://blog.backupnext.cloud/en/posts/</link>
         <description>All Posts | Cloud.Virt.AI.Sec</description>
         <generator>Hugo -- gohugo.io</generator><language>en-US</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 17 Aug 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/en/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Manual Kit Installs Again? I Built AgentBridge</title>
+    <link>https://blog.backupnext.cloud/en/2026/08/AgentBridge-launch/</link>
+    <pubDate>Mon, 17 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2026/08/AgentBridge-launch/</guid>
+    <description><![CDATA[<p>Before v13 came along, installing the Veeam Agent on Windows machines that weren&rsquo;t domain-joined was never a hard problem.</p>
+<p>You&rsquo;d fill a protection group with machine names and an administrator account, and VBR would push the Agent out in bulk. Domain-joined or not, everything could be pushed. For non-domain-joined machines, the worst of it was typing one extra local administrator&rsquo;s username and password.</p>
+<p>Then v13&rsquo;s flagship VSA arrived, and that trick suddenly stopped working for non-domain-joined Windows machines.</p>]]></description>
+</item>
+<item>
+    <title>Veeam ONE v13.1 Web UI Simplified Chinese Package Released: Bringing Chinese to Monitoring and Analytics</title>
+    <link>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</link>
+    <pubDate>Sun, 09 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</guid>
+    <description><![CDATA[<p>Last week we released the Simplified Chinese package for the VBR Web UI.</p>
+<p>This time, it&rsquo;s Veeam ONE&rsquo;s turn.</p>
+<p>In the Veeam ecosystem, VBR does the heavy lifting — backup, replication, recovery. Veeam ONE does the watching — monitoring, analytics, alerting, security posture. Together, the two close the loop on day-to-day operations.</p>
+<p>And just like VBR, the Veeam ONE Web UI shipped without Simplified Chinese.</p>
+<p>So this week, we filled that gap too.</p>]]></description>
+</item>
+<item>
     <title>Veeam Backup &amp; Replication v13.1 Web UI Simplified Chinese Package Released: Making the New-Gen VBR WebUI Truly Usable</title>
     <link>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</link>
     <pubDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</pubDate>
@@ -99,23 +121,6 @@
     <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-02/</guid>
     <description><![CDATA[<h1 id="ai-reshaping-data-protection-part-2-using-claude-code-to-control-your-vbr-server">AI Reshaping Data Protection (Part 2): Using Claude Code to Control Your VBR Server</h1>
 <p>In our previous article, we set up an AI terminal environment with Claude Code + GLM-4.6. Today, I want to show you a revolutionary way of working: <strong>zero-code</strong> control of your Veeam Backup &amp; Replication server through Veeam RestAPI. Don&rsquo;t be intimidated by terms like API - in today&rsquo;s content, you won&rsquo;t need to write a single line of code to make Claude Code (hereafter CC) your VBR operations assistant! Let CC bring you a completely different data protection experience.</p>]]></description>
-</item>
-<item>
-    <title>AI Reshapes Data Protection (Part 1): Claude Code &#43; GLM-4.6 in Practice, Building AI CLI Tools from Scratch</title>
-    <link>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</link>
-    <pubDate>Tue, 11 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/11/AI-Reshapes-Data-Protection-01/</guid>
-    <description><![CDATA[<h1 id="ai-reshapes-data-protection-part-1-claude-code--glm-46-in-practice-building-ai-cli-tools-from-scratch">AI Reshapes Data Protection (Part 1): Claude Code + GLM-4.6 in Practice, Building AI CLI Tools from Scratch</h1>
-<p>Vibe coding has been incredibly popular lately, with Claude Code and Codex competing fiercely. I&rsquo;m grateful for these excellent AI tools that bring entirely new capabilities and perspectives to our data protection and security industry. Starting with this series, I want to share how these AI tools can provide different capabilities for our data protection workflows, giving you an up-close look at the changes AI is bringing to our industry.</p>]]></description>
-</item>
-<item>
-    <title>Free YARA Rules for Veeam - A Practical Guide to Ransomware.live Integration</title>
-    <link>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</link>
-    <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/en/2025/11/veeam13-security-features-03/</guid>
-    <description><![CDATA[<p>In our previous articles, we introduced how Veeam v13 continues to enhance its YARA malware scanning capabilities. However, the limitation of official rule sets is a very real challenge. There aren&rsquo;t many free YARA rule sources available online, and high-quality ones are even scarcer. Today, I want to introduce you to a hidden gem: Ransomware.live - a professional open-source ransomware threat intelligence platform that provides free YARA rules for 62 major ransomware gangs, making it a perfect complement to Veeam&rsquo;s YARA scanning functionality.</p>]]></description>
 </item>
 </channel>
 </rss>

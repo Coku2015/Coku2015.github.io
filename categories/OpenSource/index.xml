@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>OpenSource on 云虚智安</title>
+		<link>https://blog.backupnext.cloud/categories/OpenSource/</link>
+		<description>Recent content in OpenSource on 云虚智安</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Mon, 17 Aug 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/categories/OpenSource/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>又要手工装 Kit 了？我写了 AgentBridge</title>
+				<link>https://blog.backupnext.cloud/2026/08/AgentBridge-launch/</link>
+				<pubDate>Mon, 17 Aug 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2026/08/AgentBridge-launch/</guid>
+				<description>&lt;p&gt;v13 出来之前，给没加域的 Windows 机器装 Veeam Agent，从来不是件难事。&lt;/p&gt;&#xA;&lt;p&gt;保护组里填上机器名和管理员账号，VBR 就能把 Agent 批量推下去。加域的没加域的都能推，没加域的机器顶多多填一个本地管理员的账号密码。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Backup on 云虚智安</title>
-		<link>https://blog.backupnext.cloud/tags/backup/</link>
+		<link>https://blog.backupnext.cloud/tags/Backup/</link>
 		<description>Recent content in Backup on 云虚智安</description>
 		<generator>Hugo</generator>
 		<language>zh-CN</language>
@@ -16,7 +16,7 @@
 		
 			<lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://blog.backupnext.cloud/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://blog.backupnext.cloud/tags/Backup/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Veeam Backup &amp; Replication v13.1 Web UI 简体中文包发布：让新一代 VBR WebUI 真正好用起来</title>
 				<link>https://blog.backupnext.cloud/2026/08/Veeam-WebUI-localization/</link>

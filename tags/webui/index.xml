@@ -14,9 +14,16 @@
 		
 		
 		
-			<lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Sun, 09 Aug 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="https://blog.backupnext.cloud/tags/webui/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Veeam ONE v13.1 Web UI 简体中文包发布：让监控和分析也用上中文</title>
+				<link>https://blog.backupnext.cloud/2026/08/VeeamONE-WebUI-localization/</link>
+				<pubDate>Sun, 09 Aug 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/2026/08/VeeamONE-WebUI-localization/</guid>
+				<description>&lt;p&gt;上周发了 VBR Web UI 的简体中文包。&lt;/p&gt;&#xA;&lt;p&gt;这一篇，轮到 Veeam ONE。&lt;/p&gt;&#xA;&lt;p&gt;Veeam 这套体系里，VBR 负责干活——备份、复制、恢复。Veeam ONE 负责盯着——监控、分析、报警、安全态势。两个凑在一起，才是完整的运维闭环。&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>Veeam Backup &amp; Replication v13.1 Web UI 简体中文包发布：让新一代 VBR WebUI 真正好用起来</title>
 				<link>https://blog.backupnext.cloud/2026/08/Veeam-WebUI-localization/</link>

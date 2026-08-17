@@ -4,7 +4,26 @@
         <link>https://blog.backupnext.cloud/posts/</link>
         <description>所有文章 | 云虚智安</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
-            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>Coku2015@gmail.com (Lei Wei)</webMaster><lastBuildDate>Mon, 17 Aug 2026 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://blog.backupnext.cloud/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>又要手工装 Kit 了？我写了 AgentBridge</title>
+    <link>https://blog.backupnext.cloud/2026/08/AgentBridge-launch/</link>
+    <pubDate>Mon, 17 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2026/08/AgentBridge-launch/</guid>
+    <description><![CDATA[<p>v13 出来之前，给没加域的 Windows 机器装 Veeam Agent，从来不是件难事。</p>
+<p>保护组里填上机器名和管理员账号，VBR 就能把 Agent 批量推下去。加域的没加域的都能推，没加域的机器顶多多填一个本地管理员的账号密码。</p>]]></description>
+</item>
+<item>
+    <title>Veeam ONE v13.1 Web UI 简体中文包发布：让监控和分析也用上中文</title>
+    <link>https://blog.backupnext.cloud/2026/08/VeeamONE-WebUI-localization/</link>
+    <pubDate>Sun, 09 Aug 2026 00:00:00 &#43;0000</pubDate>
+    <author>Coku2015@gmail.com (Lei Wei)</author>
+    <guid>https://blog.backupnext.cloud/2026/08/VeeamONE-WebUI-localization/</guid>
+    <description><![CDATA[<p>上周发了 VBR Web UI 的简体中文包。</p>
+<p>这一篇，轮到 Veeam ONE。</p>
+<p>Veeam 这套体系里，VBR 负责干活——备份、复制、恢复。Veeam ONE 负责盯着——监控、分析、报警、安全态势。两个凑在一起，才是完整的运维闭环。</p>]]></description>
+</item>
+<item>
     <title>Veeam Backup &amp; Replication v13.1 Web UI 简体中文包发布：让新一代 VBR WebUI 真正好用起来</title>
     <link>https://blog.backupnext.cloud/2026/08/Veeam-WebUI-localization/</link>
     <pubDate>Sun, 02 Aug 2026 00:00:00 &#43;0000</pubDate>
@@ -85,23 +104,6 @@
     <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-02/</guid>
     <description><![CDATA[<h1 id="ai-重塑数据保护二-使用-claude-code-控制您的-vbr-服务器">AI 重塑数据保护（二）: 使用 Claude Code 控制您的 VBR 服务器</h1>
 <p>在上篇文章中，我们搭建了 Claude Code + GLM-4.6 的 AI 终端环境。今天，我要向大家展示一个颠覆性的工作方式：<strong>零代码</strong>、通过 Veeam RestAPI 控制 Veeam Backup &amp; Replication 服务器。千万别被 API 之类的吓坏，在今天的内容里不需要编写一行代码，就能让 Claude Code（以下简称 CC）成为你的 VBR 操作助理！让 CC 给你带来一个完全不一样的数据保护体验。</p>]]></description>
-</item>
-<item>
-    <title>AI 重塑数据保护 (一)：Claude Code &#43; GLM-4.6 实战，从零搭建 AI CLI 工具</title>
-    <link>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</link>
-    <pubDate>Tue, 11 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/11/AI-Reshapes-Data-Protection-01/</guid>
-    <description><![CDATA[<h1 id="ai-重塑数据保护-一claude-code--glm-46-实战从零搭建-ai-cli-工具">AI 重塑数据保护 (一)：Claude Code + GLM-4.6 实战，从零搭建 AI CLI 工具</h1>
-<p>Vibe coding 非常火爆，Claude Code 和 Codex 打的异常激烈，感谢有这么好的 AI 工具，给我们数据保护和数据安全行业也带来了全新的能力和全新的想法。本期开始，我想给大家分享下，使用这些 AI 工具，能给我们的数据保护带来一些什么样的不一样的能力，近距离带大家看看 AI 给我们的行业带来的变化。</p>]]></description>
-</item>
-<item>
-    <title>Veeam YARA 扫描的免费规则库 - Ransomware.live 实战指南</title>
-    <link>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</link>
-    <pubDate>Mon, 10 Nov 2025 00:00:00 &#43;0000</pubDate>
-    <author>Coku2015@gmail.com (Lei Wei)</author>
-    <guid>https://blog.backupnext.cloud/2025/11/veeam13-security-features-03/</guid>
-    <description><![CDATA[<p>我们在之前的文章中介绍了 Veeam v13 版本继续加强了 YARA 恶意软件扫描功能，但官方规则库有限的问题很现实。互联网上免费的 YARA 规则源本来就不多，质量好的更是稀缺。今天给大家推荐一个宝藏网站：Ransomware.live - 一个专业的开源勒索软件威胁情报平台，它提供 62 个主流勒索软件团伙的免费 YARA 规则，正好可以作为 Veeam YARA 扫描功能的绝佳补充。</p>]]></description>
 </item>
 </channel>
 </rss>

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Cloud on Cloud.Virt.AI.Sec</title>
-		<link>https://blog.backupnext.cloud/en/tags/Cloud/</link>
+		<link>https://blog.backupnext.cloud/en/tags/cloud/</link>
 		<description>Recent content in Cloud on Cloud.Virt.AI.Sec</description>
 		<generator>Hugo</generator>
 		<language>en-US</language>
@@ -16,7 +16,7 @@
 		
 			<lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://blog.backupnext.cloud/en/tags/Cloud/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://blog.backupnext.cloud/en/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>VBR Software Appliance on Alibaba Cloud: Finally, a Working Installation Path</title>
 				<link>https://blog.backupnext.cloud/en/2026/07/Veeam-Installer-for-Aliyun-launch/</link>

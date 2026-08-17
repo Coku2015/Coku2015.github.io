@@ -14,9 +14,16 @@
 		
 		
 		
-			<lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Sun, 09 Aug 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="https://blog.backupnext.cloud/en/tags/webui/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Veeam ONE v13.1 Web UI Simplified Chinese Package Released: Bringing Chinese to Monitoring and Analytics</title>
+				<link>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</link>
+				<pubDate>Sun, 09 Aug 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</guid>
+				<description>&lt;p&gt;Last week we released the Simplified Chinese package for the VBR Web UI.&lt;/p&gt;&#xA;&lt;p&gt;This time, it&amp;rsquo;s Veeam ONE&amp;rsquo;s turn.&lt;/p&gt;&#xA;&lt;p&gt;In the Veeam ecosystem, VBR does the heavy lifting — backup, replication, recovery. Veeam ONE does the watching — monitoring, analytics, alerting, security posture. Together, the two close the loop on day-to-day operations.&lt;/p&gt;&#xA;&lt;p&gt;And just like VBR, the Veeam ONE Web UI shipped without Simplified Chinese.&lt;/p&gt;&#xA;&lt;p&gt;So this week, we filled that gap too.&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>Veeam Backup &amp; Replication v13.1 Web UI Simplified Chinese Package Released: Making the New-Gen VBR WebUI Truly Usable</title>
 				<link>https://blog.backupnext.cloud/en/2026/08/Veeam-WebUI-localization/</link>

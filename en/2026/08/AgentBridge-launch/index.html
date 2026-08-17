@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Manual Kit Installs Again? I Built AgentBridge - Cloud.Virt.AI.Sec</title><meta name="description" content="Manual Kit Installs Again? I Built AgentBridge"><meta property="og:url" content="https://blog.backupnext.cloud/en/2026/08/AgentBridge-launch/">
+	<meta property="og:site_name" content="Cloud.Virt.AI.Sec">
+	<meta property="og:title" content="Manual Kit Installs Again? I Built AgentBridge">
+	<meta property="og:description" content="Manual Kit Installs Again? I Built AgentBridge">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-08-17T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-08-17T00:00:00+00:00">
+		<meta property="article:tag" content="Backup">
+		<meta property="article:tag" content="Agentbridge">
+		<meta property="og:image" content="https://blog.backupnext.cloud/2026/08/AgentBridge-launch/featured-image.png">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://blog.backupnext.cloud/2026/08/AgentBridge-launch/featured-image.png">
+	<meta name="twitter:title" content="Manual Kit Installs Again? I Built AgentBridge">
+	<meta name="twitter:description" content="Manual Kit Installs Again? I Built AgentBridge">
+<meta name="application-name" content="Cloud.Virt.AI.Sec">
+<meta name="apple-mobile-web-app-title" content="Cloud.Virt.AI.Sec">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.backupnext.cloud/en/2026/08/AgentBridge-launch/" /><link rel="prev" href="https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Manual Kit Installs Again? I Built AgentBridge",
+        "inLanguage": "en-US",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.backupnext.cloud\/en\/2026\/08\/AgentBridge-launch\/"
+        },"image": ["https:\/\/blog.backupnext.cloud\/2026\/08\/AgentBridge-launch\/featured-image.png"],"genre": "posts","keywords": "backup, agentbridge","wordcount":  1675 ,
+        "url": "https:\/\/blog.backupnext.cloud\/en\/2026\/08\/AgentBridge-launch\/","datePublished": "2026-08-17T00:00:00+00:00","dateModified": "2026-08-17T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Cloud.Virt.AI.Sec","logo": "https:\/\/blog.backupnext.cloud\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Lei Wei"
+            },"description": "Manual Kit Installs Again? I Built AgentBridge"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>
+          const query = window.matchMedia('(prefers-color-scheme: dark)');
+          function applyTheme() {
+            let theme = window.localStorage?.getItem('theme') || 'auto';
+            let isDark = theme === 'dark' || (theme === 'auto' && query.matches);
+            document.body.setAttribute('theme', isDark? 'dark' : 'light');
+            document.body.setAttribute('cfg-theme', theme);
+          }
+
+          applyTheme();
+          query.addEventListener('change', applyTheme);
+        </script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/archive/"> Archive </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search articles" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/08/AgentBridge-launch/">简体中文</option><option value="/en/2026/08/AgentBridge-launch/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="Cloud.Virt.AI.Sec">Cloud.Virt.AI.Sec</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search articles" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/archive/" title="">Archive</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><div class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/08/AgentBridge-launch/">简体中文</option><option value="/en/2026/08/AgentBridge-launch/" selected>English</option></select>
+                </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Manual Kit Installs Again? I Built AgentBridge</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.backupnext.cloud" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Lei Wei</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/OpenSource/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>OpenSource</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-08-17">2026-08-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1675 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2026/08/AgentBridge-launch/featured-image.png"
+        data-srcset="/2026/08/AgentBridge-launch/featured-image.png, /2026/08/AgentBridge-launch/featured-image.png 1.5x, /2026/08/AgentBridge-launch/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2026/08/AgentBridge-launch/featured-image.png"
+        title="Manual Kit Installs Again? I Built AgentBridge" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#what-is-agentbridge">What Is AgentBridge?</a></li>
+        <li><a href="#how-does-it-bring-push-installation-back">How Does It Bring Push Installation Back?</a></li>
+        <li><a href="#why-agentbridge">Why AgentBridge?</a></li>
+        <li><a href="#the-full-walkthrough-from-bare-machines-to-vbr-taking-over">The Full Walkthrough: From Bare Machines to VBR Taking Over</a></li>
+        <li><a href="#project-info">Project Info</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Before v13 came along, installing the Veeam Agent on Windows machines that weren&rsquo;t domain-joined was never a hard problem.</p>
+<p>You&rsquo;d fill a protection group with machine names and an administrator account, and VBR would push the Agent out in bulk. Domain-joined or not, everything could be pushed. For non-domain-joined machines, the worst of it was typing one extra local administrator&rsquo;s username and password.</p>
+<p>Then v13&rsquo;s flagship VSA arrived, and that trick suddenly stopped working for non-domain-joined Windows machines.</p>
+<p>You&rsquo;d enter the credentials, hit install, and what came back wasn&rsquo;t a progress bar, it was an error. Dig through the documentation, wander the forums, and everything points to the same answer: first, install a small tool called the Deployment Kit on each machine. Only once it&rsquo;s installed can VBR connect to that machine, and only then can the Agent be pushed.</p>
+<p>The Kit itself isn&rsquo;t complicated, and installing it isn&rsquo;t slow. The problem is getting it onto dozens or hundreds of machines. The officially offered paths boil down to running scripts by hand, or already having enterprise distribution tools such as SCCM or Intune.</p>
+<p>In an environment without SCCM, you&rsquo;re down to one road: remote desktop in and click through, one machine at a time. With a dozen machines you grit your teeth and get through it. With dozens or hundreds, the experience takes you straight back to the dark ages of manual clicking.</p>
+<p>Why did it suddenly stop working? The official word is a security upgrade: the way VSA trusts non-domain-joined machines has changed, and it&rsquo;s moving to certificates. No need to dig into the details, just remember the outcome. The old credential-based push road is closed, and it&rsquo;s not coming back. On the Windows version of v13 that old road still works for now, but VSA is the flagship form of v13, and new environments won&rsquo;t be able to avoid it.</p>
+<p>At the end of the day, installing the Kit is repetitive labor, exactly the kind of work that should be handed to a tool. So I wrote the tool. It&rsquo;s called AgentBridge, and today I&rsquo;m releasing the first version, v0.1.0.</p>
+<p>Project URL: <a href="https://github.com/Coku2015/AgentBridge" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/AgentBridge</a></p>
+<h3 id="what-is-agentbridge">What Is AgentBridge?</h3>
+<p>In one sentence: a deployment tool that handles nothing but the Agent&rsquo;s first installation. Making that first connection between a machine and VBR reliable is its only job.</p>
+<p>The actual work is three steps: install the Deployment Kit on the target machines, create a certificate-based protection group, and hand things over to VBR. From there, Agent push, upgrades, backup, and recovery all run on VBR&rsquo;s normal tracks.</p>
+<p>It comes as a single executable that runs on Windows, Linux, and macOS. No installation, no service to start. Type it once in a terminal, the console opens in your browser, and everything after that happens in the web UI. Close it when you&rsquo;re done and it leaves nothing behind.</p>
+<h3 id="how-does-it-bring-push-installation-back">How Does It Bring Push Installation Back?</h3>
+<p>That Deployment Kit I mentioned earlier is really the new key v13 hands to non-domain-joined machines.</p>
+<p>Once the Kit is installed, it establishes a certificate-based trust with VBR: VBR claims the machine through a certificate-based Individual Computers protection group, and everything after that, deploying and managing the Agent, is VBR&rsquo;s own business. This is the road v13 officially designed, not some back-alley trick.</p>
+<p>Nothing wrong with the design direction. It&rsquo;s cleaner than the old credential approach. What&rsquo;s been blocking people was never the principle; it was the step of getting the Kit installed at scale.</p>
+<p>That step is exactly what AgentBridge does. On Windows it works over SMB 3 and Scheduled Task RPC: it first pre-checks that TCP/445 is reachable, that the ADMIN$ administrative share exists, and that remote Scheduled Tasks work. Then it uploads the Kit to a random temporary directory and remotely executes the official installation script. Installing alone doesn&rsquo;t count as done: it confirms the VeeamDeploySvc service is running and TCP/6160 is reachable before it calls the machine a success, and finally it cleans up the temporary files.</p>
+<p>Through the whole process, you enter an administrator username and password exactly once, in the browser.</p>
+<p>By the way: it doesn&rsquo;t bypass permissions. Whatever administrator rights are required on the target machine are still required. It just runs the errands for you; it doesn&rsquo;t bend the rules for you.</p>
+<h3 id="why-agentbridge">Why AgentBridge?</h3>
+<p><strong>Get back the feel of &ldquo;enter an account, hit push.&rdquo;</strong> That&rsquo;s the reason it exists. Add non-domain-joined Windows machines one by one, fill in an administrator account, and AgentBridge installs and verifies the Kit remotely while you sit at your own computer the entire time. What was effortless in the v12 era should stay effortless in v13.</p>
+<p><strong>Passwords are used once and never stored.</strong> Under the old way, push required storing a batch of local administrator credentials in VBR, and every security audit came around asking about them. With AgentBridge, the username and password exist in memory only for the moment of installation; they&rsquo;re cleared when the task ends, never written to disk, never written to logs. What&rsquo;s left in VBR is a single certificate-based protection group. When the audit comes asking again, you&rsquo;re standing on solid ground.</p>
+<p><strong>No need to scrape together an SCCM just for this.</strong> The Kit and the Linux Agent installation packages are exported directly from your own VBR, so the version always matches the server. No extra distribution server, no enterprise-grade tooling. A single executable gets the whole job done.</p>
+<p><strong>For machines that resist the push, send a command over instead.</strong> Some environments run a tight network: administrative shares disabled, Remote UAC in the way, remote paths unreachable. In those cases AgentBridge starts a temporary download service locally and generates a PowerShell command. Send it to whoever is sitting at the machine; copy, paste, press Enter, and the script elevates itself, downloads, verifies, and installs. The download token is single-use and expires in 30 minutes. You never have to remote desktop in yourself.</p>
+<p><strong>Linux gets taken care of in the same pass.</strong> In the same interface, Linux machines go over SSH: AgentBridge recognizes the distribution and architecture automatically, picks the matching package from VBR, and supports all the usual authentication styles, whether root password, passwordless sudo, or sudo password. In the end Windows and Linux land in the same certificate-based protection group, and VBR treats them alike.</p>
+<p><strong>Systems the vendor no longer favors: force-install them.</strong> Veeam dropped official support for systems like CentOS years ago, but in the real world those machines are still running in whole fleets. When AgentBridge meets a distribution the vendor doesn&rsquo;t recognize, it infers the best-matching package from the package format, architecture, and OS version, and lets you force the install. Before it does, it clearly warns that this is an unofficial path and requires you to confirm it yourself; the recommended package also carries an &ldquo;inferred compatible&rdquo; label, kept separate from the officially supported paths, so nothing gets mixed up.</p>
+<p><strong>&ldquo;Installed&rdquo; and &ldquo;recognized&rdquo; are shown separately.</strong> &ldquo;The Kit is installed on this machine&rdquo; and &ldquo;VBR sees it&rdquo; are two different things, with a protection group and a Rescan in between. AgentBridge lays these two layers of status out separately, so you can see at a glance exactly where things are stuck. Otherwise everything shows green during the install, and only later do you discover VBR never claimed the machines at all, and you&rsquo;re left with nowhere to start troubleshooting. It&rsquo;s an unremarkable detail, and a lifesaver when things actually go wrong.</p>
+<h3 id="the-full-walkthrough-from-bare-machines-to-vbr-taking-over">The Full Walkthrough: From Bare Machines to VBR Taking Over</h3>
+<p>Take the most typical scenario: a v13 VSA environment and a batch of non-domain-joined Windows machines.</p>
+<p><strong>Step 1, download and run.</strong> Grab the package for your system from the Releases page; unzip it and there&rsquo;s just one file:</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-bash">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">agentbridge</span></span></code></pre></div></div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/08/17/zC4m/Snapzy_clipboard_C6B18D4B-C633-4.png"
+        data-srcset="https://files.seeusercontent.com/2026/08/17/zC4m/Snapzy_clipboard_C6B18D4B-C633-4.png, https://files.seeusercontent.com/2026/08/17/zC4m/Snapzy_clipboard_C6B18D4B-C633-4.png 1.5x, https://files.seeusercontent.com/2026/08/17/zC4m/Snapzy_clipboard_C6B18D4B-C633-4.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/08/17/zC4m/Snapzy_clipboard_C6B18D4B-C633-4.png"
+        title="Snapzy_clipboard_C6B18D4B-C633-4143-BC3F-174D5522804E" /></p>
+<p>Once it starts, the browser opens the console automatically, and everything else is done with clicks in the web page.</p>
+<p><strong>Step 2, connect to VBR.</strong> You need VBR v13.1. Fill in the address and credentials, click Connect. Then generate the Deployment Kit, with the components exported from your VBR on the spot.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/08/17/u7gV/connect-en.png"
+        data-srcset="https://files.seeusercontent.com/2026/08/17/u7gV/connect-en.png, https://files.seeusercontent.com/2026/08/17/u7gV/connect-en.png 1.5x, https://files.seeusercontent.com/2026/08/17/u7gV/connect-en.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/08/17/u7gV/connect-en.png"
+        title="connect-en" /></p>
+<p><strong>Step 3, add hosts.</strong> Add the machines one by one, choosing either the Windows or the Linux platform. Enter one-time administrator credentials for each machine, and AgentBridge first runs its pre-checks: TCP/445, ADMIN$, Scheduled Task RPC, each item checked in turn. If Remote UAC blocks the way, it tells you exactly where things got stuck instead of throwing a vague error at you.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/08/17/mA6m/hosts-en.png"
+        data-srcset="https://files.seeusercontent.com/2026/08/17/mA6m/hosts-en.png, https://files.seeusercontent.com/2026/08/17/mA6m/hosts-en.png 1.5x, https://files.seeusercontent.com/2026/08/17/mA6m/hosts-en.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/08/17/mA6m/hosts-en.png"
+        title="hosts-en" /></p>
+<p><strong>Step 4, deploy.</strong> Machines that accept a push get installed remotely; the ones that don&rsquo;t switch to manual mode, and you send that PowerShell command to whoever is sitting at the machine. After installation it automatically verifies the VeeamDeploySvc service and TCP/6160. If the check doesn&rsquo;t pass, it doesn&rsquo;t count as success.</p>
+<p><strong>Step 5, create the protection group.</strong> Select the hosts that are ready, create a certificate-based protection group, and a Rescan fires automatically.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://files.seeusercontent.com/2026/08/17/4Ggv/protection-group-en.png"
+        data-srcset="https://files.seeusercontent.com/2026/08/17/4Ggv/protection-group-en.png, https://files.seeusercontent.com/2026/08/17/4Ggv/protection-group-en.png 1.5x, https://files.seeusercontent.com/2026/08/17/4Ggv/protection-group-en.png 2x"
+        data-sizes="auto"
+        alt="https://files.seeusercontent.com/2026/08/17/4Ggv/protection-group-en.png"
+        title="protection-group-en" /></p>
+<p><strong>Step 6, wait for VBR to claim them.</strong> Once the Rescan finishes, VBR deploys the Agents to this batch of machines following the protection group&rsquo;s settings. From that moment on, upgrades, backup, and recovery all run on VBR&rsquo;s normal tracks. Its work done, AgentBridge steps out of the way, and you only come back to it when the next new machines arrive.</p>
+<hr>
+<h3 id="project-info">Project Info</h3>
+<p>Project URL: <strong><a href="https://github.com/Coku2015/AgentBridge" target="_blank" rel="noopener noreffer ">https://github.com/Coku2015/AgentBridge</a></strong></p>
+<p>If you find it useful, you&rsquo;re welcome to:</p>
+<ul>
+<li>⭐ Star the project</li>
+<li>Open an Issue to report problems you hit while using it</li>
+<li>Tell me how it behaved in your own environment, especially the various non-domain-joined combinations out there</li>
+<li>Submit a Pull Request</li>
+</ul>
+<p>If you run into trouble you can also email me directly: <a href="mailto:coku2015@gmail.com" rel="">coku2015@gmail.com</a>. Remember to sanitize error output before sending; leave out passwords, private keys, and Kit contents. It&rsquo;s normal for a first release not to cover every environment. Send it over and I&rsquo;ll get to it as soon as I can.</p>
+<p>What&rsquo;s next: more real-world test records from additional environments, better documentation, and adjustments to the deployment flow based on feedback.</p>
+<hr>
+<p><em>v13 closed off an old road. What AgentBridge wants to do is build a smoother new one in its place.</em></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2026-08-17</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/en/2026/08/AgentBridge-launch/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;data=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F08%2FAgentBridge-launch%2F" target="_blank" rel="noopener noreferrer" title="Share on 微信" aria-label="Share on 微信"><i class="fab fa-weixin fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.backupnext.cloud%2Fen%2F2026%2F08%2FAgentBridge-launch%2F&amp;text=Manual&#43;Kit&#43;Installs&#43;Again%3F&#43;I&#43;Built&#43;AgentBridge" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F08%252FAgentBridge-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Linkedin" aria-label="Share on Linkedin"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=https%253A%252F%252Fblog.backupnext.cloud%252Fen%252F2026%252F08%252FAgentBridge-launch%252F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/Backup/">Backup</a>,&nbsp;<a href="/en/tags/agentbridge/">Agentbridge</a></section>
+        <section>
+            <span><button type="button" class="link-button" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/2026/08/VeeamONE-WebUI-localization/" class="prev" rel="prev" title="Veeam ONE v13.1 Web UI Simplified Chinese Package Released: Bringing Chinese to Monitoring and Analytics"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Veeam ONE v13.1 Web UI Simplified Chinese Package Released: Bringing Chinese to Monitoring and Analytics</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">English content on this site is generated by AI (GLM-5.2+Claude Code).</div><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.164.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2017 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.backupnext.cloud" target="_blank">Lei Wei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="https://blog-backupnext-cloud.disqus.com/embed.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.en.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","lunrLanguageCode":"en","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.stub.js","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script><script>
+            var doNotTrack = false;
+            if ( false ) {
+                var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+                var doNotTrack = (dnt == "1" || dnt == "yes");
+            }
+            if (!doNotTrack) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-JS3EGTT92G');
+            }
+        </script><script src="https://www.googletagmanager.com/gtag/js?id=G-JS3EGTT92G" async></script></body>
+</html>

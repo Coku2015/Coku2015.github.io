@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Morning on Cloud.Virt.AI.Sec</title>
+		<link>https://blog.backupnext.cloud/en/tags/morning/</link>
+		<description>Recent content in Morning on Cloud.Virt.AI.Sec</description>
+		<generator>Hugo</generator>
+		<language>en-US</language>
+		
+			<managingEditor>Coku2015@gmail.com (Lei Wei)</managingEditor>
+		
+		
+			<webMaster>Coku2015@gmail.com (Lei Wei)</webMaster>
+		
+		
+		
+			<lastBuildDate>Sun, 09 Aug 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://blog.backupnext.cloud/en/tags/morning/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Veeam ONE v13.1 Web UI Simplified Chinese Package Released: Bringing Chinese to Monitoring and Analytics</title>
+				<link>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</link>
+				<pubDate>Sun, 09 Aug 2026 00:00:00 +0000</pubDate><author>Coku2015@gmail.com (Lei Wei)</author>
+				<guid>https://blog.backupnext.cloud/en/2026/08/VeeamONE-WebUI-localization/</guid>
+				<description>&lt;p&gt;Last week we released the Simplified Chinese package for the VBR Web UI.&lt;/p&gt;&#xA;&lt;p&gt;This time, it&amp;rsquo;s Veeam ONE&amp;rsquo;s turn.&lt;/p&gt;&#xA;&lt;p&gt;In the Veeam ecosystem, VBR does the heavy lifting — backup, replication, recovery. Veeam ONE does the watching — monitoring, analytics, alerting, security posture. Together, the two close the loop on day-to-day operations.&lt;/p&gt;&#xA;&lt;p&gt;And just like VBR, the Veeam ONE Web UI shipped without Simplified Chinese.&lt;/p&gt;&#xA;&lt;p&gt;So this week, we filled that gap too.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
